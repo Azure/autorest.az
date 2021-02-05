@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class DataConnectionsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -49,7 +49,7 @@ class DataConnectionsOperations:
         cluster_name: str,
         database_name: str,
         **kwargs
-    ) -> AsyncIterable["models.DataConnectionListResult"]:
+    ) -> AsyncIterable["_models.DataConnectionListResult"]:
         """Returns the list of data connections of the given Kusto database.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -63,7 +63,7 @@ class DataConnectionsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.DataConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnectionListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnectionListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -126,10 +126,10 @@ class DataConnectionsOperations:
         resource_group_name: str,
         cluster_name: str,
         database_name: str,
-        parameters: "models.DataConnectionValidation",
+        parameters: "_models.DataConnectionValidation",
         **kwargs
-    ) -> Optional["models.DataConnectionValidationListResult"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.DataConnectionValidationListResult"]]
+    ) -> Optional["_models.DataConnectionValidationListResult"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.DataConnectionValidationListResult"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -183,9 +183,9 @@ class DataConnectionsOperations:
         resource_group_name: str,
         cluster_name: str,
         database_name: str,
-        parameters: "models.DataConnectionValidation",
+        parameters: "_models.DataConnectionValidation",
         **kwargs
-    ) -> AsyncLROPoller["models.DataConnectionValidationListResult"]:
+    ) -> AsyncLROPoller["_models.DataConnectionValidationListResult"]:
         """Checks that the data connection parameters are valid.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -198,8 +198,8 @@ class DataConnectionsOperations:
         :type parameters: ~kusto_management_client.models.DataConnectionValidation
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DataConnectionValidationListResult or the result of cls(response)
@@ -207,7 +207,7 @@ class DataConnectionsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnectionValidationListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnectionValidationListResult"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -259,9 +259,9 @@ class DataConnectionsOperations:
         resource_group_name: str,
         cluster_name: str,
         database_name: str,
-        data_connection_name: "models.DataConnectionCheckNameRequest",
+        data_connection_name: "_models.DataConnectionCheckNameRequest",
         **kwargs
-    ) -> "models.CheckNameResult":
+    ) -> "_models.CheckNameResult":
         """Checks that the data connection name is valid and is not already in use.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -277,7 +277,7 @@ class DataConnectionsOperations:
         :rtype: ~kusto_management_client.models.CheckNameResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CheckNameResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CheckNameResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -331,7 +331,7 @@ class DataConnectionsOperations:
         database_name: str,
         data_connection_name: str,
         **kwargs
-    ) -> "models.DataConnection":
+    ) -> "_models.DataConnection":
         """Returns a data connection.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -347,7 +347,7 @@ class DataConnectionsOperations:
         :rtype: ~kusto_management_client.models.DataConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -396,10 +396,10 @@ class DataConnectionsOperations:
         cluster_name: str,
         database_name: str,
         data_connection_name: str,
-        parameters: "models.DataConnection",
+        parameters: "_models.DataConnection",
         **kwargs
-    ) -> "models.DataConnection":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnection"]
+    ) -> "_models.DataConnection":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -460,9 +460,9 @@ class DataConnectionsOperations:
         cluster_name: str,
         database_name: str,
         data_connection_name: str,
-        parameters: "models.DataConnection",
+        parameters: "_models.DataConnection",
         **kwargs
-    ) -> AsyncLROPoller["models.DataConnection"]:
+    ) -> AsyncLROPoller["_models.DataConnection"]:
         """Creates or updates a data connection.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -477,8 +477,8 @@ class DataConnectionsOperations:
         :type parameters: ~kusto_management_client.models.DataConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DataConnection or the result of cls(response)
@@ -486,7 +486,7 @@ class DataConnectionsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnection"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -541,10 +541,10 @@ class DataConnectionsOperations:
         cluster_name: str,
         database_name: str,
         data_connection_name: str,
-        parameters: "models.DataConnection",
+        parameters: "_models.DataConnection",
         **kwargs
-    ) -> "models.DataConnection":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnection"]
+    ) -> "_models.DataConnection":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -605,9 +605,9 @@ class DataConnectionsOperations:
         cluster_name: str,
         database_name: str,
         data_connection_name: str,
-        parameters: "models.DataConnection",
+        parameters: "_models.DataConnection",
         **kwargs
-    ) -> AsyncLROPoller["models.DataConnection"]:
+    ) -> AsyncLROPoller["_models.DataConnection"]:
         """Updates a data connection.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -622,8 +622,8 @@ class DataConnectionsOperations:
         :type parameters: ~kusto_management_client.models.DataConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DataConnection or the result of cls(response)
@@ -631,7 +631,7 @@ class DataConnectionsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataConnection"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -748,8 +748,8 @@ class DataConnectionsOperations:
         :type data_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)

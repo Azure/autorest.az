@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class IntegrationRuntimeStatusOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,7 +46,7 @@ class IntegrationRuntimeStatusOperations:
         workspace_name: str,
         integration_runtime_name: str,
         **kwargs
-    ) -> "models.IntegrationRuntimeStatusResponse":
+    ) -> "_models.IntegrationRuntimeStatusResponse":
         """Get integration runtime status.
 
         Get the integration runtime status.
@@ -62,7 +62,7 @@ class IntegrationRuntimeStatusOperations:
         :rtype: ~synapse_management_client.models.IntegrationRuntimeStatusResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeStatusResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IntegrationRuntimeStatusResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

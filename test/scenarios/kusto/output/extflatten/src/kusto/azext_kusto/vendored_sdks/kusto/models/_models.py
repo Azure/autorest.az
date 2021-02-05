@@ -46,7 +46,41 @@ class Resource(msrest.serialization.Model):
         self.type = None
 
 
-class AttachedDatabaseConfiguration(Resource):
+class ProxyResource(Resource):
+    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
+     Microsoft.Storage/storageAccounts.
+    :vartype type: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
+
+
+class AttachedDatabaseConfiguration(ProxyResource):
     """Class representing an attached database configuration.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -582,7 +616,7 @@ class ClusterListResult(msrest.serialization.Model):
         self.value = kwargs.get('value', None)
 
 
-class ClusterPrincipalAssignment(Resource):
+class ClusterPrincipalAssignment(ProxyResource):
     """Class representing a cluster principal assignment.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -870,7 +904,7 @@ class ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalp
         self.client_id = None
 
 
-class Database(Resource):
+class Database(ProxyResource):
     """Class representing a Kusto database.
 
     You probably want to use the sub-classes and not this class directly. Known
@@ -998,7 +1032,7 @@ class DatabasePrincipal(msrest.serialization.Model):
         self.tenant_name = None
 
 
-class DatabasePrincipalAssignment(Resource):
+class DatabasePrincipalAssignment(ProxyResource):
     """Class representing a database principal assignment.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1178,7 +1212,7 @@ class DatabaseStatistics(msrest.serialization.Model):
         self.size = kwargs.get('size', None)
 
 
-class DataConnection(Resource):
+class DataConnection(ProxyResource):
     """Class representing an data connection.
 
     You probably want to use the sub-classes and not this class directly. Known
@@ -1887,40 +1921,6 @@ class OptimizedAutoscale(msrest.serialization.Model):
         self.is_enabled = kwargs['is_enabled']
         self.minimum = kwargs['minimum']
         self.maximum = kwargs['maximum']
-
-
-class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Fully qualified resource Id for the resource. Ex -
-     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
-    :vartype id: str
-    :ivar name: The name of the resource.
-    :vartype name: str
-    :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
-     Microsoft.Storage/storageAccounts.
-    :vartype type: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-    }
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(**kwargs)
 
 
 class ReadOnlyFollowingDatabase(Database):

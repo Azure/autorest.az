@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class Operations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -42,9 +42,9 @@ class Operations:
 
     async def check_name_availability(
         self,
-        request: "models.CheckNameAvailabilityRequest",
+        request: "_models.CheckNameAvailabilityRequest",
         **kwargs
-    ) -> "models.CheckNameAvailabilityResponse":
+    ) -> "_models.CheckNameAvailabilityResponse":
         """Check name availability.
 
         Check whether a workspace name is available.
@@ -56,7 +56,7 @@ class Operations:
         :rtype: ~synapse_management_client.models.CheckNameAvailabilityResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CheckNameAvailabilityResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CheckNameAvailabilityResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -90,7 +90,7 @@ class Operations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('CheckNameAvailabilityResponse', pipeline_response)
@@ -104,7 +104,7 @@ class Operations:
     async def list(
         self,
         **kwargs
-    ) -> List["models.AvailableRpOperation"]:
+    ) -> List["_models.AvailableRpOperation"]:
         """All operations.
 
         Get all available operations.
@@ -114,7 +114,7 @@ class Operations:
         :rtype: list[~synapse_management_client.models.AvailableRpOperation]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List["models.AvailableRpOperation"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List["_models.AvailableRpOperation"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -201,7 +201,7 @@ class Operations:
 
         if response.status_code not in [200, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -215,7 +215,7 @@ class Operations:
         workspace_name: str,
         operation_id: str,
         **kwargs
-    ) -> Optional[Union["models.OperationResource", "models.ErrorContract"]]:
+    ) -> Optional[Union["_models.OperationResource", "_models.ErrorContract"]]:
         """Get operation status.
 
         Get the status of an operation.
@@ -231,7 +231,7 @@ class Operations:
         :rtype: ~synapse_management_client.models.OperationResource or ~synapse_management_client.models.ErrorContract or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Union["models.OperationResource", "models.ErrorContract"]]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Union["_models.OperationResource", "_models.ErrorContract"]]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

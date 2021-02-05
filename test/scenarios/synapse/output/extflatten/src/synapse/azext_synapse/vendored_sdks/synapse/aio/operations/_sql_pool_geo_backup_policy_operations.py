@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class SQLPoolGeoBackupPolicyOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -45,9 +45,9 @@ class SQLPoolGeoBackupPolicyOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        geo_backup_policy_name: Union[str, "models.GeoBackupPolicyName"],
+        geo_backup_policy_name: Union[str, "_models.GeoBackupPolicyName"],
         **kwargs
-    ) -> "models.GeoBackupPolicy":
+    ) -> "_models.GeoBackupPolicy":
         """Get a SQL pool geo backup policy.
 
         Get the specified SQL pool geo backup policy.
@@ -65,7 +65,7 @@ class SQLPoolGeoBackupPolicyOperations:
         :rtype: ~synapse_management_client.models.GeoBackupPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GeoBackupPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GeoBackupPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

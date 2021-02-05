@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class SQLPoolSecurityAlertPolicyOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -45,9 +45,9 @@ class SQLPoolSecurityAlertPolicyOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        security_alert_policy_name: Union[str, "models.SecurityAlertPolicyName"],
+        security_alert_policy_name: Union[str, "_models.SecurityAlertPolicyName"],
         **kwargs
-    ) -> "models.SQLPoolSecurityAlertPolicy":
+    ) -> "_models.SQLPoolSecurityAlertPolicy":
         """Get a Sql pool's security alert policy.
 
         Get a Sql pool's security alert policy.
@@ -65,7 +65,7 @@ class SQLPoolSecurityAlertPolicyOperations:
         :rtype: ~synapse_management_client.models.SQLPoolSecurityAlertPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolSecurityAlertPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolSecurityAlertPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -113,8 +113,8 @@ class SQLPoolSecurityAlertPolicyOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        security_alert_policy_name: Union[str, "models.SecurityAlertPolicyName"],
-        state: Optional[Union[str, "models.SecurityAlertPolicyState"]] = None,
+        security_alert_policy_name: Union[str, "_models.SecurityAlertPolicyName"],
+        state: Optional[Union[str, "_models.SecurityAlertPolicyState"]] = None,
         disabled_alerts: Optional[List[str]] = None,
         email_addresses: Optional[List[str]] = None,
         email_account_admins: Optional[bool] = None,
@@ -122,7 +122,7 @@ class SQLPoolSecurityAlertPolicyOperations:
         storage_account_access_key: Optional[str] = None,
         retention_days: Optional[int] = None,
         **kwargs
-    ) -> "models.SQLPoolSecurityAlertPolicy":
+    ) -> "_models.SQLPoolSecurityAlertPolicy":
         """Create or update a Sql pool's security alert policy.
 
         Create or update a Sql pool's security alert policy.
@@ -159,13 +159,13 @@ class SQLPoolSecurityAlertPolicyOperations:
         :rtype: ~synapse_management_client.models.SQLPoolSecurityAlertPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolSecurityAlertPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolSecurityAlertPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.SQLPoolSecurityAlertPolicy(state=state, disabled_alerts=disabled_alerts, email_addresses=email_addresses, email_account_admins=email_account_admins, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days)
+        parameters = _models.SQLPoolSecurityAlertPolicy(state=state, disabled_alerts=disabled_alerts, email_addresses=email_addresses, email_account_admins=email_account_admins, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"

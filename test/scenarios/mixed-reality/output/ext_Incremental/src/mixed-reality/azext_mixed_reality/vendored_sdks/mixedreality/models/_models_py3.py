@@ -473,8 +473,8 @@ class RemoteRenderingAccount(TrackedResource):
     :type tags: dict[str, str]
     :param location: Required. The geo-location where the resource lives.
     :type location: str
-    :param identity: Identity for the resource.
-    :type identity: ~mixed_reality_client.models.Identity
+    :param identity:
+    :type identity: ~mixed_reality_client.models.RemoteRenderingAccountIdentity
     :ivar account_id: unique id of certain account.
     :vartype account_id: str
     :ivar account_domain: Correspond domain name of certain Spatial Anchors Account.
@@ -496,7 +496,7 @@ class RemoteRenderingAccount(TrackedResource):
         'type': {'key': 'type', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'location': {'key': 'location', 'type': 'str'},
-        'identity': {'key': 'identity', 'type': 'Identity'},
+        'identity': {'key': 'identity', 'type': 'RemoteRenderingAccountIdentity'},
         'account_id': {'key': 'properties.accountId', 'type': 'str'},
         'account_domain': {'key': 'properties.accountDomain', 'type': 'str'},
     }
@@ -506,7 +506,7 @@ class RemoteRenderingAccount(TrackedResource):
         *,
         location: str,
         tags: Optional[Dict[str, str]] = None,
-        identity: Optional["Identity"] = None,
+        identity: Optional["RemoteRenderingAccountIdentity"] = None,
         **kwargs
     ):
         super(RemoteRenderingAccount, self).__init__(tags=tags, location=location, **kwargs)

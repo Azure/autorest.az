@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class SqlPoolMetadataSyncConfigsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,7 +46,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         workspace_name: str,
         sql_pool_name: str,
         **kwargs
-    ) -> Optional["models.MetadataSyncConfig"]:
+    ) -> Optional["_models.MetadataSyncConfig"]:
         """Get SQL pool metadata sync config.
 
         Get the metadata sync configuration for a SQL pool.
@@ -62,7 +62,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         :rtype: ~synapse_management_client.models.MetadataSyncConfig or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.MetadataSyncConfig"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.MetadataSyncConfig"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -94,7 +94,7 @@ class SqlPoolMetadataSyncConfigsOperations:
 
         if response.status_code not in [200, 404]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -112,9 +112,9 @@ class SqlPoolMetadataSyncConfigsOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        metadata_sync_configuration: "models.MetadataSyncConfig",
+        metadata_sync_configuration: "_models.MetadataSyncConfig",
         **kwargs
-    ) -> Optional["models.MetadataSyncConfig"]:
+    ) -> Optional["_models.MetadataSyncConfig"]:
         """Set SQL pool metadata sync config.
 
         Set the metadata sync configuration for a SQL pool.
@@ -132,7 +132,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         :rtype: ~synapse_management_client.models.MetadataSyncConfig or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.MetadataSyncConfig"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.MetadataSyncConfig"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -169,7 +169,7 @@ class SqlPoolMetadataSyncConfigsOperations:
 
         if response.status_code not in [200, 404]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None

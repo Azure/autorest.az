@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class SqlPoolRestorePointsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -54,7 +54,7 @@ class SqlPoolRestorePointsOperations(object):
         sql_pool_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.RestorePointListResult"]
+        # type: (...) -> Iterable["_models.RestorePointListResult"]
         """Get SQL pool backup.
 
         Get SQL pool backup information.
@@ -70,7 +70,7 @@ class SqlPoolRestorePointsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.RestorePointListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.RestorePointListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorePointListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -133,11 +133,11 @@ class SqlPoolRestorePointsOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        parameters,  # type: "models.CreateSqlPoolRestorePointDefinition"
+        parameters,  # type: "_models.CreateSqlPoolRestorePointDefinition"
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.RestorePoint"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.RestorePoint"]]
+        # type: (...) -> Optional["_models.RestorePoint"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.RestorePoint"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -194,10 +194,10 @@ class SqlPoolRestorePointsOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        parameters,  # type: "models.CreateSqlPoolRestorePointDefinition"
+        parameters,  # type: "_models.CreateSqlPoolRestorePointDefinition"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.RestorePoint"]
+        # type: (...) -> LROPoller["_models.RestorePoint"]
         """Creates a restore point for a data warehouse.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -210,8 +210,8 @@ class SqlPoolRestorePointsOperations(object):
         :type parameters: ~synapse_management_client.models.CreateSqlPoolRestorePointDefinition
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either RestorePoint or the result of cls(response)
@@ -219,7 +219,7 @@ class SqlPoolRestorePointsOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.RestorePoint"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RestorePoint"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

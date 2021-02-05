@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -45,7 +45,7 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
         resource_group_name: str,
         workspace_name: str,
         **kwargs
-    ) -> "models.ManagedIdentitySQLControlSettingsModel":
+    ) -> "_models.ManagedIdentitySQLControlSettingsModel":
         """Get Managed Identity Sql Control Settings.
 
         Get Managed Identity Sql Control Settings.
@@ -59,7 +59,7 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
         :rtype: ~synapse_management_client.models.ManagedIdentitySQLControlSettingsModel
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedIdentitySQLControlSettingsModel"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedIdentitySQLControlSettingsModel"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -90,7 +90,7 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('ManagedIdentitySQLControlSettingsModel', pipeline_response)
@@ -105,9 +105,9 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        desired_state: Optional[Union[str, "models.ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentityDesiredState"]] = None,
+        desired_state: Optional[Union[str, "_models.ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentityDesiredState"]] = None,
         **kwargs
-    ) -> "models.ManagedIdentitySQLControlSettingsModel":
+    ) -> "_models.ManagedIdentitySQLControlSettingsModel":
         """Create or update Managed Identity Sql Control Settings.
 
         Create or update Managed Identity Sql Control Settings.
@@ -123,13 +123,13 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
         :rtype: ~synapse_management_client.models.ManagedIdentitySQLControlSettingsModel
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedIdentitySQLControlSettingsModel"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedIdentitySQLControlSettingsModel"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        managed_identity_sql_control_settings = models.ManagedIdentitySQLControlSettingsModel(desired_state=desired_state)
+        managed_identity_sql_control_settings = _models.ManagedIdentitySQLControlSettingsModel(desired_state=desired_state)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -161,7 +161,7 @@ class WorkspaceManagedIdentitySQLControlSettingOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('ManagedIdentitySQLControlSettingsModel', pipeline_response)

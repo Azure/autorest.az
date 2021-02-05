@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class IntegrationRuntimesOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -52,10 +52,10 @@ class IntegrationRuntimesOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         integration_runtime_name,  # type: str
-        update_integration_runtime_request,  # type: "models.UpdateIntegrationRuntimeRequest"
+        update_integration_runtime_request,  # type: "_models.UpdateIntegrationRuntimeRequest"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.IntegrationRuntimeResource"
+        # type: (...) -> "_models.IntegrationRuntimeResource"
         """Update integration runtime.
 
         Update an integration runtime.
@@ -73,7 +73,7 @@ class IntegrationRuntimesOperations(object):
         :rtype: ~synapse_management_client.models.IntegrationRuntimeResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IntegrationRuntimeResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -128,7 +128,7 @@ class IntegrationRuntimesOperations(object):
         if_none_match=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.IntegrationRuntimeResource"]
+        # type: (...) -> Optional["_models.IntegrationRuntimeResource"]
         """Get integration runtime.
 
         Get an integration runtime.
@@ -148,7 +148,7 @@ class IntegrationRuntimesOperations(object):
         :rtype: ~synapse_management_client.models.IntegrationRuntimeResource or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.IntegrationRuntimeResource"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.IntegrationRuntimeResource"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -199,12 +199,12 @@ class IntegrationRuntimesOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         integration_runtime_name,  # type: str
-        integration_runtime,  # type: "models.IntegrationRuntimeResource"
+        integration_runtime,  # type: "_models.IntegrationRuntimeResource"
         if_match=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.IntegrationRuntimeResource"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.IntegrationRuntimeResource"]]
+        # type: (...) -> Optional["_models.IntegrationRuntimeResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.IntegrationRuntimeResource"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -260,11 +260,11 @@ class IntegrationRuntimesOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         integration_runtime_name,  # type: str
-        integration_runtime,  # type: "models.IntegrationRuntimeResource"
+        integration_runtime,  # type: "_models.IntegrationRuntimeResource"
         if_match=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.IntegrationRuntimeResource"]
+        # type: (...) -> LROPoller["_models.IntegrationRuntimeResource"]
         """Create integration runtime.
 
         Create an integration runtime.
@@ -282,8 +282,8 @@ class IntegrationRuntimesOperations(object):
         :type if_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either IntegrationRuntimeResource or the result of cls(response)
@@ -291,7 +291,7 @@ class IntegrationRuntimesOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IntegrationRuntimeResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -406,8 +406,8 @@ class IntegrationRuntimesOperations(object):
         :type integration_runtime_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -526,7 +526,7 @@ class IntegrationRuntimesOperations(object):
         workspace_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.IntegrationRuntimeListResponse"]
+        # type: (...) -> Iterable["_models.IntegrationRuntimeListResponse"]
         """List integration runtimes.
 
         List all integration runtimes.
@@ -540,7 +540,7 @@ class IntegrationRuntimesOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.IntegrationRuntimeListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeListResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IntegrationRuntimeListResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -604,7 +604,7 @@ class IntegrationRuntimesOperations(object):
         integration_runtime_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.IntegrationRuntimeStatusResponse"]
+        # type: (...) -> Optional["_models.IntegrationRuntimeStatusResponse"]
         """Start integration runtime.
 
         Start an integration runtime.
@@ -620,7 +620,7 @@ class IntegrationRuntimesOperations(object):
         :rtype: ~synapse_management_client.models.IntegrationRuntimeStatusResponse or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.IntegrationRuntimeStatusResponse"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.IntegrationRuntimeStatusResponse"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

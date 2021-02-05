@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class AttachedDatabaseConfigurationOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -53,7 +53,7 @@ class AttachedDatabaseConfigurationOperations(object):
         cluster_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.AttachedDatabaseConfigurationListResult"]
+        # type: (...) -> Iterable["_models.AttachedDatabaseConfigurationListResult"]
         """Returns the list of attached database configurations of the given Kusto cluster.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -65,7 +65,7 @@ class AttachedDatabaseConfigurationOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~kusto_management_client.models.AttachedDatabaseConfigurationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttachedDatabaseConfigurationListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttachedDatabaseConfigurationListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -129,7 +129,7 @@ class AttachedDatabaseConfigurationOperations(object):
         attached_database_configuration_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.AttachedDatabaseConfiguration"
+        # type: (...) -> "_models.AttachedDatabaseConfiguration"
         """Returns an attached database configuration.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -143,7 +143,7 @@ class AttachedDatabaseConfigurationOperations(object):
         :rtype: ~kusto_management_client.models.AttachedDatabaseConfiguration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttachedDatabaseConfiguration"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttachedDatabaseConfiguration"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -193,17 +193,17 @@ class AttachedDatabaseConfigurationOperations(object):
         location=None,  # type: Optional[str]
         database_name=None,  # type: Optional[str]
         cluster_resource_id=None,  # type: Optional[str]
-        default_principals_modification_kind=None,  # type: Optional[Union[str, "models.DefaultPrincipalsModificationKind"]]
+        default_principals_modification_kind=None,  # type: Optional[Union[str, "_models.DefaultPrincipalsModificationKind"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.AttachedDatabaseConfiguration"
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttachedDatabaseConfiguration"]
+        # type: (...) -> "_models.AttachedDatabaseConfiguration"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttachedDatabaseConfiguration"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.AttachedDatabaseConfiguration(location=location, database_name=database_name, cluster_resource_id=cluster_resource_id, default_principals_modification_kind=default_principals_modification_kind)
+        parameters = _models.AttachedDatabaseConfiguration(location=location, database_name=database_name, cluster_resource_id=cluster_resource_id, default_principals_modification_kind=default_principals_modification_kind)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -261,10 +261,10 @@ class AttachedDatabaseConfigurationOperations(object):
         location=None,  # type: Optional[str]
         database_name=None,  # type: Optional[str]
         cluster_resource_id=None,  # type: Optional[str]
-        default_principals_modification_kind=None,  # type: Optional[Union[str, "models.DefaultPrincipalsModificationKind"]]
+        default_principals_modification_kind=None,  # type: Optional[Union[str, "_models.DefaultPrincipalsModificationKind"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.AttachedDatabaseConfiguration"]
+        # type: (...) -> LROPoller["_models.AttachedDatabaseConfiguration"]
         """Creates or updates an attached database configuration.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -285,8 +285,8 @@ class AttachedDatabaseConfigurationOperations(object):
         :type default_principals_modification_kind: str or ~kusto_management_client.models.DefaultPrincipalsModificationKind
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either AttachedDatabaseConfiguration or the result of cls(response)
@@ -294,7 +294,7 @@ class AttachedDatabaseConfigurationOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttachedDatabaseConfiguration"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttachedDatabaseConfiguration"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -409,8 +409,8 @@ class AttachedDatabaseConfigurationOperations(object):
         :type attached_database_configuration_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)

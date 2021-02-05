@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class GroupsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -49,10 +49,10 @@ class GroupsOperations(object):
         resource_group_name,  # type: str
         project_name,  # type: str
         group_name,  # type: str
-        group=None,  # type: Optional["models.Group"]
+        group=None,  # type: Optional["_models.Group"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.Group"
+        # type: (...) -> "_models.Group"
         """Create a new group with specified settings.
 
         Create a new group by sending a json object of type 'group' as given in Models section as part
@@ -73,7 +73,7 @@ class GroupsOperations(object):
         :rtype: ~dfaz_management_client.models.Group
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Group"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Group"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

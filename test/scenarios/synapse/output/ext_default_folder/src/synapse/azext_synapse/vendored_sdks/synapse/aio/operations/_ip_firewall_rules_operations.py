@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class IpFirewallRulesOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -48,7 +48,7 @@ class IpFirewallRulesOperations:
         resource_group_name: str,
         workspace_name: str,
         **kwargs
-    ) -> AsyncIterable["models.IpFirewallRuleInfoListResult"]:
+    ) -> AsyncIterable["_models.IpFirewallRuleInfoListResult"]:
         """Returns a list of firewall rules.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class IpFirewallRulesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.IpFirewallRuleInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IpFirewallRuleInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IpFirewallRuleInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,10 +122,10 @@ class IpFirewallRulesOperations:
         resource_group_name: str,
         workspace_name: str,
         rule_name: str,
-        ip_firewall_rule_info: "models.IpFirewallRuleInfo",
+        ip_firewall_rule_info: "_models.IpFirewallRuleInfo",
         **kwargs
-    ) -> "models.IpFirewallRuleInfo":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IpFirewallRuleInfo"]
+    ) -> "_models.IpFirewallRuleInfo":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IpFirewallRuleInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -162,7 +162,7 @@ class IpFirewallRulesOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -182,9 +182,9 @@ class IpFirewallRulesOperations:
         resource_group_name: str,
         workspace_name: str,
         rule_name: str,
-        ip_firewall_rule_info: "models.IpFirewallRuleInfo",
+        ip_firewall_rule_info: "_models.IpFirewallRuleInfo",
         **kwargs
-    ) -> AsyncLROPoller["models.IpFirewallRuleInfo"]:
+    ) -> AsyncLROPoller["_models.IpFirewallRuleInfo"]:
         """Creates or updates a firewall rule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -197,8 +197,8 @@ class IpFirewallRulesOperations:
         :type ip_firewall_rule_info: ~synapse_management_client.models.IpFirewallRuleInfo
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either IpFirewallRuleInfo or the result of cls(response)
@@ -206,7 +206,7 @@ class IpFirewallRulesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IpFirewallRuleInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IpFirewallRuleInfo"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -321,8 +321,8 @@ class IpFirewallRulesOperations:
         :type rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either object or the result of cls(response)
@@ -382,7 +382,7 @@ class IpFirewallRulesOperations:
         workspace_name: str,
         rule_name: str,
         **kwargs
-    ) -> "models.IpFirewallRuleInfo":
+    ) -> "_models.IpFirewallRuleInfo":
         """Get a firewall rule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -396,7 +396,7 @@ class IpFirewallRulesOperations:
         :rtype: ~synapse_management_client.models.IpFirewallRuleInfo
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IpFirewallRuleInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IpFirewallRuleInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -428,7 +428,7 @@ class IpFirewallRulesOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('IpFirewallRuleInfo', pipeline_response)
@@ -443,10 +443,10 @@ class IpFirewallRulesOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        request: "models.ReplaceAllIpFirewallRulesRequest",
+        request: "_models.ReplaceAllIpFirewallRulesRequest",
         **kwargs
-    ) -> Optional["models.ReplaceAllFirewallRulesOperationResponse"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.ReplaceAllFirewallRulesOperationResponse"]]
+    ) -> Optional["_models.ReplaceAllFirewallRulesOperationResponse"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ReplaceAllFirewallRulesOperationResponse"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -482,7 +482,7 @@ class IpFirewallRulesOperations:
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -499,9 +499,9 @@ class IpFirewallRulesOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        request: "models.ReplaceAllIpFirewallRulesRequest",
+        request: "_models.ReplaceAllIpFirewallRulesRequest",
         **kwargs
-    ) -> AsyncLROPoller["models.ReplaceAllFirewallRulesOperationResponse"]:
+    ) -> AsyncLROPoller["_models.ReplaceAllFirewallRulesOperationResponse"]:
         """Replaces firewall rules.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -512,8 +512,8 @@ class IpFirewallRulesOperations:
         :type request: ~synapse_management_client.models.ReplaceAllIpFirewallRulesRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ReplaceAllFirewallRulesOperationResponse or the result of cls(response)
@@ -521,7 +521,7 @@ class IpFirewallRulesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ReplaceAllFirewallRulesOperationResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ReplaceAllFirewallRulesOperationResponse"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

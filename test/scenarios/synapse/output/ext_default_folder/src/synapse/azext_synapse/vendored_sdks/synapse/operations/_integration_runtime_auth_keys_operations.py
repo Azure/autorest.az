@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class IntegrationRuntimeAuthKeysOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -49,10 +49,10 @@ class IntegrationRuntimeAuthKeysOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         integration_runtime_name,  # type: str
-        regenerate_key_parameters,  # type: "models.IntegrationRuntimeRegenerateKeyParameters"
+        regenerate_key_parameters,  # type: "_models.IntegrationRuntimeRegenerateKeyParameters"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.IntegrationRuntimeAuthKeys"
+        # type: (...) -> "_models.IntegrationRuntimeAuthKeys"
         """Regenerate integration runtime authentication key.
 
         Regenerate the authentication key for an integration runtime.
@@ -71,7 +71,7 @@ class IntegrationRuntimeAuthKeysOperations(object):
         :rtype: ~synapse_management_client.models.IntegrationRuntimeAuthKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeAuthKeys"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IntegrationRuntimeAuthKeys"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -125,7 +125,7 @@ class IntegrationRuntimeAuthKeysOperations(object):
         integration_runtime_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.IntegrationRuntimeAuthKeys"
+        # type: (...) -> "_models.IntegrationRuntimeAuthKeys"
         """List integration runtime authentication keys.
 
         List authentication keys in an integration runtime.
@@ -141,7 +141,7 @@ class IntegrationRuntimeAuthKeysOperations(object):
         :rtype: ~synapse_management_client.models.IntegrationRuntimeAuthKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.IntegrationRuntimeAuthKeys"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.IntegrationRuntimeAuthKeys"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

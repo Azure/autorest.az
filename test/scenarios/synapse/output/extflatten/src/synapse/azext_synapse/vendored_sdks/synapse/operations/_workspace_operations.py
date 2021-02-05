@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class WorkspaceOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -52,7 +52,7 @@ class WorkspaceOperations(object):
         resource_group_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.WorkspaceInfoListResult"]
+        # type: (...) -> Iterable["_models.WorkspaceInfoListResult"]
         """Returns a list of workspaces in a resource group.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -62,7 +62,7 @@ class WorkspaceOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.WorkspaceInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.WorkspaceInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.WorkspaceInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -124,7 +124,7 @@ class WorkspaceOperations(object):
         workspace_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.Workspace"
+        # type: (...) -> "_models.Workspace"
         """Gets a workspace.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -136,7 +136,7 @@ class WorkspaceOperations(object):
         :rtype: ~synapse_management_client.models.Workspace
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Workspace"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Workspace"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -167,7 +167,7 @@ class WorkspaceOperations(object):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('Workspace', pipeline_response)
@@ -184,17 +184,17 @@ class WorkspaceOperations(object):
         workspace_name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         sql_administrator_login_password=None,  # type: Optional[str]
-        type=None,  # type: Optional[Union[str, "models.ResourceIdentityType"]]
+        type=None,  # type: Optional[Union[str, "_models.ResourceIdentityType"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.Workspace"
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Workspace"]
+        # type: (...) -> "_models.Workspace"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Workspace"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        workspace_patch_info = models.WorkspacePatchInfo(tags=tags, sql_administrator_login_password=sql_administrator_login_password, type=type)
+        workspace_patch_info = _models.WorkspacePatchInfo(tags=tags, sql_administrator_login_password=sql_administrator_login_password, type=type)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -226,7 +226,7 @@ class WorkspaceOperations(object):
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -247,10 +247,10 @@ class WorkspaceOperations(object):
         workspace_name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         sql_administrator_login_password=None,  # type: Optional[str]
-        type=None,  # type: Optional[Union[str, "models.ResourceIdentityType"]]
+        type=None,  # type: Optional[Union[str, "_models.ResourceIdentityType"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.Workspace"]
+        # type: (...) -> LROPoller["_models.Workspace"]
         """Updates a workspace.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -265,8 +265,8 @@ class WorkspaceOperations(object):
         :type type: str or ~synapse_management_client.models.ResourceIdentityType
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
@@ -274,7 +274,7 @@ class WorkspaceOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Workspace"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Workspace"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -327,25 +327,25 @@ class WorkspaceOperations(object):
         workspace_name,  # type: str
         location,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
-        default_data_lake_storage=None,  # type: Optional["models.DataLakeStorageAccountDetails"]
+        default_data_lake_storage=None,  # type: Optional["_models.DataLakeStorageAccountDetails"]
         sql_administrator_login_password=None,  # type: Optional[str]
         managed_resource_group_name=None,  # type: Optional[str]
         sql_administrator_login=None,  # type: Optional[str]
         connectivity_endpoints=None,  # type: Optional[Dict[str, str]]
         managed_virtual_network=None,  # type: Optional[str]
-        private_endpoint_connections=None,  # type: Optional[List["models.PrivateEndpointConnection"]]
+        private_endpoint_connections=None,  # type: Optional[List["_models.PrivateEndpointConnection"]]
         compute_subnet_id=None,  # type: Optional[str]
-        type=None,  # type: Optional[Union[str, "models.ResourceIdentityType"]]
+        type=None,  # type: Optional[Union[str, "_models.ResourceIdentityType"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.Workspace"
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Workspace"]
+        # type: (...) -> "_models.Workspace"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Workspace"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        workspace_info = models.Workspace(tags=tags, location=location, default_data_lake_storage=default_data_lake_storage, sql_administrator_login_password=sql_administrator_login_password, managed_resource_group_name=managed_resource_group_name, sql_administrator_login=sql_administrator_login, connectivity_endpoints=connectivity_endpoints, managed_virtual_network=managed_virtual_network, private_endpoint_connections=private_endpoint_connections, compute_subnet_id=compute_subnet_id, type_identity_type=type)
+        workspace_info = _models.Workspace(tags=tags, location=location, default_data_lake_storage=default_data_lake_storage, sql_administrator_login_password=sql_administrator_login_password, managed_resource_group_name=managed_resource_group_name, sql_administrator_login=sql_administrator_login, connectivity_endpoints=connectivity_endpoints, managed_virtual_network=managed_virtual_network, private_endpoint_connections=private_endpoint_connections, compute_subnet_id=compute_subnet_id, type_identity_type=type)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -377,7 +377,7 @@ class WorkspaceOperations(object):
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -398,18 +398,18 @@ class WorkspaceOperations(object):
         workspace_name,  # type: str
         location,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
-        default_data_lake_storage=None,  # type: Optional["models.DataLakeStorageAccountDetails"]
+        default_data_lake_storage=None,  # type: Optional["_models.DataLakeStorageAccountDetails"]
         sql_administrator_login_password=None,  # type: Optional[str]
         managed_resource_group_name=None,  # type: Optional[str]
         sql_administrator_login=None,  # type: Optional[str]
         connectivity_endpoints=None,  # type: Optional[Dict[str, str]]
         managed_virtual_network=None,  # type: Optional[str]
-        private_endpoint_connections=None,  # type: Optional[List["models.PrivateEndpointConnection"]]
+        private_endpoint_connections=None,  # type: Optional[List["_models.PrivateEndpointConnection"]]
         compute_subnet_id=None,  # type: Optional[str]
-        type=None,  # type: Optional[Union[str, "models.ResourceIdentityType"]]
+        type=None,  # type: Optional[Union[str, "_models.ResourceIdentityType"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.Workspace"]
+        # type: (...) -> LROPoller["_models.Workspace"]
         """Creates or updates a workspace.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -444,8 +444,8 @@ class WorkspaceOperations(object):
         :type type: str or ~synapse_management_client.models.ResourceIdentityType
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
@@ -453,7 +453,7 @@ class WorkspaceOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Workspace"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Workspace"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -546,7 +546,7 @@ class WorkspaceOperations(object):
 
         if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -577,8 +577,8 @@ class WorkspaceOperations(object):
         :type workspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either object or the result of cls(response)
@@ -634,7 +634,7 @@ class WorkspaceOperations(object):
         self,
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.WorkspaceInfoListResult"]
+        # type: (...) -> Iterable["_models.WorkspaceInfoListResult"]
         """Returns a list of workspaces in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -642,7 +642,7 @@ class WorkspaceOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.WorkspaceInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.WorkspaceInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.WorkspaceInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

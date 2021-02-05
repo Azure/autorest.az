@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -37,7 +37,7 @@ class ScopeAssignmentsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -51,7 +51,7 @@ class ScopeAssignmentsOperations(object):
         scope_assignment_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.ScopeAssignment"
+        # type: (...) -> "_models.ScopeAssignment"
         """Get the specified scope assignment.
 
         :param scope: The base resource of the scope assignment.
@@ -63,7 +63,7 @@ class ScopeAssignmentsOperations(object):
         :rtype: ~managed_network_management_client.models.ScopeAssignment
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignment"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ScopeAssignment"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -93,7 +93,7 @@ class ScopeAssignmentsOperations(object):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('ScopeAssignment', pipeline_response)
@@ -108,10 +108,10 @@ class ScopeAssignmentsOperations(object):
         self,
         scope,  # type: str
         scope_assignment_name,  # type: str
-        parameters,  # type: "models.ScopeAssignment"
+        parameters,  # type: "_models.ScopeAssignment"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.ScopeAssignment"
+        # type: (...) -> "_models.ScopeAssignment"
         """Creates a scope assignment.
 
         :param scope: The base resource of the scope assignment to create. The scope can be any REST
@@ -130,7 +130,7 @@ class ScopeAssignmentsOperations(object):
         :rtype: ~managed_network_management_client.models.ScopeAssignment
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignment"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ScopeAssignment"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -165,7 +165,7 @@ class ScopeAssignmentsOperations(object):
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -238,7 +238,7 @@ class ScopeAssignmentsOperations(object):
         scope,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.ScopeAssignmentListResult"]
+        # type: (...) -> Iterable["_models.ScopeAssignmentListResult"]
         """Get the specified scope assignment.
 
         :param scope: The base resource of the scope assignment.
@@ -248,7 +248,7 @@ class ScopeAssignmentsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~managed_network_management_client.models.ScopeAssignmentListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopeAssignmentListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ScopeAssignmentListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -293,7 +293,7 @@ class ScopeAssignmentsOperations(object):
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
-                error = self._deserialize(models.ErrorResponse, response)
+                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
                 raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 

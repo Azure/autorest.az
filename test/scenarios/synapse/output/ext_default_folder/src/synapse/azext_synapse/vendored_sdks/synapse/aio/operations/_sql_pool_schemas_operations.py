@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class SqlPoolSchemasOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -48,7 +48,7 @@ class SqlPoolSchemasOperations:
         sql_pool_name: str,
         filter: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.SqlPoolSchemaListResult"]:
+    ) -> AsyncIterable["_models.SqlPoolSchemaListResult"]:
         """Gets schemas of a given SQL pool.
 
         Gets schemas of a given SQL pool.
@@ -66,7 +66,7 @@ class SqlPoolSchemasOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.SqlPoolSchemaListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPoolSchemaListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPoolSchemaListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

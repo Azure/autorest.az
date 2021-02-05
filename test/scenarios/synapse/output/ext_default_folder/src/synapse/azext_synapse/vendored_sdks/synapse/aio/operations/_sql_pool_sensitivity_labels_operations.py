@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class SqlPoolSensitivityLabelsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -48,7 +48,7 @@ class SqlPoolSensitivityLabelsOperations:
         sql_pool_name: str,
         filter: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.SensitivityLabelListResult"]:
+    ) -> AsyncIterable["_models.SensitivityLabelListResult"]:
         """Gets SQL pool sensitivity labels.
 
         Gets SQL pool sensitivity labels.
@@ -66,7 +66,7 @@ class SqlPoolSensitivityLabelsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.SensitivityLabelListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SensitivityLabelListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SensitivityLabelListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -135,7 +135,7 @@ class SqlPoolSensitivityLabelsOperations:
         skip_token: Optional[str] = None,
         filter: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.SensitivityLabelListResult"]:
+    ) -> AsyncIterable["_models.SensitivityLabelListResult"]:
         """Gets sensitivity labels of a given SQL pool.
 
         Gets sensitivity labels of a given SQL pool.
@@ -159,7 +159,7 @@ class SqlPoolSensitivityLabelsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.SensitivityLabelListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SensitivityLabelListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SensitivityLabelListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -231,9 +231,9 @@ class SqlPoolSensitivityLabelsOperations:
         schema_name: str,
         table_name: str,
         column_name: str,
-        parameters: "models.SensitivityLabel",
+        parameters: "_models.SensitivityLabel",
         **kwargs
-    ) -> "models.SensitivityLabel":
+    ) -> "_models.SensitivityLabel":
         """Creates or updates the sensitivity label of a given column in a Sql pool.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -255,7 +255,7 @@ class SqlPoolSensitivityLabelsOperations:
         :rtype: ~synapse_management_client.models.SensitivityLabel
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SensitivityLabel"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SensitivityLabel"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class AttestationProvidersOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -45,7 +45,7 @@ class AttestationProvidersOperations:
         resource_group_name: str,
         provider_name: str,
         **kwargs
-    ) -> "models.AttestationProvider":
+    ) -> "_models.AttestationProvider":
         """Get the status of Attestation Provider.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -57,7 +57,7 @@ class AttestationProvidersOperations:
         :rtype: ~attestation_management_client.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttestationProvider"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -102,9 +102,9 @@ class AttestationProvidersOperations:
         self,
         resource_group_name: str,
         provider_name: str,
-        creation_params: "models.AttestationServiceCreationParams",
+        creation_params: "_models.AttestationServiceCreationParams",
         **kwargs
-    ) -> "models.AttestationProvider":
+    ) -> "_models.AttestationProvider":
         """Creates or updates the Attestation Provider.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -118,7 +118,7 @@ class AttestationProvidersOperations:
         :rtype: ~attestation_management_client.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttestationProvider"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -172,9 +172,9 @@ class AttestationProvidersOperations:
         self,
         resource_group_name: str,
         provider_name: str,
-        update_params: "models.AttestationServicePatchParams",
+        update_params: "_models.AttestationServicePatchParams",
         **kwargs
-    ) -> "models.AttestationProvider":
+    ) -> "_models.AttestationProvider":
         """Updates the Attestation Provider.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -188,7 +188,7 @@ class AttestationProvidersOperations:
         :rtype: ~attestation_management_client.models.AttestationProvider
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProvider"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttestationProvider"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -292,7 +292,7 @@ class AttestationProvidersOperations:
     async def list(
         self,
         **kwargs
-    ) -> "models.AttestationProviderListResult":
+    ) -> "_models.AttestationProviderListResult":
         """Returns a list of attestation providers in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -300,7 +300,7 @@ class AttestationProvidersOperations:
         :rtype: ~attestation_management_client.models.AttestationProviderListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttestationProviderListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -343,7 +343,7 @@ class AttestationProvidersOperations:
         self,
         resource_group_name: str,
         **kwargs
-    ) -> "models.AttestationProviderListResult":
+    ) -> "_models.AttestationProviderListResult":
         """Returns attestation providers list in a resource group.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -353,7 +353,7 @@ class AttestationProvidersOperations:
         :rtype: ~attestation_management_client.models.AttestationProviderListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AttestationProviderListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AttestationProviderListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

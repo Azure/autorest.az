@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class IntegrationRuntimeObjectMetadataOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -49,10 +49,10 @@ class IntegrationRuntimeObjectMetadataOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         integration_runtime_name,  # type: str
-        get_metadata_request=None,  # type: Optional["models.GetSsisObjectMetadataRequest"]
+        get_metadata_request=None,  # type: Optional["_models.GetSsisObjectMetadataRequest"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SsisObjectMetadataListResponse"
+        # type: (...) -> "_models.SsisObjectMetadataListResponse"
         """Get integration runtime object metadata.
 
         Get object metadata from an integration runtime.
@@ -70,7 +70,7 @@ class IntegrationRuntimeObjectMetadataOperations(object):
         :rtype: ~synapse_management_client.models.SsisObjectMetadataListResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SsisObjectMetadataListResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SsisObjectMetadataListResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -127,7 +127,7 @@ class IntegrationRuntimeObjectMetadataOperations(object):
         integration_runtime_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.SsisObjectMetadataStatusResponse"]
+        # type: (...) -> Optional["_models.SsisObjectMetadataStatusResponse"]
         """Refresh integration runtime object metadata.
 
         Refresh the object metadata in an integration runtime.
@@ -143,7 +143,7 @@ class IntegrationRuntimeObjectMetadataOperations(object):
         :rtype: ~synapse_management_client.models.SsisObjectMetadataStatusResponse or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SsisObjectMetadataStatusResponse"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SsisObjectMetadataStatusResponse"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

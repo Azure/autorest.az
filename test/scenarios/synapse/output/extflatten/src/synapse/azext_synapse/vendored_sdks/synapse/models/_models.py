@@ -587,7 +587,41 @@ class DataLakeStorageAccountDetails(msrest.serialization.Model):
         self.filesystem = kwargs.get('filesystem', None)
 
 
-class DataWarehouseUserActivities(Resource):
+class ProxyResource(Resource):
+    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
+     Microsoft.Storage/storageAccounts.
+    :vartype type: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
+
+
+class DataWarehouseUserActivities(ProxyResource):
     """User activities of a data warehouse.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -806,7 +840,7 @@ class ErrorResponse(msrest.serialization.Model):
         self.additional_info = None
 
 
-class GeoBackupPolicy(Resource):
+class GeoBackupPolicy(ProxyResource):
     """A database geo backup policy.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1606,7 +1640,7 @@ class IntegrationRuntimeVNetProperties(msrest.serialization.Model):
         self.public_i_ps = kwargs.get('public_i_ps', None)
 
 
-class IpFirewallRuleInfo(Resource):
+class IpFirewallRuleInfo(ProxyResource):
     """IP firewall rule.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1888,7 +1922,7 @@ class LinkedIntegrationRuntimeRbacAuthorization(LinkedIntegrationRuntimeType):
         self.resource_id = kwargs['resource_id']
 
 
-class ManagedIdentitySQLControlSettingsModel(Resource):
+class ManagedIdentitySQLControlSettingsModel(ProxyResource):
     """Sql Control Settings for workspace managed identity.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2187,7 +2221,7 @@ class ManagedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         self.last_operation = None
 
 
-class MetadataSyncConfig(Resource):
+class MetadataSyncConfig(ProxyResource):
     """Configuration for metadata sync.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2437,7 +2471,7 @@ class PrivateEndpoint(msrest.serialization.Model):
         self.id = None
 
 
-class PrivateEndpointConnection(Resource):
+class PrivateEndpointConnection(ProxyResource):
     """A private endpoint connection.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2608,7 +2642,7 @@ class PrivateLinkHubPatchInfo(msrest.serialization.Model):
         self.tags = kwargs.get('tags', None)
 
 
-class PrivateLinkResource(Resource):
+class PrivateLinkResource(ProxyResource):
     """A private link resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2744,40 +2778,6 @@ class PrivateLinkServiceConnectionState(msrest.serialization.Model):
         self.status = kwargs.get('status', None)
         self.description = kwargs.get('description', None)
         self.actions_required = None
-
-
-class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Fully qualified resource Id for the resource. Ex -
-     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
-    :vartype id: str
-    :ivar name: The name of the resource.
-    :vartype name: str
-    :ivar type: The type of the resource. Ex- Microsoft.Compute/virtualMachines or
-     Microsoft.Storage/storageAccounts.
-    :vartype type: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-    }
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(**kwargs)
 
 
 class QueryInterval(msrest.serialization.Model):
@@ -2924,7 +2924,7 @@ class ReplaceAllIpFirewallRulesRequest(msrest.serialization.Model):
         self.ip_firewall_rules = kwargs.get('ip_firewall_rules', None)
 
 
-class ReplicationLink(Resource):
+class ReplicationLink(ProxyResource):
     """Represents a Sql pool replication link.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3071,7 +3071,7 @@ class ResourceMoveDefinition(msrest.serialization.Model):
         self.id = kwargs['id']
 
 
-class RestorePoint(Resource):
+class RestorePoint(ProxyResource):
     """Database restore points.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3511,7 +3511,7 @@ class SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeStatus):
         self.auto_update_eta = None
 
 
-class SensitivityLabel(Resource):
+class SensitivityLabel(ProxyResource):
     """A sensitivity label.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3704,7 +3704,7 @@ class SQLPool(TrackedResource):
         self.creation_date = kwargs.get('creation_date', None)
 
 
-class SQLPoolBlobAuditingPolicy(Resource):
+class SQLPoolBlobAuditingPolicy(ProxyResource):
     """A Sql pool blob auditing policy.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3896,7 +3896,7 @@ class SQLPoolBlobAuditingPolicySQLPoolOperationListResult(msrest.serialization.M
         self.next_link = None
 
 
-class SQLPoolColumn(Resource):
+class SQLPoolColumn(ProxyResource):
     """A Sql pool column resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3968,7 +3968,7 @@ class SQLPoolColumnListResult(msrest.serialization.Model):
         self.next_link = None
 
 
-class SQLPoolConnectionPolicy(Resource):
+class SQLPoolConnectionPolicy(ProxyResource):
     """A Sql pool connection policy.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4063,7 +4063,7 @@ class SQLPoolInfoListResult(msrest.serialization.Model):
         self.value = kwargs.get('value', None)
 
 
-class SQLPoolOperation(Resource):
+class SQLPoolOperation(ProxyResource):
     """A Sql pool operation.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4231,7 +4231,7 @@ class SQLPoolPatchInfo(msrest.serialization.Model):
         self.creation_date = kwargs.get('creation_date', None)
 
 
-class SQLPoolSchema(Resource):
+class SQLPoolSchema(ProxyResource):
     """A Sql pool schema resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4271,7 +4271,7 @@ class SQLPoolSchemaListResult(msrest.serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: Array of results.
-    :vartype value: list[~synapse_management_client.models.Resource]
+    :vartype value: list[~synapse_management_client.models.SQLPoolSchema]
     :ivar next_link: Link to retrieve next page of results.
     :vartype next_link: str
     """
@@ -4282,7 +4282,7 @@ class SQLPoolSchemaListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Resource]'},
+        'value': {'key': 'value', 'type': '[SQLPoolSchema]'},
         'next_link': {'key': 'nextLink', 'type': 'str'},
     }
 
@@ -4295,7 +4295,7 @@ class SQLPoolSchemaListResult(msrest.serialization.Model):
         self.next_link = None
 
 
-class SQLPoolSecurityAlertPolicy(Resource):
+class SQLPoolSecurityAlertPolicy(ProxyResource):
     """A Sql pool security alert policy.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4368,7 +4368,7 @@ class SQLPoolSecurityAlertPolicy(Resource):
         self.creation_time = None
 
 
-class SQLPoolTable(Resource):
+class SQLPoolTable(ProxyResource):
     """A Sql pool table resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4408,7 +4408,7 @@ class SQLPoolTableListResult(msrest.serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: Array of results.
-    :vartype value: list[~synapse_management_client.models.Resource]
+    :vartype value: list[~synapse_management_client.models.SQLPoolTable]
     :ivar next_link: Link to retrieve next page of results.
     :vartype next_link: str
     """
@@ -4419,7 +4419,7 @@ class SQLPoolTableListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Resource]'},
+        'value': {'key': 'value', 'type': '[SQLPoolTable]'},
         'next_link': {'key': 'nextLink', 'type': 'str'},
     }
 
@@ -4519,7 +4519,7 @@ class SQLPoolUsageListResult(msrest.serialization.Model):
         self.next_link = None
 
 
-class SQLPoolVulnerabilityAssessment(Resource):
+class SQLPoolVulnerabilityAssessment(ProxyResource):
     """A Sql pool vulnerability assessment.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4606,7 +4606,7 @@ class SQLPoolVulnerabilityAssessmentListResult(msrest.serialization.Model):
         self.next_link = None
 
 
-class SQLPoolVulnerabilityAssessmentRuleBaseline(Resource):
+class SQLPoolVulnerabilityAssessmentRuleBaseline(ProxyResource):
     """A Sql pool vulnerability assessment rule baseline.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4670,7 +4670,7 @@ class SQLPoolVulnerabilityAssessmentRuleBaselineItem(msrest.serialization.Model)
         self.result = kwargs['result']
 
 
-class SQLPoolVulnerabilityAssessmentScansExport(Resource):
+class SQLPoolVulnerabilityAssessmentScansExport(ProxyResource):
     """A Sql pool Vulnerability Assessment scan export resource.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5215,7 +5215,7 @@ class TopQueriesListResult(msrest.serialization.Model):
         self.value = kwargs['value']
 
 
-class TransparentDataEncryption(Resource):
+class TransparentDataEncryption(ProxyResource):
     """Represents a Sql pool transparent data encryption configuration.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5367,7 +5367,7 @@ class VulnerabilityAssessmentScanError(msrest.serialization.Model):
         self.message = None
 
 
-class VulnerabilityAssessmentScanRecord(Resource):
+class VulnerabilityAssessmentScanRecord(ProxyResource):
     """A vulnerability assessment scan record.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5579,7 +5579,7 @@ class Workspace(TrackedResource):
         self.type_identity_type = kwargs.get('type_identity_type', None)
 
 
-class WorkspaceAADAdminInfo(Resource):
+class WorkspaceAADAdminInfo(ProxyResource):
     """Workspace active directory administrator.
 
     Variables are only populated by the server, and will be ignored when sending a request.

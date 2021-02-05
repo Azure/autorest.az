@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -37,7 +37,7 @@ class PrivateLinkHubsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -50,7 +50,7 @@ class PrivateLinkHubsOperations(object):
         resource_group_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.PrivateLinkHubInfoListResult"]
+        # type: (...) -> Iterable["_models.PrivateLinkHubInfoListResult"]
         """Returns a list of privateLinkHubs in a resource group.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -60,7 +60,7 @@ class PrivateLinkHubsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.PrivateLinkHubInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkHubInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkHubInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -122,7 +122,7 @@ class PrivateLinkHubsOperations(object):
         private_link_hub_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.PrivateLinkHub"
+        # type: (...) -> "_models.PrivateLinkHub"
         """Gets a privateLinkHub.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -134,7 +134,7 @@ class PrivateLinkHubsOperations(object):
         :rtype: ~synapse_management_client.models.PrivateLinkHub
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkHub"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkHub"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -165,7 +165,7 @@ class PrivateLinkHubsOperations(object):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('PrivateLinkHub', pipeline_response)
@@ -180,10 +180,10 @@ class PrivateLinkHubsOperations(object):
         self,
         resource_group_name,  # type: str
         private_link_hub_name,  # type: str
-        private_link_hub_patch_info,  # type: "models.PrivateLinkHubPatchInfo"
+        private_link_hub_patch_info,  # type: "_models.PrivateLinkHubPatchInfo"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.PrivateLinkHub"
+        # type: (...) -> "_models.PrivateLinkHub"
         """Updates a privateLinkHub.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -197,7 +197,7 @@ class PrivateLinkHubsOperations(object):
         :rtype: ~synapse_management_client.models.PrivateLinkHub
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkHub"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkHub"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -233,7 +233,7 @@ class PrivateLinkHubsOperations(object):
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -252,10 +252,10 @@ class PrivateLinkHubsOperations(object):
         self,
         resource_group_name,  # type: str
         private_link_hub_name,  # type: str
-        private_link_hub_info,  # type: "models.PrivateLinkHub"
+        private_link_hub_info,  # type: "_models.PrivateLinkHub"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.PrivateLinkHub"
+        # type: (...) -> "_models.PrivateLinkHub"
         """Creates or updates a privateLinkHub.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -269,7 +269,7 @@ class PrivateLinkHubsOperations(object):
         :rtype: ~synapse_management_client.models.PrivateLinkHub
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkHub"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkHub"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -305,7 +305,7 @@ class PrivateLinkHubsOperations(object):
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -369,7 +369,7 @@ class PrivateLinkHubsOperations(object):
 
         if response.status_code not in [200, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -381,7 +381,7 @@ class PrivateLinkHubsOperations(object):
         self,
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.PrivateLinkHubInfoListResult"]
+        # type: (...) -> Iterable["_models.PrivateLinkHubInfoListResult"]
         """Returns a list of privateLinkHubs in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -389,7 +389,7 @@ class PrivateLinkHubsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.PrivateLinkHubInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkHubInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkHubInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

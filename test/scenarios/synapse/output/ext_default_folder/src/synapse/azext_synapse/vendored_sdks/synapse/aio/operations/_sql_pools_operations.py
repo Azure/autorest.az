@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class SqlPoolsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -49,7 +49,7 @@ class SqlPoolsOperations:
         workspace_name: str,
         sql_pool_name: str,
         **kwargs
-    ) -> "models.SqlPool":
+    ) -> "_models.SqlPool":
         """Get SQL pool.
 
         Get SQL pool properties.
@@ -65,7 +65,7 @@ class SqlPoolsOperations:
         :rtype: ~synapse_management_client.models.SqlPool
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPool"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPool"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -112,9 +112,9 @@ class SqlPoolsOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        sql_pool_info: "models.SqlPoolPatchInfo",
+        sql_pool_info: "_models.SqlPoolPatchInfo",
         **kwargs
-    ) -> Optional["models.SqlPool"]:
+    ) -> Optional["_models.SqlPool"]:
         """Update SQL pool.
 
         Apply a partial update to a SQL pool.
@@ -132,7 +132,7 @@ class SqlPoolsOperations:
         :rtype: ~synapse_management_client.models.SqlPool or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlPool"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlPool"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -186,10 +186,10 @@ class SqlPoolsOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        sql_pool_info: "models.SqlPool",
+        sql_pool_info: "_models.SqlPool",
         **kwargs
-    ) -> Optional["models.SqlPool"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.SqlPool"]]
+    ) -> Optional["_models.SqlPool"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.SqlPool"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -226,7 +226,7 @@ class SqlPoolsOperations:
 
         if response.status_code not in [200, 202, 404]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -244,9 +244,9 @@ class SqlPoolsOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        sql_pool_info: "models.SqlPool",
+        sql_pool_info: "_models.SqlPool",
         **kwargs
-    ) -> AsyncLROPoller["models.SqlPool"]:
+    ) -> AsyncLROPoller["_models.SqlPool"]:
         """Create SQL pool.
 
         Create a SQL pool.
@@ -261,8 +261,8 @@ class SqlPoolsOperations:
         :type sql_pool_info: ~synapse_management_client.models.SqlPool
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either SqlPool or the result of cls(response)
@@ -270,7 +270,7 @@ class SqlPoolsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPool"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPool"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -356,7 +356,7 @@ class SqlPoolsOperations:
 
         if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -391,8 +391,8 @@ class SqlPoolsOperations:
         :type sql_pool_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either object or the result of cls(response)
@@ -451,7 +451,7 @@ class SqlPoolsOperations:
         resource_group_name: str,
         workspace_name: str,
         **kwargs
-    ) -> AsyncIterable["models.SqlPoolInfoListResult"]:
+    ) -> AsyncIterable["_models.SqlPoolInfoListResult"]:
         """List SQL pools.
 
         List all SQL pools.
@@ -465,7 +465,7 @@ class SqlPoolsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.SqlPoolInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPoolInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPoolInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -592,8 +592,8 @@ class SqlPoolsOperations:
         :type sql_pool_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either object or the result of cls(response)
@@ -717,8 +717,8 @@ class SqlPoolsOperations:
         :type sql_pool_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either object or the result of cls(response)
@@ -777,7 +777,7 @@ class SqlPoolsOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        parameters: "models.ResourceMoveDefinition",
+        parameters: "_models.ResourceMoveDefinition",
         **kwargs
     ) -> None:
         """Rename a SQL pool.

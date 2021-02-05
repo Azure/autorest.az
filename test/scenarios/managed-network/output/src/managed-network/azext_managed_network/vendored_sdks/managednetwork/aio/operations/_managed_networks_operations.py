@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class ManagedNetworksOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -48,7 +48,7 @@ class ManagedNetworksOperations:
         resource_group_name: str,
         managed_network_name: str,
         **kwargs
-    ) -> "models.ManagedNetwork":
+    ) -> "_models.ManagedNetwork":
         """The Get ManagedNetworks operation gets a Managed Network Resource, specified by the resource
         group and Managed Network name.
 
@@ -61,7 +61,7 @@ class ManagedNetworksOperations:
         :rtype: ~managed_network_management_client.models.ManagedNetwork
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedNetwork"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -92,7 +92,7 @@ class ManagedNetworksOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('ManagedNetwork', pipeline_response)
@@ -109,12 +109,12 @@ class ManagedNetworksOperations:
         managed_network_name: str,
         location: Optional[str] = None,
         tags: Optional[Dict[str, str]] = None,
-        management_groups: Optional[List["models.ResourceId"]] = None,
-        subscriptions: Optional[List["models.ResourceId"]] = None,
-        virtual_networks: Optional[List["models.ResourceId"]] = None,
-        subnets: Optional[List["models.ResourceId"]] = None,
+        management_groups: Optional[List["_models.ResourceId"]] = None,
+        subscriptions: Optional[List["_models.ResourceId"]] = None,
+        virtual_networks: Optional[List["_models.ResourceId"]] = None,
+        subnets: Optional[List["_models.ResourceId"]] = None,
         **kwargs
-    ) -> "models.ManagedNetwork":
+    ) -> "_models.ManagedNetwork":
         """The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by
         resource group and Managed Network name.
 
@@ -139,13 +139,13 @@ class ManagedNetworksOperations:
         :rtype: ~managed_network_management_client.models.ManagedNetwork
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedNetwork"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        managed_network = models.ManagedNetwork(location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
+        managed_network = _models.ManagedNetwork(location=location, tags=tags, management_groups=management_groups, subscriptions=subscriptions, virtual_networks=virtual_networks, subnets=subnets)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -177,7 +177,7 @@ class ManagedNetworksOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -229,7 +229,7 @@ class ManagedNetworksOperations:
 
         if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -252,8 +252,8 @@ class ManagedNetworksOperations:
         :type managed_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -306,10 +306,10 @@ class ManagedNetworksOperations:
         self,
         resource_group_name: str,
         managed_network_name: str,
-        parameters: "models.ManagedNetworkUpdate",
+        parameters: "_models.ManagedNetworkUpdate",
         **kwargs
-    ) -> "models.ManagedNetwork":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
+    ) -> "_models.ManagedNetwork":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedNetwork"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -345,7 +345,7 @@ class ManagedNetworksOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -364,9 +364,9 @@ class ManagedNetworksOperations:
         self,
         resource_group_name: str,
         managed_network_name: str,
-        parameters: "models.ManagedNetworkUpdate",
+        parameters: "_models.ManagedNetworkUpdate",
         **kwargs
-    ) -> AsyncLROPoller["models.ManagedNetwork"]:
+    ) -> AsyncLROPoller["_models.ManagedNetwork"]:
         """Updates the specified Managed Network resource tags.
 
         :param resource_group_name: The name of the resource group.
@@ -377,8 +377,8 @@ class ManagedNetworksOperations:
         :type parameters: ~managed_network_management_client.models.ManagedNetworkUpdate
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ManagedNetwork or the result of cls(response)
@@ -386,7 +386,7 @@ class ManagedNetworksOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetwork"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedNetwork"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -437,7 +437,7 @@ class ManagedNetworksOperations:
         top: Optional[int] = None,
         skiptoken: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.ManagedNetworkListResult"]:
+    ) -> AsyncIterable["_models.ManagedNetworkListResult"]:
         """The ListByResourceGroup ManagedNetwork operation retrieves all the Managed Network resources in
         a resource group in a paginated format.
 
@@ -454,7 +454,7 @@ class ManagedNetworksOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~managed_network_management_client.models.ManagedNetworkListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedNetworkListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -504,7 +504,7 @@ class ManagedNetworksOperations:
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
-                error = self._deserialize(models.ErrorResponse, response)
+                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
                 raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
@@ -520,7 +520,7 @@ class ManagedNetworksOperations:
         top: Optional[int] = None,
         skiptoken: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.ManagedNetworkListResult"]:
+    ) -> AsyncIterable["_models.ManagedNetworkListResult"]:
         """The ListBySubscription  ManagedNetwork operation retrieves all the Managed Network Resources in
         the current subscription in a paginated format.
 
@@ -535,7 +535,7 @@ class ManagedNetworksOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~managed_network_management_client.models.ManagedNetworkListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagedNetworkListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedNetworkListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -584,7 +584,7 @@ class ManagedNetworksOperations:
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
-                error = self._deserialize(models.ErrorResponse, response)
+                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
                 raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 

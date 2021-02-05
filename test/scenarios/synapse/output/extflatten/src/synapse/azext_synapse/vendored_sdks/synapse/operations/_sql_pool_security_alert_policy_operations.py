@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class SQLPoolSecurityAlertPolicyOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -49,10 +49,10 @@ class SQLPoolSecurityAlertPolicyOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        security_alert_policy_name,  # type: Union[str, "models.SecurityAlertPolicyName"]
+        security_alert_policy_name,  # type: Union[str, "_models.SecurityAlertPolicyName"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SQLPoolSecurityAlertPolicy"
+        # type: (...) -> "_models.SQLPoolSecurityAlertPolicy"
         """Get a Sql pool's security alert policy.
 
         Get a Sql pool's security alert policy.
@@ -70,7 +70,7 @@ class SQLPoolSecurityAlertPolicyOperations(object):
         :rtype: ~synapse_management_client.models.SQLPoolSecurityAlertPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolSecurityAlertPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolSecurityAlertPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -118,8 +118,8 @@ class SQLPoolSecurityAlertPolicyOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        security_alert_policy_name,  # type: Union[str, "models.SecurityAlertPolicyName"]
-        state=None,  # type: Optional[Union[str, "models.SecurityAlertPolicyState"]]
+        security_alert_policy_name,  # type: Union[str, "_models.SecurityAlertPolicyName"]
+        state=None,  # type: Optional[Union[str, "_models.SecurityAlertPolicyState"]]
         disabled_alerts=None,  # type: Optional[List[str]]
         email_addresses=None,  # type: Optional[List[str]]
         email_account_admins=None,  # type: Optional[bool]
@@ -128,7 +128,7 @@ class SQLPoolSecurityAlertPolicyOperations(object):
         retention_days=None,  # type: Optional[int]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SQLPoolSecurityAlertPolicy"
+        # type: (...) -> "_models.SQLPoolSecurityAlertPolicy"
         """Create or update a Sql pool's security alert policy.
 
         Create or update a Sql pool's security alert policy.
@@ -165,13 +165,13 @@ class SQLPoolSecurityAlertPolicyOperations(object):
         :rtype: ~synapse_management_client.models.SQLPoolSecurityAlertPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolSecurityAlertPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolSecurityAlertPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.SQLPoolSecurityAlertPolicy(state=state, disabled_alerts=disabled_alerts, email_addresses=email_addresses, email_account_admins=email_account_admins, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days)
+        parameters = _models.SQLPoolSecurityAlertPolicy(state=state, disabled_alerts=disabled_alerts, email_addresses=email_addresses, email_account_admins=email_account_admins, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"

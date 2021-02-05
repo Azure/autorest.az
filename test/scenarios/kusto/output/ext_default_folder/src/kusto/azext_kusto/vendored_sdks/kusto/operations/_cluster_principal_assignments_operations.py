@@ -16,7 +16,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -39,7 +39,7 @@ class ClusterPrincipalAssignmentsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -51,10 +51,10 @@ class ClusterPrincipalAssignmentsOperations(object):
         self,
         resource_group_name,  # type: str
         cluster_name,  # type: str
-        principal_assignment_name,  # type: "models.ClusterPrincipalAssignmentCheckNameRequest"
+        principal_assignment_name,  # type: "_models.ClusterPrincipalAssignmentCheckNameRequest"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.CheckNameResult"
+        # type: (...) -> "_models.CheckNameResult"
         """Checks that the principal assignment name is valid and is not already in use.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -68,7 +68,7 @@ class ClusterPrincipalAssignmentsOperations(object):
         :rtype: ~kusto_management_client.models.CheckNameResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CheckNameResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CheckNameResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -121,7 +121,7 @@ class ClusterPrincipalAssignmentsOperations(object):
         principal_assignment_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.ClusterPrincipalAssignment"
+        # type: (...) -> "_models.ClusterPrincipalAssignment"
         """Gets a Kusto cluster principalAssignment.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -135,7 +135,7 @@ class ClusterPrincipalAssignmentsOperations(object):
         :rtype: ~kusto_management_client.models.ClusterPrincipalAssignment
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterPrincipalAssignment"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterPrincipalAssignment"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -182,11 +182,11 @@ class ClusterPrincipalAssignmentsOperations(object):
         resource_group_name,  # type: str
         cluster_name,  # type: str
         principal_assignment_name,  # type: str
-        parameters,  # type: "models.ClusterPrincipalAssignment"
+        parameters,  # type: "_models.ClusterPrincipalAssignment"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.ClusterPrincipalAssignment"
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterPrincipalAssignment"]
+        # type: (...) -> "_models.ClusterPrincipalAssignment"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterPrincipalAssignment"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -242,10 +242,10 @@ class ClusterPrincipalAssignmentsOperations(object):
         resource_group_name,  # type: str
         cluster_name,  # type: str
         principal_assignment_name,  # type: str
-        parameters,  # type: "models.ClusterPrincipalAssignment"
+        parameters,  # type: "_models.ClusterPrincipalAssignment"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.ClusterPrincipalAssignment"]
+        # type: (...) -> LROPoller["_models.ClusterPrincipalAssignment"]
         """Create a Kusto cluster principalAssignment.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -259,8 +259,8 @@ class ClusterPrincipalAssignmentsOperations(object):
         :type parameters: ~kusto_management_client.models.ClusterPrincipalAssignment
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either ClusterPrincipalAssignment or the result of cls(response)
@@ -268,7 +268,7 @@ class ClusterPrincipalAssignmentsOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterPrincipalAssignment"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterPrincipalAssignment"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -380,8 +380,8 @@ class ClusterPrincipalAssignmentsOperations(object):
         :type principal_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -438,7 +438,7 @@ class ClusterPrincipalAssignmentsOperations(object):
         cluster_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.ClusterPrincipalAssignmentListResult"]
+        # type: (...) -> Iterable["_models.ClusterPrincipalAssignmentListResult"]
         """Lists all Kusto cluster principalAssignments.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -450,7 +450,7 @@ class ClusterPrincipalAssignmentsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~kusto_management_client.models.ClusterPrincipalAssignmentListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterPrincipalAssignmentListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterPrincipalAssignmentListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

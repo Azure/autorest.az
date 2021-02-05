@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class SQLPoolUsageOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,7 +47,7 @@ class SQLPoolUsageOperations:
         workspace_name: str,
         sql_pool_name: str,
         **kwargs
-    ) -> AsyncIterable["models.SQLPoolUsageListResult"]:
+    ) -> AsyncIterable["_models.SQLPoolUsageListResult"]:
         """Gets SQL pool usages.
 
         Gets SQL pool usages.
@@ -63,7 +63,7 @@ class SQLPoolUsageOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.SQLPoolUsageListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolUsageListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolUsageListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

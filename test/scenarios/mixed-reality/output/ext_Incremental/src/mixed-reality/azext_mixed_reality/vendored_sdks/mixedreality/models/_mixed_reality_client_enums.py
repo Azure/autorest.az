@@ -44,5 +44,7 @@ class Serial(with_metaclass(_CaseInsensitiveEnumMeta, int, Enum)):
     """serial of key to be regenerated
     """
 
-    PRIMARY = 1  #: The Primary Key.
-    SECONDARY = 2  #: The Secondary Key.
+    #: The Primary Key.
+    PRIMARY = 1
+    #: The Secondary Key.
+    SECONDARY = 2

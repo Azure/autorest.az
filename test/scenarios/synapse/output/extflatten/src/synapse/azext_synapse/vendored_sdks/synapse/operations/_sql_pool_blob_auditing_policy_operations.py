@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class SQLPoolBlobAuditingPolicyOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -51,7 +51,7 @@ class SQLPoolBlobAuditingPolicyOperations(object):
         sql_pool_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SQLPoolBlobAuditingPolicy"
+        # type: (...) -> "_models.SQLPoolBlobAuditingPolicy"
         """Get a SQL pool's blob auditing policy.
 
         Get a SQL pool's blob auditing policy.
@@ -67,7 +67,7 @@ class SQLPoolBlobAuditingPolicyOperations(object):
         :rtype: ~synapse_management_client.models.SQLPoolBlobAuditingPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolBlobAuditingPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolBlobAuditingPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -116,7 +116,7 @@ class SQLPoolBlobAuditingPolicyOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        state=None,  # type: Optional[Union[str, "models.BlobAuditingPolicyState"]]
+        state=None,  # type: Optional[Union[str, "_models.BlobAuditingPolicyState"]]
         storage_endpoint=None,  # type: Optional[str]
         storage_account_access_key=None,  # type: Optional[str]
         retention_days=None,  # type: Optional[int]
@@ -126,7 +126,7 @@ class SQLPoolBlobAuditingPolicyOperations(object):
         is_azure_monitor_target_enabled=None,  # type: Optional[bool]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SQLPoolBlobAuditingPolicy"
+        # type: (...) -> "_models.SQLPoolBlobAuditingPolicy"
         """Creates or updates a SQL pool's blob auditing policy.
 
         Creates or updates a SQL pool's blob auditing policy.
@@ -249,13 +249,13 @@ class SQLPoolBlobAuditingPolicyOperations(object):
         :rtype: ~synapse_management_client.models.SQLPoolBlobAuditingPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolBlobAuditingPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolBlobAuditingPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.SQLPoolBlobAuditingPolicy(state=state, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days, audit_actions_and_groups=audit_actions_and_groups, storage_account_subscription_id=storage_account_subscription_id, is_storage_secondary_key_in_use=is_storage_secondary_key_in_use, is_azure_monitor_target_enabled=is_azure_monitor_target_enabled)
+        parameters = _models.SQLPoolBlobAuditingPolicy(state=state, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days, audit_actions_and_groups=audit_actions_and_groups, storage_account_subscription_id=storage_account_subscription_id, is_storage_secondary_key_in_use=is_storage_secondary_key_in_use, is_azure_monitor_target_enabled=is_azure_monitor_target_enabled)
         api_version = "2019-06-01-preview"
         blob_auditing_policy_name = "default"
         content_type = kwargs.pop("content_type", "application/json")

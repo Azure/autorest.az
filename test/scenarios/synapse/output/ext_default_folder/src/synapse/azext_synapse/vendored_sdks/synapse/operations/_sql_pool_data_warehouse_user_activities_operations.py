@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class SqlPoolDataWarehouseUserActivitiesOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -49,10 +49,10 @@ class SqlPoolDataWarehouseUserActivitiesOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        data_warehouse_user_activity_name,  # type: Union[str, "models.DataWarehouseUserActivityName"]
+        data_warehouse_user_activity_name,  # type: Union[str, "_models.DataWarehouseUserActivityName"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.DataWarehouseUserActivities"
+        # type: (...) -> "_models.DataWarehouseUserActivities"
         """Get SQL pool user activities.
 
         Gets the user activities of a SQL pool which includes running and suspended queries.
@@ -70,7 +70,7 @@ class SqlPoolDataWarehouseUserActivitiesOperations(object):
         :rtype: ~synapse_management_client.models.DataWarehouseUserActivities
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataWarehouseUserActivities"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataWarehouseUserActivities"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

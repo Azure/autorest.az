@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class FactoriesOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -45,7 +45,7 @@ class FactoriesOperations:
         self,
         custom_headers: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.FactoryListResponse"]:
+    ) -> AsyncIterable["_models.FactoryListResponse"]:
         """Lists factories under the specified subscription.
 
         :param custom_headers: Test the ability to rename ignoring attributes.
@@ -55,7 +55,7 @@ class FactoriesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~dfaz_management_client.models.FactoryListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.FactoryListResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.FactoryListResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -115,9 +115,9 @@ class FactoriesOperations:
     async def configure_factory_repo(
         self,
         location_id: str,
-        factory_repo_update: "models.FactoryRepoUpdate",
+        factory_repo_update: "_models.FactoryRepoUpdate",
         **kwargs
-    ) -> "models.Factory":
+    ) -> "_models.Factory":
         """Updates a factory's repo information.
 
         :param location_id: The location identifier.
@@ -129,7 +129,7 @@ class FactoriesOperations:
         :rtype: ~dfaz_management_client.models.Factory
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Factory"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -178,7 +178,7 @@ class FactoriesOperations:
         self,
         resource_group_name: str,
         **kwargs
-    ) -> AsyncIterable["models.FactoryListResponse"]:
+    ) -> AsyncIterable["_models.FactoryListResponse"]:
         """Lists factories.
 
         :param resource_group_name: The resource group name.
@@ -188,7 +188,7 @@ class FactoriesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~dfaz_management_client.models.FactoryListResponse]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.FactoryListResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.FactoryListResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -248,10 +248,10 @@ class FactoriesOperations:
         self,
         resource_group_name: str,
         factory_name: str,
-        factory: "models.Factory",
+        factory: "_models.Factory",
         if_match: Optional[str] = None,
         **kwargs
-    ) -> "models.Factory":
+    ) -> "_models.Factory":
         """Creates or updates a factory.
 
         :param resource_group_name: The resource group name.
@@ -268,7 +268,7 @@ class FactoriesOperations:
         :rtype: ~dfaz_management_client.models.Factory
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Factory"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -320,9 +320,9 @@ class FactoriesOperations:
         self,
         resource_group_name: str,
         factory_name: str,
-        factory_update_parameters: "models.FactoryUpdateParameters",
+        factory_update_parameters: "_models.FactoryUpdateParameters",
         **kwargs
-    ) -> "models.Factory":
+    ) -> "_models.Factory":
         """Updates a factory.
 
         :param resource_group_name: The resource group name.
@@ -336,7 +336,7 @@ class FactoriesOperations:
         :rtype: ~dfaz_management_client.models.Factory
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Factory"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -388,7 +388,7 @@ class FactoriesOperations:
         factory_name: str,
         if_none_match: Optional[str] = None,
         **kwargs
-    ) -> Optional["models.Factory"]:
+    ) -> Optional["_models.Factory"]:
         """Gets a factory.
 
         :param resource_group_name: The resource group name.
@@ -403,7 +403,7 @@ class FactoriesOperations:
         :rtype: ~dfaz_management_client.models.Factory or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.Factory"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.Factory"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -507,9 +507,9 @@ class FactoriesOperations:
         self,
         resource_group_name: str,
         factory_name: str,
-        git_hub_access_token_request: "models.GitHubAccessTokenRequest",
+        git_hub_access_token_request: "_models.GitHubAccessTokenRequest",
         **kwargs
-    ) -> "models.GitHubAccessTokenResponse":
+    ) -> "_models.GitHubAccessTokenResponse":
         """Get GitHub Access Token.
 
         :param resource_group_name: The resource group name.
@@ -523,7 +523,7 @@ class FactoriesOperations:
         :rtype: ~dfaz_management_client.models.GitHubAccessTokenResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.GitHubAccessTokenResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GitHubAccessTokenResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -573,9 +573,9 @@ class FactoriesOperations:
         self,
         resource_group_name: str,
         factory_name: str,
-        policy: "models.UserAccessPolicy",
+        policy: "_models.UserAccessPolicy",
         **kwargs
-    ) -> "models.AccessPolicyResponse":
+    ) -> "_models.AccessPolicyResponse":
         """Get Data Plane access.
 
         :param resource_group_name: The resource group name.
@@ -589,7 +589,7 @@ class FactoriesOperations:
         :rtype: ~dfaz_management_client.models.AccessPolicyResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AccessPolicyResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AccessPolicyResponse"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

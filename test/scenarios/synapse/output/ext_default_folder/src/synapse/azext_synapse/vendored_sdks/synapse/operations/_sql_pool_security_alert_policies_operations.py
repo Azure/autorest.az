@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -36,7 +36,7 @@ class SqlPoolSecurityAlertPoliciesOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -49,10 +49,10 @@ class SqlPoolSecurityAlertPoliciesOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        security_alert_policy_name,  # type: Union[str, "models.SecurityAlertPolicyName"]
+        security_alert_policy_name,  # type: Union[str, "_models.SecurityAlertPolicyName"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlPoolSecurityAlertPolicy"
+        # type: (...) -> "_models.SqlPoolSecurityAlertPolicy"
         """Get a Sql pool's security alert policy.
 
         Get a Sql pool's security alert policy.
@@ -70,7 +70,7 @@ class SqlPoolSecurityAlertPoliciesOperations(object):
         :rtype: ~synapse_management_client.models.SqlPoolSecurityAlertPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPoolSecurityAlertPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPoolSecurityAlertPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -118,11 +118,11 @@ class SqlPoolSecurityAlertPoliciesOperations(object):
         resource_group_name,  # type: str
         workspace_name,  # type: str
         sql_pool_name,  # type: str
-        security_alert_policy_name,  # type: Union[str, "models.SecurityAlertPolicyName"]
-        parameters,  # type: "models.SqlPoolSecurityAlertPolicy"
+        security_alert_policy_name,  # type: Union[str, "_models.SecurityAlertPolicyName"]
+        parameters,  # type: "_models.SqlPoolSecurityAlertPolicy"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.SqlPoolSecurityAlertPolicy"
+        # type: (...) -> "_models.SqlPoolSecurityAlertPolicy"
         """Create or update a Sql pool's security alert policy.
 
         Create or update a Sql pool's security alert policy.
@@ -142,7 +142,7 @@ class SqlPoolSecurityAlertPoliciesOperations(object):
         :rtype: ~synapse_management_client.models.SqlPoolSecurityAlertPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPoolSecurityAlertPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPoolSecurityAlertPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

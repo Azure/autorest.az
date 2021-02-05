@@ -15,7 +15,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -34,7 +34,7 @@ class DomainServicesOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,10 +46,10 @@ class DomainServicesOperations:
         self,
         resource_group_name: str,
         domain_service_name: str,
-        domain_service: "models.DomainService",
+        domain_service: "_models.DomainService",
         **kwargs
-    ) -> "models.DomainService":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DomainService"]
+    ) -> "_models.DomainService":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DomainService"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -106,9 +106,9 @@ class DomainServicesOperations:
         self,
         resource_group_name: str,
         domain_service_name: str,
-        domain_service: "models.DomainService",
+        domain_service: "_models.DomainService",
         **kwargs
-    ) -> AsyncLROPoller["models.DomainService"]:
+    ) -> AsyncLROPoller["_models.DomainService"]:
         """Create or Update Domain Service (PUT Resource).
 
         The Create Domain Service operation creates a new domain service with the specified parameters.
@@ -123,8 +123,8 @@ class DomainServicesOperations:
         :type domain_service: ~dfaz_management_client.models.DomainService
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DomainService or the result of cls(response)
@@ -132,7 +132,7 @@ class DomainServicesOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DomainService"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DomainService"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval

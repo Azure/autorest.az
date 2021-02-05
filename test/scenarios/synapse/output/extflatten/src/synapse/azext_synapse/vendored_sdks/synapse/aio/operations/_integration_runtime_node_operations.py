@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class IntegrationRuntimeNodeOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -47,7 +47,7 @@ class IntegrationRuntimeNodeOperations:
         integration_runtime_name: str,
         node_name: str,
         **kwargs
-    ) -> "models.SelfHostedIntegrationRuntimeNode":
+    ) -> "_models.SelfHostedIntegrationRuntimeNode":
         """Get integration runtime node.
 
         Get an integration runtime node.
@@ -65,7 +65,7 @@ class IntegrationRuntimeNodeOperations:
         :rtype: ~synapse_management_client.models.SelfHostedIntegrationRuntimeNode
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SelfHostedIntegrationRuntimeNode"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SelfHostedIntegrationRuntimeNode"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -116,7 +116,7 @@ class IntegrationRuntimeNodeOperations:
         node_name: str,
         concurrent_jobs_limit: Optional[int] = None,
         **kwargs
-    ) -> "models.SelfHostedIntegrationRuntimeNode":
+    ) -> "_models.SelfHostedIntegrationRuntimeNode":
         """Create integration runtime node.
 
         Create an integration runtime node.
@@ -137,13 +137,13 @@ class IntegrationRuntimeNodeOperations:
         :rtype: ~synapse_management_client.models.SelfHostedIntegrationRuntimeNode
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SelfHostedIntegrationRuntimeNode"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SelfHostedIntegrationRuntimeNode"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        update_integration_runtime_node_request = models.UpdateIntegrationRuntimeNodeRequest(concurrent_jobs_limit=concurrent_jobs_limit)
+        update_integration_runtime_node_request = _models.UpdateIntegrationRuntimeNodeRequest(concurrent_jobs_limit=concurrent_jobs_limit)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"

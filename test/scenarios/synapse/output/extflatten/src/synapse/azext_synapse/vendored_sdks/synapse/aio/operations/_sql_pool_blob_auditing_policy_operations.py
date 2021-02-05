@@ -13,7 +13,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -32,7 +32,7 @@ class SQLPoolBlobAuditingPolicyOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,7 +46,7 @@ class SQLPoolBlobAuditingPolicyOperations:
         workspace_name: str,
         sql_pool_name: str,
         **kwargs
-    ) -> "models.SQLPoolBlobAuditingPolicy":
+    ) -> "_models.SQLPoolBlobAuditingPolicy":
         """Get a SQL pool's blob auditing policy.
 
         Get a SQL pool's blob auditing policy.
@@ -62,7 +62,7 @@ class SQLPoolBlobAuditingPolicyOperations:
         :rtype: ~synapse_management_client.models.SQLPoolBlobAuditingPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolBlobAuditingPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolBlobAuditingPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -111,7 +111,7 @@ class SQLPoolBlobAuditingPolicyOperations:
         resource_group_name: str,
         workspace_name: str,
         sql_pool_name: str,
-        state: Optional[Union[str, "models.BlobAuditingPolicyState"]] = None,
+        state: Optional[Union[str, "_models.BlobAuditingPolicyState"]] = None,
         storage_endpoint: Optional[str] = None,
         storage_account_access_key: Optional[str] = None,
         retention_days: Optional[int] = None,
@@ -120,7 +120,7 @@ class SQLPoolBlobAuditingPolicyOperations:
         is_storage_secondary_key_in_use: Optional[bool] = None,
         is_azure_monitor_target_enabled: Optional[bool] = None,
         **kwargs
-    ) -> "models.SQLPoolBlobAuditingPolicy":
+    ) -> "_models.SQLPoolBlobAuditingPolicy":
         """Creates or updates a SQL pool's blob auditing policy.
 
         Creates or updates a SQL pool's blob auditing policy.
@@ -243,13 +243,13 @@ class SQLPoolBlobAuditingPolicyOperations:
         :rtype: ~synapse_management_client.models.SQLPoolBlobAuditingPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SQLPoolBlobAuditingPolicy"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SQLPoolBlobAuditingPolicy"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.SQLPoolBlobAuditingPolicy(state=state, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days, audit_actions_and_groups=audit_actions_and_groups, storage_account_subscription_id=storage_account_subscription_id, is_storage_secondary_key_in_use=is_storage_secondary_key_in_use, is_azure_monitor_target_enabled=is_azure_monitor_target_enabled)
+        parameters = _models.SQLPoolBlobAuditingPolicy(state=state, storage_endpoint=storage_endpoint, storage_account_access_key=storage_account_access_key, retention_days=retention_days, audit_actions_and_groups=audit_actions_and_groups, storage_account_subscription_id=storage_account_subscription_id, is_storage_secondary_key_in_use=is_storage_secondary_key_in_use, is_azure_monitor_target_enabled=is_azure_monitor_target_enabled)
         api_version = "2019-06-01-preview"
         blob_auditing_policy_name = "default"
         content_type = kwargs.pop("content_type", "application/json")

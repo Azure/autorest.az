@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class ClusterOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -48,7 +48,7 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         **kwargs
-    ) -> "models.Cluster":
+    ) -> "_models.Cluster":
         """Gets a Kusto cluster.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -60,7 +60,7 @@ class ClusterOperations:
         :rtype: ~kusto_management_client.models.Cluster
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Cluster"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Cluster"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -106,28 +106,28 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         location: str,
-        sku: "models.AzureSku",
+        sku: "_models.AzureSku",
         tags: Optional[Dict[str, str]] = None,
         zones: Optional[List[str]] = None,
-        trusted_external_tenants: Optional[List["models.TrustedExternalTenant"]] = None,
-        optimized_autoscale: Optional["models.OptimizedAutoscale"] = None,
+        trusted_external_tenants: Optional[List["_models.TrustedExternalTenant"]] = None,
+        optimized_autoscale: Optional["_models.OptimizedAutoscale"] = None,
         enable_disk_encryption: Optional[bool] = None,
         enable_streaming_ingest: Optional[bool] = False,
-        virtual_network_configuration: Optional["models.VirtualNetworkConfiguration"] = None,
-        key_vault_properties: Optional["models.KeyVaultProperties"] = None,
+        virtual_network_configuration: Optional["_models.VirtualNetworkConfiguration"] = None,
+        key_vault_properties: Optional["_models.KeyVaultProperties"] = None,
         enable_purge: Optional[bool] = False,
         enable_double_encryption: Optional[bool] = False,
-        type: Optional[Union[str, "models.IdentityType"]] = None,
-        user_assigned_identities: Optional[Dict[str, "models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
+        type: Optional[Union[str, "_models.IdentityType"]] = None,
+        user_assigned_identities: Optional[Dict[str, "_models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
         **kwargs
-    ) -> "models.Cluster":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Cluster"]
+    ) -> "_models.Cluster":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Cluster"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.Cluster(tags=tags, location=location, sku=sku, zones=zones, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
+        parameters = _models.Cluster(tags=tags, location=location, sku=sku, zones=zones, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -178,21 +178,21 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         location: str,
-        sku: "models.AzureSku",
+        sku: "_models.AzureSku",
         tags: Optional[Dict[str, str]] = None,
         zones: Optional[List[str]] = None,
-        trusted_external_tenants: Optional[List["models.TrustedExternalTenant"]] = None,
-        optimized_autoscale: Optional["models.OptimizedAutoscale"] = None,
+        trusted_external_tenants: Optional[List["_models.TrustedExternalTenant"]] = None,
+        optimized_autoscale: Optional["_models.OptimizedAutoscale"] = None,
         enable_disk_encryption: Optional[bool] = None,
         enable_streaming_ingest: Optional[bool] = False,
-        virtual_network_configuration: Optional["models.VirtualNetworkConfiguration"] = None,
-        key_vault_properties: Optional["models.KeyVaultProperties"] = None,
+        virtual_network_configuration: Optional["_models.VirtualNetworkConfiguration"] = None,
+        key_vault_properties: Optional["_models.KeyVaultProperties"] = None,
         enable_purge: Optional[bool] = False,
         enable_double_encryption: Optional[bool] = False,
-        type: Optional[Union[str, "models.IdentityType"]] = None,
-        user_assigned_identities: Optional[Dict[str, "models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
+        type: Optional[Union[str, "_models.IdentityType"]] = None,
+        user_assigned_identities: Optional[Dict[str, "_models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
         **kwargs
-    ) -> AsyncLROPoller["models.Cluster"]:
+    ) -> AsyncLROPoller["_models.Cluster"]:
         """Create or update a Kusto cluster.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -234,8 +234,8 @@ class ClusterOperations:
         :type user_assigned_identities: dict[str, ~kusto_management_client.models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either Cluster or the result of cls(response)
@@ -243,7 +243,7 @@ class ClusterOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Cluster"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Cluster"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -307,26 +307,26 @@ class ClusterOperations:
         cluster_name: str,
         tags: Optional[Dict[str, str]] = None,
         location: Optional[str] = None,
-        sku: Optional["models.AzureSku"] = None,
-        trusted_external_tenants: Optional[List["models.TrustedExternalTenant"]] = None,
-        optimized_autoscale: Optional["models.OptimizedAutoscale"] = None,
+        sku: Optional["_models.AzureSku"] = None,
+        trusted_external_tenants: Optional[List["_models.TrustedExternalTenant"]] = None,
+        optimized_autoscale: Optional["_models.OptimizedAutoscale"] = None,
         enable_disk_encryption: Optional[bool] = None,
         enable_streaming_ingest: Optional[bool] = False,
-        virtual_network_configuration: Optional["models.VirtualNetworkConfiguration"] = None,
-        key_vault_properties: Optional["models.KeyVaultProperties"] = None,
+        virtual_network_configuration: Optional["_models.VirtualNetworkConfiguration"] = None,
+        key_vault_properties: Optional["_models.KeyVaultProperties"] = None,
         enable_purge: Optional[bool] = False,
         enable_double_encryption: Optional[bool] = False,
-        type: Optional[Union[str, "models.IdentityType"]] = None,
-        user_assigned_identities: Optional[Dict[str, "models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
+        type: Optional[Union[str, "_models.IdentityType"]] = None,
+        user_assigned_identities: Optional[Dict[str, "_models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
         **kwargs
-    ) -> "models.Cluster":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Cluster"]
+    ) -> "_models.Cluster":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Cluster"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.ClusterUpdate(tags=tags, location=location, sku=sku, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
+        parameters = _models.ClusterUpdate(tags=tags, location=location, sku=sku, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -381,19 +381,19 @@ class ClusterOperations:
         cluster_name: str,
         tags: Optional[Dict[str, str]] = None,
         location: Optional[str] = None,
-        sku: Optional["models.AzureSku"] = None,
-        trusted_external_tenants: Optional[List["models.TrustedExternalTenant"]] = None,
-        optimized_autoscale: Optional["models.OptimizedAutoscale"] = None,
+        sku: Optional["_models.AzureSku"] = None,
+        trusted_external_tenants: Optional[List["_models.TrustedExternalTenant"]] = None,
+        optimized_autoscale: Optional["_models.OptimizedAutoscale"] = None,
         enable_disk_encryption: Optional[bool] = None,
         enable_streaming_ingest: Optional[bool] = False,
-        virtual_network_configuration: Optional["models.VirtualNetworkConfiguration"] = None,
-        key_vault_properties: Optional["models.KeyVaultProperties"] = None,
+        virtual_network_configuration: Optional["_models.VirtualNetworkConfiguration"] = None,
+        key_vault_properties: Optional["_models.KeyVaultProperties"] = None,
         enable_purge: Optional[bool] = False,
         enable_double_encryption: Optional[bool] = False,
-        type: Optional[Union[str, "models.IdentityType"]] = None,
-        user_assigned_identities: Optional[Dict[str, "models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
+        type: Optional[Union[str, "_models.IdentityType"]] = None,
+        user_assigned_identities: Optional[Dict[str, "_models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties"]] = None,
         **kwargs
-    ) -> AsyncLROPoller["models.Cluster"]:
+    ) -> AsyncLROPoller["_models.Cluster"]:
         """Update a Kusto cluster.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -433,8 +433,8 @@ class ClusterOperations:
         :type user_assigned_identities: dict[str, ~kusto_management_client.models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either Cluster or the result of cls(response)
@@ -442,7 +442,7 @@ class ClusterOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Cluster"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Cluster"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -557,8 +557,8 @@ class ClusterOperations:
         :type cluster_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -665,8 +665,8 @@ class ClusterOperations:
         :type cluster_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -773,8 +773,8 @@ class ClusterOperations:
         :type cluster_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -828,7 +828,7 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         **kwargs
-    ) -> AsyncIterable["models.FollowerDatabaseListResult"]:
+    ) -> AsyncIterable["_models.FollowerDatabaseListResult"]:
         """Returns a list of databases that are owned by this cluster and were followed by another
         cluster.
 
@@ -841,7 +841,7 @@ class ClusterOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.FollowerDatabaseListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.FollowerDatabaseListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.FollowerDatabaseListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -912,7 +912,7 @@ class ClusterOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        follower_database_to_remove = models.FollowerDatabaseDefinition(cluster_resource_id=cluster_resource_id, attached_database_configuration_name=attached_database_configuration_name)
+        follower_database_to_remove = _models.FollowerDatabaseDefinition(cluster_resource_id=cluster_resource_id, attached_database_configuration_name=attached_database_configuration_name)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -973,8 +973,8 @@ class ClusterOperations:
         :type attached_database_configuration_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1030,8 +1030,8 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         **kwargs
-    ) -> Optional["models.DiagnoseVirtualNetworkResult"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.DiagnoseVirtualNetworkResult"]]
+    ) -> Optional["_models.DiagnoseVirtualNetworkResult"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.DiagnoseVirtualNetworkResult"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1079,7 +1079,7 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         **kwargs
-    ) -> AsyncLROPoller["models.DiagnoseVirtualNetworkResult"]:
+    ) -> AsyncLROPoller["_models.DiagnoseVirtualNetworkResult"]:
         """Diagnoses network connectivity status for external resources on which the service is dependent
         on.
 
@@ -1089,8 +1089,8 @@ class ClusterOperations:
         :type cluster_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DiagnoseVirtualNetworkResult or the result of cls(response)
@@ -1098,7 +1098,7 @@ class ClusterOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DiagnoseVirtualNetworkResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DiagnoseVirtualNetworkResult"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -1146,7 +1146,7 @@ class ClusterOperations:
         self,
         resource_group_name: str,
         **kwargs
-    ) -> AsyncIterable["models.ClusterListResult"]:
+    ) -> AsyncIterable["_models.ClusterListResult"]:
         """Lists all Kusto clusters within a resource group.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -1156,7 +1156,7 @@ class ClusterOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.ClusterListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1215,7 +1215,7 @@ class ClusterOperations:
     def list(
         self,
         **kwargs
-    ) -> AsyncIterable["models.ClusterListResult"]:
+    ) -> AsyncIterable["_models.ClusterListResult"]:
         """Lists all Kusto clusters within a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -1223,7 +1223,7 @@ class ClusterOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.ClusterListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ClusterListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClusterListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1281,7 +1281,7 @@ class ClusterOperations:
     def list_sku(
         self,
         **kwargs
-    ) -> AsyncIterable["models.SkuDescriptionList"]:
+    ) -> AsyncIterable["_models.SkuDescriptionList"]:
         """Lists eligible SKUs for Kusto resource provider.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -1289,7 +1289,7 @@ class ClusterOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.SkuDescriptionList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SkuDescriptionList"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SkuDescriptionList"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1348,9 +1348,9 @@ class ClusterOperations:
         self,
         location: str,
         name: str,
-        type: Union[str, "models.Type"],
+        type: Union[str, "_models.Type"],
         **kwargs
-    ) -> "models.CheckNameResult":
+    ) -> "_models.CheckNameResult":
         """Checks that the cluster name is valid and is not already in use.
 
         :param location: Azure location.
@@ -1364,13 +1364,13 @@ class ClusterOperations:
         :rtype: ~kusto_management_client.models.CheckNameResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CheckNameResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CheckNameResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        cluster_name = models.ClusterCheckNameRequest(name=name, type=type)
+        cluster_name = _models.ClusterCheckNameRequest(name=name, type=type)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -1416,7 +1416,7 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         **kwargs
-    ) -> AsyncIterable["models.ListResourceSkusResult"]:
+    ) -> AsyncIterable["_models.ListResourceSkusResult"]:
         """Returns the SKUs available for the provided resource.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -1428,7 +1428,7 @@ class ClusterOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.ListResourceSkusResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ListResourceSkusResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ListResourceSkusResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1490,7 +1490,7 @@ class ClusterOperations:
         resource_group_name: str,
         cluster_name: str,
         **kwargs
-    ) -> AsyncIterable["models.LanguageExtensionsList"]:
+    ) -> AsyncIterable["_models.LanguageExtensionsList"]:
         """Returns a list of language extensions that can run within KQL queries.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -1502,7 +1502,7 @@ class ClusterOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.LanguageExtensionsList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.LanguageExtensionsList"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.LanguageExtensionsList"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1563,7 +1563,7 @@ class ClusterOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        value: Optional[List["models.LanguageExtension"]] = None,
+        value: Optional[List["_models.LanguageExtension"]] = None,
         **kwargs
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
@@ -1572,7 +1572,7 @@ class ClusterOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        language_extensions_to_add = models.LanguageExtensionsList(value=value)
+        language_extensions_to_add = _models.LanguageExtensionsList(value=value)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -1615,7 +1615,7 @@ class ClusterOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        value: Optional[List["models.LanguageExtension"]] = None,
+        value: Optional[List["_models.LanguageExtension"]] = None,
         **kwargs
     ) -> AsyncLROPoller[None]:
         """Add a list of language extensions that can run within KQL queries.
@@ -1628,8 +1628,8 @@ class ClusterOperations:
         :type value: list[~kusto_management_client.models.LanguageExtension]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -1683,7 +1683,7 @@ class ClusterOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        value: Optional[List["models.LanguageExtension"]] = None,
+        value: Optional[List["_models.LanguageExtension"]] = None,
         **kwargs
     ) -> None:
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
@@ -1692,7 +1692,7 @@ class ClusterOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        language_extensions_to_remove = models.LanguageExtensionsList(value=value)
+        language_extensions_to_remove = _models.LanguageExtensionsList(value=value)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -1735,7 +1735,7 @@ class ClusterOperations:
         self,
         resource_group_name: str,
         cluster_name: str,
-        value: Optional[List["models.LanguageExtension"]] = None,
+        value: Optional[List["_models.LanguageExtension"]] = None,
         **kwargs
     ) -> AsyncLROPoller[None]:
         """Remove a list of language extensions that can run within KQL queries.
@@ -1748,8 +1748,8 @@ class ClusterOperations:
         :type value: list[~kusto_management_client.models.LanguageExtension]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)

@@ -16,7 +16,7 @@ from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMetho
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,7 @@ class DatabasePrincipalAssignmentsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -48,9 +48,9 @@ class DatabasePrincipalAssignmentsOperations:
         resource_group_name: str,
         cluster_name: str,
         database_name: str,
-        principal_assignment_name: "models.DatabasePrincipalAssignmentCheckNameRequest",
+        principal_assignment_name: "_models.DatabasePrincipalAssignmentCheckNameRequest",
         **kwargs
-    ) -> "models.CheckNameResult":
+    ) -> "_models.CheckNameResult":
         """Checks that the database principal assignment is valid and is not already in use.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -66,7 +66,7 @@ class DatabasePrincipalAssignmentsOperations:
         :rtype: ~kusto_management_client.models.CheckNameResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.CheckNameResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CheckNameResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -120,7 +120,7 @@ class DatabasePrincipalAssignmentsOperations:
         database_name: str,
         principal_assignment_name: str,
         **kwargs
-    ) -> "models.DatabasePrincipalAssignment":
+    ) -> "_models.DatabasePrincipalAssignment":
         """Gets a Kusto cluster database principalAssignment.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -136,7 +136,7 @@ class DatabasePrincipalAssignmentsOperations:
         :rtype: ~kusto_management_client.models.DatabasePrincipalAssignment
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabasePrincipalAssignment"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabasePrincipalAssignment"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -185,10 +185,10 @@ class DatabasePrincipalAssignmentsOperations:
         cluster_name: str,
         database_name: str,
         principal_assignment_name: str,
-        parameters: "models.DatabasePrincipalAssignment",
+        parameters: "_models.DatabasePrincipalAssignment",
         **kwargs
-    ) -> "models.DatabasePrincipalAssignment":
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabasePrincipalAssignment"]
+    ) -> "_models.DatabasePrincipalAssignment":
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabasePrincipalAssignment"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -246,9 +246,9 @@ class DatabasePrincipalAssignmentsOperations:
         cluster_name: str,
         database_name: str,
         principal_assignment_name: str,
-        parameters: "models.DatabasePrincipalAssignment",
+        parameters: "_models.DatabasePrincipalAssignment",
         **kwargs
-    ) -> AsyncLROPoller["models.DatabasePrincipalAssignment"]:
+    ) -> AsyncLROPoller["_models.DatabasePrincipalAssignment"]:
         """Creates a Kusto cluster database principalAssignment.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -263,8 +263,8 @@ class DatabasePrincipalAssignmentsOperations:
         :type parameters: ~kusto_management_client.models.DatabasePrincipalAssignment
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either DatabasePrincipalAssignment or the result of cls(response)
@@ -272,7 +272,7 @@ class DatabasePrincipalAssignmentsOperations:
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabasePrincipalAssignment"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabasePrincipalAssignment"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -389,8 +389,8 @@ class DatabasePrincipalAssignmentsOperations:
         :type principal_assignment_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -449,7 +449,7 @@ class DatabasePrincipalAssignmentsOperations:
         cluster_name: str,
         database_name: str,
         **kwargs
-    ) -> AsyncIterable["models.DatabasePrincipalAssignmentListResult"]:
+    ) -> AsyncIterable["_models.DatabasePrincipalAssignmentListResult"]:
         """Lists all Kusto cluster database principalAssignments.
 
         :param resource_group_name: The name of the resource group containing the Kusto cluster.
@@ -463,7 +463,7 @@ class DatabasePrincipalAssignmentsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~kusto_management_client.models.DatabasePrincipalAssignmentListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DatabasePrincipalAssignmentListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DatabasePrincipalAssignmentListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

@@ -450,8 +450,8 @@ output-folder: $(az-output-folder)
 debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
-  "@autorest/python": "5.4.0"
-  "@autorest/clicommon": "0.6.0"
+  "@autorest/python": "5.6.2"
+  "@autorest/clicommon": "/Users/zhangqiaoqiao/work/code/autorest.clicommon"
   #"@autorest/python": "latest"
 
 require:

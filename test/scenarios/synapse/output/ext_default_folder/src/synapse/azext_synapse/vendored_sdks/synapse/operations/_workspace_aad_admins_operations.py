@@ -15,7 +15,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -38,7 +38,7 @@ class WorkspaceAadAdminsOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -52,7 +52,7 @@ class WorkspaceAadAdminsOperations(object):
         workspace_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.WorkspaceAadAdminInfo"
+        # type: (...) -> "_models.WorkspaceAadAdminInfo"
         """Gets a workspace active directory admin.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -64,7 +64,7 @@ class WorkspaceAadAdminsOperations(object):
         :rtype: ~synapse_management_client.models.WorkspaceAadAdminInfo
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.WorkspaceAadAdminInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.WorkspaceAadAdminInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -109,11 +109,11 @@ class WorkspaceAadAdminsOperations(object):
         self,
         resource_group_name,  # type: str
         workspace_name,  # type: str
-        aad_admin_info,  # type: "models.WorkspaceAadAdminInfo"
+        aad_admin_info,  # type: "_models.WorkspaceAadAdminInfo"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.WorkspaceAadAdminInfo"
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.WorkspaceAadAdminInfo"]
+        # type: (...) -> "_models.WorkspaceAadAdminInfo"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.WorkspaceAadAdminInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -149,7 +149,7 @@ class WorkspaceAadAdminsOperations(object):
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -168,10 +168,10 @@ class WorkspaceAadAdminsOperations(object):
         self,
         resource_group_name,  # type: str
         workspace_name,  # type: str
-        aad_admin_info,  # type: "models.WorkspaceAadAdminInfo"
+        aad_admin_info,  # type: "_models.WorkspaceAadAdminInfo"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.WorkspaceAadAdminInfo"]
+        # type: (...) -> LROPoller["_models.WorkspaceAadAdminInfo"]
         """Creates or updates a workspace active directory admin.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -182,8 +182,8 @@ class WorkspaceAadAdminsOperations(object):
         :type aad_admin_info: ~synapse_management_client.models.WorkspaceAadAdminInfo
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either WorkspaceAadAdminInfo or the result of cls(response)
@@ -191,7 +191,7 @@ class WorkspaceAadAdminsOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.WorkspaceAadAdminInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.WorkspaceAadAdminInfo"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -274,7 +274,7 @@ class WorkspaceAadAdminsOperations(object):
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -297,8 +297,8 @@ class WorkspaceAadAdminsOperations(object):
         :type workspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)

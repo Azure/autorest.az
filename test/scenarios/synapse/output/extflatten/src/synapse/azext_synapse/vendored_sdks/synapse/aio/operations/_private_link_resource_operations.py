@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class PrivateLinkResourceOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -46,7 +46,7 @@ class PrivateLinkResourceOperations:
         resource_group_name: str,
         workspace_name: str,
         **kwargs
-    ) -> AsyncIterable["models.PrivateLinkResourceListResult"]:
+    ) -> AsyncIterable["_models.PrivateLinkResourceListResult"]:
         """Private Link Resources.
 
         Get all private link resources for a workspaces.
@@ -60,7 +60,7 @@ class PrivateLinkResourceOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.PrivateLinkResourceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkResourceListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkResourceListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -123,7 +123,7 @@ class PrivateLinkResourceOperations:
         workspace_name: str,
         private_link_resource_name: str,
         **kwargs
-    ) -> "models.PrivateLinkResource":
+    ) -> "_models.PrivateLinkResource":
         """Get Private Link Resource.
 
         Get private link resource in workspace.
@@ -139,7 +139,7 @@ class PrivateLinkResourceOperations:
         :rtype: ~synapse_management_client.models.PrivateLinkResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

@@ -14,7 +14,7 @@ from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
-from ... import models
+from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -33,7 +33,7 @@ class SqlPoolTableColumnsOperations:
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer) -> None:
         self._client = client
@@ -50,7 +50,7 @@ class SqlPoolTableColumnsOperations:
         table_name: str,
         filter: Optional[str] = None,
         **kwargs
-    ) -> AsyncIterable["models.SqlPoolColumnListResult"]:
+    ) -> AsyncIterable["_models.SqlPoolColumnListResult"]:
         """Gets columns in a given table in a SQL pool.
 
         Gets columns in a given table in a SQL pool.
@@ -72,7 +72,7 @@ class SqlPoolTableColumnsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~synapse_management_client.models.SqlPoolColumnListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.SqlPoolColumnListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlPoolColumnListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }

@@ -17,7 +17,7 @@ from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.arm_polling import ARMPolling
 
-from .. import models
+from .. import models as _models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -40,7 +40,7 @@ class BigDataPoolOperations(object):
     :param deserializer: An object model deserializer.
     """
 
-    models = models
+    models = _models
 
     def __init__(self, client, config, serializer, deserializer):
         self._client = client
@@ -55,7 +55,7 @@ class BigDataPoolOperations(object):
         big_data_pool_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.BigDataPoolResourceInfo"
+        # type: (...) -> "_models.BigDataPoolResourceInfo"
         """Get Big Data pool.
 
         Get a Big Data pool.
@@ -71,7 +71,7 @@ class BigDataPoolOperations(object):
         :rtype: ~synapse_management_client.models.BigDataPoolResourceInfo
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BigDataPoolResourceInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BigDataPoolResourceInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -103,7 +103,7 @@ class BigDataPoolOperations(object):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('BigDataPoolResourceInfo', pipeline_response)
@@ -122,7 +122,7 @@ class BigDataPoolOperations(object):
         tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.BigDataPoolResourceInfo"
+        # type: (...) -> "_models.BigDataPoolResourceInfo"
         """Update a Big Data pool.
 
         Patch a Big Data pool.
@@ -140,13 +140,13 @@ class BigDataPoolOperations(object):
         :rtype: ~synapse_management_client.models.BigDataPoolResourceInfo
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BigDataPoolResourceInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BigDataPoolResourceInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        big_data_pool_patch_info = models.BigDataPoolPatchInfo(tags=tags)
+        big_data_pool_patch_info = _models.BigDataPoolPatchInfo(tags=tags)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -179,7 +179,7 @@ class BigDataPoolOperations(object):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('BigDataPoolResourceInfo', pipeline_response)
@@ -199,26 +199,26 @@ class BigDataPoolOperations(object):
         force=False,  # type: Optional[bool]
         tags=None,  # type: Optional[Dict[str, str]]
         provisioning_state=None,  # type: Optional[str]
-        auto_scale=None,  # type: Optional["models.AutoScaleProperties"]
+        auto_scale=None,  # type: Optional["_models.AutoScaleProperties"]
         creation_date=None,  # type: Optional[datetime.datetime]
-        auto_pause=None,  # type: Optional["models.AutoPauseProperties"]
+        auto_pause=None,  # type: Optional["_models.AutoPauseProperties"]
         spark_events_folder=None,  # type: Optional[str]
         node_count=None,  # type: Optional[int]
-        library_requirements=None,  # type: Optional["models.LibraryRequirements"]
+        library_requirements=None,  # type: Optional["_models.LibraryRequirements"]
         spark_version=None,  # type: Optional[str]
         default_spark_log_folder=None,  # type: Optional[str]
-        node_size=None,  # type: Optional[Union[str, "models.NodeSize"]]
-        node_size_family=None,  # type: Optional[Union[str, "models.NodeSizeFamily"]]
+        node_size=None,  # type: Optional[Union[str, "_models.NodeSize"]]
+        node_size_family=None,  # type: Optional[Union[str, "_models.NodeSizeFamily"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.BigDataPoolResourceInfo"
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BigDataPoolResourceInfo"]
+        # type: (...) -> "_models.BigDataPoolResourceInfo"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BigDataPoolResourceInfo"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        big_data_pool_info = models.BigDataPoolResourceInfo(tags=tags, location=location, provisioning_state=provisioning_state, auto_scale=auto_scale, creation_date=creation_date, auto_pause=auto_pause, spark_events_folder=spark_events_folder, node_count=node_count, library_requirements=library_requirements, spark_version=spark_version, default_spark_log_folder=default_spark_log_folder, node_size=node_size, node_size_family=node_size_family)
+        big_data_pool_info = _models.BigDataPoolResourceInfo(tags=tags, location=location, provisioning_state=provisioning_state, auto_scale=auto_scale, creation_date=creation_date, auto_pause=auto_pause, spark_events_folder=spark_events_folder, node_count=node_count, library_requirements=library_requirements, spark_version=spark_version, default_spark_log_folder=default_spark_log_folder, node_size=node_size, node_size_family=node_size_family)
         api_version = "2019-06-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -253,7 +253,7 @@ class BigDataPoolOperations(object):
 
         if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -277,19 +277,19 @@ class BigDataPoolOperations(object):
         force=False,  # type: Optional[bool]
         tags=None,  # type: Optional[Dict[str, str]]
         provisioning_state=None,  # type: Optional[str]
-        auto_scale=None,  # type: Optional["models.AutoScaleProperties"]
+        auto_scale=None,  # type: Optional["_models.AutoScaleProperties"]
         creation_date=None,  # type: Optional[datetime.datetime]
-        auto_pause=None,  # type: Optional["models.AutoPauseProperties"]
+        auto_pause=None,  # type: Optional["_models.AutoPauseProperties"]
         spark_events_folder=None,  # type: Optional[str]
         node_count=None,  # type: Optional[int]
-        library_requirements=None,  # type: Optional["models.LibraryRequirements"]
+        library_requirements=None,  # type: Optional["_models.LibraryRequirements"]
         spark_version=None,  # type: Optional[str]
         default_spark_log_folder=None,  # type: Optional[str]
-        node_size=None,  # type: Optional[Union[str, "models.NodeSize"]]
-        node_size_family=None,  # type: Optional[Union[str, "models.NodeSizeFamily"]]
+        node_size=None,  # type: Optional[Union[str, "_models.NodeSize"]]
+        node_size_family=None,  # type: Optional[Union[str, "_models.NodeSizeFamily"]]
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.BigDataPoolResourceInfo"]
+        # type: (...) -> LROPoller["_models.BigDataPoolResourceInfo"]
         """Create a Big Data pool.
 
         Create a new Big Data pool.
@@ -330,8 +330,8 @@ class BigDataPoolOperations(object):
         :type node_size_family: str or ~synapse_management_client.models.NodeSizeFamily
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either BigDataPoolResourceInfo or the result of cls(response)
@@ -339,7 +339,7 @@ class BigDataPoolOperations(object):
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BigDataPoolResourceInfo"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BigDataPoolResourceInfo"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -439,7 +439,7 @@ class BigDataPoolOperations(object):
 
         if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(models.ErrorContract, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorContract, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
@@ -475,8 +475,8 @@ class BigDataPoolOperations(object):
         :type big_data_pool_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either object or the result of cls(response)
@@ -536,7 +536,7 @@ class BigDataPoolOperations(object):
         workspace_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.BigDataPoolResourceInfoListResult"]
+        # type: (...) -> Iterable["_models.BigDataPoolResourceInfoListResult"]
         """List the Big Data pools in a workspace.
 
         List Big Data pools in a workspace.
@@ -550,7 +550,7 @@ class BigDataPoolOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~synapse_management_client.models.BigDataPoolResourceInfoListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BigDataPoolResourceInfoListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BigDataPoolResourceInfoListResult"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
