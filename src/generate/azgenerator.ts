@@ -1,7 +1,8 @@
-import { Host, startSession } from '@azure-tools/autorest-extension-base';
+import { Channel, Host, startSession } from '@azure-tools/autorest-extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
+import { isNullOrUndefined } from '../utils/helper';
 import {
     CodeGenConstants,
     PathConstants,
@@ -51,17 +52,31 @@ export async function processRequest(host: Host) {
         }
 
         for (const f in files) {
-            if (typeof files[f] === 'string') {
-                host.WriteFile(f, files[f]);
-            } else {
-                host.WriteFile(f, files[f].join(EOL));
+            if (!isNullOrUndefined(files[f])) {
+                if (
+                    (AzConfiguration.getValue(CodeGenConstants.generationMode) !==
+                        GenerationMode.Incremental &&
+                        (f.endsWith('azext_metadata.json') ||
+                            (f.endsWith('setup.py') &&
+                                AzConfiguration.getValue(CodeGenConstants.targetMode) !==
+                                    TargetMode.Core))) ||
+                    f.endsWith('HISTORY.rst') ||
+                    f.endsWith('setup.cfg') ||
+                    // f.endsWith('report.md') ||
+                    f.endsWith('tests/__init__.py') ||
+                    f.endsWith('preparers.py')
+                ) {
+                    host.WriteFile(f, files[f]);
+                } else {
+                    host.WriteFile(f, files[f].join(EOL));
+                }
             }
         }
         closeInplaceGen();
-    } catch (error) {
+    } catch (E) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
-        throw error;
+        throw E;
     }
 }

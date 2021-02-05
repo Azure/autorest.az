@@ -405,10 +405,10 @@ export async function processRequest(host: Host) {
         const plugin = await new AzNamer(session);
         const result = await plugin.process();
         host.WriteFile('aznamer-temp-output.yaml', serialize(result));
-    } catch (error) {
+    } catch (E) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
-        throw error;
+        throw E;
     }
 }

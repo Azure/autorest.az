@@ -57,10 +57,10 @@ export async function processRequest(host: Host) {
         const plugin = new Hider(session);
         const result = await plugin.process();
         host.WriteFile(CodeGenConstants.m4CodeModelName, serialize(result));
-    } catch (error) {
+    } catch (E) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
-        throw error;
+        throw E;
     }
 }

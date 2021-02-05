@@ -451,7 +451,7 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.4.0"
-  "@autorest/clicommon": "0.6.0"
+  "@autorest/clicommon": "0.6.1"
   #"@autorest/python": "latest"
 
 require:
@@ -531,9 +531,6 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
-    az/azlinter:
-        input:
-            - az/emitter
 ```
 
 ``` yaml !$(sdk-flatten) || $(sdk-no-flatten)
@@ -583,7 +580,4 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
-    az/azlinter:
-        input:
-            - az/emitter
 ```

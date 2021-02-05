@@ -135,7 +135,6 @@ export enum CodeGenConstants {
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
     PYLINT_MAX_CODE_LENGTH = 119,
-    PYLINT_MAX_OPERATION_TEMPLATE_LENGTH = 92,
 }
 
 export interface AzextMetadata {
@@ -194,15 +193,8 @@ export class RenderInput {
         public properties: string[] = [],
         public sortBy: Record<string, SortOrder> = {},
         public conditions: [string, unknown][] = [],
-        public converter: (item) => unknown = undefined,
+        public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),
     ) {}
 }
 
 export type TemplateRender = [string, TemplateBase];
-
-export enum CliCommandType {
-    CUSTOM_SHOW_COMMAND = 'custom_show_command',
-    CUSTOM_COMMAND = 'custom_command',
-    CUSTOM_WAIT_COMMAND = 'custom_wait_command',
-    GENERIC_UPDATE_COMMAND = 'generic_update_command',
-}

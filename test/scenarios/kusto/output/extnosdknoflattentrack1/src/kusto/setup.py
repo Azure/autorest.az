@@ -31,7 +31,7 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'azure-mgmt-kusto~=0.10.0'
+    'azure-mgmt-kusto~=1.0.0'
 ]
 
 try:
