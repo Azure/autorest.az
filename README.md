@@ -531,9 +531,6 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
-    az/azlinter:
-        input:
-            - az/emitter
 ```
 
 ``` yaml !$(sdk-flatten) || $(sdk-no-flatten)
@@ -583,7 +580,4 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
-    az/azlinter:
-        input:
-            - az/emitter
 ```

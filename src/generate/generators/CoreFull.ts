@@ -12,7 +12,7 @@ import { CliMainRequirement } from '../renders/extraMain/CliMainRequirement';
 import { CliMainSetupPy } from '../renders/extraMain/CliMainSetupPy';
 import { GenerateAzureCliActions } from '../renders/generated/CliActions';
 import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
-import { CliCommands } from '../renders/generated/CliCommands';
+import { GenerateAzureCliCommands } from '../renders/generated/CliCommands';
 import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
 import { GenerateAzureCliHelp } from '../renders/generated/CliHelp';
 import { GenerateAzureCliParams } from '../renders/generated/CliParams';
@@ -39,6 +39,9 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 files[
                     path.join(model.azOutputFolder, 'generated/_params.py')
                 ] = GenerateAzureCliParams(model, isDebugMode);
+                files[
+                    path.join(model.azOutputFolder, 'generated/commands.py')
+                ] = GenerateAzureCliCommands(model);
                 files[
                     path.join(model.azOutputFolder, 'generated/custom.py')
                 ] = GenerateAzureCliCustom(model);
@@ -69,7 +72,6 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 files[
                     path.join(model.azOutputFolder, 'manual/__init__.py')
                 ] = GenerateNamespaceInit(model);
-                await this.generateFullSingleAndAddtoOutput(new CliCommands(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopAction(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopInit(model));

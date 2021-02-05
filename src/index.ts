@@ -6,7 +6,6 @@ import { processRequest as modifiers } from './modifiers';
 import { processRequest as merger } from './merger';
 import { processRequest as generator } from './generate/azgenerator';
 import { processRequest as entry } from './entry';
-import { processRequest as azlinter } from './azlinter';
 
 export type LogCallback = (message: string) => void;
 export type FileCallback = (path: string, rows: string[]) => void;
@@ -19,7 +18,6 @@ export async function initializePlugins(pluginHost: AutoRestExtension) {
     pluginHost.Add('modifiers', modifiers);
     pluginHost.Add('merger', merger);
     pluginHost.Add('azgenerator', generator);
-    pluginHost.Add('azlinter', azlinter);
 }
 
 export async function az() {

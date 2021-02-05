@@ -681,10 +681,10 @@ export async function processRequest(host: Host) {
         const plugin = new Merger(session);
         const result = await plugin.process();
         host.WriteFile('azmerger-cli-temp-output-after.yaml', serialize(result));
-    } catch (error) {
+    } catch (E) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
         }
-        throw error;
+        throw E;
     }
 }

@@ -33,10 +33,7 @@ stages:
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js'
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.7'
-        inputs:
-          versionSpec: 3.7
+
       - task: Npm@1
         displayName: 'npm install'
         inputs:
@@ -78,7 +75,7 @@ stages:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js'
       - task: UsePythonVersion@0
-        displayName: 'Use Python 3.7'
+        displayName: 'Use Python 3.6'
         inputs:
           versionSpec: 3.7
       - script: |

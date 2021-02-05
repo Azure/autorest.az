@@ -124,9 +124,6 @@ export interface CodeModelAz {
     CommandGroup_MinApi: string;
     CommandGroup_ResourceType: string | undefined;
     CommandGroup_Mode: string;
-    CommandGroup_ClientFactoryName: string;
-    CommandGroup_OperationTmplName: string;
-    CommandGroup_CustomCommandTypeName: string;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -146,8 +143,6 @@ export interface CodeModelAz {
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
     Command_Mode: string;
-    Command_Type: string;
-    Command_GenericSetterArgName: string;
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
