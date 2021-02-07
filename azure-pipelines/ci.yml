@@ -7,15 +7,6 @@ variables:
   VAR_ARIFACT_NAME: "drop"
   parallelTest: 'true'
 
-strategy:
-  matrix:
-    linux:
-      imageName: 'ubuntu-20.04'
-    mac:
-      imageName: 'macos-10.14'
-    windows:
-      imageName: 'windows-2019'
-
 jobs:
   - job: ESLint
     pool:
@@ -29,6 +20,14 @@ jobs:
         displayName: 'eslint'
 
   - job: Build
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-20.04'
+        mac:
+          imageName: 'macos-10.14'
+        windows:
+          imageName: 'windows-2019'
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
@@ -56,6 +55,14 @@ jobs:
           publishLocation: 'Container'
           
   - job: TestReport
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-20.04'
+        mac:
+          imageName: 'macos-10.14'
+        windows:
+          imageName: 'windows-2019'
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
@@ -78,6 +85,14 @@ jobs:
         displayName: 'npm test-report'
      
   - job: Analyze
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-20.04'
+        mac:
+          imageName: 'macos-10.14'
+        windows:
+          imageName: 'windows-2019'
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
