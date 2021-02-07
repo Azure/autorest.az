@@ -6,8 +6,7 @@ import { processRequest as modifiers } from './modifiers';
 import { processRequest as merger } from './merger';
 import { processRequest as generator } from './generate/azgenerator';
 import { processRequest as entry } from './entry';
-import { processRequest as azlinter } from './azlinter/azlinter';
-import { runPython3 } from './utils/helper';
+import { processRequest as azlinter } from './azlinter';
 
 export type LogCallback = (message: string) => void;
 export type FileCallback = (path: string, rows: string[]) => void;
@@ -24,7 +23,6 @@ export async function initializePlugins(pluginHost: AutoRestExtension) {
 }
 
 export async function az() {
-    runPython3('src/azlinter/install.py');
     const extension = new AutoRestExtension();
     await initializePlugins(extension);
     extension.Run();

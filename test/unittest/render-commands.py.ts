@@ -9,7 +9,6 @@ import * as nunjucks from 'nunjucks';
 import * as path from 'path';
 import * as sourceMapSupport from 'source-map-support';
 import { readFile, writeFile, rmFile } from '@azure-tools/async-io';
-import { runLintball } from '../../src/utils/helper';
 sourceMapSupport.install();
 
 @suite
@@ -296,7 +295,6 @@ export class Process {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        await runLintball(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
@@ -326,7 +324,6 @@ export class Process {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        await runLintball(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,

@@ -29,11 +29,11 @@ from pathlib import Path
 
 from venvtools import ExtendedEnvBuilder, python_run
 
-_ROOT_DIR = Path(__file__).parent
+_ROOT_DIR = Path(__file__).parent.parent.parent
 
 
 def main():
-    venv_path = _ROOT_DIR / "venv"
+    venv_path = _ROOT_DIR / "azenv"
     venv_prexists = venv_path.exists()
 
     if venv_prexists:

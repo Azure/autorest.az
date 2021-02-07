@@ -9,8 +9,6 @@ import * as path from 'path';
 import * as request from 'request-promise-native';
 import { CodeGenConstants, ExtensionMode } from './models';
 import * as child_process from 'child_process';
-import { exec } from 'child_process';
-import * as extension from '@azure-tools/extension';
 
 export function changeCamelToDash(str: string): string {
     str = str.replace(/[A-Z][^A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
@@ -727,35 +725,4 @@ export function getGitStatus(folder: string) {
 
 export function isNullOrUndefined(obj: any) {
     return obj === null || obj === undefined;
-}
-
-export async function runLintball(filename: string): Promise<boolean> {
-    const projectPath = path.join(`${__dirname}`, '/../../../');
-    filename = path.relative(projectPath, filename);
-    const cmd =
-        `cd ${projectPath} && ` +
-        path.join('node_modules/.bin/lintball') +
-        ' -c ' +
-        path.join('.lintballrc.json') +
-        ' fix ' +
-        filename;
-    return await new Promise<boolean>((resolve, reject) => {
-        exec(cmd, function (error) {
-            if (!isNullOrUndefined(error)) {
-                console.log('exec error: ' + error);
-                // Reject if there is an error:
-                return reject(false);
-            }
-            // Otherwise resolve the promise:
-            return resolve(true);
-        });
-    });
-}
-
-export async function runPython3(scriptName, debug = '') {
-    const command = ['python', scriptName, debug];
-    await extension.updatePythonPath(command);
-    child_process.execSync(command.join(' '), {
-        stdio: [0, 1, 2],
-    });
 }

@@ -1,7 +1,8 @@
 import { Host } from '@azure-tools/autorest-extension-base';
-import { AzConfiguration, CodeGenConstants, PathConstants } from '../utils/models';
+import { AzConfiguration, CodeGenConstants, PathConstants } from './utils/models';
 import * as path from 'path';
-import { runPython3 } from '../utils/helper';
+
+import runPython3 from '../python/setup';
 
 export async function processRequest(host: Host): Promise<void> {
     try {
@@ -13,7 +14,7 @@ export async function processRequest(host: Host): Promise<void> {
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
-        runPython3('install.py ' + fileName);
+        runPython3('python/install.py ' + fileName);
     } catch (error) {
         console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         throw error;

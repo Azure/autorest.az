@@ -9,7 +9,6 @@ import * as path from 'path';
 import { readFile, rmFile, writeFile } from '@azure-tools/async-io';
 import * as sourceMapSupport from 'source-map-support';
 import { AzConfiguration, CodeGenConstants, ExtensionMode } from '../../src/utils/models';
-import { runLintball } from '../../src/utils/helper';
 import { RenderDataBase } from './render-getRenderDataBase';
 import { CliCommands } from '../../src/generate/renders/generated/CliCommands';
 
@@ -60,7 +59,6 @@ export class Process extends RenderDataBase {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        await runLintball(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
