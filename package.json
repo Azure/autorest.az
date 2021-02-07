@@ -1,6 +1,6 @@
 {
   "name": "@autorest/az",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Autorest Azure AZ extension",
   "main": "dist/src/index.js",
   "engines": {
@@ -63,7 +63,7 @@
     "@azure-tools/codegen": "2.5.276",
     "@azure-tools/codemodel": "4.13.325",
     "@azure-tools/linq": "3.1.232",
-    "autorest": "^3.0.6187",
+    "autorest": "^3.0.6336",
     "await-exec": "^0.1.2",
     "compare-versions": "^3.6.0",
     "dir-compare": "^2.2.0",

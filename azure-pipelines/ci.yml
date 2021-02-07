@@ -20,8 +20,16 @@ jobs:
         displayName: 'eslint'
 
   - job: Build
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-latest'
+        mac:
+          imageName: 'macos-latest'
+        windows:
+          imageName: 'windows-latest'
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: $(imageName)
       pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
@@ -47,8 +55,16 @@ jobs:
           publishLocation: 'Container'
           
   - job: TestReport
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-latest'
+        mac:
+          imageName: 'macos-latest'
+        windows:
+          imageName: 'windows-latest'
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: $(imageName)
       pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
@@ -69,8 +85,17 @@ jobs:
         displayName: 'npm test-report'
      
   - job: Analyze
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-latest'
+        mac:
+          imageName: 'macos-latest'
+        windows:
+          imageName: 'windows-latest'
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: $(imageName)
+      pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
         inputs:
