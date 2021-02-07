@@ -16,10 +16,6 @@ strategy:
     windows:
       imageName: 'windows-2019'
 
-pool:
-  vmImage: $(imageName)
-  pythonVersion: '3.6'
-
 jobs:
   - job: ESLint
     pool:
@@ -33,6 +29,9 @@ jobs:
         displayName: 'eslint'
 
   - job: Build
+    pool:
+      vmImage: $(imageName)
+      pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
         inputs:
@@ -57,6 +56,9 @@ jobs:
           publishLocation: 'Container'
           
   - job: TestReport
+    pool:
+      vmImage: $(imageName)
+      pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
         inputs:
@@ -76,6 +78,9 @@ jobs:
         displayName: 'npm test-report'
      
   - job: Analyze
+    pool:
+      vmImage: $(imageName)
+      pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
         inputs:
