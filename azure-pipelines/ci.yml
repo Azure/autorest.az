@@ -7,6 +7,19 @@ variables:
   VAR_ARIFACT_NAME: "drop"
   parallelTest: 'true'
 
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-20.04'
+    mac:
+      imageName: 'macos-10.14'
+    windows:
+      imageName: 'windows-2019'
+
+pool:
+  vmImage: ${imageName}
+  pythonVersion: '3.6'
+
 jobs:
   - job: ESLint
     pool:
@@ -20,9 +33,6 @@ jobs:
         displayName: 'eslint'
 
   - job: Build
-    pool:
-      vmImage: 'Ubuntu 16.04'
-      pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
         inputs:
@@ -47,9 +57,6 @@ jobs:
           publishLocation: 'Container'
           
   - job: TestReport
-    pool:
-      vmImage: 'Ubuntu 16.04'
-      pythonVersion: '3.6'
     steps:
       - task: NodeTool@0
         inputs:
@@ -69,8 +76,6 @@ jobs:
         displayName: 'npm test-report'
      
   - job: Analyze
-    pool:
-      vmImage: 'Ubuntu 16.04'
     steps:
       - task: NodeTool@0
         inputs:
@@ -89,8 +94,6 @@ jobs:
 
   - job: Windows
     displayName: CredScan
-    pool:
-      vmImage: "windows-2019"
     steps:
       - task:  ea576cd4-c61f-48f8-97e7-a3cb07b90a6f@3
         inputs:
