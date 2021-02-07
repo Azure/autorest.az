@@ -81,6 +81,8 @@ jobs:
           verbose: false
       - script: 'npm run build'
         displayName: 'npm build'
+      - script: 'D:\a\1\s\node_modules\.bin\autorest --version=3.0.6320 --az --use=D:\a\1\s D:\a\1\s\test\scenarios\attestation/configuration/readme.md --azure-cli-extension-folder=D:\a\1\s\test\scenarios\attestation\tmpoutput --debug'
+        displayName: 'temp debug'
       - script: 'npm run test-report'
         displayName: 'npm test-report'
         env:
