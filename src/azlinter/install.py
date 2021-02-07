@@ -8,7 +8,8 @@
 import os
 import sys
 if not sys.version_info >= (3, 6, 0):
-    raise Exception("Autorest for Python extension requires Python 3.6 at least")
+    raise Exception(
+        "Autorest for Python extension requires Python 3.6 at least")
 
 try:
     import pip
@@ -59,9 +60,12 @@ def lint(filename):
     # black --line-length=120 --experimental-string-processing --skip-string-normalization
     # autopep8 --global-config '.pyproject.toml' --in-place --max-line-length=120 --ignore="E203,E501,W6"
     # autoflake --in-place --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables
-    python_run(venv_context, "black", ["--line-length=120", "--experimental-string-processing", "--skip-string-normalization", filename])
-    python_run(venv_context, "autopep8", ["--in-place", '--exclude=".git,__pycache__"', "--max-line-length=120", '--ignore="E203,E501,W6"', filename])
-    python_run(venv_context, "autoflake", ["--in-place", "--expand-star-imports", "--remove-all-unused-imports", "--remove-duplicate-keys", "--remove-unused-variables", filename])
+    python_run(venv_context, "black", [
+               "--line-length=120", "--experimental-string-processing", "--skip-string-normalization", filename])
+    python_run(venv_context, "autopep8", [
+               "--in-place", '--exclude=".git,__pycache__"', "--max-line-length=120", '--ignore="E203,E501,W6"', filename])
+    python_run(venv_context, "autoflake", ["--in-place", "--expand-star-imports",
+                                           "--remove-all-unused-imports", "--remove-duplicate-keys", "--remove-unused-variables", filename])
 
 
 if __name__ == "__main__":

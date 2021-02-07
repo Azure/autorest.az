@@ -13,11 +13,9 @@ export async function processRequest(host: Host): Promise<void> {
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
-        // await runLintball(fileName);
         runPython3('install.py ' + fileName);
     } catch (error) {
-        // console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
-        error;
+        console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         throw error;
     }
 }

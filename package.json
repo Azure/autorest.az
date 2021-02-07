@@ -12,17 +12,10 @@
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/index.js",
     "eslint-fix": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --fix",
     "eslint": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --quiet",
-<<<<<<< HEAD
     "build": "npm run eslint && tsc",
-    "postbuild": "cpy templates ../dist/src --cwd=src/ --parents",
-    "start-testserver": "./node_modules/.bin/start-autorest-testserver",
-    "stop-testserver": "./node_modules/.bin/stop-autorest-testserver",
-=======
-    "build": "npm run eslint && tsc ",
     "postbuild": "cpy templates azlinter/*.py azlinter/requirements.txt ../dist/src --cwd=src/ --parents",
     "start-testserver": "start-autorest-testserver",
     "stop-testserver": "stop-autorest-testserver",
->>>>>>> 5dd535af... using python scripts
     "watch": "tsc -p . --watch",
     "prepare": "npm run build",
     "test": "npm run build && mocha dist/test --recursive",
@@ -70,6 +63,7 @@
     "@azure-tools/autorest-extension-base": "3.1.235",
     "@azure-tools/codegen": "2.5.276",
     "@azure-tools/codemodel": "4.13.325",
+    "@azure-tools/extension": "^3.1.269",
     "@azure-tools/linq": "3.1.232",
     "autorest": "^3.0.6336",
     "await-exec": "^0.1.2",
