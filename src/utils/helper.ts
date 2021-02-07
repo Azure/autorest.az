@@ -727,26 +727,6 @@ export function isNullOrUndefined(obj: any) {
     return obj === null || obj === undefined;
 }
 
-export async function runLintball(filename: string): Promise<boolean> {
-    const cmd =
-        path.join(`${__dirname}`, '/../../../' + 'node_modules/.bin/lintball') +
-        ' -c ' +
-        path.join(`${__dirname}`, '/../../../.lintballrc.json') +
-        ' fix ' +
-        filename;
-    return await new Promise<boolean>((resolve, reject) => {
-        exec(cmd, function (error) {
-            if (!isNullOrUndefined(error)) {
-                console.log('exec error: ' + error);
-                // Reject if there is an error:
-                return reject(false);
-            }
-            // Otherwise resolve the promise:
-            return resolve(true);
-        });
-    });
-}
-
 export function setPathValue(obj, path, value) {
     if (Object(obj) !== obj) return obj; // When obj is not an object
     // If not yet an array, get the keys from the string-path
