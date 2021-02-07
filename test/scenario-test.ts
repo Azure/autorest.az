@@ -54,7 +54,7 @@ export class Process {
         for (const k in extraOption) {
             cmdOption.push('--' + k + '=' + extraOption[k]);
         }
-        const cmd =
+        let cmd =
             path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') +
             ' --version=3.0.6320 --az --use=' +
             path.join(`${__dirname}`, '/../../') +
@@ -62,6 +62,16 @@ export class Process {
             directory +
             '/configuration/readme.md ' +
             cmdOption.join(' ');
+        cmd = cmd
+            .split(' ')
+            .map((item) => {
+                if (item.endsWith('\\')) {
+                    item = item.substr(0, item.length - 1);
+                    return item;
+                }
+                return item;
+            })
+            .join(' ');
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
             exec(cmd, function (error) {
