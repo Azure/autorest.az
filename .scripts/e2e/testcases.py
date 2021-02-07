@@ -30,9 +30,9 @@ def test_rp_e2e(rp, az, swagger, cliext, azpack):
         az_arg_str = '--use=' + az;
 
     if (rp == 'testserver'):
-        swagger_arg_str = az + '/src/test/scenarios/testserver/configuration/readme.md';
+        swagger_arg_str = az + '/test/scenarios/testserver/configuration/readme.md';
     else:
-        swagger_arg_str = swagger + '/specification/'+ rp + '/resource-manager/readme.md';
+        swagger_arg_str = swagger + '/specification/' + rp + '/resource-manager/readme.md';
 
     logInfo ("Az: " + az_arg_str);
     logInfo ("Swagger: " + swagger_arg_str);
