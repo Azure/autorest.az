@@ -23,11 +23,11 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-20.04'
+          imageName: 'ubuntu-latest'
         mac:
-          imageName: 'macos-10.14'
+          imageName: 'macos-latest'
         windows:
-          imageName: 'windows-2019'
+          imageName: 'windows-latest'
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
@@ -58,11 +58,11 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-20.04'
+          imageName: 'ubuntu-latest'
         mac:
-          imageName: 'macos-10.14'
+          imageName: 'macos-latest'
         windows:
-          imageName: 'windows-2019'
+          imageName: 'windows-latest'
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
@@ -88,11 +88,11 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-20.04'
+          imageName: 'ubuntu-latest'
         mac:
-          imageName: 'macos-10.14'
+          imageName: 'macos-latest'
         windows:
-          imageName: 'windows-2019'
+          imageName: 'windows-latest'
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
