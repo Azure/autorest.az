@@ -12,4 +12,4 @@ test-results.xml
 *.orig
 gen.zip
 .nyc_output
-azvenv/
+venv/

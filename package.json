@@ -80,6 +80,8 @@
     "request-promise-native": "1.0.8"
   },
   "files": [
-    "dist"
+    "dist/src",
+    "dist/test",
+    "dist/python"
   ]
 }
