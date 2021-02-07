@@ -392,7 +392,7 @@ see [how to set an action argument as aws shorthand syntax](https://github.com/A
 ## SDK Customization
 We also provide some SDK layer customization options. See [how to generate with different options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md) for more details. 
 ### Flattened SDK and un-Flattened SDK
-The previous version of Autorest.Az code generator can only support the flattened SDK(before 1.6.0 release), and after we have supported the Azure CLI main repo modules(since 1.6.0 release). We are using flattened SDK by default for generating Azure CLI extensions and using un-flattened SDK by default for generating Azure CLI main repo modules.(current 1.6.1 release)  
+The previous version of Autorest code generator can only support the flattened SDK(before 1.6.0 release), and after we have supported the Azure CLI main repo modules(since 1.6.0 release). We are using flattened SDK by default for generating Azure CLI extensions and using un-flattened SDK by default for generating Azure CLI main repo modules.(current 1.6.1 release)  
 Current in our private releases we have changed the default generated SDK to un-flattened way as well. which should be public release very soon.
 Users can use `--sdk-no-flatten` to specific an un-flattened SDK and `--sdk-flatten` to generate a flattened SDK. If users use both `--sdk-no-flatten` and `--sdk-flatten` we will still generate the un-flattened SDK.
 
