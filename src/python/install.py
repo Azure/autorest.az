@@ -44,19 +44,18 @@ def main():
         env_builder.create(venv_path)
         venv_context = env_builder.context
 
-        python_run(venv_context, "pip", ["install", "-U", "pip"])
-        python_run(venv_context, "pip", ["install", "-r", "requirements.txt"])
+    python_run(venv_context, "pip", ["install", "-U", "pip"])
+    python_run(venv_context, "pip", ["install", "-r", "src/python/requirements.txt"])
 
 
 def lint(filename):
     venv_path = _ROOT_DIR / "venv"
     venv_prexists = venv_path.exists()
     venv_context = False
-    if venv_prexists:
-        env_builder = venv.EnvBuilder(with_pip=True)
-        venv_context = env_builder.ensure_directories(venv_path)
-    else:
+    if not venv_prexists:
         main()
+    env_builder = venv.EnvBuilder(with_pip=True)
+    venv_context = env_builder.ensure_directories(venv_path)        
     # black --line-length=120 --experimental-string-processing --skip-string-normalization
     # autopep8 --global-config '.pyproject.toml' --in-place --max-line-length=120 --ignore="E203,E501,W6"
     # autoflake --in-place --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables

@@ -11,6 +11,7 @@ import * as sourceMapSupport from 'source-map-support';
 import { AzConfiguration, CodeGenConstants, ExtensionMode } from '../../src/utils/models';
 import { RenderDataBase } from './render-getRenderDataBase';
 import { CliCommands } from '../../src/generate/renders/generated/CliCommands';
+import { AzLinter } from '../../src/azlinter';
 
 sourceMapSupport.install();
 
@@ -59,6 +60,8 @@ export class Process extends RenderDataBase {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
+        const azLinter = new AzLinter();
+        await azLinter.process(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
