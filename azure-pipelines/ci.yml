@@ -42,6 +42,8 @@ jobs:
         displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
+      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+        displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
         inputs:
@@ -77,6 +79,8 @@ jobs:
         displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
+      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+        displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
         inputs:
@@ -108,6 +112,8 @@ jobs:
         displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
+      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+        displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
         inputs:
