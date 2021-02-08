@@ -55,9 +55,9 @@ export class Process {
             cmdOption.push('--' + k + '=' + extraOption[k]);
         }
         let cmd =
-            path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') +
+            path.join(`${__dirname}`, '/../' + 'node_modules/.bin/autorest') +
             ' --version=3.0.6320 --az --use=' +
-            path.join(`${__dirname}`, '/../../') +
+            path.join(`${__dirname}`, '/../') +
             ' ' +
             directory +
             '/configuration/readme.md ' +
@@ -180,7 +180,7 @@ export class Process {
     }
 
     @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
-        const dir = path.join(`${__dirname}`, '/../../test/scenarios/');
+        const dir = path.join(`${__dirname}`, '/../test/scenarios/');
         const folders = fs.readdirSync(dir);
         const msg = '';
         let finalResult = true;
