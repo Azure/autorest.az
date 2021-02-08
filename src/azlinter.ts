@@ -2,7 +2,7 @@ import { Host } from '@azure-tools/autorest-extension-base';
 import { AzConfiguration, CodeGenConstants, PathConstants } from './utils/models';
 import * as path from 'path';
 
-import runPython3 from '../python/setup';
+import { runPython3 } from './python/setup';
 
 export async function processRequest(host: Host): Promise<void> {
     try {
