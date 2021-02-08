@@ -5,7 +5,7 @@ import { runPython3 } from './python/setup';
 
 export class AzLinter {
     async process(fileName: string): Promise<void> {
-        const scriptName = 'dist/src/python/install.py ' + fileName;
+        const scriptName = path.join('dist/src/python/install.py') + ' ' + fileName;
         await runPython3(scriptName);
     }
 }

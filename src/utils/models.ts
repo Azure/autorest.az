@@ -74,8 +74,10 @@ export class PathConstants {
     public static readonly setupPyFile: string = 'setup.py';
     public static readonly setupCfgFile: string = 'setup.cfg';
     public static readonly historyRstFile: string = 'HISTORY.rst';
-    public static readonly docSourceJsonFile: string = '/doc/sphinx/azhelpgen/doc_source_map.json';
-    public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
+    public static readonly docSourceJsonFile: string = path.join(
+        '/doc/sphinx/azhelpgen/doc_source_map.json',
+    );
+    public static readonly mainSetupPyFile: string = path.join('src/azure-cli/setup.py');
     public static readonly readmeFile: string = 'README.md';
     public static readonly recordingFolder: string = 'recordings';
     public static readonly templateRootFolder: string = path.join(
