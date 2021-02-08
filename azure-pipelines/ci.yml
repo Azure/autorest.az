@@ -12,12 +12,12 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
+      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+        displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
         inputs:
           verbose: false
-      - script: 'cd tools\autoconfig && npm install && cd ..\..'
-        displayName: 'install autoconfig dependencies'
       - script: 'node_modules\.bin\eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/'
         displayName: 'eslint'
         
