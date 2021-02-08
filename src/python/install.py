@@ -43,9 +43,8 @@ def main():
         env_builder = ExtendedEnvBuilder(with_pip=True)
         env_builder.create(venv_path)
         venv_context = env_builder.context
-
-    python_run(venv_context, "pip", ["install", "-U", "pip"])
-    python_run(venv_context, "pip", ["install", "-r", "src/python/requirements.txt"])
+        python_run(venv_context, "pip", ["install", "-U", "pip"])
+        python_run(venv_context, "pip", ["install", "-r", "src/python/requirements.txt"])
 
 
 def lint(filename):

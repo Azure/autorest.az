@@ -296,8 +296,8 @@ export class Process {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        const azLinter = new AzLinter();
-        await azLinter.process(oriFile);
+        // const azLinter = new AzLinter();
+        // await azLinter.process(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
@@ -327,8 +327,8 @@ export class Process {
             '../../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
-        const azLinter = new AzLinter();
-        await azLinter.process(oriFile);
+        // const azLinter = new AzLinter();
+        // await azLinter.process(oriFile);
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
