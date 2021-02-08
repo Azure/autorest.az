@@ -12,7 +12,7 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+      - script: 'cd tools && cd autoconfig && npm install && cd .. && cd ..'
         displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
@@ -42,7 +42,7 @@ jobs:
         displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
-      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+      - script: 'cd tools && cd autoconfig && npm install && cd .. && cd ..'
         displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
@@ -79,7 +79,7 @@ jobs:
         displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
-      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+      - script: 'cd tools && cd autoconfig && npm install && cd .. && cd ..'
         displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
@@ -112,7 +112,7 @@ jobs:
         displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
-      - script: 'cd tools\autoconfig && npm install && cd ..\..'
+      - script: 'cd tools && cd autoconfig && npm install && cd .. && cd ..'
         displayName: 'install autoconfig dependencies'
       - task: Npm@1
         displayName: 'npm install'
