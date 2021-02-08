@@ -2,7 +2,11 @@ import * as cp from 'child_process';
 
 export async function runPython3(scriptName, debug = '') {
     const command = ['python', scriptName, debug];
-    cp.execSync(command.join(' '));
+    try {
+        cp.execSync(command.join(' '));
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 runPython3(process.argv.slice(2)).catch((err) => {
