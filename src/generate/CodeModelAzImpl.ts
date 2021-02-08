@@ -62,8 +62,7 @@ import {
 } from './renders/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
 import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
-import * as os from 'os';
-
+import * as process from 'process';
 class ActionParam {
     public constructor(
         public groupOpActionName: string,
@@ -236,10 +235,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     v.indexOf('specification') > 0
                 ) {
                     const p = v.indexOf('specification');
-                    if (os.type().toLowerCase().indexOf('linux') >= 0) {
-                        return v.slice('file:///'.length - 1, p - 1);
+                    if (process.platform.toLowerCase().startsWith('win')) {
+                        return v.slice('file:///'.length, p - 1);
                     }
-                    return v.slice('file:///'.length, p - 1);
+                    return v.slice('file:///'.length - 1, p - 1);
                 }
             }
             return undefined;

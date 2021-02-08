@@ -21,7 +21,7 @@ import {
     TestStepExampleFileRestCall,
 } from 'oav/dist/lib/testScenario/testResourceTypes';
 import * as path from 'path';
-import * as os from 'os';
+import * as process from 'process';
 
 export const azOptions = {};
 
@@ -1370,10 +1370,10 @@ export class ResourcePool {
             for (const k in parentsOptions) {
                 const v: string = parentsOptions[k];
                 if (k.endsWith('.json') && typeof v === 'string' && v.startsWith('file:///')) {
-                    if (os.type().toLowerCase().indexOf('linux') >= 0) {
-                        return v.slice('file:///'.length - 1);
+                    if (process.platform.toLowerCase().startsWith('win')) {
+                        return v.slice('file:///'.length);
                     }
-                    return v.slice('file:///'.length);
+                    return v.slice('file:///'.length - 1);
                 }
             }
             return undefined;
