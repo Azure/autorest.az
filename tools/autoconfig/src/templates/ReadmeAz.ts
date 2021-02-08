@@ -10,7 +10,6 @@ import {
     groupOperations,
     RPInfo,
     isTrack2,
-    isNullOrUndefined,
 } from '../helper';
 import * as fs from 'fs';
 import { CodeModel } from '@azure-tools/codemodel';

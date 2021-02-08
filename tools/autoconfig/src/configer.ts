@@ -14,6 +14,7 @@ import {
 } from './helper';
 import { GenerateReadmeAz } from './templates/ReadmeAz';
 import { GenerateReadmeCli } from './templates/ReadmeCli';
+import { GenerateReadmePython } from './templates/ReadmePython';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -31,4 +32,5 @@ export async function processRequest(host: Host): Promise<void> {
         path.join(readmeFolder, 'readme.az.md'),
     );
     GenerateReadmeCli(path.join(readmeFolder, 'readme.cli.md'));
+    GenerateReadmePython(path.join(readmeFolder, 'readme.python.md'));
 }
