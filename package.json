@@ -8,7 +8,6 @@
   },
   "scripts": {
     "start": "node dist/src/index.js",
-    "poststart": "node dist/src/azlinter.js",
     "postinstall": "mkdirp dist && cpy src/python/* dist/ --parents && tsc dist/src/python/setup.ts && node dist/src/python/setup.js dist/src/python/install.py",
     "debug": "node --max_old_space_size=4096 --inspect-brk ./dist/src/index.js",
     "eslint-fix": "eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/ --fix",
