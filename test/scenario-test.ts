@@ -56,7 +56,7 @@ export class Process {
         }
         let cmd =
             path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') +
-            ' --version=3.0.6320 --az --use=' +
+            ' --version=3.0.6370 --az --use=' +
             path.join(`${__dirname}`, '/../../') +
             ' ' +
             path.join(directory, 'configuration/readme.md') +
