@@ -66,6 +66,8 @@ jobs:
     pool:
       vmImage: $(imageName)
       pythonVersion: '3.6'
+    env:
+      NODE_OPTIONS: --max_old_space_size=10240
     steps:
       - task: NodeTool@0
         inputs:
