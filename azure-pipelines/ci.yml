@@ -2,7 +2,7 @@ trigger:
 - master
 
 variables:
-  NodeVersion: '10.x'
+  NodeVersion: '13.x'
   VAR_BUILD_ARTIFACT_STAGING_DIRECTORY: $(Build.ArtifactStagingDirectory)
   VAR_ARIFACT_NAME: "drop"
   parallelTest: 'true'
