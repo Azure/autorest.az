@@ -1,0 +1,1785 @@
+{
+    "model": {
+        "hasExtension": true,
+        "Extensions": [
+            {
+                "name": "offazure",
+                "hasCommandGroup": true,
+                "CommandGroups": [
+                    {
+                        "name": "offazure hyperv cluster",
+                        "cliKey": "HyperVCluster",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv cluster cluster list",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "cluster list",
+                                        "cliKey": "GetAllClustersInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "filter",
+                                                "type": "string",
+                                                "description": "",
+                                                "cliKey": "$filter"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv cluster cluster list --resource-group \"ipsahoo-RI-121119\" --site-name \"hyperv121319c813site\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv cluster show",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "cluster show",
+                                        "cliKey": "GetCluster",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Cluster ARM name.",
+                                                "cliKey": "clusterName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv cluster show --name \"hypgqlclusrs1-ntdev-corp-micros-11e77b27-67cc-5e46-a5d8-0ff3dc2ef179\" \\",
+                                                    "--resource-group \"ipsahoo-RI-121119\" --site-name \"hyperv121319c813site\" --subscription-id \\",
+                                                    "\"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv host",
+                        "cliKey": "HyperVHost",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv host put-host",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-host",
+                                        "cliKey": "PutHost",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "host-name",
+                                                "type": "string",
+                                                "description": "Host ARM name.",
+                                                "cliKey": "hostName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Name of the host.",
+                                                "cliKey": "name"
+                                            },
+                                            {
+                                                "mapsTo": "fqdn",
+                                                "type": "string",
+                                                "description": "FQDN/IPAddress of the Hyper-V host.",
+                                                "cliKey": "fqdn"
+                                            },
+                                            {
+                                                "mapsTo": "run-as-account-id",
+                                                "type": "string",
+                                                "description": "Run as account ID of the Hyper-V host.",
+                                                "cliKey": "runAsAccountId"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv host put-host --fqdn \"10.10.10.20\" --run-as-account-id \"Account1\" --host-name \"Host1\" \\",
+                                                    "--resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv host show-all-host-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-host-in-site",
+                                        "cliKey": "GetAllHostsInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "filter",
+                                                "type": "string",
+                                                "description": "",
+                                                "cliKey": "$filter"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv host show-all-host-in-site --resource-group \"pajindTest\" --site-name \"appliance1e39site\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv host show-host",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-host",
+                                        "cliKey": "GetHost",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "host-name",
+                                                "type": "string",
+                                                "description": "Host ARM name.",
+                                                "cliKey": "hostName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv host show-host --host-name \"bcdr-ewlab-46-ntdev-corp-micros-e4638031-3b19-5642-926d-385da60cfb8a\" \\",
+                                                    "--resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv machine",
+                        "cliKey": "HyperVMachines",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv machine show-all-machine-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-machine-in-site",
+                                        "cliKey": "GetAllMachinesInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "filter",
+                                                "type": "string",
+                                                "description": "",
+                                                "cliKey": "$filter"
+                                            },
+                                            {
+                                                "mapsTo": "top",
+                                                "type": "integer",
+                                                "description": "",
+                                                "cliKey": "$top"
+                                            },
+                                            {
+                                                "mapsTo": "continuation-token",
+                                                "type": "string",
+                                                "description": "Optional parameter for continuation token.",
+                                                "cliKey": "continuationToken"
+                                            },
+                                            {
+                                                "mapsTo": "total-record-count",
+                                                "type": "integer",
+                                                "description": "Total count of machines in the given site.",
+                                                "cliKey": "totalRecordCount"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv machine show-all-machine-in-site --resource-group \"pajindTest\" --site-name \"appliance1e39site\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv machine show-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-machine",
+                                        "cliKey": "GetMachine",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "machine-name",
+                                                "type": "string",
+                                                "description": "Machine ARM name.",
+                                                "cliKey": "machineName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv machine show-machine --machine-name \"96d27052-052b-48db-aa84-b9978eddbf5d\" --resource-group \\",
+                                                    "\"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv run-as-account",
+                        "cliKey": "HyperVRunAsAccounts",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv run-as-account show-all-run-as-account-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-run-as-account-in-site",
+                                        "cliKey": "GetAllRunAsAccountsInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv run-as-account show-all-run-as-account-in-site --resource-group \"pajindTest\" --site-name \\",
+                                                    "\"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv run-as-account show-run-as-account",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-run-as-account",
+                                        "cliKey": "GetRunAsAccount",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "account-name",
+                                                "type": "string",
+                                                "description": "Run as account ARM name.",
+                                                "cliKey": "accountName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv run-as-account show-run-as-account --account-name \"account1\" --resource-group \"pajindTest\" \\",
+                                                    "--site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure hyperv site",
+                        "cliKey": "HyperVSites",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure hyperv site delete",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "delete",
+                                        "cliKey": "DeleteSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site delete --resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \\",
+                                                    "\"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site get-site-health-summary",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-health-summary",
+                                        "cliKey": "GetSiteHealthSummary",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site get-site-health-summary --resource-group \"HMWalkthroughDay1-Scale\" --site-name \\",
+                                                    "\"HyperV1acf8site\" --subscription-id \"8c3c936a-c09b-4de3-830b-3f5f244d72e9\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site get-site-usage",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-usage",
+                                        "cliKey": "GetSiteUsage",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site get-site-usage --resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \\",
+                                                    "\"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site patch-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "patch-site",
+                                        "cliKey": "PatchSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Name of the Hyper-V site.",
+                                                "cliKey": "name"
+                                            },
+                                            {
+                                                "mapsTo": "tags",
+                                                "type": "dictionary",
+                                                "description": "Dictionary of <string>",
+                                                "cliKey": "tags"
+                                            },
+                                            {
+                                                "mapsTo": "e-tag",
+                                                "type": "string",
+                                                "description": "eTag for concurrency control.",
+                                                "cliKey": "eTag"
+                                            },
+                                            {
+                                                "mapsTo": "location",
+                                                "type": "string",
+                                                "description": "Azure location in which Sites is created.",
+                                                "cliKey": "location"
+                                            },
+                                            {
+                                                "mapsTo": "service-principal-identity-details",
+                                                "type": "object",
+                                                "description": "Service principal identity details used by agent for communication to the service.",
+                                                "cliKey": "servicePrincipalIdentityDetails"
+                                            },
+                                            {
+                                                "mapsTo": "agent-details",
+                                                "type": "object",
+                                                "description": "On-premises agent details.",
+                                                "cliKey": "agentDetails"
+                                            },
+                                            {
+                                                "mapsTo": "discovery-solution-id",
+                                                "type": "string",
+                                                "description": "ARM ID of migration hub solution for SDS.",
+                                                "cliKey": "discoverySolutionId"
+                                            },
+                                            {
+                                                "mapsTo": "appliance-name",
+                                                "type": "string",
+                                                "description": "Appliance Name.",
+                                                "cliKey": "applianceName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site patch-site --location \"westeurope\" --agent-details key-vault-id=\"/subscriptions/4bd2aa0f-2bd2-4\\",
+                                                    "d67-91a8-5a4533d58600/resourceGroups/pajindTest/providers/Microsoft.KeyVault/vaults/appliance1e39kv\" \\",
+                                                    "key-vault-uri=\"https://appliance1e39kv.vault.azure.net\" --appliance-name \"appliance\" --discovery-solution-id \\",
+                                                    "\"/subscriptions/4bd2aa0f-2bd2-4d67-91a8-5a4533d58600/resourceGroups/pajindTest/providers/Microsoft.Migrate/MigrateProje\\",
+                                                    "cts/WestEuropeTest/Solutions/Servers-Discovery-ServerDiscovery\" --service-principal-identity-details \\",
+                                                    "aad-authority=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\" application-id=\"61635e77-1e11-4c57-86d1-\\",
+                                                    "a8bf45d027fe\" audience=\"https://72f988bf-86f1-41af-91ab-2d7cd011db47/appliance1e39agentauthaadapp\" \\",
+                                                    "object-id=\"809f96f7-5c3b-45cf-a1ee-65b5d1689919\" raw-cert-data=\"MIIDNDCCAhygAwIBAgIQcG1waNhSQHq+QWMteouKoDANBgkqhkiG9w0\\",
+                                                    "BAQsFADAXMRUwEwYDVQQDEwxBZ2VudFNwbkNlcnQwHhcNMTkwNTA5MDc0MDQ5WhcNMjIwNTA5MDc1MDQ5WjAXMRUwEwYDVQQDEwxBZ2VudFNwbkNlcnQwgg\\",
+                                                    "EiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCovoqe6ey6QROBYESERRC8ZECO0jqsSDUWYtoFpEsgmvPa5ht3nqQAx7ODGzbV3eIPGHF2dRz2E4quv\\",
+                                                    "mo9g7DK4n5mukloE7zIVeo9WCdxF6ru13X6Q8aKCz6BLl10L9DpmKTeQwrbohKV+9HSE4K8wXB0flezTrcUzRZGQRbB3CInpPhRJfWVLIQuZngSJ3qZ/Y6e\\",
+                                                    "jYLA4dUdKHMyvjDcmc//VGczZPhfLxZc9t8bhxiiYopWyAkF6ZWCeEUsMcFuiBOft5lNHEFNRkRVgADBekDSK5iJqcvBIzOezbagZewvum2GviQEbe3yxQF\\",
+                                                    "+TygjLB8xLL1XVYop4Y4xRu2bAgMBAAGjfDB6MA4GA1UdDwEB/wQEAwIFoDAJBgNVHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBg\\",
+                                                    "NVHSMEGDAWgBSFDL/nQvfZoLGuuw+fwSiFMi8CSTAdBgNVHQ4EFgQUhQy/50L32aCxrrsPn8EohTIvAkkwDQYJKoZIhvcNAQELBQADggEBADxJp9gLn7x6t\\",
+                                                    "p4fmApAoMBIghIJb36KJjT6sjGz9wsXNfH4S0kHQbgj8EAJpz8TlSBpjNmJ7DkwxorNn1BeG/DrnBvUJ9sNeI3rISCXrrw89CHy86uGXtn7BZ+2Co1UTHy9\\",
+                                                    "8nkWK/1pPyMrSM8HxneWQGAa1bLKTclp+QRJNnQwJ9pEPuAr5BaWJkT737YkiE5NNcaaGDA5nLW91ARL5HNumtpwIDoN+l7OtAfRIgu83HFLeiqlVaR6x+7\\",
+                                                    "wtnA7n+fomIznBQ4vsoIclSPZ9vSaudT98TXN8m8CkQGEZi6w4gpmjQnXTehzvpdTbv1H+9iKsuPIDkjwiiLmr6mUbXs=\" \\",
+                                                    "tenant-id=\"72f988bf-86f1-41af-91ab-2d7cd011db47\" --resource-group \"pajindTest\" --site-name \"appliance1e39site\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site put-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-site",
+                                        "cliKey": "PutSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Name of the Hyper-V site.",
+                                                "cliKey": "name"
+                                            },
+                                            {
+                                                "mapsTo": "tags",
+                                                "type": "dictionary",
+                                                "description": "Dictionary of <string>",
+                                                "cliKey": "tags"
+                                            },
+                                            {
+                                                "mapsTo": "e-tag",
+                                                "type": "string",
+                                                "description": "eTag for concurrency control.",
+                                                "cliKey": "eTag"
+                                            },
+                                            {
+                                                "mapsTo": "location",
+                                                "type": "string",
+                                                "description": "Azure location in which Sites is created.",
+                                                "cliKey": "location"
+                                            },
+                                            {
+                                                "mapsTo": "service-principal-identity-details",
+                                                "type": "object",
+                                                "description": "Service principal identity details used by agent for communication to the service.",
+                                                "cliKey": "servicePrincipalIdentityDetails"
+                                            },
+                                            {
+                                                "mapsTo": "agent-details",
+                                                "type": "object",
+                                                "description": "On-premises agent details.",
+                                                "cliKey": "agentDetails"
+                                            },
+                                            {
+                                                "mapsTo": "discovery-solution-id",
+                                                "type": "string",
+                                                "description": "ARM ID of migration hub solution for SDS.",
+                                                "cliKey": "discoverySolutionId"
+                                            },
+                                            {
+                                                "mapsTo": "appliance-name",
+                                                "type": "string",
+                                                "description": "Appliance Name.",
+                                                "cliKey": "applianceName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site put-site --location \"eastus\" --service-principal-identity-details \\",
+                                                    "aad-authority=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\" application-id=\"e9f013df-2a2a-4871-b766-\\",
+                                                    "e79867f30348\" audience=\"https://72f988bf-86f1-41af-91ab-2d7cd011db47/MaheshSite17ac9agentauthaadapp\" \\",
+                                                    "object-id=\"2cd492bc-7ef3-4ee0-b301-59a88108b47b\" tenant-id=\"72f988bf-86f1-41af-91ab-2d7cd011db47\" --resource-group \\",
+                                                    "\"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site refresh-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "refresh-site",
+                                        "cliKey": "RefreshSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site refresh-site --resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \\",
+                                                    "\"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure hyperv site show-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-site",
+                                        "cliKey": "GetSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure hyperv site show-site --resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \\",
+                                                    "\"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware machine",
+                        "cliKey": "Machines",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware machine show-all-machine-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-machine-in-site",
+                                        "cliKey": "GetAllMachinesInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "filter",
+                                                "type": "string",
+                                                "description": "",
+                                                "cliKey": "$filter"
+                                            },
+                                            {
+                                                "mapsTo": "top",
+                                                "type": "integer",
+                                                "description": "",
+                                                "cliKey": "$top"
+                                            },
+                                            {
+                                                "mapsTo": "continuation-token",
+                                                "type": "string",
+                                                "description": "Optional parameter for continuation token.",
+                                                "cliKey": "continuationToken"
+                                            },
+                                            {
+                                                "mapsTo": "total-record-count",
+                                                "type": "integer",
+                                                "description": "Total count of machines in the given site.",
+                                                "cliKey": "totalRecordCount"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware machine show-all-machine-in-site --resource-group \"myResourceGroup\" --site-name \"pajind_site1\" \\",
+                                                    "--subscription-id \"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware machine show-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-machine",
+                                        "cliKey": "GetMachine",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "machine-name",
+                                                "type": "string",
+                                                "description": "Machine ARM name.",
+                                                "cliKey": "machineName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware machine show-machine --name \"machine1\" --resource-group \"myResourceGroup\" --site-name \\",
+                                                    "\"pajind_site1\" --subscription-id \"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware machine start-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "start-machine",
+                                        "cliKey": "StartMachine",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "machine-name",
+                                                "type": "string",
+                                                "description": "Machine ARM name.",
+                                                "cliKey": "machineName"
+                                            }
+                                        ],
+                                        "hasAzExample": false,
+                                        "AzExamples": []
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware machine stop-machine",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "stop-machine",
+                                        "cliKey": "StopMachine",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "machine-name",
+                                                "type": "string",
+                                                "description": "Machine ARM name.",
+                                                "cliKey": "machineName"
+                                            }
+                                        ],
+                                        "hasAzExample": false,
+                                        "AzExamples": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware run-as-account",
+                        "cliKey": "RunAsAccounts",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware run-as-account show-all-run-as-account-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-run-as-account-in-site",
+                                        "cliKey": "GetAllRunAsAccountsInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware run-as-account show-all-run-as-account-in-site --resource-group \"myResourceGroup\" --site-name \\",
+                                                    "\"pajind_site1\" --subscription-id \"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware run-as-account show-run-as-account",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-run-as-account",
+                                        "cliKey": "GetRunAsAccount",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "account-name",
+                                                "type": "string",
+                                                "description": "Run as account ARM name.",
+                                                "cliKey": "accountName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware run-as-account show-run-as-account --account-name \"account1\" --resource-group \"myResourceGroup\" \\",
+                                                    "--site-name \"pajind_site1\" --subscription-id \"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware site",
+                        "cliKey": "Sites",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware site delete",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "delete",
+                                        "cliKey": "DeleteSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site delete --resource-group \"myResourceGroup\" --name \"pajind_site1\" --subscription-id \\",
+                                                    "\"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site get-site-health-summary",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-health-summary",
+                                        "cliKey": "GetSiteHealthSummary",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site get-site-health-summary --resource-group \"rahasijaBugBash050919\" --name \\",
+                                                    "\"rahasapp122119d37csite\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site get-site-usage",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "get-site-usage",
+                                        "cliKey": "GetSiteUsage",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site get-site-usage --resource-group \"rahasijaBugBash050919\" --name \"rahasapp122119d37csite\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site patch-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "patch-site",
+                                        "cliKey": "PatchSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Name of the VMware site.",
+                                                "cliKey": "name"
+                                            },
+                                            {
+                                                "mapsTo": "tags",
+                                                "type": "dictionary",
+                                                "description": "Dictionary of <string>",
+                                                "cliKey": "tags"
+                                            },
+                                            {
+                                                "mapsTo": "e-tag",
+                                                "type": "string",
+                                                "description": "eTag for concurrency control.",
+                                                "cliKey": "eTag"
+                                            },
+                                            {
+                                                "mapsTo": "location",
+                                                "type": "string",
+                                                "description": "Azure location in which Sites is created.",
+                                                "cliKey": "location"
+                                            },
+                                            {
+                                                "mapsTo": "service-principal-identity-details",
+                                                "type": "object",
+                                                "description": "Service principal identity details used by agent for communication to the service.",
+                                                "cliKey": "servicePrincipalIdentityDetails"
+                                            },
+                                            {
+                                                "mapsTo": "agent-details",
+                                                "type": "object",
+                                                "description": "On-premises agent details.",
+                                                "cliKey": "agentDetails"
+                                            },
+                                            {
+                                                "mapsTo": "discovery-solution-id",
+                                                "type": "string",
+                                                "description": "ARM ID of migration hub solution for SDS.",
+                                                "cliKey": "discoverySolutionId"
+                                            },
+                                            {
+                                                "mapsTo": "appliance-name",
+                                                "type": "string",
+                                                "description": "Appliance Name.",
+                                                "cliKey": "applianceName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site patch-site --name \"pajind_site1\" --location \"\" --agent-details key-vault-id=\"string\" \\",
+                                                    "key-vault-uri=\"https://keyVaultUri\" --appliance-name \"string\" --discovery-solution-id \"string\" \\",
+                                                    "--service-principal-identity-details aad-authority=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\" \\",
+                                                    "application-id=\"e9f013df-2a2a-4871-b766-e79867f30348\" audience=\"https://72f988bf-86f1-41af-91ab-2d7cd011db47/MaheshSite\\",
+                                                    "17ac9agentauthaadapp\" object-id=\"2cd492bc-7ef3-4ee0-b301-59a88108b47b\" raw-cert-data=\"string\" \\",
+                                                    "tenant-id=\"72f988bf-86f1-41af-91ab-2d7cd011db47\" --resource-group \"myResourceGroup\" --site-name \"pajind_site1\" \\",
+                                                    "--subscription-id \"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site put-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-site",
+                                        "cliKey": "PutSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Name of the VMware site.",
+                                                "cliKey": "name"
+                                            },
+                                            {
+                                                "mapsTo": "tags",
+                                                "type": "dictionary",
+                                                "description": "Dictionary of <string>",
+                                                "cliKey": "tags"
+                                            },
+                                            {
+                                                "mapsTo": "e-tag",
+                                                "type": "string",
+                                                "description": "eTag for concurrency control.",
+                                                "cliKey": "eTag"
+                                            },
+                                            {
+                                                "mapsTo": "location",
+                                                "type": "string",
+                                                "description": "Azure location in which Sites is created.",
+                                                "cliKey": "location"
+                                            },
+                                            {
+                                                "mapsTo": "service-principal-identity-details",
+                                                "type": "object",
+                                                "description": "Service principal identity details used by agent for communication to the service.",
+                                                "cliKey": "servicePrincipalIdentityDetails"
+                                            },
+                                            {
+                                                "mapsTo": "agent-details",
+                                                "type": "object",
+                                                "description": "On-premises agent details.",
+                                                "cliKey": "agentDetails"
+                                            },
+                                            {
+                                                "mapsTo": "discovery-solution-id",
+                                                "type": "string",
+                                                "description": "ARM ID of migration hub solution for SDS.",
+                                                "cliKey": "discoverySolutionId"
+                                            },
+                                            {
+                                                "mapsTo": "appliance-name",
+                                                "type": "string",
+                                                "description": "Appliance Name.",
+                                                "cliKey": "applianceName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site put-site --location \"eastus\" --service-principal-identity-details \\",
+                                                    "aad-authority=\"https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\" application-id=\"e9f013df-2a2a-4871-b766-\\",
+                                                    "e79867f30348\" audience=\"https://72f988bf-86f1-41af-91ab-2d7cd011db47/MaheshSite17ac9agentauthaadapp\" \\",
+                                                    "object-id=\"2cd492bc-7ef3-4ee0-b301-59a88108b47b\" tenant-id=\"72f988bf-86f1-41af-91ab-2d7cd011db47\" --resource-group \\",
+                                                    "\"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site refresh-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "refresh-site",
+                                        "cliKey": "RefreshSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site refresh-site --resource-group \"pajindTest\" --name \"appliance1e39site\" --subscription-id \\",
+                                                    "\"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware site show-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-site",
+                                        "cliKey": "GetSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware site show-site --resource-group \"myResourceGroup\" --name \"pajind_site1\" --subscription-id \\",
+                                                    "\"75dd7e42-4fd1-4512-af04-83ad9864335b\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "offazure vmware vcenter",
+                        "cliKey": "VCenter",
+                        "hasCommand": true,
+                        "Commands": [
+                            {
+                                "name": "offazure vmware vcenter delete",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "delete",
+                                        "cliKey": "DeleteVCenter",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "vcenter-name",
+                                                "type": "string",
+                                                "description": "VCenter ARM name.",
+                                                "cliKey": "vcenterName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware vcenter delete --resource-group \"rahasijaBugBash050919\" --site-name \"rahasapp122119d37csite\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\" --name \"10-150-8-50-6af5f800-e9f6-56ff-9c3c-7be56d242c31\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware vcenter put-v-center",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "put-v-center",
+                                        "cliKey": "PutVCenter",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "vcenter-name",
+                                                "type": "string",
+                                                "description": "VCenter ARM name.",
+                                                "cliKey": "vcenterName"
+                                            },
+                                            {
+                                                "mapsTo": "name",
+                                                "type": "string",
+                                                "description": "Name of the vCenter.",
+                                                "cliKey": "name"
+                                            },
+                                            {
+                                                "mapsTo": "fqdn",
+                                                "type": "string",
+                                                "description": "FQDN/IPAddress of the vCenter.",
+                                                "cliKey": "fqdn"
+                                            },
+                                            {
+                                                "mapsTo": "port",
+                                                "type": "string",
+                                                "description": "Port of the vCenter.",
+                                                "cliKey": "port"
+                                            },
+                                            {
+                                                "mapsTo": "run-as-account-id",
+                                                "type": "string",
+                                                "description": "Run as account ID of the vCenter.",
+                                                "cliKey": "runAsAccountId"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware vcenter put-v-center --fqdn \"idclab-a226vc6\" --run-as-account-id \"/subscriptions/4bd2aa0f-2bd2-4d67-\\",
+                                                    "91a8-5a4533d58600/resourceGroups/pajindTest/providers/Microsoft.OffAzure/VMwareSites/appliance1e39site/runasaccounts/ac\\",
+                                                    "count1\" --resource-group \"pajindTest\" --site-name \"appliance1e39site\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533\\",
+                                                    "d58600\" --vcenter-name \"vcenter1\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware vcenter show-all-v-center-in-site",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-all-v-center-in-site",
+                                        "cliKey": "GetAllVCentersInSite",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "filter",
+                                                "type": "string",
+                                                "description": "",
+                                                "cliKey": "$filter"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware vcenter show-all-v-center-in-site --resource-group \"rahasijaBugBash050919\" --site-name \\",
+                                                    "\"rahasapp122119d37csite\" --subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "offazure vmware vcenter show-v-center",
+                                "hasMethod": true,
+                                "Methods": [
+                                    {
+                                        "nameAz": "show-v-center",
+                                        "cliKey": "GetVCenter",
+                                        "hasMethodParameter": true,
+                                        "MethodParameters": [
+                                            {
+                                                "mapsTo": "subscription-id",
+                                                "type": "string",
+                                                "description": "The ID of the target subscription.",
+                                                "cliKey": "subscriptionId"
+                                            },
+                                            {
+                                                "mapsTo": "resource-group-name",
+                                                "type": "string",
+                                                "description": "The name of the resource group. The name is case insensitive.",
+                                                "cliKey": "resourceGroupName"
+                                            },
+                                            {
+                                                "mapsTo": "site-name",
+                                                "type": "string",
+                                                "description": "Site name.",
+                                                "cliKey": "siteName"
+                                            },
+                                            {
+                                                "mapsTo": "vcenter-name",
+                                                "type": "string",
+                                                "description": "VCenter ARM name.",
+                                                "cliKey": "vcenterName"
+                                            }
+                                        ],
+                                        "hasAzExample": true,
+                                        "AzExamples": [
+                                            {
+                                                "commandStringItems": [
+                                                    "az offazure vmware vcenter show-v-center --resource-group \"rahasijaBugBash050919\" --site-name \"rahasapp122119d37csite\" \\",
+                                                    "--subscription-id \"4bd2aa0f-2bd2-4d67-91a8-5a4533d58600\" --name \"10-150-8-50-6af5f800-e9f6-56ff-9c3c-7be56d242c31\""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
