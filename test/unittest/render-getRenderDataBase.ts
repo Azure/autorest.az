@@ -34,6 +34,7 @@ export class RenderDataBase {
         await entry.init();
 
         const model = new CodeModelCliImpl(session);
+        model.GenerateTestInit();
 
         this.model = model;
     }
