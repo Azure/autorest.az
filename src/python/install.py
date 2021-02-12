@@ -44,7 +44,7 @@ def main():
         env_builder.create(venv_path)
         venv_context = env_builder.context
     python_run(venv_context, "pip", ["install", "-U", "pip"])
-    python_run(venv_context, "pip", ["install", "-r", "src/python/requirements.txt"])
+    python_run(venv_context, "pip", ["install", "-r", os.path.join("dist", "src", "python", "requirements.txt")])
 
 
 def lint(filename):
@@ -55,7 +55,7 @@ def lint(filename):
     env_builder = venv.EnvBuilder(with_pip=True)
     venv_context = env_builder.ensure_directories(venv_path)
     python_run(venv_context, "pip", ["install", "-U", "pip"])
-    python_run(venv_context, "pip", ["install", "-r", "src/python/requirements.txt"])
+    python_run(venv_context, "pip", ["install", "-r", os.path.join("dist", "src", "python", "requirements.txt")])
     # black --line-length=120 --experimental-string-processing --skip-string-normalization
     # autopep8 --global-config '.pyproject.toml' --in-place --max-line-length=120 --ignore="E203,E501,W6"
     # autoflake --in-place --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables

@@ -2,10 +2,10 @@ trigger:
 - master
 
 variables:
-  NodeVersion: '10.x'
+  NodeVersion: '13.x'
   VAR_BUILD_ARTIFACT_STAGING_DIRECTORY: $(Build.ArtifactStagingDirectory)
   VAR_ARIFACT_NAME: "drop"
-  parallelTest: 'true'
+  parallelTest: false
 
 jobs:
   - job: ESLint
@@ -84,7 +84,7 @@ jobs:
       - script: 'npm run test-report'
         displayName: 'npm test-report'
         env:
-          NODE_OPTIONS: --max_old_space_size=10240
+          NODE_OPTIONS: --max_old_space_size=65536
   - job: Analyze
     strategy:
       matrix:

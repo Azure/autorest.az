@@ -102,8 +102,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _parentOptions: any;
     private _useOptions: string[];
 
-    private _cliCoreLib: string;
-
     init(): void {
         this.options = AzConfiguration.getValue(CodeGenConstants.az);
         this._parentOptions = AzConfiguration.getValue(CodeGenConstants.parents);
@@ -3574,15 +3572,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret;
     }
 
-    public set CliCoreLib(lib: string) {
-        this._cliCoreLib = lib;
-    }
-
     public get CliCoreLib(): string {
-        if (isNullOrUndefined(this._cliCoreLib)) {
+        if (isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.cliCoreLib))) {
             return CodeGenConstants.DEFAULT_CLI_CORE_LIB;
         }
-        return this._cliCoreLib;
+        return AzConfiguration.getValue(CodeGenConstants.cliCoreLib);
     }
 
     public get AzureCliFolder(): string {

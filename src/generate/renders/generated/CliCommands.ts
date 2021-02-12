@@ -118,10 +118,7 @@ export class CliCommands extends TemplateBase {
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
         let data = { imports: [], pylints: [] };
-        data['imports'].push([
-            CodeGenConstants.DEFAULT_CLI_CORE_LIB + '.commands',
-            ['CliCommandType'],
-        ]);
+        data['imports'].push([this.model.CliCoreLib + '.commands', ['CliCommandType']]);
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -184,7 +181,7 @@ export class CliCommands extends TemplateBase {
         ];
         data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
         if (this.importProfile) {
-            data['imports'].push(['azure.cli.core.profiles', ['ResourceType']]);
+            data['imports'].push([this.model.CliCoreLib + '.profiles', ['ResourceType']]);
         }
         data['pylints'].push(
             '# pylint: disable=too-many-statements',
