@@ -15,7 +15,15 @@ import {
 } from '../../../utils/helper';
 import { SchemaType } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
-import { CodeGenConstants } from '../../../utils/models';
+import {
+    CodeGenConstants,
+    CodeModelTypes,
+    PathConstants,
+    RenderInput,
+    SortOrder,
+} from '../../../utils/models';
+import { TemplateBase } from '../TemplateBase';
+import * as path from 'path';
 
 let hasActions: boolean,
     hasBoolean: boolean,
@@ -39,6 +47,74 @@ function initVars() {
     hasTags = false;
     actions = [];
     useResourceType = false;
+}
+
+export class CLIParameter extends TemplateBase {
+    constructor(model: CodeModelAz) {
+        super(model);
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.commandsFile,
+        );
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/_params.py.njx');
+    }
+
+    public async fullGeneration(): Promise<string[]> {
+        return this.render();
+    }
+
+    public async GetRenderData(): Promise<any> {
+        let data = {};
+
+        const converter = (item) => {
+            let mapsTo = item['mapsTo'];
+            if (isNullOrUndefined(mapsTo)) {
+                return undefined;
+            }
+            if (mapsTo.endsWith('_')) {
+                mapsTo = mapsTo.substr(0, mapsTo.length - 1);
+            }
+            item['mapsTo'] = mapsTo.replace(/_/g, '-');
+            return item;
+        };
+
+        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+            CodeModelTypes,
+            RenderInput
+        >([
+            ['extension', new RenderInput(['name'], { name: SortOrder.ASEC })],
+            ['commandGroup', new RenderInput(['name', 'cliKey'], { name: SortOrder.ASEC })],
+            ['command', new RenderInput(['name'])],
+            ['method', new RenderInput(['nameAz', 'cliKey'], { nameAz: SortOrder.ASEC })],
+            [
+                'methodParameter',
+                new RenderInput(
+                    ['mapsTo', 'type', 'description', 'cliKey', 'namePython'],
+                    {},
+                    [
+                        ['isFlattened', true],
+                        ['type', SchemaType.Constant],
+                        ['isPolyOfSimple', true],
+                        ['isDiscriminator', true],
+                    ],
+                    converter,
+                ),
+            ],
+        ]);
+
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            ['method', 'methodParameter'],
+        ];
+        data = this.model.getModelData('extension', inputProperties, dependencies);
+        return data;
+    }
+    public async incrementalGeneration(): Promise<string[]> {
+        return this.render();
+    }
 }
 
 export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
