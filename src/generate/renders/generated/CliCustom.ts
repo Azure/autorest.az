@@ -113,6 +113,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
             if (skip) {
                 skip = false;
             }
+            model.MethodParameter;
             if (
                 (model.MethodParameter_IsCliFlattened &&
                     (!isNullOrUndefined(model.MethodParameter.language['cli'].cliFlattenTrace) ||
@@ -312,6 +313,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                 } else {
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
+                    // if this parameter was popped out because of last flattened parameter has just finished construction,
+                    // then we need to run construction logic for this parameter one more time.
+                    if (
+                        originalParameterStack.length > 0 &&
+                        model.MethodParameter['originalParameter'] === originalParameterStack.last
+                    ) {
+                        skip = true;
+                    }
                 }
             }
         } while (skip || model.SelectNextMethodParameter(true));
