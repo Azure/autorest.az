@@ -62,17 +62,19 @@ def step_cluster_create(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster create '
-             '--name "{myCluster}" '
+             '--cluster-name "{myCluster}" '
              '--type "SystemAssigned" '
              '--location "westus" '
              '--enable-double-encryption false '
              '--enable-purge true '
              '--enable-streaming-ingest true '
-             '--sku name="Standard_L8s" capacity=2 tier="Standard" '
+             '--name "Standard_L8s" '
+             '--capacity 2 '
+             '--tier "Standard" '
              '--resource-group "{rg}"',
              checks=[])
     test.cmd('az kusto cluster wait --created '
-             '--name "{myCluster}" '
+             '--cluster-name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=checks)
 
@@ -135,7 +137,7 @@ def step_cluster_update(test, rg, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster update '
-             '--name "{myCluster}" '
+             '--cluster-name "{myCluster}" '
              '--type "SystemAssigned" '
              '--location "westus" '
              '--enable-purge true '

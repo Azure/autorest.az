@@ -206,9 +206,9 @@ az kusto cluster show --name "kustoclusterrptest4" --resource-group "kustorptest
 
 ##### <a name="ExamplesClustersCreateOrUpdate#Create">Example</a>
 ```
-az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
---enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" \
-capacity=2 tier="Standard" --resource-group "kustorptest"
+az kusto cluster create --cluster-name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+--enable-double-encryption false --enable-purge true --enable-streaming-ingest true --name "Standard_L8s" --capacity 2 \
+--tier "Standard" --resource-group "kustorptest"
 ```
 ##### <a name="ParametersClustersCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -216,8 +216,10 @@ capacity=2 tier="Standard" --resource-group "kustorptest"
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
 |**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
 |**--location**|string|The geo-location where the resource lives|location|location|
-|**--sku**|object|The SKU of the cluster.|sku|sku|
+|**--name**|choice|SKU name.|name|name|
+|**--tier**|choice|SKU tier.|tier|tier|
 |**--tags**|dictionary|Resource tags.|tags|tags|
+|**--capacity**|integer|The number of instances of the cluster.|capacity|capacity|
 |**--zones**|array|The availability zones of the cluster.|zones|zones|
 |**--trusted-external-tenants**|array|The cluster's external tenants.|trusted_external_tenants|trustedExternalTenants|
 |**--optimized-autoscale**|object|Optimized auto scale definition.|optimized_autoscale|optimizedAutoscale|
@@ -234,9 +236,9 @@ capacity=2 tier="Standard" --resource-group "kustorptest"
 
 ##### <a name="ExamplesClustersUpdate">Example</a>
 ```
-az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-purge true \
---enable-streaming-ingest true --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" \
-key-version="keyVersion" --resource-group "kustorptest"
+az kusto cluster update --cluster-name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+--enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" \
+key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
 ```
 ##### <a name="ParametersClustersUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -245,7 +247,9 @@ key-version="keyVersion" --resource-group "kustorptest"
 |**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
 |**--tags**|dictionary|Resource tags.|tags|tags|
 |**--location**|string|Resource location.|location|location|
-|**--sku**|object|The SKU of the cluster.|sku|sku|
+|**--name**|choice|SKU name.|name|name|
+|**--capacity**|integer|The number of instances of the cluster.|capacity|capacity|
+|**--tier**|choice|SKU tier.|tier|tier|
 |**--trusted-external-tenants**|array|The cluster's external tenants.|trusted_external_tenants|trustedExternalTenants|
 |**--optimized-autoscale**|object|Optimized auto scale definition.|optimized_autoscale|optimizedAutoscale|
 |**--enable-disk-encryption**|boolean|A boolean value that indicates if the cluster's disks are encrypted.|enable_disk_encryption|enableDiskEncryption|

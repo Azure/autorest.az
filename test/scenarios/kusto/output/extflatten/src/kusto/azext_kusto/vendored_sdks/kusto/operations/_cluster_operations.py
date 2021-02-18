@@ -111,8 +111,10 @@ class ClusterOperations(object):
         resource_group_name,  # type: str
         cluster_name,  # type: str
         location,  # type: str
-        sku,  # type: "models.AzureSku"
+        name,  # type: Union[str, "models.AzureSkuName"]
+        tier,  # type: Union[str, "models.AzureSkuTier"]
         tags=None,  # type: Optional[Dict[str, str]]
+        capacity=None,  # type: Optional[int]
         zones=None,  # type: Optional[List[str]]
         trusted_external_tenants=None,  # type: Optional[List["models.TrustedExternalTenant"]]
         optimized_autoscale=None,  # type: Optional["models.OptimizedAutoscale"]
@@ -133,7 +135,7 @@ class ClusterOperations(object):
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.Cluster(tags=tags, location=location, sku=sku, zones=zones, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
+        parameters = models.Cluster(tags=tags, location=location, sku=sku, name=name, capacity=capacity, tier=tier, zones=zones, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -184,8 +186,10 @@ class ClusterOperations(object):
         resource_group_name,  # type: str
         cluster_name,  # type: str
         location,  # type: str
-        sku,  # type: "models.AzureSku"
+        name,  # type: Union[str, "models.AzureSkuName"]
+        tier,  # type: Union[str, "models.AzureSkuTier"]
         tags=None,  # type: Optional[Dict[str, str]]
+        capacity=None,  # type: Optional[int]
         zones=None,  # type: Optional[List[str]]
         trusted_external_tenants=None,  # type: Optional[List["models.TrustedExternalTenant"]]
         optimized_autoscale=None,  # type: Optional["models.OptimizedAutoscale"]
@@ -208,10 +212,14 @@ class ClusterOperations(object):
         :type cluster_name: str
         :param location: The geo-location where the resource lives.
         :type location: str
-        :param sku: The SKU of the cluster.
-        :type sku: ~kusto_management_client.models.AzureSku
+        :param name: SKU name.
+        :type name: str or ~kusto_management_client.models.AzureSkuName
+        :param tier: SKU tier.
+        :type tier: str or ~kusto_management_client.models.AzureSkuTier
         :param tags: Resource tags.
         :type tags: dict[str, str]
+        :param capacity: The number of instances of the cluster.
+        :type capacity: int
         :param zones: The availability zones of the cluster.
         :type zones: list[str]
         :param trusted_external_tenants: The cluster's external tenants.
@@ -261,8 +269,10 @@ class ClusterOperations(object):
                 resource_group_name=resource_group_name,
                 cluster_name=cluster_name,
                 location=location,
-                sku=sku,
+                name=name,
+                tier=tier,
                 tags=tags,
+                capacity=capacity,
                 zones=zones,
                 trusted_external_tenants=trusted_external_tenants,
                 optimized_autoscale=optimized_autoscale,
@@ -314,7 +324,9 @@ class ClusterOperations(object):
         cluster_name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         location=None,  # type: Optional[str]
-        sku=None,  # type: Optional["models.AzureSku"]
+        name=None,  # type: Optional[Union[str, "models.AzureSkuName"]]
+        capacity=None,  # type: Optional[int]
+        tier=None,  # type: Optional[Union[str, "models.AzureSkuTier"]]
         trusted_external_tenants=None,  # type: Optional[List["models.TrustedExternalTenant"]]
         optimized_autoscale=None,  # type: Optional["models.OptimizedAutoscale"]
         enable_disk_encryption=None,  # type: Optional[bool]
@@ -334,7 +346,7 @@ class ClusterOperations(object):
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        parameters = models.ClusterUpdate(tags=tags, location=location, sku=sku, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
+        parameters = models.ClusterUpdate(tags=tags, location=location, sku=sku, name=name, capacity=capacity, tier=tier, trusted_external_tenants=trusted_external_tenants, optimized_autoscale=optimized_autoscale, enable_disk_encryption=enable_disk_encryption, enable_streaming_ingest=enable_streaming_ingest, virtual_network_configuration=virtual_network_configuration, key_vault_properties=key_vault_properties, enable_purge=enable_purge, enable_double_encryption=enable_double_encryption, type_identity_type=type, user_assigned_identities=user_assigned_identities)
         api_version = "2020-06-14"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -389,7 +401,9 @@ class ClusterOperations(object):
         cluster_name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
         location=None,  # type: Optional[str]
-        sku=None,  # type: Optional["models.AzureSku"]
+        name=None,  # type: Optional[Union[str, "models.AzureSkuName"]]
+        capacity=None,  # type: Optional[int]
+        tier=None,  # type: Optional[Union[str, "models.AzureSkuTier"]]
         trusted_external_tenants=None,  # type: Optional[List["models.TrustedExternalTenant"]]
         optimized_autoscale=None,  # type: Optional["models.OptimizedAutoscale"]
         enable_disk_encryption=None,  # type: Optional[bool]
@@ -413,8 +427,12 @@ class ClusterOperations(object):
         :type tags: dict[str, str]
         :param location: Resource location.
         :type location: str
-        :param sku: The SKU of the cluster.
-        :type sku: ~kusto_management_client.models.AzureSku
+        :param name: SKU name.
+        :type name: str or ~kusto_management_client.models.AzureSkuName
+        :param capacity: The number of instances of the cluster.
+        :type capacity: int
+        :param tier: SKU tier.
+        :type tier: str or ~kusto_management_client.models.AzureSkuTier
         :param trusted_external_tenants: The cluster's external tenants.
         :type trusted_external_tenants: list[~kusto_management_client.models.TrustedExternalTenant]
         :param optimized_autoscale: Optimized auto scale definition.
@@ -463,7 +481,9 @@ class ClusterOperations(object):
                 cluster_name=cluster_name,
                 tags=tags,
                 location=location,
-                sku=sku,
+                name=name,
+                capacity=capacity,
+                tier=tier,
                 trusted_external_tenants=trusted_external_tenants,
                 optimized_autoscale=optimized_autoscale,
                 enable_disk_encryption=enable_disk_encryption,

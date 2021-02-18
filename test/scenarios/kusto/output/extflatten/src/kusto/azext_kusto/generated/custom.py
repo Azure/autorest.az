@@ -31,8 +31,10 @@ def kusto_cluster_create(client,
                          resource_group_name,
                          cluster_name,
                          location,
-                         sku,
+                         name,
+                         tier,
                          tags=None,
+                         capacity=None,
                          zones=None,
                          trusted_external_tenants=None,
                          optimized_autoscale=None,
@@ -51,13 +53,19 @@ def kusto_cluster_create(client,
         enable_purge = False
     if enable_double_encryption is None:
         enable_double_encryption = False
+    sku = {}
+    sku['name'] = name
+    sku['capacity'] = capacity
+    sku['tier'] = tier
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        tags=tags,
                        location=location,
-                       sku=sku,
+                       name=name,
+                       capacity=capacity,
+                       tier=tier,
                        zones=zones,
                        trusted_external_tenants=trusted_external_tenants,
                        optimized_autoscale=optimized_autoscale,
@@ -76,7 +84,9 @@ def kusto_cluster_update(client,
                          cluster_name,
                          tags=None,
                          location=None,
-                         sku=None,
+                         name=None,
+                         capacity=None,
+                         tier=None,
                          trusted_external_tenants=None,
                          optimized_autoscale=None,
                          enable_disk_encryption=None,
@@ -94,13 +104,19 @@ def kusto_cluster_update(client,
         enable_purge = False
     if enable_double_encryption is None:
         enable_double_encryption = False
+    sku = {}
+    sku['name'] = name
+    sku['capacity'] = capacity
+    sku['tier'] = tier
     return sdk_no_wait(no_wait,
                        client.begin_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        tags=tags,
                        location=location,
-                       sku=sku,
+                       name=name,
+                       capacity=capacity,
+                       tier=tier,
                        trusted_external_tenants=trusted_external_tenants,
                        optimized_autoscale=optimized_autoscale,
                        enable_disk_encryption=enable_disk_encryption,
