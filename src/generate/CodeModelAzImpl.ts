@@ -16,7 +16,7 @@ import {
     Schema,
     SchemaType,
 } from '@azure-tools/codemodel';
-import { values, keys } from '@azure-tools/linq';
+import { values } from '@azure-tools/linq';
 import {
     Capitalize,
     deepCopy,
