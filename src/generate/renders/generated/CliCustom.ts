@@ -113,7 +113,6 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
             if (skip) {
                 skip = false;
             }
-            model.MethodParameter;
             if (
                 (model.MethodParameter_IsCliFlattened &&
                     (!isNullOrUndefined(model.MethodParameter.language['cli'].cliFlattenTrace) ||
