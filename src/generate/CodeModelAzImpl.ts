@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { Channel, Session } from '@azure-tools/autorest-extension-base';
+import { Channel, Session } from '@autorest/extension-base';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import {
     CodeModel,

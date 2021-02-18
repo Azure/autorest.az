@@ -1,4 +1,4 @@
-import { Host } from '@azure-tools/autorest-extension-base';
+import { Host } from '@autorest/extension-base';
 import { AzConfiguration, CodeGenConstants, PathConstants } from './utils/models';
 import * as path from 'path';
 import { runPython3 } from './python/setup';

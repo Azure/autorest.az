@@ -1,4 +1,4 @@
-import { AutoRestExtension } from '@azure-tools/autorest-extension-base';
+import { AutoRestExtension } from '@autorest/extension-base';
 import { processRequest as hider } from './hider';
 import { processRequest as renamer } from './renamer';
 import { processRequest as aznamer } from './aznamer';
