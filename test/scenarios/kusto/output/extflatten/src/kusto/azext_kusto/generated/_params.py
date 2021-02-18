@@ -22,7 +22,6 @@ from azure.cli.core.commands.validators import (
     validate_file_or_dict
 )
 from azext_kusto.action import (
-    AddSku,
     AddTrustedExternalTenants,
     AddOptimizedAutoscale,
     AddVirtualNetworkConfiguration,
@@ -46,12 +45,21 @@ def load_arguments(self, _):
 
     with self.argument_context('kusto cluster create') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
-                   'Kusto cluster.')
+        c.argument('cluster_name', type=str, help='The name of the Kusto cluster.')
         c.argument('tags', tags_type)
         c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
-        c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
+        c.argument('name', arg_type=get_enum_type(['Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
+                                                   'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
+                                                   'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
+                                                   'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
+                                                   'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2', 'Standard_E2a_v4',
+                                                   'Standard_E4a_v4', 'Standard_E8a_v4', 'Standard_E16a_v4',
+                                                   'Standard_E8as_v4+1TB_PS', 'Standard_E8as_v4+2TB_PS',
+                                                   'Standard_E16as_v4+3TB_PS', 'Standard_E16as_v4+4TB_PS', 'Dev(No '
+                                                   'SLA)_Standard_E2a_v4']), help='SKU name.')
+        c.argument('capacity', type=int, help='The number of instances of the cluster.')
+        c.argument('tier', arg_type=get_enum_type(['Basic', 'Standard']), help='SKU tier.')
         c.argument('zones', nargs='+', help='The availability zones of the cluster.')
         c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='+', help='The cluster\'s '
                    'external tenants.')
@@ -79,12 +87,21 @@ def load_arguments(self, _):
 
     with self.argument_context('kusto cluster update') as c:
         c.argument('resource_group_name', resource_group_name_type)
-        c.argument('cluster_name', options_list=['--name', '-n', '--cluster-name'], type=str, help='The name of the '
-                   'Kusto cluster.', id_part='name')
+        c.argument('cluster_name', type=str, help='The name of the Kusto cluster.', id_part='name')
         c.argument('tags', tags_type)
         c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
-        c.argument('sku', action=AddSku, nargs='+', help='The SKU of the cluster.')
+        c.argument('name', arg_type=get_enum_type(['Standard_DS13_v2+1TB_PS', 'Standard_DS13_v2+2TB_PS',
+                                                   'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
+                                                   'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
+                                                   'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
+                                                   'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2', 'Standard_E2a_v4',
+                                                   'Standard_E4a_v4', 'Standard_E8a_v4', 'Standard_E16a_v4',
+                                                   'Standard_E8as_v4+1TB_PS', 'Standard_E8as_v4+2TB_PS',
+                                                   'Standard_E16as_v4+3TB_PS', 'Standard_E16as_v4+4TB_PS', 'Dev(No '
+                                                   'SLA)_Standard_E2a_v4']), help='SKU name.')
+        c.argument('capacity', type=int, help='The number of instances of the cluster.')
+        c.argument('tier', arg_type=get_enum_type(['Basic', 'Standard']), help='SKU tier.')
         c.argument('trusted_external_tenants', action=AddTrustedExternalTenants, nargs='+', help='The cluster\'s '
                    'external tenants.')
         c.argument('optimized_autoscale', action=AddOptimizedAutoscale, nargs='+', help='Optimized auto scale '
