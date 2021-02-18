@@ -1,5 +1,5 @@
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
-import { Session, startSession, Host } from '@azure-tools/autorest-extension-base';
+import { Session, startSession, Host } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { isNullOrUndefined } from './utils/helper';
 import { CodeGenConstants, AzConfiguration } from './utils/models';

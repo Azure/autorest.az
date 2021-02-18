@@ -1,4 +1,4 @@
-import { Host, startSession } from '@azure-tools/autorest-extension-base';
+import { Host, startSession } from '@autorest/extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';

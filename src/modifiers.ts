@@ -5,7 +5,7 @@ import {
     OperationGroup,
     Parameter,
 } from '@azure-tools/codemodel';
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
+import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from './utils/helper';
