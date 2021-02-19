@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -17,15 +16,13 @@ import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/uti
 
 sourceMapSupport.install();
 
-const resources = path.join(`${__dirname}`, '/../../../test/unittest/');
+const resources = path.join(`${__dirname}`, '/../../test/unittest/');
 
 const fileName = 'offazure-az-modifier-after.yaml';
 
-@suite
-export class Process {
-    private model: CodeModelCliImpl;
-
-    async init(): Promise<void> {
+describe('RenderSetupPy', () => {
+    let model: CodeModelCliImpl;
+    async function init(): Promise<void> {
         const cfg = {
             az: {
                 extensions: 'offazure',
@@ -41,12 +38,12 @@ export class Process {
         const entry = new Entry(session);
         await entry.init();
 
-        const model = new CodeModelCliImpl(session);
+        const codeModel = new CodeModelCliImpl(session);
 
-        this.model = model;
+        model = codeModel;
     }
 
-    getRenderTestData(dependencies: DataGraph, arrayOutputFormat = false) {
+    function getRenderTestData(dependencies: DataGraph, arrayOutputFormat = false) {
         const data = {
             model: {},
         };
@@ -90,30 +87,38 @@ export class Process {
         ]);
 
         if (arrayOutputFormat) {
-            data.model = this.model.getArrayModelData('extension', inputProperties, dependencies);
+            data.model = model.getArrayModelData('extension', inputProperties, dependencies);
         } else {
-            data.model = this.model.getModelData('extension', inputProperties, dependencies);
+            data.model = model.getModelData('extension', inputProperties, dependencies);
         }
         return data;
     }
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest1() {
-        await this.init();
+    const originalWarn = console.warn.bind(console.warn);
+    beforeAll(() => {
+        console.warn = (msg) => msg.toString().includes('ShowInTest') && originalWarn(msg);
+    });
+    afterAll(() => {
+        console.warn = originalWarn;
+    });
+
+    it('getModelDataTest1', async () => {
+        await init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
         );
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[['extension', 'commandGroup']];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to commandGroup ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest2() {
-        await this.init();
+    it('getModelDataTest2', async () => {
+        await init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/commands.json')),
         );
@@ -121,17 +126,17 @@ export class Process {
             ['extension', 'commandGroup'],
             ['commandGroup', 'command'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to command ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest3() {
-        await this.init();
+    it('getModelDataTest3', async () => {
+        await init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods.json')),
         );
@@ -140,17 +145,17 @@ export class Process {
             ['commandGroup', 'command'],
             ['command', 'method'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to method ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest4() {
-        await this.init();
+    it('getModelDataTest4', async () => {
+        await init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
         );
@@ -160,17 +165,17 @@ export class Process {
             ['command', 'method'],
             ['method', 'methodParameter'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to methodParameter ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest5() {
-        await this.init();
+    it('getModelDataTest5', async () => {
+        await init();
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods-array.json')),
         );
@@ -180,28 +185,28 @@ export class Process {
             ['command', 'method'],
             // ['method', 'methodParameter'],
         ];
-        const data = this.getRenderTestData(dependencies, true);
+        const data = getRenderTestData(dependencies, true);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to methodParameter ',
         );
-    }
+    });
+});
 
-    // @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
-    //     await this.init();
-    //     const expected = JSON.parse(
-    //         await readFile(path.join(resources, 'expected', 'data/methods.json')),
-    //     );
-    //     const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-    //         ['extension', 'commandGroup'],
-    //         ['commandGroup', 'command'],
-    //         ['command', 'method'],
-    //         ['method', 'methodParameter'],
-    //         ['method', 'azExample'],
-    //     ];
-    //     const data = this.getRenderTestData(dependencies);
-    //     console.log(JSON.stringify(data));
-    // }
-}
+// @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
+//     await this.init();
+//     const expected = JSON.parse(
+//         await readFile(path.join(resources, 'expected', 'data/methods.json')),
+//     );
+//     const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+//         ['extension', 'commandGroup'],
+//         ['commandGroup', 'command'],
+//         ['command', 'method'],
+//         ['method', 'methodParameter'],
+//         ['method', 'azExample'],
+//     ];
+//     const data = this.getRenderTestData(dependencies);
+//     console.log(JSON.stringify(data));
+// }

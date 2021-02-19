@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import { readFile, readdir, writeFile } from '@azure-tools/async-io';
 import { deserialize, serialize } from '@azure-tools/codegen';
@@ -15,11 +14,10 @@ import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();
 
-const resources = path.join(`${__dirname}`, '/../../test/resources/');
+const resources = path.join(`${__dirname}`, '/../test/resources/');
 
-@suite
-export class Process {
-    @test(slow(600000), timeout(1500000)) async simpleNamerTest() {
+describe('simpleNamerTest', () => {
+    it('simpleNamerTestCase1', async () => {
         const folders = await readdir(resources);
         for (const each of folders) {
             const cfg = {
@@ -45,7 +43,7 @@ export class Process {
             // console.log(serialize(codeModel))
             const fileName = path.join(
                 `${__dirname}`,
-                '/../../test/resources/' + each + '/' + each + '-az-namer.yaml',
+                '/../test/resources/' + each + '/' + each + '-az-namer.yaml',
             );
 
             // uncomment this line to overwrite existing file
@@ -56,5 +54,5 @@ export class Process {
             const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
             assert.deepEqual(codeModel, codeModelSupposed, 'namer has failed the unit test');
         }
-    }
-}
+    });
+});

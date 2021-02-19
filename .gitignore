@@ -1,3 +1,4 @@
+coverage/
 node_modules/
 dist/
 .vs/
@@ -12,3 +13,4 @@ test-results.xml
 *.orig
 gen.zip
 .nyc_output
+junit.xml
