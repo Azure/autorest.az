@@ -74,8 +74,10 @@ export class PathConstants {
     public static readonly setupPyFile: string = 'setup.py';
     public static readonly setupCfgFile: string = 'setup.cfg';
     public static readonly historyRstFile: string = 'HISTORY.rst';
-    public static readonly docSourceJsonFile: string = '/doc/sphinx/azhelpgen/doc_source_map.json';
-    public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
+    public static readonly docSourceJsonFile: string = path.join(
+        '/doc/sphinx/azhelpgen/doc_source_map.json',
+    );
+    public static readonly mainSetupPyFile: string = path.join('src/azure-cli/setup.py');
     public static readonly readmeFile: string = 'README.md';
     public static readonly recordingFolder: string = 'recordings';
     public static readonly templateRootFolder: string = path.join(
@@ -135,6 +137,7 @@ export enum CodeGenConstants {
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
     PYLINT_MAX_CODE_LENGTH = 119,
+    PYLINT_MAX_OPERATION_TEMPLATE_LENGTH = 92,
 }
 
 export interface AzextMetadata {
@@ -193,8 +196,15 @@ export class RenderInput {
         public properties: string[] = [],
         public sortBy: Record<string, SortOrder> = {},
         public conditions: [string, unknown][] = [],
-        public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),
+        public converter: (item) => unknown = undefined,
     ) {}
 }
 
 export type TemplateRender = [string, TemplateBase];
+
+export enum CliCommandType {
+    CUSTOM_SHOW_COMMAND = 'custom_show_command',
+    CUSTOM_COMMAND = 'custom_command',
+    CUSTOM_WAIT_COMMAND = 'custom_wait_command',
+    GENERIC_UPDATE_COMMAND = 'generic_update_command',
+}

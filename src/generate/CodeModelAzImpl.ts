@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { Channel, Session } from '@azure-tools/autorest-extension-base';
+import { Channel, Session } from '@autorest/extension-base';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import {
     CodeModel,
@@ -41,6 +41,7 @@ import {
     RenderInput,
     DataGraph,
     SortOrder,
+    CliCommandType,
 } from '../utils/models';
 import {
     CodeModelAz,
@@ -100,8 +101,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _outputPath: string;
     private _parentOptions: any;
     private _useOptions: string[];
-
-    private _cliCoreLib: string;
 
     init(): void {
         this.options = AzConfiguration.getValue(CodeGenConstants.az);
@@ -817,7 +816,16 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Extension_Mode(): string {
-        return AzConfiguration.getValue(CodeGenConstants.extensionMode);
+        let extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode);
+        this.codeModel.operationGroups.forEach((operationGroup) => {
+            if (
+                operationGroup.language['az'].command === this.Extension_Name &&
+                !isNullOrUndefined(operationGroup.language?.['cli']?.extensionMode)
+            ) {
+                extensionMode = operationGroup.language?.['cli']?.extensionMode;
+            }
+        });
+        return extensionMode;
     }
 
     public get Extension_NameUnderscored(): string {
@@ -967,6 +975,31 @@ export class CodeModelCliImpl implements CodeModelAz {
             return this.Extension_Mode;
         }
         return this.CommandGroup?.language?.['cli']?.extensionMode;
+    }
+
+    public get CommandGroup_ClientFactoryName(): string {
+        const cfName: string =
+            'cf_' +
+            (this.GetModuleOperationName() !== ''
+                ? this.GetModuleOperationName()
+                : this.Extension_NameUnderscored);
+        return cfName;
+    }
+
+    public get CommandGroup_OperationTmplName(): string {
+        const operationTmpl =
+            this.GetPythonNamespace() +
+            '.operations._' +
+            this.GetModuleOperationNamePython() +
+            '_operations#' +
+            this.GetModuleOperationNamePythonUpper() +
+            '.{}';
+        return operationTmpl;
+    }
+
+    public get CommandGroup_CustomCommandTypeName(): string {
+        const customName = this.Extension_NameUnderscored + '_' + this.GetModuleOperationName();
+        return customName;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -1127,12 +1160,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         const polyOriginal = this.Command.extensions?.['cli-poly-as-resource-original-operation'];
         if (
             !isNullOrUndefined(polyOriginal) &&
-            !isNullOrUndefined(polyOriginal.extensions['cli-split-operation-original-operation'])
+            !isNullOrUndefined(polyOriginal.extensions?.['cli-split-operation-original-operation'])
         ) {
-            const splitOriginal = polyOriginal.extensions['cli-split-operation-original-operation'];
+            const splitOriginal =
+                polyOriginal.extensions?.['cli-split-operation-original-operation'];
             return splitOriginal;
         }
-        const splittedOriginal = this.Command.extensions['cli-split-operation-original-operation'];
+        const splittedOriginal = this.Command.extensions?.[
+            'cli-split-operation-original-operation'
+        ];
         if (!isNullOrUndefined(splittedOriginal)) {
             return splittedOriginal;
         }
@@ -1166,6 +1202,25 @@ export class CodeModelCliImpl implements CodeModelAz {
             return this.CommandGroup_Mode;
         }
         return this.Command?.language?.['cli']?.extensionMode;
+    }
+
+    public get Command_Type(): string {
+        if (this.Command_MethodName === 'show') {
+            return CliCommandType.CUSTOM_SHOW_COMMAND;
+        } else if (this.Command_NeedGeneric) {
+            if (!isNullOrUndefined(this.Command_GenericSetterArgName)) {
+                return CliCommandType.GENERIC_UPDATE_COMMAND;
+            }
+        }
+        return CliCommandType.CUSTOM_COMMAND;
+    }
+
+    public get Command_GenericSetterArgName(): string {
+        const genericParam = this.Command_GenericSetterParameter(this.Command_GetOriginalOperation);
+        if (isNullOrUndefined(genericParam)) {
+            return undefined;
+        }
+        return this.Parameter_NamePython(genericParam);
     }
 
     public get Command_MaxApi(): string {
@@ -3517,15 +3572,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret;
     }
 
-    public set CliCoreLib(lib: string) {
-        this._cliCoreLib = lib;
-    }
-
     public get CliCoreLib(): string {
-        if (isNullOrUndefined(this._cliCoreLib)) {
+        if (isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.cliCoreLib))) {
             return CodeGenConstants.DEFAULT_CLI_CORE_LIB;
         }
-        return this._cliCoreLib;
+        return AzConfiguration.getValue(CodeGenConstants.cliCoreLib);
     }
 
     public get AzureCliFolder(): string {
@@ -3678,9 +3729,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
                     for (const prop of props) {
                         item[prop] = this[Type + '_' + Capitalize(prop)];
-                        if (!isNullOrUndefined(converter.get(prop))) {
-                            item[prop] = converter.get(prop)(item[prop]);
-                        }
                     }
                     for (const condition of conditions) {
                         if (this[Type + '_' + Capitalize(condition[0])] === condition[1]) {
@@ -3705,6 +3753,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                             item = { ...item, ...item2 };
                         });
                     // const d = dependencies.shift();
+                }
+                if (!isNullOrUndefined(converter)) {
+                    item = converter(item);
                 }
                 items.push(item);
             } while (this['SelectNext' + Type]());

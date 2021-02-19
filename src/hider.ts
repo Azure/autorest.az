@@ -1,5 +1,5 @@
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
-import { Session, startSession, Host } from '@azure-tools/autorest-extension-base';
+import { Session, startSession, Host } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { isNullOrUndefined } from './utils/helper';
 import { CodeGenConstants, AzConfiguration } from './utils/models';
@@ -57,10 +57,10 @@ export async function processRequest(host: Host) {
         const plugin = new Hider(session);
         const result = await plugin.process();
         host.WriteFile(CodeGenConstants.m4CodeModelName, serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

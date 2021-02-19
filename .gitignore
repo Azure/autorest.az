@@ -13,4 +13,5 @@ test-results.xml
 *.orig
 gen.zip
 .nyc_output
+venv/
 junit.xml

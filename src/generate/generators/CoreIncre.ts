@@ -17,7 +17,7 @@ import { CliMainRequirement } from '../renders/extraMain/CliMainRequirement';
 import { CliMainSetupPy } from '../renders/extraMain/CliMainSetupPy';
 import { GenerateAzureCliActions } from '../renders/generated/CliActions';
 import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
-import { GenerateAzureCliCommands } from '../renders/generated/CliCommands';
+import { CliCommands } from '../renders/generated/CliCommands';
 import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
 import { GenerateAzureCliHelp } from '../renders/generated/CliHelp';
 import { GenerateAzureCliParams } from '../renders/generated/CliParams';
@@ -47,9 +47,6 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         this.files[
             path.join(PathConstants.generatedFolder, PathConstants.paramsFile)
         ] = GenerateAzureCliParams(this.model, this.isDebugMode);
-        this.files[
-            path.join(PathConstants.generatedFolder, PathConstants.commandsFile)
-        ] = GenerateAzureCliCommands(this.model);
         this.files[
             path.join(PathConstants.generatedFolder, PathConstants.customFile)
         ] = GenerateAzureCliCustom(this.model);
@@ -81,6 +78,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
             ] = GenerateNamespaceInit(this.model);
         }
 
+        await this.generateIncrementalSingleAndAddtoOutput(new CliCommands(this.model));
         // Add Import and run method from generated folder (Init)
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model));
 

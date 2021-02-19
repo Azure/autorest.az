@@ -32,8 +32,10 @@ def kusto_cluster_create(client,
                          resource_group_name,
                          cluster_name,
                          location,
-                         sku,
+                         name,
+                         tier,
                          tags=None,
+                         capacity=None,
                          zones=None,
                          trusted_external_tenants=None,
                          optimized_autoscale=None,
@@ -55,7 +57,10 @@ def kusto_cluster_create(client,
     parameters = {}
     parameters['tags'] = tags
     parameters['location'] = location
-    parameters['sku'] = sku
+    parameters['sku'] = {}
+    parameters['sku']['name'] = name
+    parameters['sku']['capacity'] = capacity
+    parameters['sku']['tier'] = tier
     parameters['zones'] = zones
     parameters['trusted_external_tenants'] = trusted_external_tenants
     parameters['optimized_autoscale'] = optimized_autoscale
@@ -80,7 +85,9 @@ def kusto_cluster_update(client,
                          cluster_name,
                          tags=None,
                          location=None,
-                         sku=None,
+                         name=None,
+                         capacity=None,
+                         tier=None,
                          trusted_external_tenants=None,
                          optimized_autoscale=None,
                          enable_disk_encryption=None,
@@ -101,7 +108,10 @@ def kusto_cluster_update(client,
     parameters = {}
     parameters['tags'] = tags
     parameters['location'] = location
-    parameters['sku'] = sku
+    parameters['sku'] = {}
+    parameters['sku']['name'] = name
+    parameters['sku']['capacity'] = capacity
+    parameters['sku']['tier'] = tier
     parameters['trusted_external_tenants'] = trusted_external_tenants
     parameters['optimized_autoscale'] = optimized_autoscale
     parameters['enable_disk_encryption'] = enable_disk_encryption

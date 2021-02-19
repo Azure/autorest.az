@@ -5,7 +5,7 @@ import {
     OperationGroup,
     Parameter,
 } from '@azure-tools/codemodel';
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
+import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from './utils/helper';
@@ -318,10 +318,10 @@ export async function processRequest(host: Host) {
         const plugin = new Modifiers(session);
         const result = await plugin.process();
         host.WriteFile('modifiers-temp-output.yaml', serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

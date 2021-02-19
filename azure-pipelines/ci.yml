@@ -2,10 +2,10 @@ trigger:
 - master
 
 variables:
-  NodeVersion: '10.x'
+  NodeVersion: '13.x'
   VAR_BUILD_ARTIFACT_STAGING_DIRECTORY: $(Build.ArtifactStagingDirectory)
   VAR_ARIFACT_NAME: "drop"
-  parallelTest: 'true'
+  parallelTest: false
 
 jobs:
   - job: ESLint
@@ -18,7 +18,7 @@ jobs:
           verbose: false
       - script: 'node_modules\.bin\eslint . --ext .ts --ignore-pattern node_modules/ --ignore-pattern dist/'
         displayName: 'eslint'
-
+        
   - job: Build
     strategy:
       matrix:
@@ -36,14 +36,14 @@ jobs:
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js $(NodeVersion)'
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.7'
+        inputs:
+          versionSpec: 3.7
       - task: Npm@1
         displayName: 'npm install'
         inputs:
           verbose: false
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
-        inputs:
-          versionSpec: 3.6
       - script: 'npm run build'
         displayName: 'npm build'
       - script: 'npm pack'
@@ -71,19 +71,20 @@ jobs:
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js $(NodeVersion)'
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.7'
+        inputs:
+          versionSpec: 3.7
       - task: Npm@1
         displayName: 'npm install'
         inputs:
           verbose: false
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
-        inputs:
-          versionSpec: 3.6
       - script: 'npm run build'
         displayName: 'npm build'
       - script: 'npm run test-report'
         displayName: 'npm test-report'
-     
+        env:
+          NODE_OPTIONS: --max_old_space_size=65536
   - job: Analyze
     strategy:
       matrix:
@@ -101,6 +102,10 @@ jobs:
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js $(NodeVersion)'
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.7'
+        inputs:
+          versionSpec: 3.7
       - task: Npm@1
         displayName: 'npm install'
         inputs:

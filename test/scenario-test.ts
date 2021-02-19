@@ -54,11 +54,11 @@ describe('ScenarioTest', () => {
         }
         let cmd =
             path.join(`${__dirname}`, '/../' + 'node_modules/.bin/autorest') +
-            ' --version=3.0.6320 --az --use=' +
+            ' --version=3.0.6370 --az --use=' +
             path.join(`${__dirname}`, '/../') +
             ' ' +
-            directory +
-            '/configuration/readme.md ' +
+            path.join(directory, 'configuration/readme.md') +
+            ' ' +
             cmdOption.join(' ');
         cmd = cmd
             .split(' ')
@@ -159,7 +159,10 @@ describe('ScenarioTest', () => {
                 result = err;
             });
         if (result) {
-            await compare(dir + each + '/output/' + testMode, dir + each + '/tmpoutput/' + testMode)
+            await this.compare(
+                path.join(dir, each, 'output', testMode),
+                path.join(dir, each, 'tmpoutput', testMode),
+            )
                 .then((res1) => {
                     if (res1 === false) {
                         msg = 'The generated files have changed!';

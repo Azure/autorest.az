@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { readFile } from '@azure-tools/async-io';
 import { deserialize, fail } from '@azure-tools/codegen';
-import { startSession, Session } from '@azure-tools/autorest-extension-base';
+import { startSession, Session } from '@autorest/extension-base';
 import { values } from '@azure-tools/linq';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
