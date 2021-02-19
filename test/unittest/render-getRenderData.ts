@@ -4,13 +4,16 @@
  *-------------------------------------------------------------------------------------------- */
 
 import * as assert from 'assert';
+import * as fs from 'fs';
 import * as path from 'path';
 import { readFile } from '@azure-tools/async-io';
-import { SchemaType } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
 import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
+import { Entry } from '../../src/entry';
+import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
 import { isNullOrUndefined } from '../../src/utils/helper';
-import { RenderDataBase } from './render-getRenderDataBase';
+import { createTestSession } from '../utils/test-helper';
 
 sourceMapSupport.install();
 
@@ -20,10 +23,10 @@ const fileName = 'offazure-az-modifier-after.yaml';
 
 describe('RenderSetupPy', () => {
     let model: CodeModelCliImpl;
-    async function init(): Promise<void> {
+    async function init(extensionName: string, fileName: string): Promise<void> {
         const cfg = {
             az: {
-                extensions: 'offazure',
+                extensions: extensionName,
             },
         };
         if (!fs.existsSync(path.join(resources, 'input', fileName))) {
@@ -100,7 +103,7 @@ describe('RenderSetupPy', () => {
     });
 
     it('getModelDataTest1', async () => {
-        await init();
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
         );
@@ -115,7 +118,7 @@ describe('RenderSetupPy', () => {
     });
 
     it('getModelDataTest2', async () => {
-        await init();
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/commands.json')),
         );
@@ -133,7 +136,7 @@ describe('RenderSetupPy', () => {
     });
 
     it('getModelDataTest3', async () => {
-        await init();
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods.json')),
         );
@@ -152,7 +155,7 @@ describe('RenderSetupPy', () => {
     });
 
     it('getModelDataTest4', async () => {
-        await init();
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
         );
@@ -172,7 +175,7 @@ describe('RenderSetupPy', () => {
     });
 
     it('getModelDataTest5', async () => {
-        await init();
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods-array.json')),
         );
@@ -189,10 +192,10 @@ describe('RenderSetupPy', () => {
             expected,
             'Getting render data error from extension to methodParameter ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
-        await super.init('offazure', fileName);
+    it('getModelDataTest6', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(
                 path.join(resources, 'expected', 'data/method-parameters-az-examples.json'),
@@ -205,7 +208,7 @@ describe('RenderSetupPy', () => {
             ['method', 'methodParameter'],
             ['method', 'azExample'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
         // console.log(JSON.stringify(data));
         assert.deepStrictEqual(
             data,
@@ -213,9 +216,8 @@ describe('RenderSetupPy', () => {
             'Getting render data error from extension to methodParameter ',
         );
     });
-});
 
-    @test(slow(600000), timeout(1500000)) async testConverter() {
+    it('testConverter', () => {
         const converter = (item) => {
             let mapsTo = item['mapsTo'];
             if (isNullOrUndefined(mapsTo)) {
@@ -232,5 +234,5 @@ describe('RenderSetupPy', () => {
         };
         const data = converter(item);
         assert.deepStrictEqual(data, { mapsTo: 'converter-test' }, 'testConverter error!');
-    }
-}
+    });
+});
