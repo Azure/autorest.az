@@ -24,7 +24,7 @@ def load_command_table(self, _):
         ),
         client_factory=cf_factory,
     )
-    with self.command_group('datafactory factory', datafactory_factory) as g:
+    with self.command_group('datafactory factory', datafactory_factory, client_factory=cf_factory) as g:
         g.custom_command('list', 'datafactory_factory_list')
         g.custom_show_command('show', 'datafactory_factory_show')
         g.custom_command('create', 'datafactory_factory_create')
@@ -40,7 +40,9 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._integration_runtime_operations#IntegrationRuntimeOperations.{}',
         client_factory=cf_integration_runtime,
     )
-    with self.command_group('datafactory integration-runtime', datafactory_integration_runtime) as g:
+    with self.command_group(
+        'datafactory integration-runtime', datafactory_integration_runtime, client_factory=cf_integration_runtime
+    ) as g:
         g.custom_command('list', 'datafactory_integration_runtime_list')
         g.custom_show_command('show', 'datafactory_integration_runtime_show')
         g.custom_command(
@@ -68,7 +70,9 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._linked_service_operations#LinkedServiceOperations.{}',
         client_factory=cf_linked_service,
     )
-    with self.command_group('datafactory linked-service', datafactory_linked_service, is_preview=True) as g:
+    with self.command_group(
+        'datafactory linked-service', datafactory_linked_service, client_factory=cf_linked_service, is_preview=True
+    ) as g:
         g.custom_command('list', 'datafactory_linked_service_list')
         g.custom_show_command('show', 'datafactory_linked_service_show')
         g.custom_command('create', 'datafactory_linked_service_create')
