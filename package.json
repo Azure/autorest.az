@@ -19,7 +19,7 @@
         "watch": "tsc -p . --watch",
         "prepare": "npm run build",
         "test": "npm run build && jest --forceExit --coverage --runInBand --config ./jest.unittest.config.js",
-        "test-report": "npm run build && jest --ci  --runInBand --reporters=default --reporters=jest-junit",
+        "test-report": "npm run build && jest --ci  --runInBand --reporters=default --reporters=jest-junit --coverage",
         "clean": "ver > nul 2>&1 nul && npm run --silent clean-cmd || npm run --silent clean-bash",
         "clean-cmd": "if exist dist rmdir /s /q dist && exit 0 || exit 0 ",
         "clean-bash": "rm nul && rm -rf dist && exit 0 || exit 0"
