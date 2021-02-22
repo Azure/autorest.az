@@ -34,7 +34,7 @@ def load_command_table(self, _):
     {{commandGroup.customCommandTypeName}} = CliCommandType(
         operations_tmpl='{{commandGroup.operationTmplName}}',
         client_factory={{commandGroup.clientFactoryName}})
-    with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}
+    with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}, client_factory={{commandGroup.clientFactoryName}}
                             {%- for key, value in commandGroup.propertiesString %}
                                 {% if key != 'mode' %}
                                     , {{key}}={{value}}

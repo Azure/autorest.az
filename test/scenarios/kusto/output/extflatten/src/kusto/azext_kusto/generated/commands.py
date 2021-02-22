@@ -22,7 +22,7 @@ def load_command_table(self, _):
         operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._cluster_operations#ClusterOperations.{}',
         client_factory=cf_cluster,
     )
-    with self.command_group('kusto cluster', kusto_cluster, is_experimental=True) as g:
+    with self.command_group('kusto cluster', kusto_cluster, client_factory=cf_cluster, is_experimental=True) as g:
         g.custom_command('list', 'kusto_cluster_list')
         g.custom_show_command('show', 'kusto_cluster_show')
         g.custom_command('create', 'kusto_cluster_create', supports_no_wait=True)
@@ -47,7 +47,11 @@ def load_command_table(self, _):
         operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._cluster_principal_assignment_operations#ClusterPrincipalAssignmentOperations.{}',
         client_factory=cf_cluster_principal_assignment,
     )
-    with self.command_group('kusto cluster-principal-assignment', kusto_cluster_principal_assignment) as g:
+    with self.command_group(
+        'kusto cluster-principal-assignment',
+        kusto_cluster_principal_assignment,
+        client_factory=cf_cluster_principal_assignment,
+    ) as g:
         g.custom_command('list', 'kusto_cluster_principal_assignment_list')
         g.custom_show_command('show', 'kusto_cluster_principal_assignment_show')
         g.custom_command('create', 'kusto_cluster_principal_assignment_create', supports_no_wait=True)
@@ -63,7 +67,7 @@ def load_command_table(self, _):
         operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._database_operations#DatabaseOperations.{}',
         client_factory=cf_database,
     )
-    with self.command_group('kusto database', kusto_database) as g:
+    with self.command_group('kusto database', kusto_database, client_factory=cf_database) as g:
         g.custom_command('list', 'kusto_database_list')
         g.custom_show_command('show', 'kusto_database_show')
         g.custom_command('create', 'kusto_database_create', supports_no_wait=True)
@@ -80,7 +84,11 @@ def load_command_table(self, _):
         operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._database_principal_assignment_operations#DatabasePrincipalAssignmentOperations.{}',
         client_factory=cf_database_principal_assignment,
     )
-    with self.command_group('kusto database-principal-assignment', kusto_database_principal_assignment) as g:
+    with self.command_group(
+        'kusto database-principal-assignment',
+        kusto_database_principal_assignment,
+        client_factory=cf_database_principal_assignment,
+    ) as g:
         g.custom_command('list', 'kusto_database_principal_assignment_list')
         g.custom_show_command('show', 'kusto_database_principal_assignment_show')
         g.custom_command('create', 'kusto_database_principal_assignment_create', supports_no_wait=True)
@@ -96,7 +104,11 @@ def load_command_table(self, _):
         operations_tmpl='azext_kusto.vendored_sdks.kusto.operations._attached_database_configuration_operations#AttachedDatabaseConfigurationOperations.{}',
         client_factory=cf_attached_database_configuration,
     )
-    with self.command_group('kusto attached-database-configuration', kusto_attached_database_configuration) as g:
+    with self.command_group(
+        'kusto attached-database-configuration',
+        kusto_attached_database_configuration,
+        client_factory=cf_attached_database_configuration,
+    ) as g:
         g.custom_command('list', 'kusto_attached_database_configuration_list')
         g.custom_show_command('show', 'kusto_attached_database_configuration_show')
         g.custom_command('create', 'kusto_attached_database_configuration_create', supports_no_wait=True)
@@ -114,7 +126,7 @@ def load_command_table(self, _):
         ),
         client_factory=cf_data_connection,
     )
-    with self.command_group('kusto data-connection', kusto_data_connection) as g:
+    with self.command_group('kusto data-connection', kusto_data_connection, client_factory=cf_data_connection) as g:
         g.custom_command('list', 'kusto_data_connection_list')
         g.custom_show_command('show', 'kusto_data_connection_show')
         g.custom_command('event-grid create', 'kusto_data_connection_event_grid_create', supports_no_wait=True)
