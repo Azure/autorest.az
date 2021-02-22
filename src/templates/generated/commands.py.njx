@@ -42,7 +42,7 @@ def load_command_table(self, _):
                                     {% if commandGroup.name == extension.name %}
                                         {% set extensionModeDefined = true %}
                                     {% endif %}
-                                    {% if (value != "stable" and value != extension.mode) or (commandGroup.name == extension.name) %}
+                                    {% if (value != "stable" and ((value != extension.mode) or (commandGroup.name == extension.name))) %}
                                         , is_{{value}}=True
                                     {% endif %}
                                     {% set groupMode = value %}
