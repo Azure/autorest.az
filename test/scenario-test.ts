@@ -54,7 +54,7 @@ describe('ScenarioTest', () => {
         }
         let cmd =
             path.join(`${__dirname}`, '/../' + 'node_modules/.bin/autorest') +
-            ' --version=3.0.6370 --az --use=' +
+            ' --version=3.0.6336 --az --use=' +
             path.join(`${__dirname}`, '/../') +
             ' ' +
             path.join(directory, 'configuration/readme.md') +
@@ -159,7 +159,7 @@ describe('ScenarioTest', () => {
                 result = err;
             });
         if (result) {
-            await this.compare(
+            await compare(
                 path.join(dir, each, 'output', testMode),
                 path.join(dir, each, 'tmpoutput', testMode),
             )
