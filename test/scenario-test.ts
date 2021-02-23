@@ -5,7 +5,6 @@ import * as path from 'path';
 import { CodeGenConstants, CompatibleLevel, GenerateSdk, TargetMode } from '../src/utils/models';
 import { copyRecursiveSync, deleteFolderRecursive, isNullOrUndefined } from '../src/utils/helper';
 import * as sourceMapSupport from 'source-map-support';
-import { Test } from 'mocha';
 
 sourceMapSupport.install();
 
