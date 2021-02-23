@@ -142,7 +142,7 @@ export class CliTestStep extends TemplateBase {
                                 stepBuff[cmdString] = functionName;
                                 if (
                                     exampleCmd[0].indexOf(' delete') > -1 &&
-                                    examples[exampleIdx].HttpMethod.toLowerCase() == 'delete'
+                                    examples[exampleIdx].HttpMethod.toLowerCase() === 'delete'
                                 ) {
                                     exampleCmd[0] += ' -y';
                                 }

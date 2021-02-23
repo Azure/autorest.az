@@ -27,20 +27,12 @@ export class CliTestPrepare extends TemplateBase {
     constructor(model: CodeModelAz, resourceNames: string[]) {
         super(model);
         this.resourceNames = resourceNames;
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                PathConstants.preparersFile,
-            );
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                PathConstants.preparersFile,
-            );
-        }
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.testFolder,
+            PathConstants.latestFolder,
+            PathConstants.preparersFile,
+        );
         this.tmplPath = path.join(PathConstants.templateRootFolder, 'tests/latest/prepares.py.njx');
     }
 
