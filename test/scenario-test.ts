@@ -6,6 +6,7 @@ import * as path from 'path';
 import { CodeGenConstants, CompatibleLevel, GenerateSdk, TargetMode } from '../src/utils/models';
 import { copyRecursiveSync, deleteFolderRecursive, isNullOrUndefined } from '../src/utils/helper';
 import * as sourceMapSupport from 'source-map-support';
+import { Test } from 'mocha';
 
 sourceMapSupport.install();
 
@@ -18,6 +19,7 @@ export enum TestMode {
     ExtNoSdk = 'extnosdk',
     ExtDefaultFolder = 'ext_default_folder',
     ExtNoSdkNoFlattenTrack1 = 'extnosdknoflattentrack1',
+    CoreTrack2 = 'coretrack2',
 }
 
 @suite
@@ -32,7 +34,7 @@ export class Process {
             'kusto',
             [
                 TestMode.CoreDefault,
-                TestMode.ExtFlatten,
+                TestMode.CoreTrack2,
                 TestMode.ExtDefaultFolder,
                 TestMode.ExtNoSdkNoFlattenTrack1,
             ],
@@ -118,6 +120,14 @@ export class Process {
             key = CodeGenConstants.azureCliFolder;
             extraOption[key] = outputDir;
             return extraOption;
+        } else if (testMode === TestMode.CoreTrack2) {
+            let key = CodeGenConstants.targetMode;
+            extraOption[key] = TargetMode.Core;
+            key = CodeGenConstants.azureCliFolder;
+            extraOption[key] = outputDir;
+            key = CodeGenConstants.compatibleLevel;
+            extraOption[key] = CompatibleLevel.Track2;
+            return extraOption;
         } else if (testMode === TestMode.ExtFlatten) {
             let key = CodeGenConstants.azureCliExtFolder;
             extraOption[key] = outputDir;
@@ -202,7 +212,8 @@ export class Process {
                         if (
                             dimension === TestMode.CoreDefault ||
                             dimension === TestMode.ExtIncremental ||
-                            dimension === TestMode.CoreIncremental
+                            dimension === TestMode.CoreIncremental ||
+                            dimension === TestMode.CoreTrack2
                         ) {
                             copyRecursiveSync(
                                 path.join(dir, rp, 'basecli'),
