@@ -405,3 +405,14 @@ az:
   ...
   gen-min-test: true
 ~~~
+
+
+## How to merge resource names in example files
+In some RPs the resource names in example files is not well defined. For instance: every example file use a different resource group name. This will generate many resource groups in test files.
+
+Below flag can require test codegen to use only one resource name for each resource type.
+~~~
+az:
+  ...
+  test-unique-resource: true
+~~~

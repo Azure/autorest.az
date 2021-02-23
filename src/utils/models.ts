@@ -132,6 +132,7 @@ export enum CodeGenConstants {
     clientBaseUrlBound = 'client-base-url-bound',
     clientSubscriptionBound = 'client-subscription-bound',
     clientAuthenticationPolicy = 'client-authentication-policy',
+    testUniqueResource = 'test-unique-resource',
 
     // default constant values
     minCliCoreVersion = '2.15.0',

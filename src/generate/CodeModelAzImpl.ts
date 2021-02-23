@@ -209,7 +209,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get GetTestUniqueResource(): boolean {
-        const ret = this.options?.['test-unique-resource'];
+        const ret = this.options?.[CodeGenConstants.testUniqueResource];
         if (ret) return true;
         return false;
     }

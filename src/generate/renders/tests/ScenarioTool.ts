@@ -560,7 +560,7 @@ const uniqueNames = {};
 
 function addUniqueName(className: string, objectName: string): string {
     let ret = objectName;
-    if (azOptions?.['test-unique-resource']) {
+    if (azOptions?.[CodeGenConstants.testUniqueResource]) {
         if (Object.prototype.hasOwnProperty.call(uniqueNames, className)) {
             ret = uniqueNames[className];
         } else {
