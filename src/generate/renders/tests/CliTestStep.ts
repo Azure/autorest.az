@@ -27,20 +27,12 @@ export function NeedPreparers(): Set<string> {
 export class CliTestStep extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                PathConstants.testStepFile,
-            );
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                PathConstants.testStepFile,
-            );
-        }
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.testFolder,
+            PathConstants.latestFolder,
+            PathConstants.testStepFile,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {

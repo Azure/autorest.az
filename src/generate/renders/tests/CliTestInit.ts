@@ -10,15 +10,11 @@ import { PathConstants } from '../../../utils/models';
 export class CliTestInit extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.testFolder, PathConstants.initFile);
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.testFolder,
-                PathConstants.initFile,
-            );
-        }
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.testFolder,
+            PathConstants.initFile,
+        );
         this.tmplPath = path.join(PathConstants.templateRootFolder, 'tests/init.py.njx');
     }
 

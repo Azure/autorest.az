@@ -11,32 +11,23 @@ import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants } from '../../../utils/models';
 
 export class CliTestScenario extends TemplateBase {
+    public configValue: any;
+    private groupName: string;
+    private header: HeaderGenerator = new HeaderGenerator();
+    private scenarios: string[] = [];
+
     constructor(model: CodeModelAz, testFilename: string, configValue: any, groupName: string) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                testFilename,
-            );
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                testFilename,
-            );
-        }
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.testFolder,
+            PathConstants.latestFolder,
+            testFilename,
+        );
         this.configValue = configValue;
         this.groupName = groupName;
         this.skip = true;
     }
-
-    public configValue: any;
-    private groupName: string;
-
-    private header: HeaderGenerator = new HeaderGenerator();
-    private scenarios: string[] = [];
 
     public async fullGeneration(): Promise<string[]> {
         this.StartGenerateAzureCliTestScenario();
