@@ -25,9 +25,9 @@ def step_mn_create(test, rg, checks=None):
              '":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn'
              '}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/vir'
              'tualNetworks/{vn_2}\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{r'
-             'g}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{'
-             'subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/default\\'
-             '"}}]}}" '
+             'g}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/{subnets}\\"}},{{\\"id\\":\\"/subscriptions'
+             '/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/{subnet'
+             's_2}\\"}}]}}" '
              '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=checks)
@@ -108,8 +108,8 @@ def step_mn_group_create(test, rg, checks=None):
     test.cmd('az managed-network mn group create '
              '--management-groups "[]" '
              '--subnets id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNet'
-             'works/{vn}/subnets/default" id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.'
-             'Network/virtualNetworks/{vn_2}/subnets/default" '
+             'works/{vn}/subnets/{subnets}" id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsof'
+             't.Network/virtualNetworks/{vn_2}/subnets/{subnets_2}" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
              'etworks/VnetA" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'

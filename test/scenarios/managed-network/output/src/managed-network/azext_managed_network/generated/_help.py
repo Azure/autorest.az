@@ -45,8 +45,8 @@ d\\":\\"/providers/Microsoft.Management/managementGroups/20000000-0002-0000-0000
 criptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork\\"},{\\"id\\":\\"\
 /subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwor\
 k2\\"}],\\"subnets\\":[{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myResourceGroup/providers/Microsoft.Net\
-work/virtualNetworks/myVirtualNetwork3/subnets/default\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/myR\
-esourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork3/subnets/default\\"}]}" --name \
+work/virtualNetworks/myVirtualNetwork3/subnets/mySubnet\\"},{\\"id\\":\\"/subscriptions/subscriptionC/resourceGroups/my\
+ResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork3/subnets/mySubnet2\\"}]}" --name \
 "myManagedNetwork" --resource-group "myResourceGroup"
 """
 
@@ -188,11 +188,11 @@ helps['managed-network mn group create'] = """
       - name: Create/Update Managed Network Group
         text: |-
                az managed-network mn group create --management-groups "[]" --subnets id="/subscriptions/subscriptionB/r\
-esourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/default" \
+esourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNetwork/subnets/mySubnet" \
 id="/subscriptions/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myVirtualNe\
-twork2/subnets/default" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Networ\
-k/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netwo\
-rk/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
+twork2/subnets/mySubnet2" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Netw\
+ork/virtualNetworks/VnetA" --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Net\
+work/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" \
 --resource-group "myResourceGroup"
 """
 
