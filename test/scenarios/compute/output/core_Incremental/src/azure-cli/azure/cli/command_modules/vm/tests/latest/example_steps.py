@@ -14,18 +14,18 @@ from .. import try_manual
 
 # EXAMPLE: /VirtualMachines/post/Assess patch state of a virtual machine.
 @try_manual
-def step_virtual_machine_assess_patch(test, rg, rg_2, checks=None):
+def step_virtual_machine_assess_patch(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az vm virtual-machine assess-patch '
              '--resource-group "{rg}" '
-             '--vm-name "myVMName"',
+             '--name "myVMName"',
              checks=checks)
 
 
 # EXAMPLE: /VirtualMachineScaleSetVMExtensions/put/Create VirtualMachineScaleSet VM extension.
 @try_manual
-def step_virtual_machine_scale_set_vm_extension_create(test, rg, rg_2, checks=None):
+def step_virtual_machine_scale_set_vm_extension_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az vm virtual-machine-scale-set-vm-extension create '
@@ -44,7 +44,7 @@ def step_virtual_machine_scale_set_vm_extension_create(test, rg, rg_2, checks=No
 
 # EXAMPLE: /VirtualMachineScaleSetVMExtensions/get/Get VirtualMachineScaleSet VM extension.
 @try_manual
-def step_virtual_machine_scale_set_vm_extension_show(test, rg, rg_2, checks=None):
+def step_virtual_machine_scale_set_vm_extension_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az vm virtual-machine-scale-set-vm-extension show '
@@ -57,7 +57,7 @@ def step_virtual_machine_scale_set_vm_extension_show(test, rg, rg_2, checks=None
 
 # EXAMPLE: /VirtualMachineScaleSetVMExtensions/get/List extensions in Vmss instance.
 @try_manual
-def step_virtual_machine_scale_set_vm_extension_list(test, rg, rg_2, checks=None):
+def step_virtual_machine_scale_set_vm_extension_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az vm virtual-machine-scale-set-vm-extension list '

@@ -33,4 +33,3 @@ def step_attestation_provider_update(test, rg, rg_2, rg_3, checks=None):
              '--provider-name "myattestationprovider" '
              '--tags Property1="{storageAccountId}" Property2="Value2" Property3="Value3"',
              checks=checks)
-

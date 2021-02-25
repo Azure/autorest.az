@@ -27,39 +27,35 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 # Env setup_scenario
 @try_manual
-def setup_scenario(test, rg, rg_2):
+def setup_scenario(test):
     pass
 
 
 # Env cleanup_scenario
 @try_manual
-def cleanup_scenario(test, rg, rg_2):
+def cleanup_scenario(test):
     pass
 
 
 # Testcase: Scenario
 @try_manual
-def call_scenario(test, rg, rg_2):
-    setup_scenario(test, rg, rg_2)
-    step_virtual_machine_assess_patch(test, rg, rg_2, checks=[])
-    step_virtual_machine_scale_set_vm_extension_create(test, rg, rg_2, checks=[])
-    step_virtual_machine_scale_set_vm_extension_show(test, rg, rg_2, checks=[])
-    step_virtual_machine_scale_set_vm_extension_list(test, rg, rg_2, checks=[])
-    cleanup_scenario(test, rg, rg_2)
+def call_scenario(test):
+    setup_scenario(test)
+    step_virtual_machine_assess_patch(test, checks=[])
+    step_virtual_machine_scale_set_vm_extension_create(test, checks=[])
+    step_virtual_machine_scale_set_vm_extension_show(test, checks=[])
+    step_virtual_machine_scale_set_vm_extension_list(test, checks=[])
+    cleanup_scenario(test)
 
 
 # Test class for Scenario
 @try_manual
 class VmScenarioTest(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(VmScenarioTest, self).__init__(*args, **kwargs)
 
-
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
-    @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroup'[:7], key='rg_2', parameter_name='rg_2')
-    def test_vm_Scenario(self, rg, rg_2):
-        call_scenario(self, rg, rg_2)
+    def test_vm_Scenario(self, rg):
+        call_scenario(self)
         calc_coverage(__file__)
         raise_if()
-
