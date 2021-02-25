@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
@@ -6,6 +6,7 @@
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
 import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
+import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
 
 export class MethodParam {
     public value: any;
@@ -254,7 +255,13 @@ export interface CodeModelAz {
     GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string, commandParams: any, examples: any[], minimum: boolean): string[][];
+    FindExampleById(
+        id: string,
+        commandParams: any,
+        examples: any[],
+        minimum: boolean,
+        step?: TestStepExampleFileRestCall,
+    ): string[][];
     SelectFirstAzExample(): boolean;
     SelectNextAzExample(): boolean;
     AzExample: CommandExample;
@@ -264,7 +271,7 @@ export interface CodeModelAz {
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
-    FindExampleWaitById(id: string): string[][];
+    FindExampleWaitById(id: string, step?: TestStepExampleFileRestCall): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
@@ -278,4 +285,5 @@ export interface CodeModelAz {
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
     );
+    GetTestUniqueResource: boolean;
 }

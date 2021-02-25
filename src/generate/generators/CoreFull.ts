@@ -20,7 +20,7 @@ import { GenerateAzureCliValidators } from '../renders/generated/CliValidators';
 import { CliTestInit } from '../renders/tests/CliTestInit';
 import { CliTestPrepare } from '../renders/tests/CliTestPrepare';
 import { CliTestScenario } from '../renders/tests/CliTestScenario';
-import { CliTestStep, NeedPreparer } from '../renders/tests/CliTestStep';
+import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 export class AzCoreFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -103,9 +103,22 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         true,
                     );
                 }
-                if (NeedPreparer()) {
-                    await this.generateFullSingleAndAddtoOutput(new CliTestPrepare(model));
+                const needPreparers = NeedPreparers();
+                if (needPreparers.size > 0) {
+                    await this.generateFullSingleAndAddtoOutput(
+                        new CliTestPrepare(model, [...needPreparers]),
+                    );
                 }
+                model
+                    .GetResourcePool()
+                    .generateArmTemplate(
+                        files,
+                        path.join(
+                            model.azOutputFolder,
+                            PathConstants.testFolder,
+                            PathConstants.latestFolder,
+                        ),
+                    );
                 GenerateMetaFile(model);
             } while (model.SelectNextExtension());
         }

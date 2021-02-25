@@ -25,7 +25,7 @@ import { GenerateAzureCliValidators } from '../renders/generated/CliValidators';
 import { CliTestInit } from '../renders/tests/CliTestInit';
 import { CliTestPrepare } from '../renders/tests/CliTestPrepare';
 import { CliTestScenario } from '../renders/tests/CliTestScenario';
-import { CliTestStep, NeedPreparer } from '../renders/tests/CliTestStep';
+import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 
 export class AzExtensionIncrementalGenerator extends GeneratorBase {
@@ -132,9 +132,18 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                 true,
             );
         }
-        if (NeedPreparer()) {
-            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model));
+        const needPreparers = NeedPreparers();
+        if (needPreparers.size > 0) {
+            await this.generateIncrementalSingleAndAddtoOutput(
+                new CliTestPrepare(this.model, [...needPreparers]),
+            );
         }
+        this.model
+            .GetResourcePool()
+            .generateArmTemplate(
+                this.files,
+                path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder),
+            );
         GenerateMetaFile(this.model);
     }
 }
