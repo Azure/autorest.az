@@ -113,6 +113,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
             if (skip) {
                 skip = false;
             }
+            if (model.MethodParameter_MapsTo === 'microsoft_graph_entity_id') {
+                originalParameterStack;
+            }
             if (
                 (model.MethodParameter_IsCliFlattened &&
                     (!isNullOrUndefined(model.MethodParameter.language['cli'].cliFlattenTrace) ||

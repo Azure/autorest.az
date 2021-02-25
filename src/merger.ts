@@ -1,4 +1,10 @@
-import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
+import {
+    CodeModel,
+    codeModelSchema,
+    getAllProperties,
+    ObjectSchema,
+    SchemaType,
+} from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
@@ -183,6 +189,9 @@ export class CodeModelMerger {
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
+        if (cliM4Path === "schemas$$objects['microsoft.graph.user']$$properties['settings']") {
+            cliM4Path;
+        }
         const cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel, false, param);
         let foundNode = false;
         if (
@@ -210,35 +219,79 @@ export class CodeModelMerger {
             if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
                 for (const fnode of flattenedNodes) {
                     if (!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
-                        for (const prop of values(param.schema.properties)) {
-                            if (
-                                !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
-                                fnode.language?.cli?.cliKey === prop['language']?.cli?.cliKey
-                            ) {
-                                fnode.language.python = prop['language'].python;
-                                fnode.language.cli.pythonFlattenedFrom = param;
-                                break;
-                            } else if (!isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)) {
-                                for (const trace of values(fnode.language.cli.cliFlattenTrace)) {
-                                    if (
-                                        !isNullOrUndefined(prop['language']?.cli?.cliPath) &&
-                                        trace === prop['language'].cli.cliPath
-                                    ) {
-                                        for (const p of prop['schema']?.properties) {
-                                            if (
-                                                !isNullOrUndefined(p.language?.cli?.cliKey) &&
-                                                fnode.language?.cli?.cliKey ===
-                                                    p.language?.cli?.cliKey
-                                            ) {
-                                                fnode.language.python = p.language.python;
-                                                fnode.language.cli.pythonFlattenedFrom = prop;
-                                                break;
-                                            }
+                        let foundProp = false;
+                        const OutLayerProp = [];
+                        OutLayerProp.push(param.schema);
+                        let tryAgain = false;
+                        while (!foundProp) {
+                            if (!tryAgain && OutLayerProp.length === 0) {
+                                OutLayerProp.push(param.schema);
+                                tryAgain = true;
+                            }
+                            const outProp = OutLayerProp.shift();
+                            outProp.language['cli'].cliKey;
+                            for (const prop of getAllProperties(outProp)) {
+                                if (
+                                    !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
+                                    fnode.language?.cli?.cliKey === prop.language?.['cli']?.cliKey
+                                ) {
+                                    fnode.language.python = prop['language'].python;
+                                    fnode.language.cli.pythonFlattenedFrom = param;
+                                    foundProp = true;
+                                    break;
+                                } else if (
+                                    !isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)
+                                ) {
+                                    for (const trace of values(
+                                        fnode.language.cli.cliFlattenTrace,
+                                    )) {
+                                        if (
+                                            trace ===
+                                            "schemas$$objects['microsoft.graph.identitySet']$$properties['user']"
+                                        ) {
+                                            trace;
+                                            fnode.language.cli.cliFlattenTrace;
                                         }
-                                        break;
+                                        if (
+                                            !isNullOrUndefined(prop.language?.['cli']?.cliPath) &&
+                                            trace === prop.language?.['cli'].cliPath
+                                        ) {
+                                            for (const p of getAllProperties(
+                                                <ObjectSchema>prop.schema,
+                                            )) {
+                                                if (
+                                                    !isNullOrUndefined(
+                                                        p.language?.['cli']?.cliKey,
+                                                    ) &&
+                                                    fnode.language?.['cli']?.cliKey ===
+                                                        p.language?.['cli']?.cliKey
+                                                ) {
+                                                    fnode.language.python = p.language.python;
+                                                    fnode.language.cli.pythonFlattenedFrom = prop;
+                                                    foundProp = true;
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    if (
+                                        !foundProp &&
+                                        !isNullOrUndefined(prop.schema) &&
+                                        prop.schema.type === SchemaType.Object
+                                    ) {
+                                        prop.schema;
+                                        OutLayerProp.push(
+                                            ...getAllProperties(<ObjectSchema>prop.schema),
+                                        );
                                     }
                                 }
                             }
+                        }
+                        if (!foundProp) {
+                            fnode;
+                            param;
                         }
                     }
                 }
@@ -257,7 +310,7 @@ export class CodeModelMerger {
 
         for (const obj of values(schemas.objects)) {
             this.setPythonName(obj);
-            for (const property of values(obj.properties)) {
+            for (const property of getAllProperties(obj)) {
                 this.setPythonName(property);
             }
         }
