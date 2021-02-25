@@ -1,12 +1,10 @@
 import * as assert from 'assert';
 import { exec } from 'child_process';
 import * as fs from 'fs';
-import { slow, suite, test, timeout } from 'mocha-typescript';
 import * as path from 'path';
 import { CodeGenConstants, CompatibleLevel, GenerateSdk, TargetMode } from '../src/utils/models';
 import { copyRecursiveSync, deleteFolderRecursive, isNullOrUndefined } from '../src/utils/helper';
 import * as sourceMapSupport from 'source-map-support';
-import { Test } from 'mocha';
 
 sourceMapSupport.install();
 
@@ -22,9 +20,8 @@ export enum TestMode {
     CoreTrack2 = 'coretrack2',
 }
 
-@suite
-export class Process {
-    private testDimensions: Map<string, Array<TestMode>> = new Map([
+describe('ScenarioTest', () => {
+    const testDimensions: Map<string, Array<TestMode>> = new Map([
         ['attestation', [TestMode.ExtDefault]],
         ['boolean', [TestMode.ExtDefault]],
         ['datafactory', [TestMode.ExtDefault]],
@@ -51,15 +48,15 @@ export class Process {
         ['compute', [TestMode.CoreIncremental]],
     ]);
 
-    async runAz(directory: string, extraOption: any) {
+    async function runAz(directory: string, extraOption: any) {
         const cmdOption = [];
         for (const k in extraOption) {
             cmdOption.push('--' + k + '=' + extraOption[k]);
         }
         let cmd =
-            path.join(`${__dirname}`, '/../../' + 'node_modules/.bin/autorest') +
-            ' --version=3.0.6370 --az --use=' +
-            path.join(`${__dirname}`, '/../../') +
+            path.join(`${__dirname}`, '/../' + 'node_modules/.bin/autorest') +
+            ' --version=3.0.6336 --az --use=' +
+            path.join(`${__dirname}`, '/../') +
             ' ' +
             path.join(directory, 'configuration/readme.md') +
             ' ' +
@@ -88,7 +85,7 @@ export class Process {
         });
     }
 
-    async compare(dir1: string, dir2: string) {
+    async function compare(dir1: string, dir2: string) {
         const cmd = 'diff -r --exclude=gen.zip --strip-trailing-cr ' + dir1 + ' ' + dir2;
         console.log(cmd);
         return await new Promise<boolean>((resolve, reject) => {
@@ -104,7 +101,7 @@ export class Process {
         });
     }
 
-    getOptions(testMode: string, outputDir: string) {
+    function getOptions(testMode: string, outputDir: string) {
         const extraOption: any = {};
         if (
             testMode === TestMode.ExtDefault ||
@@ -156,10 +153,10 @@ export class Process {
         return extraOption;
     }
 
-    async runSingleTest(dir: string, each: string, extraOption: any, testMode: string) {
+    async function runSingleTest(dir: string, each: string, extraOption: any, testMode: string) {
         let result = true;
         let msg = '';
-        await this.runAz(dir + each, extraOption)
+        await runAz(dir + each, extraOption)
             .then((res) => {
                 if (res === false) {
                     msg = 'Run autorest not successfully!';
@@ -171,7 +168,7 @@ export class Process {
                 result = err;
             });
         if (result) {
-            await this.compare(
+            await compare(
                 path.join(dir, each, 'output', testMode),
                 path.join(dir, each, 'tmpoutput', testMode),
             )
@@ -189,8 +186,9 @@ export class Process {
         return result;
     }
 
-    @test(slow(600000), timeout(1500000)) async acceptanceSuite() {
-        const dir = path.join(`${__dirname}`, '/../../test/scenarios/');
+    it('acceptanceSuite', async () => {
+        jest.setTimeout(1500000);
+        const dir = path.join(`${__dirname}`, '/../test/scenarios/');
         const folders = fs.readdirSync(dir);
         const msg = '';
         let finalResult = true;
@@ -205,7 +203,7 @@ export class Process {
             fs.mkdirSync(path.join(dir, rp, 'tmpoutput'));
 
             try {
-                const dimensions: Array<TestMode> = this.testDimensions.get(rp);
+                const dimensions: Array<TestMode> = testDimensions.get(rp);
                 if (dimensions != null) {
                     for (const dimension of dimensions) {
                         let outputDir = '';
@@ -221,8 +219,8 @@ export class Process {
                             );
                         }
                         outputDir = path.join(dir, rp, 'tmpoutput', dimension);
-                        const extraOption = this.getOptions(dimension, outputDir);
-                        const test = this.runSingleTest(dir, rp, extraOption, dimension);
+                        const extraOption = getOptions(dimension, outputDir);
+                        const test = runSingleTest(dir, rp, extraOption, dimension);
                         if (!parallelTest) {
                             result = await test;
                         } else {
@@ -246,5 +244,5 @@ export class Process {
             finalResult = (await Promise.all(allTests)).every((x) => x);
         }
         assert.strictEqual(finalResult, true, msg);
-    }
-}
+    });
+});

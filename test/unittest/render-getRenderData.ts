@@ -3,25 +3,49 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
+import * as fs from 'fs';
 import * as path from 'path';
 import { readFile } from '@azure-tools/async-io';
-import { SchemaType } from '@azure-tools/codemodel';
+import { CodeModel, SchemaType } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
 import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
+import { Entry } from '../../src/entry';
+import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
 import { isNullOrUndefined } from '../../src/utils/helper';
-import { RenderDataBase } from './render-getRenderDataBase';
+import { createTestSession } from '../utils/test-helper';
 
 sourceMapSupport.install();
 
-const resources = path.join(`${__dirname}`, '/../../../test/unittest/');
+const resources = path.join(`${__dirname}`, '/../../test/unittest/');
 
 const fileName = 'offazure-az-modifier-after.yaml';
 
-@suite
-export class Process extends RenderDataBase {
-    getRenderTestData(dependencies: DataGraph, arrayOutputFormat = false) {
+describe('RenderSetupPy', () => {
+    let model: CodeModelCliImpl;
+    async function init(extensionName: string, fileName: string): Promise<void> {
+        const cfg = {
+            az: {
+                extensions: extensionName,
+            },
+        };
+        if (!fs.existsSync(path.join(resources, 'input', fileName))) {
+            throw Error;
+        }
+        const session = await createTestSession<CodeModel>(cfg, path.join(resources, 'input'), [
+            fileName,
+        ]);
+
+        const entry = new Entry(session);
+        await entry.init();
+
+        const codeModel = new CodeModelCliImpl(session);
+        codeModel.GenerateTestInit();
+
+        model = codeModel;
+    }
+
+    function getRenderTestData(dependencies: DataGraph, arrayOutputFormat = false) {
         const data = {
             model: {},
         };
@@ -64,30 +88,38 @@ export class Process extends RenderDataBase {
         ]);
 
         if (arrayOutputFormat) {
-            data.model = this.model.getArrayModelData('extension', inputProperties, dependencies);
+            data.model = model.getArrayModelData('extension', inputProperties, dependencies);
         } else {
-            data.model = this.model.getModelData('extension', inputProperties, dependencies);
+            data.model = model.getModelData('extension', inputProperties, dependencies);
         }
         return data;
     }
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest1() {
-        await super.init('offazure', fileName);
+    const originalWarn = console.warn.bind(console.warn);
+    beforeAll(() => {
+        console.warn = (msg) => msg.toString().includes('ShowInTest') && originalWarn(msg);
+    });
+    afterAll(() => {
+        console.warn = originalWarn;
+    });
+
+    it('getModelDataTest1', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/command-groups.json')),
         );
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[['extension', 'commandGroup']];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to commandGroup ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest2() {
-        await super.init('offazure', fileName);
+    it('getModelDataTest2', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/commands.json')),
         );
@@ -95,17 +127,17 @@ export class Process extends RenderDataBase {
             ['extension', 'commandGroup'],
             ['commandGroup', 'command'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to command ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest3() {
-        await super.init('offazure', fileName);
+    it('getModelDataTest3', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods.json')),
         );
@@ -114,17 +146,17 @@ export class Process extends RenderDataBase {
             ['commandGroup', 'command'],
             ['command', 'method'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to method ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest4() {
-        await super.init('offazure', fileName);
+    it('getModelDataTest4', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/method-parameters.json')),
         );
@@ -134,17 +166,17 @@ export class Process extends RenderDataBase {
             ['command', 'method'],
             ['method', 'methodParameter'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to methodParameter ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest5() {
-        await super.init('offazure', fileName);
+    it('getModelDataTest5', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(path.join(resources, 'expected', 'data/methods-array.json')),
         );
@@ -154,17 +186,17 @@ export class Process extends RenderDataBase {
             ['command', 'method'],
             // ['method', 'methodParameter'],
         ];
-        const data = this.getRenderTestData(dependencies, true);
+        const data = getRenderTestData(dependencies, true);
 
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to methodParameter ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async getModelDataTest6() {
-        await super.init('offazure', fileName);
+    it('getModelDataTest6', async () => {
+        await init('offazure', fileName);
         const expected = JSON.parse(
             await readFile(
                 path.join(resources, 'expected', 'data/method-parameters-az-examples.json'),
@@ -177,16 +209,16 @@ export class Process extends RenderDataBase {
             ['method', 'methodParameter'],
             ['method', 'azExample'],
         ];
-        const data = this.getRenderTestData(dependencies);
+        const data = getRenderTestData(dependencies);
         // console.log(JSON.stringify(data));
         assert.deepStrictEqual(
             data,
             expected,
             'Getting render data error from extension to methodParameter ',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async testConverter() {
+    it('testConverter', () => {
         const converter = (item) => {
             let mapsTo = item['mapsTo'];
             if (isNullOrUndefined(mapsTo)) {
@@ -203,5 +235,5 @@ export class Process extends RenderDataBase {
         };
         const data = converter(item);
         assert.deepStrictEqual(data, { mapsTo: 'converter-test' }, 'testConverter error!');
-    }
-}
+    });
+});
