@@ -42,6 +42,7 @@ describe('getCommandsRender', () => {
         await entry.init();
 
         const codeModel = new CodeModelCliImpl(session);
+        codeModel.GenerateTestInit();
 
         model = codeModel;
     }
