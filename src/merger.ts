@@ -222,15 +222,22 @@ export class CodeModelMerger {
                         let foundProp = false;
                         const OutLayerProp = [];
                         OutLayerProp.push(param.schema);
-                        let tryAgain = false;
-                        while (!foundProp) {
-                            if (!tryAgain && OutLayerProp.length === 0) {
-                                OutLayerProp.push(param.schema);
-                                tryAgain = true;
-                            }
+                        while (!foundProp && OutLayerProp.length >= 0) {
                             const outProp = OutLayerProp.shift();
+                            if (isNullOrUndefined(outProp)) {
+                                continue;
+                            }
                             outProp.language['cli'].cliKey;
                             for (const prop of getAllProperties(outProp)) {
+                                if (
+                                    !isNullOrUndefined(prop.schema) &&
+                                    prop.schema.type === SchemaType.Object
+                                ) {
+                                    prop.schema;
+                                    OutLayerProp.push(
+                                        ...getAllProperties(<ObjectSchema>prop.schema),
+                                    );
+                                }
                                 if (
                                     !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
                                     fnode.language?.cli?.cliKey === prop.language?.['cli']?.cliKey
@@ -274,17 +281,6 @@ export class CodeModelMerger {
                                             }
                                             break;
                                         }
-                                    }
-
-                                    if (
-                                        !foundProp &&
-                                        !isNullOrUndefined(prop.schema) &&
-                                        prop.schema.type === SchemaType.Object
-                                    ) {
-                                        prop.schema;
-                                        OutLayerProp.push(
-                                            ...getAllProperties(<ObjectSchema>prop.schema),
-                                        );
                                     }
                                 }
                             }
