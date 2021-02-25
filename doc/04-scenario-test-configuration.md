@@ -416,3 +416,11 @@ az:
   ...
   test-unique-resource: true
 ~~~
+
+## How make preparer variables be a parameter in test steps
+You can reference preparer variables by self.kwargs in your test scenario. If you want it to be a function parameter in test step for history reason, you can enable use-test-step-param flag as below:
+~~~
+az:
+  ...
+  use-test-step-param: true
+~~~

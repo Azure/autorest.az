@@ -84,6 +84,10 @@ export class PathConstants {
         `${__dirname}`,
         '../../../dist/src/templates',
     );
+    public static readonly cmdletFolder: string = 'cmdlet';
+    public static readonly positiveTestFile: string = 'test_positive.py';
+    public static readonly negativeTestFile: string = 'test_negative.py';
+    public static readonly conftestFile: string = 'conftest.py';
 
     public static fullTestSceanrioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario.py';
@@ -133,6 +137,7 @@ export enum CodeGenConstants {
     clientSubscriptionBound = 'client-subscription-bound',
     clientAuthenticationPolicy = 'client-authentication-policy',
     testUniqueResource = 'test-unique-resource',
+    useTestStepParam = 'use-test-step-param',
 
     // default constant values
     minCliCoreVersion = '2.15.0',
