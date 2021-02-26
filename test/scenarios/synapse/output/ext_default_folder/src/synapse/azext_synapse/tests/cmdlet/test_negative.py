@@ -28,6 +28,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /BigDataPools/get/Get a Big Data pool
     def test_big_data_pool_show(self):
@@ -39,6 +41,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /BigDataPools/put/Create or update a Big Data pool
     def test_big_data_pool_create(self):
@@ -61,6 +65,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /BigDataPools/patch/Update a Big Data pool
     def test_big_data_pool_update(self):
@@ -73,6 +79,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /BigDataPools/delete/Delete a Big Data pool
     def test_big_data_pool_delete(self):
@@ -84,6 +92,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Operations/get/Get azure async operation header result
     def test_operation_show_azure_async_header_result(self):
@@ -95,6 +105,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Operations/get/Get location header result
     def test_operation_show_location_header_result(self):
@@ -106,6 +118,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IpFirewallRules/get/List IP firewall rules in a workspace
     def test_ip_firewall_rule_list(self):
@@ -116,6 +130,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IpFirewallRules/get/Create an IP firewall rule
     def test_ip_firewall_rule_show(self):
@@ -127,6 +143,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IpFirewallRules/put/Create an IP firewall rule
     def test_ip_firewall_rule_create(self):
@@ -140,6 +158,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IpFirewallRules/delete/Delete an IP firewall rule from a workspace
     def test_ip_firewall_rule_delete(self):
@@ -151,6 +171,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IpFirewallRules/post/Replace all IP firewall rules in a workspace
     def test_ip_firewall_rule_replace_all(self):
@@ -162,6 +184,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace
     def test_sql_pool_list(self):
@@ -172,6 +196,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace with filter
     def test_sql_pool_list2(self):
@@ -182,6 +208,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/get/Get a SQL Analytics pool
     def test_sql_pool_show(self):
@@ -193,6 +221,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/put/Create a SQL Analytics pool
     def test_sql_pool_create(self):
@@ -213,6 +243,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/patch/Update a SQL Analytics pool
     def test_sql_pool_update(self):
@@ -233,6 +265,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/delete/Delete a SQL Analytics pool
     def test_sql_pool_delete(self):
@@ -244,6 +278,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/post/Pause a SQL Analytics pool
     def test_sql_pool_pause(self):
@@ -255,6 +291,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/post/Rename a SQL Analytics pool
     def test_sql_pool_rename(self):
@@ -267,6 +305,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPools/post/Resume a SQL Analytics pool
     def test_sql_pool_resume(self):
@@ -278,6 +318,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolMetadataSyncConfigs/get/Get metadata sync config for a SQL Analytics pool
     def test_sql_pool_metadata_sync_config_show(self):
@@ -289,6 +331,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolMetadataSyncConfigs/put/Set metadata sync config for a SQL Analytics pool
     def test_sql_pool_metadata_sync_config_create(self):
@@ -301,6 +345,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolOperationResults/get/Get the result of an operation on a SQL Analytics pool
     def test_sql_pool_operation(self):
@@ -313,6 +359,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolGeoBackupPolicies/get/Get Sql pool geo backup policy
     def test_sql_pool_geo_backup_policy_show(self):
@@ -324,6 +372,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolDataWarehouseUserActivities/get/Get a SQL Analytics pool user activity
     def test_sql_pool_data_warehouse_user_activity_show(self):
@@ -335,6 +385,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolRestorePoints/get/Get a list of restore points of a SQL Analytics pool
     def test_sql_pool_restore_point_list(self):
@@ -346,6 +398,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolRestorePoints/post/Creates Sql pool restore point.
     def test_sql_pool_restore_point_create(self):
@@ -358,6 +412,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolReplicationLinks/get/Lists a Sql Analytic pool's replication links
     def test_sql_pool_replication_link_list(self):
@@ -369,6 +425,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolTransparentDataEncryptions/get/Get transparent data encryption configuration of a SQL Analytics pool
     def test_sql_pool_transparent_data_encryption_show(self):
@@ -380,6 +438,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolTransparentDataEncryptions/put/Create or update a Sql pool's transparent data encryption configuration
     def test_sql_pool_transparent_data_encryption_create(self):
@@ -392,6 +452,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolBlobAuditingPolicies/get/Get blob auditing policy of a SQL Analytics pool
     def test_sql_pool_blob_auditing_policy_show(self):
@@ -403,6 +465,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with all parameters
     def test_sql_pool_blob_auditing_policy_create(self):
@@ -422,6 +486,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with minimal parameters
     def test_sql_pool_blob_auditing_policy_create2(self):
@@ -436,6 +502,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolOperations/get/List the Sql Analytics pool management operations
     def test_sql_pool_operation_list(self):
@@ -447,6 +515,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolUsages/get/List the usages of a SQL Analytics pool
     def test_sql_pool_usage_list(self):
@@ -458,6 +528,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSensitivityLabels/put/Updates the sensitivity label of a given column with all parameters
     def test_sql_pool_sensitivity_label_create(self):
@@ -476,6 +548,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSensitivityLabels/delete/Deletes the sensitivity label of a given column
     def test_sql_pool_sensitivity_label_delete(self):
@@ -490,6 +564,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSensitivityLabels/post/Disables sensitivity recommendations on a given column
     def test_sql_pool_sensitivity(self):
@@ -504,6 +580,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSensitivityLabels/post/Enables sensitivity recommendations on a given column
     def test_sql_pool_sensitivity2(self):
@@ -518,6 +596,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSensitivityLabels/get/Gets the current sensitivity labels of a given SQL Analytics pool
     def test_sql_pool_sensitivity_label_list_current(self):
@@ -529,6 +609,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSensitivityLabels/get/Gets the recommended sensitivity labels of a given SQL Analytics pool
     def test_sql_pool_sensitivity_label_list_recommended(self):
@@ -540,6 +622,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSchemas/get/List the schema in a SQL Analytics pool
     def test_sql_pool_schema_list(self):
@@ -551,6 +635,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolTables/get/List the tables of a given schema in a SQL Analytics pool
     def test_sql_pool_table_list(self):
@@ -563,6 +649,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolTableColumns/get/List the columns in a table of a given schema in a SQL Analytics pool
     def test_sql_pool_table_column_list(self):
@@ -576,6 +664,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolConnectionPolicies/get/Get a connection policy of a SQL Analytics pool
     def test_sql_pool_connection_policy_show(self):
@@ -587,6 +677,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessments/get/Get a vulnerability assessment of a SQL Analytics pool
     def test_sql_pool_vulnerability_assessment_list(self):
@@ -598,6 +690,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessments/get/Get a Sql pool's vulnerability assessment
     def test_sql_pool_vulnerability_assessment_show(self):
@@ -609,6 +703,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with all parameters
     def test_sql_pool_vulnerability_assessment_create(self):
@@ -624,6 +720,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageAccountAccessKey is specified
     def test_sql_pool_vulnerability_assessment_create2(self):
@@ -637,6 +735,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageContainerSasKey is specified
     def test_sql_pool_vulnerability_assessment_create3(self):
@@ -650,6 +750,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessments/delete/Remove a database's vulnerability assessment
     def test_sql_pool_vulnerability_assessment_delete(self):
@@ -661,6 +763,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/get/Get a vulnerability scan record of a SQL Analytics pool
     def test_sql_pool_vulnerability_assessment_scan_list(self):
@@ -672,6 +776,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/post/Export a database's vulnerability assessment scan results.
     def test_sql_pool_vulnerability_assessment_scan_export(self):
@@ -684,6 +790,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/post/Executes a Sql pool's vulnerability assessment scan.
     def test_sql_pool_vulnerability3(self):
@@ -696,6 +804,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSecurityAlertPolicies/get/Get a security alert of a SQL Analytics pool
     def test_sql_pool_security_alert_policy_show(self):
@@ -707,6 +817,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Create a Sql pool's threat detection policy with all parameters
     def test_sql_pool_security_alert_policy_create(self):
@@ -725,6 +837,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Update a Sql pool's threat detection policy with minimal parameters
     def test_sql_pool_security_alert_policy_update(self):
@@ -737,6 +851,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessmentRuleBaselines/put/Creates or updates a database's vulnerability assessment rule baseline.
     def test_sql_pool_vulnerability(self):
@@ -753,6 +869,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /SqlPoolVulnerabilityAssessmentRuleBaselines/delete/Removes a database's vulnerability assessment rule baseline.
     def test_sql_pool_vulnerability2(self):
@@ -766,6 +884,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Workspaces/get/List workspaces in resource group
     def test_workspace_list(self):
@@ -775,6 +895,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Workspaces/get/List workspaces in subscription
     def test_workspace_list2(self):
@@ -783,6 +905,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Workspaces/get/Get a workspace
     def test_workspace_show(self):
@@ -793,6 +917,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Workspaces/put/Create or update a workspace
     def test_workspace_create(self):
@@ -811,6 +937,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Workspaces/patch/Update a workspace
     def test_workspace_update(self):
@@ -824,6 +952,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Workspaces/delete/Delete a workspace
     def test_workspace_delete(self):
@@ -834,6 +964,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /WorkspaceAadAdmins/get/Get workspace active directory admin
     def test_workspace_aad_admin_show(self):
@@ -844,6 +976,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /WorkspaceAadAdmins/put/Create or update workspace active directory admin
     def test_workspace_aad_admin_create(self):
@@ -858,6 +992,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /WorkspaceAadAdmins/delete/Delete workspace active directory admin
     def test_workspace_aad_admin_delete(self):
@@ -868,6 +1004,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /WorkspaceManagedIdentitySqlControlSettings/get/Get managed identity sql control settings
     def test_workspace_managed_identity2(self):
@@ -878,6 +1016,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /WorkspaceManagedIdentitySqlControlSettings/put/Create or update managed identity sql control settings
     def test_workspace_managed_identity(self):
@@ -889,6 +1029,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/get/List integration runtimes
     def test_integration_runtime_list(self):
@@ -899,6 +1041,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/get/Get integration runtime
     def test_integration_runtime_show(self):
@@ -910,6 +1054,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/put/Create integration runtime
     def test_integration_runtime_create(self):
@@ -922,6 +1068,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/patch/Update integration runtime
     def test_integration_runtime_update(self):
@@ -935,6 +1083,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/delete/Delete integration runtime
     def test_integration_runtime_delete(self):
@@ -946,6 +1096,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/post/Start integration runtime
     def test_integration_runtime_start(self):
@@ -957,6 +1109,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/post/Stop integration runtime
     def test_integration_runtime_stop(self):
@@ -968,6 +1122,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimes/post/Upgrade integration runtime
     def test_integration_runtime_upgrade(self):
@@ -979,6 +1135,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeNodeIpAddress/post/Get integration runtime node IP address
     def test_integration_runtime_node_ip_address_get(self):
@@ -991,6 +1149,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeObjectMetadata/post/Get integration runtime object metadata
     def test_integration_runtime_object_metadata_get(self):
@@ -1003,6 +1163,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeObjectMetadata/post/Refresh object metadata
     def test_integration_runtime_object_metadata_refresh(self):
@@ -1014,6 +1176,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeNodes/get/Get integration runtime node
     def test_integration_runtime_node_show(self):
@@ -1026,6 +1190,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeNodes/patch/Update integration runtime node
     def test_integration_runtime_node_update(self):
@@ -1039,6 +1205,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeNodes/delete/Delete integration runtime node
     def test_integration_runtime_node_delete(self):
@@ -1051,6 +1219,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeCredentials/post/Sync credentials
     def test_integration_runtime_credentials_sync(self):
@@ -1062,6 +1232,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeConnectionInfos/post/Get connection info
     def test_integration_runtime_connection_info_get(self):
@@ -1073,6 +1245,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeAuthKeys/post/List auth keys
     def test_integration_runtime_auth_key_list(self):
@@ -1084,6 +1258,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeAuthKeys/post/Regenerate auth key
     def test_integration_runtime_auth_key_regenerate(self):
@@ -1096,6 +1272,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeMonitoringData/post/Get monitoring data
     def test_integration_runtime_monitoring_data_get(self):
@@ -1107,6 +1285,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /IntegrationRuntimeStatus/post/Get status
     def test_integration_runtime_status_get(self):
@@ -1118,6 +1298,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkResources/get/Get private link resources for workspace
     def test_private_link_resource_list(self):
@@ -1128,6 +1310,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkResources/get/Get private link resources for workspace
     def test_private_link_resource_show(self):
@@ -1139,6 +1323,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateEndpointConnections/get/List private endpoint connections in workspace
     def test_private_endpoint_connection_list(self):
@@ -1149,6 +1335,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateEndpointConnections/get/Get private endpoint connection
     def test_private_endpoint_connection_show(self):
@@ -1160,6 +1348,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateEndpointConnections/put/Approve private endpoint connection
     def test_private_endpoint_connection_create(self):
@@ -1171,6 +1361,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateEndpointConnections/delete/Delete private endpoint connection
     def test_private_endpoint_connection_delete(self):
@@ -1182,6 +1374,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in resource group
     def test_private_link_hub_list(self):
@@ -1191,6 +1385,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in subscription
     def test_private_link_hub_list2(self):
@@ -1199,6 +1395,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkHubs/get/Get a privateLinkHub
     def test_private_link_hub_show(self):
@@ -1209,6 +1407,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkHubs/put/Create or update a privateLinkHub
     def test_private_link_hub_create(self):
@@ -1221,6 +1421,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkHubs/patch/Update a privateLinkHub
     def test_private_link_hub_update(self):
@@ -1232,6 +1434,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /PrivateLinkHubs/delete/Delete a privateLinkHub
     def test_private_link_hub_delete(self):
@@ -1242,3 +1446,5 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")

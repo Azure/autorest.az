@@ -27,6 +27,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworks/get/ManagedNetworksListBySubscription
     def test_mn_list2(self):
@@ -35,6 +37,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworks/put/ManagedNetworksPut
     def test_mn_create(self):
@@ -46,6 +50,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworks/patch/ManagedNetworksPatch
     def test_mn_update(self):
@@ -56,6 +62,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworks/delete/ManagedNetworksDelete
     def test_mn_delete(self):
@@ -66,6 +74,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworks/get/ManagedNetworksGet
     def test_mn_show_modify(self):
@@ -76,6 +86,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ScopeAssignments/get/ScopeAssignmentsList
     def test_mn_scope_assignment_list(self):
@@ -85,6 +97,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ScopeAssignments/get/ScopeAssignmentsGet
     def test_mn_scope_assignment_show(self):
@@ -95,6 +109,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ScopeAssignments/put/ScopeAssignmentsPut
     def test_mn_scope_assignment_create(self):
@@ -106,6 +122,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ScopeAssignments/delete/ScopeAssignmentsDelete
     def test_mn_scope_assignment_delete(self):
@@ -116,6 +134,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkGroups/get/ManagedNetworksGroupsListByManagedNetwork
     def test_mn_group_list(self):
@@ -126,6 +146,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkGroups/get/ManagementNetworkGroupsGet
     def test_mn_group_show(self):
@@ -137,6 +159,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkGroups/put/ManagementNetworkGroupsPut
     def test_mn_group_create(self):
@@ -152,6 +176,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkGroups/delete/ManagementNetworkGroupsDelete
     def test_mn_group_delete(self):
@@ -163,6 +189,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkPeeringPolicies/get/ManagedNetworkPeeringPoliciesListByManagedNetwork
     def test_managed_network_peering_policy_list(self):
@@ -173,6 +201,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkPeeringPolicies/get/ManagedNetworkPeeringPoliciesGet
     def test_managed_network_peering_policy_show(self):
@@ -184,6 +214,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkPeeringPolicies/put/ManagedNetworkPeeringPoliciesPut
     def test_managed_network_peering(self):
@@ -198,6 +230,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkPeeringPolicies/put/ManagedNetworkPeeringPoliciesPut
     def test_managed_network_peering(self):
@@ -212,6 +246,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ManagedNetworkPeeringPolicies/delete/ManagedNetworkPeeringPoliciesDelete
     def test_managed_network_peering_policy_delete(self):
@@ -223,3 +259,5 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")

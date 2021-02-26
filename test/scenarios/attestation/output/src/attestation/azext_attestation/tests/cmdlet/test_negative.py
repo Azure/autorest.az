@@ -28,6 +28,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Operation/get/Operations_List
     def test_list_operation(self):
@@ -36,6 +38,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttestationProviders/get/AttestationProviders_ListByResourceGroup
     def test_attestation_provider_provider_list(self):
@@ -45,6 +49,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttestationProviders/get/AttestationProviders_List
     def test_attestation_provider_provider_list2(self):
@@ -53,6 +59,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttestationProviders/get/AttestationProviders_Get
     def test_attestation_provider_show(self):
@@ -63,6 +71,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttestationProviders/patch/AttestationProviders_Update
     def test_attestation_provider_update(self):
@@ -74,6 +84,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttestationProviders/delete/AttestationProviders_Delete
     def test_attestation_provider_delete(self):
@@ -84,3 +96,5 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")

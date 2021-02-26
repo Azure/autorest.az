@@ -27,6 +27,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/get/KustoClustersList
     def test_cluster_list(self):
@@ -35,6 +37,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/get/KustoClustersGet
     def test_cluster_show(self):
@@ -45,6 +49,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/put/KustoClustersCreateOrUpdate
     def test_cluster_create(self):
@@ -63,6 +69,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/patch/KustoClustersUpdate
     def test_cluster_update(self):
@@ -78,6 +86,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/delete/KustoClustersDelete
     def test_cluster_delete(self):
@@ -88,6 +98,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClusterAddLanguageExtensions
     def test_cluster_add_language_extension(self):
@@ -100,6 +112,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClusterDetachFollowerDatabases
     def test_cluster_detach_follower_database(self):
@@ -112,6 +126,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClusterDiagnoseVirtualNetwork
     def test_cluster_diagnose_virtual_network(self):
@@ -122,6 +138,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClusterListFollowerDatabases
     def test_cluster_list_follower_database(self):
@@ -132,6 +150,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClusterListLanguageExtensions
     def test_cluster_list_language_extension(self):
@@ -142,6 +162,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/get/KustoClustersListResourceSkus
     def test_cluster_list_sku(self):
@@ -152,6 +174,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/get/KustoClustersListSkus
     def test_cluster_list_sku2(self):
@@ -160,6 +184,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClusterRemoveLanguageExtensions
     def test_cluster_remove_language_extension(self):
@@ -172,6 +198,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClustersStart
     def test_cluster_start(self):
@@ -182,6 +210,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Clusters/post/KustoClustersStop
     def test_cluster_stop(self):
@@ -192,6 +222,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ClusterPrincipalAssignments/get/KustoPrincipalAssignmentsList
     def test_cluster_principal_assignment_list(self):
@@ -202,6 +234,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ClusterPrincipalAssignments/get/KustoClusterPrincipalAssignmentsGet
     def test_cluster_principal_assignment_show(self):
@@ -213,6 +247,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ClusterPrincipalAssignments/put/KustoClusterPrincipalAssignmentsCreateOrUpdate
     def test_cluster_principal_assignment_create(self):
@@ -228,6 +264,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /ClusterPrincipalAssignments/delete/KustoClusterPrincipalAssignmentsDelete
     def test_cluster_principal_assignment_delete(self):
@@ -239,6 +277,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/get/KustoDatabasesListByCluster
     def test_database_list(self):
@@ -249,6 +289,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/get/KustoDatabasesGet
     def test_database_show(self):
@@ -260,6 +302,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/put/KustoDatabasesCreateOrUpdate
     def test_database_create(self):
@@ -272,6 +316,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/patch/KustoDatabasesUpdate
     def test_database_update(self):
@@ -284,6 +330,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/delete/KustoDatabasesDelete
     def test_database_delete(self):
@@ -295,6 +343,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/post/KustoDatabaseAddPrincipals
     def test_database_add_principal(self):
@@ -309,6 +359,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/post/KustoDatabaseListPrincipals
     def test_database_list_principal(self):
@@ -320,6 +372,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /Databases/post/KustoDatabaseRemovePrincipals
     def test_database_remove_principal(self):
@@ -334,6 +388,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DatabasePrincipalAssignments/get/KustoPrincipalAssignmentsList
     def test_database_principal_assignment_list(self):
@@ -345,6 +401,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DatabasePrincipalAssignments/get/KustoDatabasePrincipalAssignmentsGet
     def test_database_principal_assignment_show(self):
@@ -357,6 +415,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DatabasePrincipalAssignments/put/KustoDatabasePrincipalAssignmentsCreateOrUpdate
     def test_database_principal_assignment_create(self):
@@ -373,6 +433,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DatabasePrincipalAssignments/delete/KustoDatabasePrincipalAssignmentsDelete
     def test_database_principal_assignment_delete(self):
@@ -385,6 +447,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
     def test_attached_database_configuration_list(self):
@@ -395,6 +459,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttachedDatabaseConfigurations/get/AttachedDatabaseConfigurationsGet
     def test_attached_database_configuration_show(self):
@@ -406,6 +472,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttachedDatabaseConfigurations/put/AttachedDatabaseConfigurationsCreateOrUpdate
     def test_attached_database_configuration_create(self):
@@ -421,6 +489,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
     def test_attached_database_configuration_delete(self):
@@ -432,6 +502,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DataConnections/get/KustoDatabasesListByCluster
     def test_data_connection_list(self):
@@ -443,6 +515,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DataConnections/get/KustoDataConnectionsGet
     def test_data_connection_show(self):
@@ -455,6 +529,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DataConnections/put/KustoDataConnectionsCreateOrUpdate
     def test_data_connection_event_hub_create(self):
@@ -470,6 +546,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DataConnections/patch/KustoDataConnectionsUpdate
     def test_data_connection_event_hub_update(self):
@@ -485,6 +563,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DataConnections/delete/KustoDataConnectionsDelete
     def test_data_connection_delete(self):
@@ -497,6 +577,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /DataConnections/post/KustoDataConnectionValidation
     def test_data_connection_event(self):
@@ -511,3 +593,5 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")

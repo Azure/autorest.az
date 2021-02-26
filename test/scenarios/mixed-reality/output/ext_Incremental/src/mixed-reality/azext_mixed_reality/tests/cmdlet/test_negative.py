@@ -29,6 +29,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by resource group
     def test_list(self):
@@ -38,6 +40,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by subscription
     def test_list2(self):
@@ -46,6 +50,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/get/Get remote rendering account
     def test_show(self):
@@ -56,6 +62,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/put/Create remote rendering account
     def test_create(self):
@@ -67,6 +75,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/patch/Update remote rendering account
     def test_update(self):
@@ -79,6 +89,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/delete/Delete remote rendering account
     def test_delete(self):
@@ -89,6 +101,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/post/List remote rendering account key
     def test_list_key(self):
@@ -99,6 +113,8 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
 
     # EXAMPLE: /RemoteRenderingAccounts/post/Regenerate remote rendering account keys
     def test_regenerate_key(self):
@@ -110,3 +126,5 @@ class NegativeTest(ScenarioTest):
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
