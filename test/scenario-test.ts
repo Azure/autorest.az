@@ -26,6 +26,7 @@ describe('ScenarioTest', () => {
         ['boolean', [TestMode.ExtDefault]],
         ['datafactory', [TestMode.ExtDefault]],
         ['managed-network', [TestMode.ExtDefault]],
+        ['msgraphuser', [TestMode.ExtDefault]],
         ['mixed-reality', [TestMode.ExtIncremental]],
         [
             'kusto',
