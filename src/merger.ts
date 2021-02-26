@@ -189,9 +189,6 @@ export class CodeModelMerger {
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
-        if (cliM4Path === "schemas$$objects['microsoft.graph.user']$$properties['settings']") {
-            cliM4Path;
-        }
         const cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel, false, param);
         let foundNode = false;
         if (
@@ -222,21 +219,20 @@ export class CodeModelMerger {
                         let foundProp = false;
                         const OutLayerProp = [];
                         OutLayerProp.push(param.schema);
-                        while (!foundProp && OutLayerProp.length >= 0) {
+                        while (!foundProp && OutLayerProp.length > 0) {
                             const outProp = OutLayerProp.shift();
                             if (isNullOrUndefined(outProp)) {
                                 continue;
                             }
-                            outProp.language['cli'].cliKey;
                             for (const prop of getAllProperties(outProp)) {
+                                if (foundProp) {
+                                    break;
+                                }
                                 if (
                                     !isNullOrUndefined(prop.schema) &&
                                     prop.schema.type === SchemaType.Object
                                 ) {
-                                    prop.schema;
-                                    OutLayerProp.push(
-                                        ...getAllProperties(<ObjectSchema>prop.schema),
-                                    );
+                                    OutLayerProp.push(prop.schema);
                                 }
                                 if (
                                     !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
@@ -252,13 +248,6 @@ export class CodeModelMerger {
                                     for (const trace of values(
                                         fnode.language.cli.cliFlattenTrace,
                                     )) {
-                                        if (
-                                            trace ===
-                                            "schemas$$objects['microsoft.graph.identitySet']$$properties['user']"
-                                        ) {
-                                            trace;
-                                            fnode.language.cli.cliFlattenTrace;
-                                        }
                                         if (
                                             !isNullOrUndefined(prop.language?.['cli']?.cliPath) &&
                                             trace === prop.language?.['cli'].cliPath
@@ -284,10 +273,6 @@ export class CodeModelMerger {
                                     }
                                 }
                             }
-                        }
-                        if (!foundProp) {
-                            fnode;
-                            param;
                         }
                     }
                 }
