@@ -218,9 +218,13 @@ export class CodeModelMerger {
                     if (!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
                         let foundProp = false;
                         const OutLayerProp = [];
-                        OutLayerProp.push(param.schema);
+                        const cliFlattenTrace = param.language['cli'].cliM4Path;
+                        OutLayerProp.push([param.schema, cliFlattenTrace]);
+
                         while (!foundProp && OutLayerProp.length > 0) {
-                            const outProp = OutLayerProp.shift();
+                            const item = OutLayerProp.shift();
+                            const outProp = item[0];
+                            const preFlattenTrace = item[1];
                             if (isNullOrUndefined(outProp)) {
                                 continue;
                             }
@@ -228,15 +232,21 @@ export class CodeModelMerger {
                                 if (foundProp) {
                                     break;
                                 }
+                                const curFlattenTrace =
+                                    preFlattenTrace + ';' + prop.language['cli'].cliM4Path;
                                 if (
                                     !isNullOrUndefined(prop.schema) &&
                                     prop.schema.type === SchemaType.Object
                                 ) {
-                                    OutLayerProp.push(prop.schema);
+                                    OutLayerProp.push([prop.schema, curFlattenTrace]);
                                 }
                                 if (
                                     !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
-                                    fnode.language?.cli?.cliKey === prop.language?.['cli']?.cliKey
+                                    fnode.language?.cli?.cliKey ===
+                                        prop.language?.['cli']?.cliKey &&
+                                    (isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace) ||
+                                        curFlattenTrace ===
+                                            fnode.language['cli'].cliFlattenTrace.join(';'))
                                 ) {
                                     fnode.language.python = prop['language'].python;
                                     fnode.language.cli.pythonFlattenedFrom = param;

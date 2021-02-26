@@ -113,9 +113,6 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
             if (skip) {
                 skip = false;
             }
-            if (model.MethodParameter_MapsTo === 'microsoft_graph_entity_id') {
-                originalParameterStack;
-            }
             if (
                 (model.MethodParameter_IsCliFlattened &&
                     (!isNullOrUndefined(model.MethodParameter.language['cli'].cliFlattenTrace) ||
@@ -212,7 +209,8 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                         if (
                             originalParameterStack.last?.language?.['cli']?.[
                                 'moved-from-python'
-                            ] !== true
+                            ] !== true &&
+                            originalParameterStack.last.schema !== flattenedFrom
                         ) {
                             const newParam = new Parameter(
                                 flattenedFrom.language.python.name,
