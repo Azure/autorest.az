@@ -113,6 +113,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
             if (skip) {
                 skip = false;
             }
+            if (model.MethodParameter_MapsTo === 'type_properties_type') {
+                model.MethodParameter;
+            }
             if (
                 (model.MethodParameter_IsCliFlattened &&
                     (!isNullOrUndefined(model.MethodParameter.language['cli'].cliFlattenTrace) ||

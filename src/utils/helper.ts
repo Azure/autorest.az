@@ -489,9 +489,33 @@ export function findNodeInCodeModel(
                 let found = false;
                 for (const node of values(curNode)) {
                     if (node?.['language']?.cli?.cliKey === nextStep) {
-                        curNode = node;
-                        found = true;
-                        break;
+                        if (np === nodePaths.last) {
+                            const curNodeFlattenedNames = isNullOrUndefined(node['flattenedNames'])
+                                ? undefined
+                                : node['flattenedNames'].join(';');
+                            const nodeTobeFoundFlattendNames = isNullOrUndefined(
+                                nodeTobeFound?.flattenedNames,
+                            )
+                                ? undefined
+                                : nodeTobeFound.flattenedNames.join(';');
+                            if (
+                                curNodeFlattenedNames === nodeTobeFoundFlattendNames ||
+                                (!isNullOrUndefined(curNodeFlattenedNames) &&
+                                    !isNullOrUndefined(nodeTobeFoundFlattendNames) &&
+                                    (curNodeFlattenedNames.startsWith(nodeTobeFoundFlattendNames) ||
+                                        nodeTobeFoundFlattendNames.startsWith(
+                                            curNodeFlattenedNames,
+                                        )))
+                            ) {
+                                curNode = node;
+                                found = true;
+                                break;
+                            }
+                        } else {
+                            curNode = node;
+                            found = true;
+                            break;
+                        }
                     }
                 }
                 if (!found) {

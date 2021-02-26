@@ -27,4 +27,8 @@ cli:
               group: VirtualMachines
           set:
               extensionMode: experimental
+        - where:
+            group: 'VirtualMachineScaleSetVMExtensions'
+            op: List|Get|CreateOrUpdate
+          hidden: false
 ```

@@ -390,6 +390,8 @@ export class CodeModelMerger {
                                         const cliNode = findNodeInCodeModel(
                                             cliPath,
                                             this.cliCodeModel,
+                                            false,
+                                            tmpParam,
                                         );
                                         if (isNullOrUndefined(cliNode)) {
                                             m4FlattenedFrom.push(tmpParam);
