@@ -489,6 +489,12 @@ export function findNodeInCodeModel(
                 let found = false;
                 for (const node of values(curNode)) {
                     if (node?.['language']?.cli?.cliKey === nextStep) {
+                        // if we have entered the last part of cliM4Path, we need to find out whether that node is what we want to find out.
+                        // In the case of object A and its property p1 has the same property, let's say, named type, modelerfour flattened p1
+                        // because both A.type and A.p1.type will becomes A's property directly, and modelerfour will rename A.p1.type
+                        // but cliM4Path is recording based on their cliKey, which is recorded prior to modelerfour flattener.
+                        // causing both A.type and A.p1.type will have the same cliM4Path.
+                        // In such case, we will use flattenedNames to make sure we are finding the right node.
                         if (np === nodePaths.last) {
                             const curNodeFlattenedNames = isNullOrUndefined(node['flattenedNames'])
                                 ? undefined

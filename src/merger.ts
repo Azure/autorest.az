@@ -189,6 +189,7 @@ export class CodeModelMerger {
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
+        // try to find the counter node in cli codemodel.
         const cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel, false, param);
         let foundNode = false;
         if (
@@ -196,6 +197,7 @@ export class CodeModelMerger {
             !isNullOrUndefined(cliNode.language) &&
             isNullOrUndefined(cliNode.language.python)
         ) {
+            // if found that node, and no language.python has been set
             if (
                 (!isNullOrUndefined(cliNode.language.cli.cliM4Path) &&
                     cliNode.language.cli.cliM4Path === cliM4Path) ||
@@ -203,6 +205,8 @@ export class CodeModelMerger {
             ) {
                 foundNode = true;
                 cliNode.language.python = param.language.python;
+                // in the case of python code model is flattener than cli code model, we need to expand cli code model when calling python SDK.
+                // and we record cli-m4-flattened and m4FlattenedFrom for future reference.
                 if (param.flattened && param.language.cli?.['cli-m4-flattened']) {
                     cliNode.language.cli['cli-m4-flattened'] = true;
                     if (!isNullOrUndefined(m4FlattenedFrom)) {
@@ -212,15 +216,20 @@ export class CodeModelMerger {
             }
         }
         if (!foundNode) {
+            // if we don't found the counter node in cli codemodel to that python codemodel node. it's probably it's has been flattened in cli codemodel.
+            // we need to find those flattenedNodes in cli codemodel.
             const flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true, param);
             if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
+                // for each flattenNodes, we need to find out what's the targetProperty in the python codemodel.
                 for (const fnode of flattenedNodes) {
                     if (!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
                         let foundProp = false;
+                        // here we use a level traversal algorithm to traverse all the subnodes of the param node in python codemodel.
                         const OutLayerProp = [];
                         const cliFlattenTrace = param.language['cli'].cliM4Path;
+                        // OutLayerProp is the queue in level traversal algorithm.
+                        // each node of OutLayerProp is a pair, and the first element is the target traversal node, the second element is current cli flatten trace from the top to that node.
                         OutLayerProp.push([param.schema, cliFlattenTrace]);
-
                         while (!foundProp && OutLayerProp.length > 0) {
                             const item = OutLayerProp.shift();
                             const outProp = item[0];
@@ -234,12 +243,15 @@ export class CodeModelMerger {
                                 }
                                 const curFlattenTrace =
                                     preFlattenTrace + ';' + prop.language['cli'].cliM4Path;
+                                // adding next Layer to the queue.
                                 if (
                                     !isNullOrUndefined(prop.schema) &&
                                     prop.schema.type === SchemaType.Object
                                 ) {
                                     OutLayerProp.push([prop.schema, curFlattenTrace]);
                                 }
+                                // because flatten will delete the original schema if no other places have refer to that schema.
+                                // in the case of flattened schema is not being deleted, and we can find the targeting node. we simply need to record language.python and pythonFlattenedFrom for future parameter construction when calling python SDK.
                                 if (
                                     !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
                                     fnode.language?.cli?.cliKey ===
@@ -255,6 +267,7 @@ export class CodeModelMerger {
                                 } else if (
                                     !isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)
                                 ) {
+                                    // in the case of flattened schema has been deleted, we need to use cli flatten trace to identify the flattened schema.
                                     for (const trace of values(
                                         fnode.language.cli.cliFlattenTrace,
                                     )) {
