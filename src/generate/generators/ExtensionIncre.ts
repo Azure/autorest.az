@@ -139,15 +139,13 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                 path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder),
             );
         GenerateMetaFile(this.model);
+        for (const boolVal of [false, true]) {
+            await this.generateIncrementalSingleAndAddtoOutput(
+                new CliCmdletTest(this.model, boolVal),
+                true,
+            );
+        }
         await this.generateIncrementalSingleAndAddtoOutput(
-            new CliCmdletTest(this.model, false),
-            true,
-        );
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new CliCmdletTest(this.model, true),
-            true,
-        );
-        await this.generateFullSingleAndAddtoOutput(
             new SimpleTemplate(
                 this.model,
                 path.join(

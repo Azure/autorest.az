@@ -126,16 +126,13 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         ),
                     );
                 GenerateMetaFile(model);
-                await this.generateFullSingleAndAddtoOutput(
-                    new CliCmdletTest(this.model, false),
-                    true,
-                    true,
-                );
-                await this.generateFullSingleAndAddtoOutput(
-                    new CliCmdletTest(this.model, true),
-                    true,
-                    true,
-                );
+                for (const boolVal of [false, true]) {
+                    await this.generateFullSingleAndAddtoOutput(
+                        new CliCmdletTest(this.model, boolVal),
+                        true,
+                        true,
+                    );
+                }
                 await this.generateFullSingleAndAddtoOutput(
                     new SimpleTemplate(
                         this.model,

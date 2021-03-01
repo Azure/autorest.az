@@ -217,7 +217,10 @@ export class CliTestStep extends TemplateBase {
     }
 
     public static parameterLine(parameterNames, withChecksDef = false) {
-        if (!AzConfiguration.getValue(CodeGenConstants.az)[CodeGenConstants.useTestStepParam]) {
+        if (
+            AzConfiguration.getValue(CodeGenConstants.az)[CodeGenConstants.useTestStepParam] !==
+            true
+        ) {
             parameterNames = [];
         }
         let ret = '';
