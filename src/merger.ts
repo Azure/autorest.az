@@ -231,9 +231,9 @@ export class CodeModelMerger {
                         // each node of OutLayerProp is a pair, and the first element is the target traversal node, the second element is current cli flatten trace from the top to that node.
                         OutLayerProp.push([param.schema, cliFlattenTrace]);
                         while (!foundProp && OutLayerProp.length > 0) {
-                            const item = OutLayerProp.shift();
-                            const outProp = item[0];
-                            const preFlattenTrace = item[1];
+                            const layerPair = OutLayerProp.shift();
+                            const outProp = layerPair[0];
+                            const preFlattenTrace = layerPair[1];
                             if (isNullOrUndefined(outProp)) {
                                 continue;
                             }
