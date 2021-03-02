@@ -2,7 +2,7 @@ import { CodeModel, codeModelSchema, Language } from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
-import { changeCamelToDash, isNullOrUndefined } from './utils/helper';
+import { Capitalize, changeCamelToDash, isNullOrUndefined } from './utils/helper';
 import { CodeGenConstants, EXCLUDED_PARAMS, AzConfiguration } from './utils/models';
 
 export class AzNamer {
@@ -15,6 +15,28 @@ export class AzNamer {
     public methodMap(operationNameOri: string, httpProtocol: string) {
         let operationName = operationNameOri.toLowerCase();
         httpProtocol = httpProtocol.toLowerCase();
+
+        function commandNameMap(type: string) {
+            // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
+            // we should divide it into two groups
+            // group list contains list and listbyresourcegroup
+            // group listsku contains listsku and listskubyresource
+            // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
+            // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase
+            // const regex = /^(?<$(type)>$(type)[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
+            const regexStr =
+                '^(?<' + type + '>' + Capitalize(type) + '[a-zA-Z0-9]*)(?<by>By[A-Z].*)$';
+            const regex = new RegExp(regexStr);
+            const groups = operationNameOri.match(regex);
+            let mtype = type;
+            if (groups && groups.length > 2) {
+                mtype = changeCamelToDash(groups[1]);
+            } else {
+                mtype = changeCamelToDash(operationNameOri);
+            }
+            return subOperationGroupName === '' ? mtype : subOperationGroupName + ' ' + mtype;
+        }
+
         let subOperationGroupName = '';
         let ons: Array<string> = [];
         if (operationNameOri.indexOf('#') > -1) {
@@ -25,48 +47,18 @@ export class AzNamer {
             }
         }
         if (operationName.startsWith('create') && httpProtocol === 'put') {
-            return subOperationGroupName === '' ? 'create' : subOperationGroupName + ' ' + 'create';
+            return commandNameMap('create');
         } else if (
             operationName === 'update' &&
             (httpProtocol === 'put' || httpProtocol === 'patch')
         ) {
-            return subOperationGroupName === '' ? 'update' : subOperationGroupName + ' ' + 'update';
+            return commandNameMap('update');
         } else if (operationName.startsWith('get') && httpProtocol === 'get') {
-            // return subOperationGroupName === "" ? "show" : subOperationGroupName + " " + "show";
-            // for show scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
-            // we should divide it into two groups
-            // group list contains list and listbyresourcegroup
-            // group listsku contains listsku and listskubyresource
-            // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
-            // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase \
-            const regex = /^(?<show>Get[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
-            const groups = operationNameOri.match(regex);
-            let cmd = 'show';
-            if (groups && groups.length > 2) {
-                cmd = changeCamelToDash(groups[1]);
-            } else {
-                cmd = changeCamelToDash(operationNameOri);
-            }
-            cmd = cmd.replace(/^get/i, 'show');
-            return subOperationGroupName === '' ? cmd : subOperationGroupName + ' ' + cmd;
+            return commandNameMap('get').replace(/^get/i, 'show');
         } else if (operationName.startsWith('list') && httpProtocol === 'get') {
-            // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
-            // we should divide it into two groups
-            // group list contains list and listbyresourcegroup
-            // group listsku contains listsku and listskubyresource
-            // a temporary way is to treat the part after 'by' as parameter distinguish part and the part before by as command.
-            // the split is valid only the By is not first word and the letter before By is capital and the letter after By is lowercase
-            const regex = /^(?<list>List[a-zA-Z0-9]*)(?<by>By[A-Z].*)$/;
-            const groups = operationNameOri.match(regex);
-            let list = 'list';
-            if (groups && groups.length > 2) {
-                list = changeCamelToDash(groups[1]);
-            } else {
-                list = changeCamelToDash(operationNameOri);
-            }
-            return subOperationGroupName === '' ? list : subOperationGroupName + ' ' + list;
+            return commandNameMap('list');
         } else if (operationName.startsWith('delete') && httpProtocol === 'delete') {
-            return subOperationGroupName === '' ? 'delete' : subOperationGroupName + ' ' + 'delete';
+            return commandNameMap('delete');
         }
         if (subOperationGroupName !== '') {
             return subOperationGroupName + ' ' + changeCamelToDash(ons[0]);
