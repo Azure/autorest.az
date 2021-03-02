@@ -209,7 +209,8 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                         if (
                             originalParameterStack.last?.language?.['cli']?.[
                                 'moved-from-python'
-                            ] !== true
+                            ] !== true &&
+                            originalParameterStack.last.schema !== flattenedFrom
                         ) {
                             const newParam = new Parameter(
                                 flattenedFrom.language.python.name,
