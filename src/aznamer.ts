@@ -16,7 +16,16 @@ export class AzNamer {
         let operationName = operationNameOri.toLowerCase();
         httpProtocol = httpProtocol.toLowerCase();
 
-        function commandNameMap(type: string) {
+        let subOperationGroupName = '';
+        let ons: Array<string> = [];
+        if (operationNameOri.indexOf('#') > -1) {
+            ons = operationNameOri.split('#');
+            if (ons && ons.length === 2) {
+                subOperationGroupName = changeCamelToDash(ons[1]);
+                operationName = ons[0].toLowerCase();
+            }
+        }
+        function commandNameMap(type: string): string {
             // for list scenarios like kusto, if there's list, listbyresourcegroup, listsku, listskubyresource
             // we should divide it into two groups
             // group list contains list and listbyresourcegroup
@@ -36,32 +45,26 @@ export class AzNamer {
             }
             return subOperationGroupName === '' ? mtype : subOperationGroupName + ' ' + mtype;
         }
-
-        let subOperationGroupName = '';
-        let ons: Array<string> = [];
-        if (operationNameOri.indexOf('#') > -1) {
-            ons = operationNameOri.split('#');
-            if (ons && ons.length === 2) {
-                subOperationGroupName = changeCamelToDash(ons[1]);
-                operationName = ons[0].toLowerCase();
-            }
-        }
+        let commandName = '';
         if (operationName.startsWith('create') && httpProtocol === 'put') {
-            return commandNameMap('create');
+            commandName = commandNameMap('create');
         } else if (
             operationName === 'update' &&
             (httpProtocol === 'put' || httpProtocol === 'patch')
         ) {
-            return commandNameMap('update');
+            commandName = commandNameMap('update');
         } else if (operationName.startsWith('get') && httpProtocol === 'get') {
-            return commandNameMap('get').replace(/^get/i, 'show');
+            commandName = commandNameMap('get').replace(/^get/i, 'show');
         } else if (operationName.startsWith('list') && httpProtocol === 'get') {
-            return commandNameMap('list');
+            commandName = commandNameMap('list');
         } else if (operationName.startsWith('delete') && httpProtocol === 'delete') {
-            return commandNameMap('delete');
+            commandName = commandNameMap('delete');
         }
         if (subOperationGroupName !== '') {
-            return subOperationGroupName + ' ' + changeCamelToDash(ons[0]);
+            commandName = subOperationGroupName + ' ' + changeCamelToDash(ons[0]);
+        }
+        if (commandName !== '') {
+            return commandName;
         }
         return changeCamelToDash(operationNameOri);
     }
