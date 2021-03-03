@@ -4,5 +4,5 @@ const mainConfig = require("./jest.config")
 
 module.exports = {
   ...mainConfig,
-  testMatch: ["**/test/unittest/**/*.ts"]
+  testMatch: ["**/test/unittest/**/*.ts", "!**/.history/**"]
 }

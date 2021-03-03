@@ -20,6 +20,15 @@ def users_user_list(client,
                             expand=expand)
 
 
+def users_user_show(client,
+                    user_id,
+                    select=None,
+                    expand=None):
+    return client.get_user(user_id=user_id,
+                           select=select,
+                           expand=expand)
+
+
 def users_user_create(client,
                       id_=None,
                       deleted_date_time=None,
@@ -598,20 +607,11 @@ def users_user_update(client,
                               body=body)
 
 
-def users_user_delete_user(client,
-                           user_id,
-                           if_match=None):
+def users_user_delete(client,
+                      user_id,
+                      if_match=None):
     return client.delete_user(user_id=user_id,
                               if_match=if_match)
-
-
-def users_user_show_user(client,
-                         user_id,
-                         select=None,
-                         expand=None):
-    return client.get_user(user_id=user_id,
-                           select=select,
-                           expand=expand)
 
 
 def users_user_create_extension(client,

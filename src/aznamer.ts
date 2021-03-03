@@ -48,6 +48,9 @@ export class AzNamer {
         let commandName = '';
         if (operationName.startsWith('create') && httpProtocol === 'put') {
             commandName = commandNameMap('create');
+            if (commandName === 'create-or-update') {
+                commandName = 'create';
+            }
         } else if (
             operationName === 'update' &&
             (httpProtocol === 'put' || httpProtocol === 'patch')
@@ -196,12 +199,13 @@ export class AzNamer {
         }
         this.codeModel.operationGroups.forEach((operationGroup) => {
             let operationGroupName = '';
+            let groupName;
             if (!isNullOrUndefined(operationGroup.language['cli'])) {
                 operationGroup.language['az'] = new Language();
                 operationGroup.language['az'].name = operationGroup.language['cli'].name;
                 operationGroup.language['az'].description =
                     operationGroup.language['cli'].description;
-                const groupName = changeCamelToDash(operationGroup.language['az'].name);
+                groupName = changeCamelToDash(operationGroup.language['az'].name);
                 if (extensionName.endsWith(groupName)) {
                     operationGroupName = extensionName;
                 } else {
@@ -231,6 +235,13 @@ export class AzNamer {
                         }
                         operation.language['az'].description =
                             operation.language['cli'].description;
+                        if (operation.language['az'].name.indexOf(groupName) > -1) {
+                            const regex = `-{0, 1}` + groupName + `-{0, 1}`;
+                            operation.language['az'].name = operation.language['az'].name.replace(
+                                regex,
+                                '',
+                            );
+                        }
                         operationName =
                             operationGroupName +
                             ' ' +

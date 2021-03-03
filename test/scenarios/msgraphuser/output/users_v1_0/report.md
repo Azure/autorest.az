@@ -19,10 +19,10 @@
 |CLI Command|Operation Swagger name|Parameters|Examples|
 |---------|------------|--------|-----------|
 |[az users user list](#users.userListUser)|ListUser|[Parameters](#Parametersusers.userListUser)|Not Found|
+|[az users user show](#users.userGetUser)|GetUser|[Parameters](#Parametersusers.userGetUser)|Not Found|
 |[az users user create](#users.userCreateUser)|CreateUser|[Parameters](#Parametersusers.userCreateUser)|Not Found|
 |[az users user update](#users.userUpdateUser)|UpdateUser|[Parameters](#Parametersusers.userUpdateUser)|Not Found|
-|[az users user delete-user](#users.userDeleteUser)|DeleteUser|[Parameters](#Parametersusers.userDeleteUser)|Not Found|
-|[az users user show-user](#users.userGetUser)|GetUser|[Parameters](#Parametersusers.userGetUser)|Not Found|
+|[az users user delete](#users.userDeleteUser)|DeleteUser|[Parameters](#Parametersusers.userDeleteUser)|Not Found|
 
 ### <a name="CommandsInusers">Commands in `az users user` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -106,6 +106,15 @@
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--orderby**|array|Order items by property values|orderby|$orderby|
+|**--select**|array|Select properties to be returned|select|$select|
+|**--expand**|array|Expand related entities|expand|$expand|
+
+#### <a name="users.userGetUser">Command `az users user show`</a>
+
+##### <a name="Parametersusers.userGetUser">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--user-id**|string|key: id of user|user_id|user-id|
 |**--select**|array|Select properties to be returned|select|$select|
 |**--expand**|array|Expand related entities|expand|$expand|
 
@@ -396,22 +405,13 @@
 |**--time-zone**|string|The default time zone for the user's mailbox.|time_zone|timeZone|
 |**--working-hours**|object|workingHours|working_hours|workingHours|
 
-#### <a name="users.userDeleteUser">Command `az users user delete-user`</a>
+#### <a name="users.userDeleteUser">Command `az users user delete`</a>
 
 ##### <a name="Parametersusers.userDeleteUser">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 |**--user-id**|string|key: id of user|user_id|user-id|
 |**--if-match**|string|ETag|if_match|If-Match|
-
-#### <a name="users.userGetUser">Command `az users user show-user`</a>
-
-##### <a name="Parametersusers.userGetUser">Parameters</a> 
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--user-id**|string|key: id of user|user_id|user-id|
-|**--select**|array|Select properties to be returned|select|$select|
-|**--expand**|array|Expand related entities|expand|$expand|
 
 ### group `az users user`
 #### <a name="usersCreateExtensions">Command `az users user create-extension`</a>

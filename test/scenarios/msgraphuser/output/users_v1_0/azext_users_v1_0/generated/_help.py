@@ -22,6 +22,11 @@ helps['users user list'] = """
     short-summary: "Get entities from users."
 """
 
+helps['users user show'] = """
+    type: command
+    short-summary: "Get entity from users by key."
+"""
+
 helps['users user create'] = """
     type: command
     short-summary: "Add new entity to users."
@@ -704,14 +709,9 @@ country/region. For example, 'en-us'. The language component follows 2-letter co
 country component follows 2-letter codes as defined in ISO 3166-1 alpha-2.
 """
 
-helps['users user delete-user'] = """
+helps['users user delete'] = """
     type: command
     short-summary: "Delete entity from users."
-"""
-
-helps['users user show-user'] = """
-    type: command
-    short-summary: "Get entity from users by key."
 """
 
 helps['users user'] = """

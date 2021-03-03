@@ -13,6 +13,6 @@ module.exports = {
             tsconfig: 'tsconfig.json',
         },
     },
-    testMatch: ["**/test/**/*.ts", "!**/test/**/*.d.ts", "!**/test/**/test-helper.ts"],
+    testMatch: ["**/test/**/*.ts", "!**/test/**/*.d.ts", "!**/test/**/test-helper.ts", "!**/.history/**"],
     verbose: true,
 };

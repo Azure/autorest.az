@@ -55,6 +55,11 @@ def load_arguments(self, _):
         c.argument('select', nargs='+', help='Select properties to be returned')
         c.argument('expand', nargs='+', help='Expand related entities')
 
+    with self.argument_context('users user show') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('select', nargs='+', help='Select properties to be returned')
+        c.argument('expand', nargs='+', help='Expand related entities')
+
     with self.argument_context('users user create') as c:
         c.argument('id_', options_list=['--id'], type=str, help='Read-only.')
         c.argument('deleted_date_time', help='')
@@ -668,14 +673,9 @@ def load_arguments(self, _):
         c.argument('working_hours', type=validate_file_or_dict, help='workingHours Expected value: '
                    'json-string/@json-file.', arg_group='Mailbox Settings')
 
-    with self.argument_context('users user delete-user') as c:
+    with self.argument_context('users user delete') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('if_match', type=str, help='ETag')
-
-    with self.argument_context('users user show-user') as c:
-        c.argument('user_id', type=str, help='key: id of user')
-        c.argument('select', nargs='+', help='Select properties to be returned')
-        c.argument('expand', nargs='+', help='Expand related entities')
 
     with self.argument_context('users user create-extension') as c:
         c.argument('user_id', type=str, help='key: id of user')

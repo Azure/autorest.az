@@ -2914,9 +2914,9 @@ operationGroups:
             name: create_or_update
             description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
           az:
-            name: create-or-update
+            name: create
             description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
-            command: managed-network create-or-update
+            command: managed-network create
           cli:
             name: CreateOrUpdate
             description: 'The Put ManagedNetworks operation creates/updates a Managed Network Resource, specified by resource group and Managed Network name'
@@ -3912,9 +3912,9 @@ operationGroups:
             name: create_or_update
             description: Creates a scope assignment.
           az:
-            name: create-or-update
+            name: create
             description: Creates a scope assignment.
-            command: managed-network scope-assignment create-or-update
+            command: managed-network scope-assignment create
           cli:
             name: CreateOrUpdate
             description: Creates a scope assignment.
@@ -4590,9 +4590,9 @@ operationGroups:
             name: create_or_update
             description: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
           az:
-            name: create-or-update
+            name: create
             description: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
-            command: managed-network managed-network-group create-or-update
+            command: managed-network managed-network-group create
           cli:
             name: CreateOrUpdate
             description: The Put ManagedNetworkGroups operation creates or updates a Managed Network Group resource
@@ -5313,9 +5313,9 @@ operationGroups:
             name: create_or_update
             description: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
           az:
-            name: create-or-update
+            name: create
             description: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
-            command: managed-network managed-network-peering-policy create-or-update
+            command: managed-network managed-network-peering-policy create
           cli:
             name: CreateOrUpdate
             description: The Put ManagedNetworkPeeringPolicies operation creates/updates a new Managed Network Peering Policy
