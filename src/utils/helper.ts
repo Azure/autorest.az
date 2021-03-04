@@ -370,8 +370,8 @@ export function ToMultiLine(
             while (
                 firstCharIdx < ret[0].length &&
                 ret[0][firstCharIdx] === ' ' &&
-                firstCharIdx < newLine.length &&
-                newLine[firstCharIdx] === ' '
+                ((firstCharIdx < newLine.length && newLine[firstCharIdx] === ' ') ||
+                    firstCharIdx >= newLine.length)
             )
                 firstCharIdx++;
             if (

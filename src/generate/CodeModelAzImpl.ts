@@ -2982,15 +2982,16 @@ export class CodeModelCliImpl implements CodeModelAz {
                 // else {
                 //     paramName = "name";
                 // }
-                else if (this.extensionName == 'vm') {
-                    if (paramName == 'vm_name') paramName = 'name';
-                } else if (this.extensionName == 'network') {
-                    if (paramName == 'network_security_group_name') paramName = 'nsg_name';
-                    else if (paramName == 'virtual_network_name') paramName = 'vnet_name';
-                    else if (commandGroup.toLowerCase() === 'privatelinkservices') {
-                        if (paramName == 'service_name') paramName = 'name';
-                    }
-                }
+                // else if (this.extensionName == 'vm') {
+                //     if (paramName == 'vm_name') paramName = 'name';
+                // }
+                // else if (this.extensionName == 'network') {
+                //     if (paramName == 'network_security_group_name') paramName = 'nsg_name';
+                //     else if (paramName == 'virtual_network_name') paramName = 'vnet_name';
+                //     else if (commandGroup.toLowerCase() === 'privatelinkservices') {
+                //         if (paramName == 'service_name') paramName = 'name';
+                //     }
+                // }
             }
             paramName = paramName.split('_').join('-');
             ret.push(
