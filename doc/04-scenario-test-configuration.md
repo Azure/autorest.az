@@ -424,3 +424,14 @@ az:
   ...
   use-test-step-param: true
 ~~~
+
+## How to generate cmdlet tests
+The cmdlet tests can be run under virtual server to check CLI command availability. It can be generated with below option
+~~~ bat
+> autorest --az --gen-cmdlet-test ...
+~~~
+or configure in readme.az.md:
+~~~
+gen-cmdlet-test: true
+~~~
+

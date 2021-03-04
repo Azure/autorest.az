@@ -792,3 +792,7 @@ export function checkNested(obj, path: string) {
     }
     return true;
 }
+
+export function isTrue(t: any) {
+    return !isNullOrUndefined(t) && t.toString().toLowerCase() === 'true';
+}

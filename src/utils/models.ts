@@ -128,6 +128,7 @@ export enum CodeGenConstants {
     inputFile = 'input-file',
     testResources = 'test-resources',
     preparers = 'preparers',
+    genCmdletTest = 'gen-cmdlet-test',
 
     // some configuration keys under az section
     namespace = 'namespace',
@@ -169,8 +170,8 @@ export class AzConfiguration {
         }
     }
 
-    public static getValue(key: CodeGenConstants) {
-        return AzConfiguration.dict[key];
+    public static getValue(key: CodeGenConstants, defaultValue: any = undefined) {
+        return AzConfiguration.dict[key] || defaultValue;
     }
 
     public static setValue(key: CodeGenConstants, value: unknown): void {

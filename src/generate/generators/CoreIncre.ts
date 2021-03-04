@@ -4,7 +4,8 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { PathConstants, SystemType, TemplateRender } from '../../utils/models';
+import { SystemType, PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
+import { isTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
 import { CodeModelAz } from '../CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
@@ -156,28 +157,30 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
                 ),
             );
         GenerateMetaFile(this.model);
-        for (const boolVal of [false, true]) {
+        if (isTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, true))) {
+            for (const boolVal of [false, true]) {
+                await this.generateIncrementalSingleAndAddtoOutput(
+                    new CliCmdletTest(this.model, boolVal),
+                    true,
+                );
+            }
             await this.generateIncrementalSingleAndAddtoOutput(
-                new CliCmdletTest(this.model, boolVal),
-                true,
+                new SimpleTemplate(
+                    this.model,
+                    path.join(
+                        this.model.AzextFolder,
+                        PathConstants.testFolder,
+                        PathConstants.cmdletFolder,
+                        PathConstants.conftestFile,
+                    ),
+                    path.join(
+                        PathConstants.templateRootFolder,
+                        PathConstants.testFolder,
+                        PathConstants.cmdletFolder,
+                        PathConstants.conftestFile + '.njx',
+                    ),
+                ),
             );
         }
-        await this.generateIncrementalSingleAndAddtoOutput(
-            new SimpleTemplate(
-                this.model,
-                path.join(
-                    this.model.AzextFolder,
-                    PathConstants.testFolder,
-                    PathConstants.cmdletFolder,
-                    PathConstants.conftestFile,
-                ),
-                path.join(
-                    PathConstants.templateRootFolder,
-                    PathConstants.testFolder,
-                    PathConstants.cmdletFolder,
-                    PathConstants.conftestFile + '.njx',
-                ),
-            ),
-        );
     }
 }
