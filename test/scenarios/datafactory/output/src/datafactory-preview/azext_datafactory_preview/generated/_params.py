@@ -200,18 +200,6 @@ def load_arguments(self, _):
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
 
-    with self.argument_context('datafactory integration-runtime linked-integration-runtime create') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
-        c.argument('integration_runtime_name', type=str, help='The integration runtime name.')
-        c.argument('name', type=str, help='The name of the linked integration runtime.')
-        c.argument('subscription_id', type=str, help='The ID of the subscription that the linked integration runtime '
-                   'belongs to.')
-        c.argument('data_factory_name', type=str, help='The name of the data factory that the linked integration '
-                   'runtime belongs to.')
-        c.argument('data_factory_location', type=str, help='The location of the data factory that the linked '
-                   'integration runtime belongs to.')
-
     with self.argument_context('datafactory integration-runtime managed create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
@@ -331,6 +319,18 @@ def load_arguments(self, _):
         c.argument('if_none_match', type=str, help='ETag of the integration runtime entity. Should only be specified '
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
+
+    with self.argument_context('datafactory create-linked-integration-runtime') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
+        c.argument('integration_runtime_name', type=str, help='The integration runtime name.')
+        c.argument('name', type=str, help='The name of the linked integration runtime.')
+        c.argument('subscription_id', type=str, help='The ID of the subscription that the linked integration runtime '
+                   'belongs to.')
+        c.argument('data_factory_name', type=str, help='The name of the data factory that the linked integration '
+                   'runtime belongs to.')
+        c.argument('data_factory_location', type=str, help='The location of the data factory that the linked '
+                   'integration runtime belongs to.')
 
     with self.argument_context('datafactory domain-service create') as c:
         c.argument('resource_group_name', resource_group_name_type)
