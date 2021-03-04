@@ -1,6 +1,6 @@
 {
   "name": "autorest-autoconfig",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Autorest auto configuration extension",
   "main": "dist/index.js",
   "engines": {

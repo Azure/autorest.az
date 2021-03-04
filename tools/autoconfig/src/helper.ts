@@ -328,7 +328,7 @@ export function isHiddenOperation(operationInfo: OperationInfo): boolean {
         const cliDirective = new CliDirective(directive);
         if (
             cliDirective.selector.match({
-                operationGroupCliKey: groupName === '' ? undefined : groupName,
+                operationGroupCliKey: groupName,
                 operationCliKey: operationName,
                 parent: undefined,
                 target: new Operation('fake', 'fake description'),
@@ -345,7 +345,6 @@ export function isHiddenOperation(operationInfo: OperationInfo): boolean {
         }
 
         if (
-            groupName !== '' &&
             cliDirective.selector.match({
                 operationGroupCliKey: groupName,
                 parent: undefined,
