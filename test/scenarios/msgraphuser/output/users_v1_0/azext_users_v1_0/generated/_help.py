@@ -22,6 +22,11 @@ helps['users user list'] = """
     short-summary: "Get entities from users."
 """
 
+helps['users user show'] = """
+    type: command
+    short-summary: "Get entity from users by key."
+"""
+
 helps['users user create'] = """
     type: command
     short-summary: "Add new entity to users."
@@ -709,22 +714,9 @@ helps['users user delete'] = """
     short-summary: "Delete entity from users."
 """
 
-helps['users user show-user'] = """
-    type: command
-    short-summary: "Get entity from users by key."
-"""
-
 helps['users user'] = """
     type: group
     short-summary: Manage user with users_v1_0
-"""
-
-helps['users user delete'] = """
-    type: command
-    short-summary: "Delete navigation property extensions for users And Delete navigation property licenseDetails for \
-users And Delete navigation property photos for users And Delete ref of navigation property manager for users And \
-Delete navigation property outlook for users And Delete navigation property photo for users And Delete navigation \
-property settings for users."
 """
 
 helps['users user create-extension'] = """
@@ -797,6 +789,36 @@ helps['users user create-ref-registered-device'] = """
 helps['users user create-ref-transitive-member-of'] = """
     type: command
     short-summary: "Create new navigation property ref to transitiveMemberOf for users."
+"""
+
+helps['users user delete-extension'] = """
+    type: command
+    short-summary: "Delete navigation property extensions for users."
+"""
+
+helps['users user delete-license-detail'] = """
+    type: command
+    short-summary: "Delete navigation property licenseDetails for users."
+"""
+
+helps['users user delete-outlook'] = """
+    type: command
+    short-summary: "Delete navigation property outlook for users."
+"""
+
+helps['users user delete-photo'] = """
+    type: command
+    short-summary: "Delete navigation property photos for users And Delete navigation property photo for users."
+"""
+
+helps['users user delete-ref-manager'] = """
+    type: command
+    short-summary: "Delete ref of navigation property manager for users."
+"""
+
+helps['users user delete-setting'] = """
+    type: command
+    short-summary: "Delete navigation property settings for users."
 """
 
 helps['users user list-created-object'] = """
@@ -1021,14 +1043,14 @@ helps['users user-outlook'] = """
     short-summary: Manage user outlook with users_v1_0
 """
 
-helps['users user-outlook delete'] = """
-    type: command
-    short-summary: "Delete navigation property masterCategories for users."
-"""
-
 helps['users user-outlook create-master-category'] = """
     type: command
     short-summary: "Create new navigation property to masterCategories for users."
+"""
+
+helps['users user-outlook delete-master-category'] = """
+    type: command
+    short-summary: "Delete navigation property masterCategories for users."
 """
 
 helps['users user-outlook list-master-category'] = """
@@ -1051,7 +1073,7 @@ helps['users user-setting'] = """
     short-summary: Manage user setting with users_v1_0
 """
 
-helps['users user-setting delete'] = """
+helps['users user-setting delete-shift-preference'] = """
     type: command
     short-summary: "Delete navigation property shiftPreferences for users."
 """

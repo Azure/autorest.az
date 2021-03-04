@@ -55,6 +55,11 @@ def load_arguments(self, _):
         c.argument('select', nargs='+', help='Select properties to be returned')
         c.argument('expand', nargs='+', help='Expand related entities')
 
+    with self.argument_context('users user show') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('select', nargs='+', help='Select properties to be returned')
+        c.argument('expand', nargs='+', help='Expand related entities')
+
     with self.argument_context('users user create') as c:
         c.argument('id_', options_list=['--id'], type=str, help='Read-only.')
         c.argument('deleted_date_time', help='')
@@ -672,18 +677,6 @@ def load_arguments(self, _):
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('if_match', type=str, help='ETag')
 
-    with self.argument_context('users user show-user') as c:
-        c.argument('user_id', type=str, help='key: id of user')
-        c.argument('select', nargs='+', help='Select properties to be returned')
-        c.argument('expand', nargs='+', help='Expand related entities')
-
-    with self.argument_context('users user delete') as c:
-        c.argument('user_id', type=str, help='key: id of user')
-        c.argument('extension_id', type=str, help='key: id of extension')
-        c.argument('if_match', type=str, help='ETag')
-        c.argument('license_details_id', type=str, help='key: id of licenseDetails')
-        c.argument('profile_photo_id', type=str, help='key: id of profilePhoto')
-
     with self.argument_context('users user create-extension') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('id_', options_list=['--id'], type=str, help='Read-only.')
@@ -743,6 +736,33 @@ def load_arguments(self, _):
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
                    'json-string/@json-file.')
+
+    with self.argument_context('users user delete-extension') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('extension_id', type=str, help='key: id of extension')
+        c.argument('if_match', type=str, help='ETag')
+
+    with self.argument_context('users user delete-license-detail') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('license_details_id', type=str, help='key: id of licenseDetails')
+        c.argument('if_match', type=str, help='ETag')
+
+    with self.argument_context('users user delete-outlook') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('if_match', type=str, help='ETag')
+
+    with self.argument_context('users user delete-photo') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('profile_photo_id', type=str, help='key: id of profilePhoto')
+        c.argument('if_match', type=str, help='ETag')
+
+    with self.argument_context('users user delete-ref-manager') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('if_match', type=str, help='ETag')
+
+    with self.argument_context('users user delete-setting') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('if_match', type=str, help='ETag')
 
     with self.argument_context('users user list-created-object') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -935,11 +955,6 @@ def load_arguments(self, _):
                    'and its recurrence pattern. Expected value: json-string/@json-file.',
                    arg_group='Shift Preferences')
 
-    with self.argument_context('users user-outlook delete') as c:
-        c.argument('user_id', type=str, help='key: id of user')
-        c.argument('outlook_category_id', type=str, help='key: id of outlookCategory')
-        c.argument('if_match', type=str, help='ETag')
-
     with self.argument_context('users user-outlook create-master-category') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('id_', options_list=['--id'], type=str, help='Read-only.')
@@ -951,6 +966,11 @@ def load_arguments(self, _):
                    help='categoryColor')
         c.argument('display_name', type=str, help='A unique name that identifies a category in the user\'s mailbox. '
                    'After a category is created, the name cannot be changed. Read-only.')
+
+    with self.argument_context('users user-outlook delete-master-category') as c:
+        c.argument('user_id', type=str, help='key: id of user')
+        c.argument('outlook_category_id', type=str, help='key: id of outlookCategory')
+        c.argument('if_match', type=str, help='ETag')
 
     with self.argument_context('users user-outlook list-master-category') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -977,7 +997,7 @@ def load_arguments(self, _):
         c.argument('display_name', type=str, help='A unique name that identifies a category in the user\'s mailbox. '
                    'After a category is created, the name cannot be changed. Read-only.')
 
-    with self.argument_context('users user-setting delete') as c:
+    with self.argument_context('users user-setting delete-shift-preference') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('if_match', type=str, help='ETag')
 

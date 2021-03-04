@@ -25,21 +25,25 @@ directive:
       set:
           group: user
     - where:
-          command: create-user
+          command: users user create-user
       set:
-          command: create
+          command: users user create
     - where:
-          command: get-user
+          command: users user update-user
       set:
-          command: get
+          command: users user update
     - where:
-          command: list-user
+          command: users user show-user
       set:
-          command: list
+          command: users user show
     - where:
-          command: update-user
+          command: users user list-user
       set:
-          command: update
+          command: users user list
+    - where:
+          command: users user delete-user
+      set:
+          command: users user delete
 
 modelerfour:
     lenient-model-deduplication: true
