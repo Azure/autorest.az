@@ -470,7 +470,7 @@ def datafactory_integration_runtime_upgrade(client,
                           integration_runtime_name=integration_runtime_name)
 
 
-def datafactory_create_linked_integration_runtime(client,
+def datafactory_linked_integration_runtime_create(client,
                                                   resource_group_name,
                                                   factory_name,
                                                   integration_runtime_name,

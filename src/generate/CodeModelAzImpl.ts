@@ -943,6 +943,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             /-/g,
             ' ',
         );
+        if (groupPart === '') {
+            return '';
+        }
         if (extensionPart !== groupPart) {
             return 'Manage ' + groupPart + ' with ' + extensionPart;
         } else {

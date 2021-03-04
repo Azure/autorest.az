@@ -106,7 +106,7 @@ const getPatternToMatch = (selector: string | undefined): RegExp | undefined => 
 
 export class Modifiers {
     codeModel: CodeModel;
-    allCommandGroups: Record<string, number>;
+    allCommandGroups: Record<string, number[]>;
     groupChanged: boolean;
 
     constructor(protected session: Session<CodeModel>) {
@@ -119,7 +119,10 @@ export class Modifiers {
         this.allCommandGroups = {};
         let groupIdx = 0;
         this.codeModel.operationGroups.forEach((operationGroup) => {
-            this.allCommandGroups[operationGroup.language['az'].command] = groupIdx;
+            if (isNullOrUndefined(this.allCommandGroups[operationGroup.language['az'].command])) {
+                this.allCommandGroups[operationGroup.language['az'].command] = [];
+            }
+            this.allCommandGroups[operationGroup.language['az'].command].push(groupIdx);
             groupIdx++;
         });
     }
@@ -156,6 +159,7 @@ export class Modifiers {
             !isNullOrUndefined(groupRegex) &&
             operationGroup.language['az'].command.match(groupRegex)
         ) {
+            const preIndexs = this.allCommandGroups[operationGroup.language['az'].command];
             if (
                 Object.prototype.hasOwnProperty.call(
                     this.allCommandGroups,
@@ -169,7 +173,7 @@ export class Modifiers {
                     ? operationGroup.language['az'].command.replace(groupRegex, groupReplacer)
                     : groupReplacer
                 : operationGroup.language['az'].command;
-            this.allCommandGroups[operationGroup.language['az'].command] = groupIdx;
+            this.allCommandGroups[operationGroup.language['az'].command] = preIndexs;
             operationGroup.language['az'].description =
                 groupDescriptionReplacer || operationGroup.language['az'].description;
             this.groupChanged = true;
@@ -216,22 +220,24 @@ export class Modifiers {
             let newAzName = newCommandArr.last;
             while (commonIdx >= 0) {
                 const groupName = newCommandArr.slice(0, commonIdx + 1).join(' ');
-                const newIndex = this.allCommandGroups[groupName];
-                if (!isNullOrUndefined(newIndex)) {
+                const newIndexes = this.allCommandGroups[groupName];
+                if (!isNullOrUndefined(newIndexes) && newIndexes.length !== 0) {
                     newAzName = newCommandArr.slice(commonIdx + 1, newCommandArr.length).join(' ');
                     newGroup = newCommandArr.slice(0, commonIdx + 1).join(' ');
-                    if (groupIdx !== newIndex) {
+                    if (newIndexes.indexOf(groupIdx) > -1) {
                         this.codeModel.operationGroups[groupIdx].operations.splice(opIndex, 1);
-                        this.codeModel.operationGroups[newIndex].operations.push(operation);
+                        this.codeModel.operationGroups[newIndexes[groupIdx]].operations.push(
+                            operation,
+                        );
                     }
                     break;
                 } else if (operationGroup.operations.length === 1) {
                     operationGroup.language['az'].command = newGroup;
-                    const oldIndex = this.allCommandGroups[oldGroup];
-                    if (!isNullOrUndefined(oldIndex)) {
+                    const oldIndexes = this.allCommandGroups[oldGroup];
+                    if (!isNullOrUndefined(oldIndexes) && oldIndexes.length === 1) {
                         delete this.allCommandGroups[oldGroup];
                     }
-                    this.allCommandGroups[newGroup] = groupIdx;
+                    this.allCommandGroups[newGroup] = [groupIdx];
                     break;
                 }
                 commonIdx--;
@@ -246,7 +252,7 @@ export class Modifiers {
             }
             operation.language['az'].name = newAzName;
             operation.language['az'].command = newCommand;
-            if (newGroup != subCommandGroup) {
+            if (newGroup.indexOf(oldGroup, 0) > -1 && newGroup != oldGroup) {
                 operation.language['az'].subCommandGroup = subCommandGroup;
             }
             this.session.message({

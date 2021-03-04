@@ -320,7 +320,7 @@ def load_arguments(self, _):
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
 
-    with self.argument_context('datafactory create-linked-integration-runtime') as c:
+    with self.argument_context('datafactory linked-integration-runtime create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
         c.argument('integration_runtime_name', type=str, help='The integration runtime name.')

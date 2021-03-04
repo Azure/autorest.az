@@ -12,7 +12,7 @@
 |az datafactory|Factories|[commands](#CommandsInFactories)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 |az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
-|az datafactory||[commands](#CommandsIn)|
+|az datafactory linked-integration-runtime||[commands](#CommandsIn)|
 |az datafactory domain-service|DomainServices|[commands](#CommandsInDomainServices)|
 |az datafactory group|Groups|[commands](#CommandsInGroups)|
 
@@ -29,11 +29,6 @@
 |[az datafactory configure-factory-repo](#FactoriesConfigureFactoryRepo)|ConfigureFactoryRepo|[Parameters](#ParametersFactoriesConfigureFactoryRepo)|[Example](#ExamplesFactoriesConfigureFactoryRepo)|
 |[az datafactory get-data-plane-access](#FactoriesGetDataPlaneAccess)|GetDataPlaneAccess|[Parameters](#ParametersFactoriesGetDataPlaneAccess)|[Example](#ExamplesFactoriesGetDataPlaneAccess)|
 |[az datafactory get-git-hub-access-token](#FactoriesGetGitHubAccessToken)|GetGitHubAccessToken|[Parameters](#ParametersFactoriesGetGitHubAccessToken)|[Example](#ExamplesFactoriesGetGitHubAccessToken)|
-
-### <a name="CommandsIn">Commands in `az datafactory` group</a>
-|CLI Command|Operation Swagger name|Parameters|Examples|
-|---------|------------|--------|-----------|
-|[az datafactory create-linked-integration-runtime](#CreateLinkedIntegrationRuntime)|CreateLinkedIntegrationRuntime|[Parameters](#ParametersCreateLinkedIntegrationRuntime)|[Example](#ExamplesCreateLinkedIntegrationRuntime)|
 
 ### <a name="CommandsInDomainServices">Commands in `az datafactory domain-service` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -65,6 +60,11 @@
 |[az datafactory integration-runtime stop](#IntegrationRuntimesStop)|Stop|[Parameters](#ParametersIntegrationRuntimesStop)|[Example](#ExamplesIntegrationRuntimesStop)|
 |[az datafactory integration-runtime sync-credentials](#IntegrationRuntimesSyncCredentials)|SyncCredentials|[Parameters](#ParametersIntegrationRuntimesSyncCredentials)|[Example](#ExamplesIntegrationRuntimesSyncCredentials)|
 |[az datafactory integration-runtime upgrade](#IntegrationRuntimesUpgrade)|Upgrade|[Parameters](#ParametersIntegrationRuntimesUpgrade)|[Example](#ExamplesIntegrationRuntimesUpgrade)|
+
+### <a name="CommandsIn">Commands in `az datafactory linked-integration-runtime` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az datafactory linked-integration-runtime create](#CreateLinkedIntegrationRuntime)|CreateLinkedIntegrationRuntime|[Parameters](#ParametersCreateLinkedIntegrationRuntime)|[Example](#ExamplesCreateLinkedIntegrationRuntime)|
 
 ### <a name="CommandsInTriggers">Commands in `az datafactory trigger` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -216,26 +216,6 @@ az datafactory get-git-hub-access-token --name "myFactory" --git-hub-access-code
 |**--git-hub-access-code**|string|GitHub access code.|git_hub_access_code|gitHubAccessCode|
 |**--git-hub-access-token-base-url**|string|GitHub access token base URL.|git_hub_access_token_base_url|gitHubAccessTokenBaseUrl|
 |**--git-hub-client-id**|string|GitHub application client ID.|git_hub_client_id|gitHubClientId|
-
-### group `az datafactory`
-#### <a name="CreateLinkedIntegrationRuntime">Command `az datafactory create-linked-integration-runtime`</a>
-
-##### <a name="ExamplesCreateLinkedIntegrationRuntime">Example</a>
-```
-az datafactory create-linked-integration-runtime --name "myDatafactory" --data-factory-location "West US" \
---data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id "061774c7-4b5a-4159-a55b-365581830283" \
---factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup"
-```
-##### <a name="ParametersCreateLinkedIntegrationRuntime">Parameters</a> 
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
-|**--factory-name**|string|The factory name.|factory_name|factoryName|
-|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
-|**--name**|string|The name of the linked integration runtime.|name|name|
-|**--subscription-id**|string|The ID of the subscription that the linked integration runtime belongs to.|subscription_id|subscriptionId|
-|**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|dataFactoryName|
-|**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|dataFactoryLocation|
 
 ### group `az datafactory domain-service`
 #### <a name="DomainServicesCreateOrUpdate#Create">Command `az datafactory domain-service create`</a>
@@ -512,6 +492,27 @@ az datafactory integration-runtime upgrade --factory-name "myFactory" --name "my
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
+
+### group `az datafactory linked-integration-runtime`
+#### <a name="CreateLinkedIntegrationRuntime">Command `az datafactory linked-integration-runtime create`</a>
+
+##### <a name="ExamplesCreateLinkedIntegrationRuntime">Example</a>
+```
+az datafactory linked-integration-runtime create --name "myDatafactoryLinkedIntegrationRuntime" \
+--data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id \
+"061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+```
+##### <a name="ParametersCreateLinkedIntegrationRuntime">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
+|**--factory-name**|string|The factory name.|factory_name|factoryName|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
+|**--name**|string|The name of the linked integration runtime.|name|name|
+|**--subscription-id**|string|The ID of the subscription that the linked integration runtime belongs to.|subscription_id|subscriptionId|
+|**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|dataFactoryName|
+|**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|dataFactoryLocation|
 
 ### group `az datafactory trigger`
 #### <a name="TriggersListByFactory">Command `az datafactory trigger list`</a>

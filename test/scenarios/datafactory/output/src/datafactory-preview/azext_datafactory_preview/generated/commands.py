@@ -85,8 +85,10 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._dfaz_management_client_operations#DFAZManagementClientOperationsMixin.{}',
         client_factory=cf_datafactory_cl,
     )
-    with self.command_group('datafactory', datafactory_, client_factory=cf_datafactory_cl, is_experimental=True) as g:
-        g.custom_command('create-linked-integration-runtime', 'datafactory_create_linked_integration_runtime')
+    with self.command_group(
+        'datafactory linked-integration-runtime', datafactory_, client_factory=cf_datafactory_cl
+    ) as g:
+        g.custom_command('create', 'datafactory_linked_integration_runtime_create')
 
     from azext_datafactory_preview.generated._client_factory import cf_domain_service
 

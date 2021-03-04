@@ -283,13 +283,13 @@ def step_integration_runtime_upgrade(test, rg, checks=None):
              checks=checks)
 
 
-# EXAMPLE: /datafactory/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
+# EXAMPLE: /datafactory linked-integration-runtime/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
 @try_manual
-def step_create_linked_integration_runtime(test, rg, checks=None):
+def step_linked_integration_runtime_create(test, rg, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az datafactory create-linked-integration-runtime '
-             '--name "{myDatafactory}" '
+    test.cmd('az datafactory linked-integration-runtime create '
+             '--name "{myDatafactoryLinkedIntegrationRuntime}" '
              '--data-factory-location "West US" '
              '--data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" '
              '--subscription-id "061774c7-4b5a-4159-a55b-365581830283" '
