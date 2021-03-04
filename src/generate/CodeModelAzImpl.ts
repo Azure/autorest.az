@@ -991,7 +991,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             'cf_' +
             (this.GetModuleOperationName() !== ''
                 ? this.GetModuleOperationName()
-                : this.Extension_NameUnderscored + '_cl');
+                : this.Extension_NameUnderscored);
         return cfName;
     }
 
@@ -2331,9 +2331,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetModuleOperationNamePython(): string {
-        if (this.CommandGroup_CliKey === '') {
-            return this.codeModel.info['python_title'];
-        }
         if (
             this.SDK_IsTrack1 &&
             !isNullOrUndefined(this.CommandGroup.language['cli']?.track1_name)

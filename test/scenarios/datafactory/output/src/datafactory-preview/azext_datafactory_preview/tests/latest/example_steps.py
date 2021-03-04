@@ -161,6 +161,22 @@ def step_integration_runtime_update(test, rg, checks=None):
              checks=checks)
 
 
+# EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
+@try_manual
+def step_integration_runtime_linked(test, rg, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az datafactory integration-runtime linked-integration-runtime create '
+             '--name "bfa92911-9fb6-4fbe-8f23-beae87bc1c83" '
+             '--data-factory-location "West US" '
+             '--data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" '
+             '--subscription-id "061774c7-4b5a-4159-a55b-365581830283" '
+             '--factory-name "{myFactory}" '
+             '--integration-runtime-name "{myIntegrationRuntime}" '
+             '--resource-group "{rg}"',
+             checks=checks)
+
+
 # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_GetConnectionInfo
 @try_manual
 def step_integration_runtime_get_connection_info(test, rg, checks=None):
@@ -279,22 +295,6 @@ def step_integration_runtime_upgrade(test, rg, checks=None):
     test.cmd('az datafactory integration-runtime upgrade '
              '--factory-name "{myFactory}" '
              '--name "{myIntegrationRuntime}" '
-             '--resource-group "{rg}"',
-             checks=checks)
-
-
-# EXAMPLE: /datafactory/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
-@try_manual
-def step_create_linked_integration_runtime(test, rg, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az datafactory create-linked-integration-runtime '
-             '--name "{myDatafactory}" '
-             '--data-factory-location "West US" '
-             '--data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" '
-             '--subscription-id "061774c7-4b5a-4159-a55b-365581830283" '
-             '--factory-name "{myFactory}" '
-             '--integration-runtime-name "{myIntegrationRuntime}" '
              '--resource-group "{rg}"',
              checks=checks)
 

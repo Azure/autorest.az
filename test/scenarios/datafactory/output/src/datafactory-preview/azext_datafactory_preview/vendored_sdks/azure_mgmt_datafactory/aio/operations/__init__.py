@@ -9,7 +9,6 @@
 from ._factories_operations import FactoriesOperations
 from ._triggers_operations import TriggersOperations
 from ._integration_runtimes_operations import IntegrationRuntimesOperations
-from ._dfaz_management_client_operations import DFAZManagementClientOperationsMixin
 from ._domain_services_operations import DomainServicesOperations
 from ._groups_operations import GroupsOperations
 
@@ -17,7 +16,6 @@ __all__ = [
     'FactoriesOperations',
     'TriggersOperations',
     'IntegrationRuntimesOperations',
-    'DFAZManagementClientOperationsMixin',
     'DomainServicesOperations',
     'GroupsOperations',
 ]

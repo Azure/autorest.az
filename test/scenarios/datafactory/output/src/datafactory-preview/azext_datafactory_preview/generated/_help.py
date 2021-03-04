@@ -313,6 +313,23 @@ helps['datafactory integration-runtime show'] = """
 --resource-group "myResourceGroup"
 """
 
+helps['datafactory integration-runtime linked-integration-runtime'] = """
+    type: group
+    short-summary: Manage integration runtime with datafactory sub group linked-integration-runtime
+"""
+
+helps['datafactory integration-runtime linked-integration-runtime create'] = """
+    type: command
+    short-summary: "Create a linked integration runtime entry in a shared integration runtime."
+    examples:
+      - name: IntegrationRuntimes_CreateLinkedIntegrationRuntime
+        text: |-
+               az datafactory integration-runtime linked-integration-runtime create --name \
+"bfa92911-9fb6-4fbe-8f23-beae87bc1c83" --data-factory-location "West US" --data-factory-name \
+"e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id "061774c7-4b5a-4159-a55b-365581830283" --factory-name \
+"myFactory" --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup"
+"""
+
 helps['datafactory integration-runtime managed'] = """
     type: group
     short-summary: Manage integration runtime with datafactory sub group managed
@@ -508,22 +525,6 @@ created.
         text: |-
                az datafactory integration-runtime wait --factory-name "myFactory" --name "myIntegrationRuntime" \
 --resource-group "myResourceGroup" --created
-"""
-
-helps['datafactory'] = """
-    type: group
-    short-summary: Manage  with datafactory
-"""
-
-helps['datafactory create-linked-integration-runtime'] = """
-    type: command
-    short-summary: "Create a linked integration runtime entry in a shared integration runtime."
-    examples:
-      - name: IntegrationRuntimes_CreateLinkedIntegrationRuntime
-        text: |-
-               az datafactory create-linked-integration-runtime --name "myDatafactory" --data-factory-location "West \
-US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id "061774c7-4b5a-4159-a55b-365581830283"\
- --factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup"
 """
 
 helps['datafactory domain-service'] = """

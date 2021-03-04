@@ -110,6 +110,13 @@ az datafactory integration-runtime self-hosted create --factory-name "myFactory"
 az datafactory integration-runtime show --factory-name "myFactory" --name "myIntegrationRuntime" \
     --resource-group "myResourceGroup" 
 ```
+##### Linked-integration-runtime create #####
+```
+az datafactory integration-runtime linked-integration-runtime create --name "bfa92911-9fb6-4fbe-8f23-beae87bc1c83" \
+    --data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" \
+    --subscription-id "061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" \
+    --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup" 
+```
 ##### List #####
 ```
 az datafactory integration-runtime list --factory-name "myFactory" --resource-group "myResourceGroup"
@@ -173,14 +180,6 @@ az datafactory integration-runtime upgrade --factory-name "myFactory" --name "my
 ```
 az datafactory integration-runtime delete --factory-name "myFactory" --name "myIntegrationRuntime" \
     --resource-group "myResourceGroup" 
-```
-#### datafactory ####
-##### Create-linked-integration-runtime #####
-```
-az datafactory create-linked-integration-runtime --name "myDatafactory" --data-factory-location "West US" \
-    --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" \
-    --subscription-id "061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" \
-    --integration-runtime-name "myIntegrationRuntime" --resource-group "myResourceGroup" 
 ```
 #### datafactory domain-service ####
 #### datafactory group ####

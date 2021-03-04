@@ -63,6 +63,9 @@ def load_command_table(self, _):
     ) as g:
         g.custom_command('list', 'datafactory_integration_runtime_list')
         g.custom_show_command('show', 'datafactory_integration_runtime_show')
+        g.custom_command(
+            'linked-integration-runtime create', 'datafactory_integration_runtime_linked_integration_runtime_create'
+        )
         g.custom_command('managed create', 'datafactory_integration_runtime_managed_create')
         g.custom_command('self-hosted create', 'datafactory_integration_runtime_self_hosted_create')
         g.custom_command('update', 'datafactory_integration_runtime_update')
@@ -78,15 +81,6 @@ def load_command_table(self, _):
         g.custom_command('sync-credentials', 'datafactory_integration_runtime_sync_credentials')
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
         g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
-
-    from azext_datafactory_preview.generated._client_factory import cf_datafactory_cl
-
-    datafactory_ = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._dfaz_management_client_operations#DFAZManagementClientOperationsMixin.{}',
-        client_factory=cf_datafactory_cl,
-    )
-    with self.command_group('datafactory', datafactory_, client_factory=cf_datafactory_cl, is_experimental=True) as g:
-        g.custom_command('create-linked-integration-runtime', 'datafactory_create_linked_integration_runtime')
 
     from azext_datafactory_preview.generated._client_factory import cf_domain_service
 
