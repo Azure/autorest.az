@@ -128,19 +128,25 @@ export class CliTopInit extends TemplateBase {
         }
         const output: string[] = header.getLines();
         let importPath = model.AzextFolder;
-        if (model.IsCliCore) {
+        if (!model.IsCliCore) {
+            output.push(
+                'from ' +
+                    importPath +
+                    '.generated._help import helps  # pylint: disable=unused-import',
+            );
+            output.push('try:');
+            output.push(
+                '    from ' +
+                    importPath +
+                    '.manual._help import helps  # pylint: disable=reimported',
+            );
+            output.push('except ImportError:');
+            output.push('    pass');
+            output.push('');
+        } else {
             importPath = '';
         }
-        output.push(
-            'from ' + importPath + '.generated._help import helps  # pylint: disable=unused-import',
-        );
-        output.push('try:');
-        output.push(
-            '    from ' + importPath + '.manual._help import helps  # pylint: disable=reimported',
-        );
-        output.push('except ImportError:');
-        output.push('    pass');
-        output.push('');
+
         output.push('');
         output.push('class ' + model.Extension_NameClass + 'CommandsLoader(AzCommandsLoader):');
         output.push('');

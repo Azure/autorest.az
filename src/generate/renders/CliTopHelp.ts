@@ -22,8 +22,13 @@ export class CliTopHelp extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
-        // Nothing need to do as Full Generation will not have top level help
-        return null;
+        const headerGenerator: HeaderGenerator = new HeaderGenerator();
+        headerGenerator.disableWildcardImport = true;
+        headerGenerator.disableUnusedWildcardImport = true;
+        let output: string[] = headerGenerator.getLines();
+        output.push('');
+        output = output.concat(this.loadGeneratedHelp(0));
+        return output;
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {
