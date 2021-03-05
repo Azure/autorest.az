@@ -19,11 +19,7 @@ import { TemplateBase } from './TemplateBase';
 export class CliTopInit extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.initFile);
-        } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.initFile);
-        }
+        this.relativePath = path.join(model.AzextFolder, PathConstants.initFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -132,19 +128,25 @@ export class CliTopInit extends TemplateBase {
         }
         const output: string[] = header.getLines();
         let importPath = model.AzextFolder;
-        if (model.IsCliCore) {
+        if (!model.IsCliCore) {
+            output.push(
+                'from ' +
+                    importPath +
+                    '.generated._help import helps  # pylint: disable=unused-import',
+            );
+            output.push('try:');
+            output.push(
+                '    from ' +
+                    importPath +
+                    '.manual._help import helps  # pylint: disable=reimported',
+            );
+            output.push('except ImportError:');
+            output.push('    pass');
+            output.push('');
+        } else {
             importPath = '';
         }
-        output.push(
-            'from ' + importPath + '.generated._help import helps  # pylint: disable=unused-import',
-        );
-        output.push('try:');
-        output.push(
-            '    from ' + importPath + '.manual._help import helps  # pylint: disable=reimported',
-        );
-        output.push('except ImportError:');
-        output.push('    pass');
-        output.push('');
+
         output.push('');
         output.push('class ' + model.Extension_NameClass + 'CommandsLoader(AzCommandsLoader):');
         output.push('');

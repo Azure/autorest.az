@@ -6,6 +6,7 @@ import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
 import { CliReport } from '../renders/CliReport';
 import { CliTopAction } from '../renders/CliTopAction';
 import { CliTopCustom } from '../renders/CliTopCustom';
+import { CliTopHelp } from '../renders/CliTopHelp';
 import { CliTopInit } from '../renders/CliTopInit';
 import { CliMainDocSourceJsonMap } from '../renders/extraMain/CliMainDocSourceJsonMap';
 import { CliMainRequirement } from '../renders/extraMain/CliMainRequirement';
@@ -72,6 +73,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 await this.generateFullSingleAndAddtoOutput(new CliCommands(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopAction(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model));
+                await this.generateFullSingleAndAddtoOutput(new CliTopHelp(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopInit(model));
                 await this.generateFullSingleAndAddtoOutput(new CliReport(model));
                 await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model));

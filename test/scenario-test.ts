@@ -166,7 +166,7 @@ describe('ScenarioTest', () => {
             })
             .catch((err) => {
                 msg = 'Run autorest failed!';
-                result = err;
+                result = false;
             });
         if (result) {
             await compare(
@@ -181,7 +181,7 @@ describe('ScenarioTest', () => {
                 })
                 .catch((e) => {
                     msg = 'The diff has some error';
-                    result = e;
+                    result = false;
                 });
         }
         return result;
@@ -193,7 +193,6 @@ describe('ScenarioTest', () => {
         const folders = fs.readdirSync(dir);
         const msg = '';
         let finalResult = true;
-        const parallelTest = process.env.parallelTest?.toLowerCase() === 'true';
         const allTests: Promise<boolean>[] = [];
         for (const rp of folders) {
             let result = true;
@@ -222,11 +221,7 @@ describe('ScenarioTest', () => {
                         outputDir = path.join(dir, rp, 'tmpoutput', dimension);
                         const extraOption = getOptions(dimension, outputDir);
                         const test = runSingleTest(dir, rp, extraOption, dimension);
-                        if (!parallelTest) {
-                            result = await test;
-                        } else {
-                            allTests.push(test);
-                        }
+                        allTests.push(test);
                     }
                 } else {
                     console.log(rp + ' is not configure, pass here');
@@ -241,9 +236,7 @@ describe('ScenarioTest', () => {
             }
             // assert.strictEqual(result, true, msg);
         }
-        if (parallelTest) {
-            finalResult = (await Promise.all(allTests)).every((x) => x);
-        }
+        finalResult = (await Promise.all(allTests)).every((x) => x);
         assert.strictEqual(finalResult, true, msg);
     });
 });

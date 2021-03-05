@@ -90,16 +90,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
-        const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(
-            PathConstants.actionFile,
-            PathConstants.actionFileOldVersion,
-        );
-        if (fs.existsSync(path.join(this.model.azOutputFolder, relativePathOldVersion))) {
-            cliTopActionBase = fs
-                .readFileSync(path.join(this.model.azOutputFolder, relativePathOldVersion))
-                .toString();
-            cliTopActionGenerator.relativePath = relativePathOldVersion;
-        } else if (
+        if (
             fs.existsSync(path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath))
         ) {
             cliTopActionBase = fs

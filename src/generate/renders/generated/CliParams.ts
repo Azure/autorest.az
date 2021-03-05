@@ -16,6 +16,7 @@ import {
 import { SchemaType } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
 import { CodeGenConstants } from '../../../utils/models';
+import { CliTopAction } from '../CliTopAction';
 
 let hasActions: boolean,
     hasBoolean: boolean,
@@ -108,7 +109,8 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
 
     if (hasActions) {
         if (model.IsCliCore) {
-            header.addFromImport('..action', actions);
+            const topAction = new CliTopAction(model);
+            header.addFromImport('..' + topAction.relativePath.replace(/\.py$/, ''), actions);
         } else {
             header.addFromImport(model.AzextFolder + '.action', actions);
         }

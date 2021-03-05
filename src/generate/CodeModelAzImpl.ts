@@ -943,6 +943,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             /-/g,
             ' ',
         );
+        if (groupPart === '') {
+            return '';
+        }
         if (extensionPart !== groupPart) {
             return 'Manage ' + groupPart + ' with ' + extensionPart;
         } else {
@@ -991,7 +994,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             'cf_' +
             (this.GetModuleOperationName() !== ''
                 ? this.GetModuleOperationName()
-                : this.Extension_NameUnderscored);
+                : this.Extension_NameUnderscored + '_cl');
         return cfName;
     }
 
@@ -2331,6 +2334,9 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public GetModuleOperationNamePython(): string {
+        if (this.CommandGroup_CliKey === '') {
+            return this.codeModel.info['python_title'];
+        }
         if (
             this.SDK_IsTrack1 &&
             !isNullOrUndefined(this.CommandGroup.language['cli']?.track1_name)
