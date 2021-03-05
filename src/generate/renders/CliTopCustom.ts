@@ -18,11 +18,7 @@ import { TemplateBase } from './TemplateBase';
 export class CliTopCustom extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.customFile);
-        } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.customFile);
-        }
+        this.relativePath = path.join(model.AzextFolder, PathConstants.customFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -51,9 +47,6 @@ export class CliTopCustom extends TemplateBase {
                 throw new Error(
                     'GenerationMode Error: Should not set Incremental mode on existing Full generation RP.',
                 );
-            } else if (existingMode === GenerationMode.Incremental) {
-                // No need more incremental change
-                return base.split(EOL);
             } else {
                 // Change base on the manual
                 const headerGenerator: HeaderGenerator = new HeaderGenerator();
@@ -64,13 +57,24 @@ export class CliTopCustom extends TemplateBase {
                 const baseSplit: string[] = base.split(EOL);
                 const skipLineIdx = skipCommentLines(baseSplit);
                 const keepLineIdx = keepHeaderLines(baseSplit);
+                let hasLoadLogic = false;
+                if (skipLineIdx !== -1) {
+                    for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
+                        if (baseSplit.indexOf('from .generated.custom import *') > -1) {
+                            hasLoadLogic = true;
+                            break;
+                        }
+                    }
+                }
 
                 if (skipLineIdx < keepLineIdx) {
                     output = output.concat(baseSplit.slice(skipLineIdx, keepLineIdx));
                 }
 
                 // Add loading code block
-                output = output.concat(this.loadGeneratedCustom(0));
+                if (!hasLoadLogic) {
+                    output = output.concat(this.loadGeneratedCustom(0));
+                }
 
                 const appendLineStartIdx = skipLineIdx < keepLineIdx ? keepLineIdx : skipLineIdx;
                 if (appendLineStartIdx !== -1) {

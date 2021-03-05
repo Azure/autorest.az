@@ -221,14 +221,13 @@ export class Modifiers {
             while (commonIdx >= 0) {
                 const groupName = newCommandArr.slice(0, commonIdx + 1).join(' ');
                 const newIndexes = this.allCommandGroups[groupName];
-                if (!isNullOrUndefined(newIndexes) && newIndexes.length !== 0) {
+                if (!isNullOrUndefined(newIndexes) && newIndexes.length > 0) {
                     newAzName = newCommandArr.slice(commonIdx + 1, newCommandArr.length).join(' ');
                     newGroup = newCommandArr.slice(0, commonIdx + 1).join(' ');
-                    if (newIndexes.indexOf(groupIdx) > -1) {
+                    if (newIndexes.indexOf(groupIdx) === -1) {
                         this.codeModel.operationGroups[groupIdx].operations.splice(opIndex, 1);
-                        this.codeModel.operationGroups[newIndexes[groupIdx]].operations.push(
-                            operation,
-                        );
+                        // all the operation groups in the newIndexes have the same commandGroupName. therefore it doesn't matter when index we put it into.
+                        this.codeModel.operationGroups[newIndexes[0]].operations.push(operation);
                     }
                     break;
                 } else if (operationGroup.operations.length === 1) {
@@ -252,7 +251,10 @@ export class Modifiers {
             }
             operation.language['az'].name = newAzName;
             operation.language['az'].command = newCommand;
-            if (newGroup.indexOf(oldGroup, 0) > -1 && newGroup != oldGroup) {
+            if (
+                (newGroup.indexOf(oldGroup, 0) > -1 && newGroup != oldGroup) ||
+                newAzName.indexOf(' ') > -1
+            ) {
                 operation.language['az'].subCommandGroup = subCommandGroup;
             }
             this.session.message({

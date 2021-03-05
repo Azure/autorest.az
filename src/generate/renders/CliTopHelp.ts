@@ -18,11 +18,7 @@ import { TemplateBase } from './TemplateBase';
 export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(PathConstants.helpFile);
-        } else {
-            this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
-        }
+        this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -39,9 +35,6 @@ export class CliTopHelp extends TemplateBase {
                 throw new Error(
                     'GenerationMode Error: Should not set Incremental mode on existing Full generation RP.',
                 );
-            } else if (existingMode === GenerationMode.Incremental) {
-                // No need more incremental change
-                return base.split(EOL);
             } else {
                 // Change base on the manual
                 const headerGenerator: HeaderGenerator = new HeaderGenerator();
@@ -53,12 +46,24 @@ export class CliTopHelp extends TemplateBase {
                 const skipLineIdx = skipCommentLines(baseSplit);
                 const keepLineIdx = keepHeaderLines(baseSplit);
 
+                let hasLoadLogic = false;
+                if (skipLineIdx !== -1) {
+                    for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
+                        if (baseSplit.indexOf('from .generated._help import helps') > -1) {
+                            hasLoadLogic = true;
+                            break;
+                        }
+                    }
+                }
+
                 if (skipLineIdx < keepLineIdx) {
                     output = output.concat(baseSplit.slice(skipLineIdx, keepLineIdx));
                 }
 
                 // Add loading code block
-                output = output.concat(this.loadGeneratedHelp(0));
+                if (!hasLoadLogic) {
+                    output = output.concat(this.loadGeneratedHelp(0));
+                }
 
                 const appendLineStartIdx = skipLineIdx < keepLineIdx ? keepLineIdx : skipLineIdx;
                 if (appendLineStartIdx !== -1) {
