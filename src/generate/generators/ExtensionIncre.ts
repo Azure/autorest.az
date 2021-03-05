@@ -140,7 +140,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                 path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder),
             );
         GenerateMetaFile(this.model);
-        if (isTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, true))) {
+        if (isTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))) {
             for (const boolVal of [false, true]) {
                 await this.generateIncrementalSingleAndAddtoOutput(
                     new CliCmdletTest(this.model, boolVal),

@@ -23,7 +23,7 @@ helps['vm virtual-machine assess-patch'] = """
     examples:
       - name: Assess patch state of a virtual machine.
         text: |-
-               az vm virtual-machine assess-patch --resource-group "myResourceGroupName" --name "myVMName"
+               az vm virtual-machine assess-patch --resource-group "myResourceGroupName" --vm-name "myVMName"
 """
 
 helps['vm virtual-machine wait'] = """

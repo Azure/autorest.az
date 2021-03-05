@@ -19,7 +19,7 @@ def step_virtual_machine_assess_patch(test, checks=None):
         checks = []
     test.cmd('az vm virtual-machine assess-patch '
              '--resource-group "{rg}" '
-             '--name "myVMName"',
+             '--vm-name "myVMName"',
              checks=checks)
 
 
@@ -65,4 +65,3 @@ def step_virtual_machine_scale_set_vm_extension_list(test, checks=None):
              '--resource-group "{rg_2}" '
              '--vm-scale-set-name "myvmScaleSet"',
              checks=checks)
-

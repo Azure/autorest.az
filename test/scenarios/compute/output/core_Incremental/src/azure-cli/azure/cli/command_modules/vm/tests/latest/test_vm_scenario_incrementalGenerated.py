@@ -55,7 +55,8 @@ class VmScenarioTest(ScenarioTest):
         super(VmScenarioTest, self).__init__(*args, **kwargs)
 
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
-    def test_vm_Scenario(self, rg):
+    @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroup'[:7], key='rg_2', parameter_name='rg_2')
+    def test_vm_Scenario(self, rg, rg_2):
         call_scenario(self)
         calc_coverage(__file__)
         raise_if()

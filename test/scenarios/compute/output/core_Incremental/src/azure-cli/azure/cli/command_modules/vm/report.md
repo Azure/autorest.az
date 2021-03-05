@@ -33,7 +33,7 @@
 
 ##### <a name="ExamplesVirtualMachinesAssessPatches">Example</a>
 ```
-az vm virtual-machine assess-patch --resource-group "myResourceGroupName" --name "myVMName"
+az vm virtual-machine assess-patch --resource-group "myResourceGroupName" --vm-name "myVMName"
 ```
 ##### <a name="ParametersVirtualMachinesAssessPatches">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
