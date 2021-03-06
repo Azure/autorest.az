@@ -12,6 +12,7 @@ import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
 from .preparers import VirtualNetworkPreparer
+from .preparers import SubnetPreparer
 from .example_steps import step_mn_scope_assignment_create
 from .example_steps import step_mn_scope_assignment_show
 from .example_steps import step_mn_scope_assignment_list
@@ -102,6 +103,10 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
+    @SubnetPreparer(name_prefix='clitestmanaged_network_subnetA'[:7], key='subnets', virtual_network_key='vn',
+                    resource_group_key='rg')
+    @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
+                    resource_group_key='rg')
     def test_ScopeAssignments_Scenario(self, rg):
         call_scenario(self, rg)
         calc_coverage(__file__)
@@ -113,6 +118,10 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetC'[:7], key='vn_3', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_myHubVnet'[:7], key='vn_4', resource_group_key='rg')
+    @SubnetPreparer(name_prefix='clitestmanaged_network_subnetA'[:7], key='subnets', virtual_network_key='vn',
+                    resource_group_key='rg')
+    @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
+                    resource_group_key='rg')
     def test_ScopeAssignments_Scenario_min(self, rg):
         call_scenario_min(self, rg)
         calc_coverage(__file__)

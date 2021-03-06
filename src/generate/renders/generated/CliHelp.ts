@@ -117,6 +117,9 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', 
     if (subCommandGroupName !== '') {
         output.push("helps['" + subCommandGroupName + '\'] = """');
     } else {
+        if (model.CommandGroup_Help.trim() === '') {
+            return [];
+        }
         output.push("helps['" + model.CommandGroup_Name + '\'] = """');
     }
     output.push('    type: group');

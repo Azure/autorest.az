@@ -11,11 +11,11 @@ az extension add --name kusto
 #### kusto cluster ####
 ##### Create #####
 ```
-az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
-    --enable-double-encryption false --enable-purge true --enable-streaming-ingest true \
-    --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest" 
+az kusto cluster create --cluster-name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+    --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --name "Standard_L8s" \
+    --capacity 2 --tier "Standard" --resource-group "kustorptest" 
 
-az kusto cluster wait --created --name "{myCluster}" --resource-group "{rg}"
+az kusto cluster wait --created --cluster-name "{myCluster}" --resource-group "{rg}"
 ```
 ##### Show #####
 ```
@@ -27,8 +27,8 @@ az kusto cluster list --resource-group "kustorptest"
 ```
 ##### Update #####
 ```
-az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-purge true \
-    --enable-streaming-ingest true \
+az kusto cluster update --cluster-name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
+    --enable-purge true --enable-streaming-ingest true \
     --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" \
     --resource-group "kustorptest" 
 ```

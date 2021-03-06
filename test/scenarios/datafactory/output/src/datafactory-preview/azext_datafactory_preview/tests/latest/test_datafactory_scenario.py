@@ -23,7 +23,6 @@ from .example_steps import step_integration_runtime_self_hosted_create
 from .example_steps import step_integration_runtime_show
 from .example_steps import step_integration_runtime_list
 from .example_steps import step_integration_runtime_update
-from .example_steps import step_integration_runtime_linked
 from .example_steps import step_integration_runtime_get_connection_info
 from .example_steps import step_integration_runtime_get_monitoring_data
 from .example_steps import step_integration_runtime_get_status
@@ -34,6 +33,7 @@ from .example_steps import step_integration_runtime_start
 from .example_steps import step_integration_runtime_stop
 from .example_steps import step_integration_runtime_sync_credentials
 from .example_steps import step_integration_runtime_upgrade
+from .example_steps import step_linked_integration_runtime_create
 from .example_steps import step_integration_runtime_delete
 from .example_steps import step_trigger_create
 from .example_steps import step_trigger_update
@@ -85,7 +85,6 @@ def call_scenario(test, rg):
     step_integration_runtime_show(test, rg, checks=[])
     step_integration_runtime_list(test, rg, checks=[])
     step_integration_runtime_update(test, rg, checks=[])
-    step_integration_runtime_linked(test, rg, checks=[])
     step_integration_runtime_get_connection_info(test, rg, checks=[])
     step_integration_runtime_get_monitoring_data(test, rg, checks=[])
     step_integration_runtime_get_status(test, rg, checks=[])
@@ -96,6 +95,7 @@ def call_scenario(test, rg):
     step_integration_runtime_stop(test, rg, checks=[])
     step_integration_runtime_sync_credentials(test, rg, checks=[])
     step_integration_runtime_upgrade(test, rg, checks=[])
+    step_linked_integration_runtime_create(test, rg, checks=[])
     step_integration_runtime_delete(test, rg, checks=[])
     step_trigger_create(test, rg, checks=[])
     step_trigger_update(test, rg, checks=[])
@@ -127,6 +127,7 @@ class DatafactoryScenarioTest(ScenarioTest):
             'myTrigger': 'exampleTrigger',
             'myIntegrationRuntime': 'exampleIntegrationRuntime',
             'myIntegrationRuntime2': 'exampleManagedIntegrationRuntime',
+            'myDatafactoryLinkedIntegrationRuntime': 'bfa92911-9fb6-4fbe-8f23-beae87bc1c83',
         })
 
 

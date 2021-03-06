@@ -25,7 +25,7 @@ import { GenerateAzureCliValidators } from '../renders/generated/CliValidators';
 import { CliTestInit } from '../renders/tests/CliTestInit';
 import { CliTestPrepare } from '../renders/tests/CliTestPrepare';
 import { CliTestScenario } from '../renders/tests/CliTestScenario';
-import { CliTestStep, NeedPreparer } from '../renders/tests/CliTestStep';
+import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliExtSetupPy } from '../renders/extraExt/CliExtSetupPy';
 
@@ -94,16 +94,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
-        const relativePathOldVersion = cliTopActionGenerator.relativePath.replace(
-            PathConstants.actionFile,
-            PathConstants.actionFileOldVersion,
-        );
-        if (fs.existsSync(path.join(this.model.azOutputFolder, relativePathOldVersion))) {
-            cliTopActionBase = fs
-                .readFileSync(path.join(this.model.azOutputFolder, relativePathOldVersion))
-                .toString();
-            cliTopActionGenerator.relativePath = relativePathOldVersion;
-        } else if (
+        if (
             fs.existsSync(path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath))
         ) {
             cliTopActionBase = fs
@@ -145,9 +136,22 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
                 true,
             );
         }
-        if (NeedPreparer()) {
-            await this.generateIncrementalSingleAndAddtoOutput(new CliTestPrepare(this.model));
+        const needPreparers = NeedPreparers();
+        if (needPreparers.size > 0) {
+            await this.generateIncrementalSingleAndAddtoOutput(
+                new CliTestPrepare(this.model, [...needPreparers]),
+            );
         }
+        this.model
+            .GetResourcePool()
+            .generateArmTemplate(
+                this.files,
+                path.join(
+                    this.model.azOutputFolder,
+                    PathConstants.testFolder,
+                    PathConstants.latestFolder,
+                ),
+            );
         GenerateMetaFile(this.model);
     }
 }

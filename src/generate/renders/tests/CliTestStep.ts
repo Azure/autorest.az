@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
@@ -10,37 +10,29 @@ import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants } from '../../../utils/models';
 
-let usePreparers: boolean, shortToLongName, funcNames, allSteps, stepBuff: any;
+let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: Record<string, any>;
 
 function initVars() {
-    usePreparers = false;
+    usePreparers = new Set<string>();
     shortToLongName = {};
     funcNames = {};
     allSteps = [];
     stepBuff = {};
 }
 
-export function NeedPreparer(): boolean {
+export function NeedPreparers(): Set<string> {
     return usePreparers;
 }
 
 export class CliTestStep extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                PathConstants.testStepFile,
-            );
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                PathConstants.testStepFile,
-            );
-        }
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.testFolder,
+            PathConstants.latestFolder,
+            PathConstants.testStepFile,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -61,7 +53,15 @@ export class CliTestStep extends TemplateBase {
         steps.push('');
 
         const commandParams = model.GatherInternalResource();
-        const config: any = deepCopy(model.Extension_DefaultTestScenario);
+        let config: any = [];
+        if (model.GetResourcePool().hasTestResourceScenario) {
+            for (const g in model.Extension_TestScenario) {
+                for (const s in model.Extension_TestScenario[g])
+                    config.push(...model.Extension_TestScenario[g][s]);
+            }
+        } else {
+            config = deepCopy(model.Extension_DefaultTestScenario);
+        }
 
         const header: HeaderGenerator = new HeaderGenerator();
 
@@ -95,6 +95,7 @@ export class CliTestStep extends TemplateBase {
                         commandParams,
                         examples,
                         minimum,
+                        config[ci].step,
                     )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
@@ -131,7 +132,10 @@ export class CliTestStep extends TemplateBase {
                                 );
                             } else {
                                 stepBuff[cmdString] = functionName;
-                                if (exampleCmd[0].indexOf(' delete') > -1) {
+                                if (
+                                    exampleCmd[0].indexOf(' delete') > -1 &&
+                                    examples[exampleIdx].HttpMethod.toLowerCase() === 'delete'
+                                ) {
                                     exampleCmd[0] += ' -y';
                                 }
 
@@ -236,10 +240,13 @@ export class CliTestStep extends TemplateBase {
         const parameterNames = [];
         for (const entity of model.GetPreparerEntities() as PreparerEntity[]) {
             if (!entity.info.name) {
+                const created = model.GetTestUniqueResource
+                    ? entity.info.createdObjectNames.length > 0
+                    : entity.info.createdObjectNames.indexOf(entity.objectName) >= 0;
                 internalObjects.push([
                     entity.info.className,
                     getResourceKey(entity.info.className, entity.objectName),
-                    entity.info.createdObjectNames.indexOf(entity.objectName) >= 0,
+                    created,
                     entity.objectName,
                 ]);
                 continue;
@@ -263,13 +270,11 @@ export class CliTestStep extends TemplateBase {
             line += ')';
             ToMultiLine(line, decorators);
             if (decorated.indexOf(entity.info.name) < 0) {
-                if (entity.info.name === 'ResourceGroupPreparer') {
+                if (!entity.info.needGen) {
                     header.addFromImport('azure.cli.testsdk', [entity.info.name]);
-                } else if (entity.info.name === 'StorageAccountPreparer') {
-                    header.addFromImport('azure.cli.testsdk', [entity.info.name]);
-                } else {
+                } else if (entity.info.needGen) {
                     header.addFromImport('.preparers', [entity.info.name]);
-                    usePreparers = true;
+                    usePreparers.add(entity.info.className);
                 }
                 decorated.push(entity.info.name);
             }

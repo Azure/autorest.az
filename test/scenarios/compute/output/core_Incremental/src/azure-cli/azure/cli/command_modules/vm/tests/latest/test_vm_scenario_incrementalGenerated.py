@@ -12,6 +12,9 @@ import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
 from .example_steps import step_virtual_machine_assess_patch
+from .example_steps import step_virtual_machine_scale_set_vm_extension_create
+from .example_steps import step_virtual_machine_scale_set_vm_extension_show
+from .example_steps import step_virtual_machine_scale_set_vm_extension_list
 from .. import (
     try_manual,
     raise_if,
@@ -24,22 +27,25 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 # Env setup_scenario
 @try_manual
-def setup_scenario(test, rg):
+def setup_scenario(test, rg, rg_2):
     pass
 
 
 # Env cleanup_scenario
 @try_manual
-def cleanup_scenario(test, rg):
+def cleanup_scenario(test, rg, rg_2):
     pass
 
 
 # Testcase: Scenario
 @try_manual
-def call_scenario(test, rg):
-    setup_scenario(test, rg)
-    step_virtual_machine_assess_patch(test, rg, checks=[])
-    cleanup_scenario(test, rg)
+def call_scenario(test, rg, rg_2):
+    setup_scenario(test, rg, rg_2)
+    step_virtual_machine_assess_patch(test, rg, rg_2, checks=[])
+    step_virtual_machine_scale_set_vm_extension_create(test, rg, rg_2, checks=[])
+    step_virtual_machine_scale_set_vm_extension_show(test, rg, rg_2, checks=[])
+    step_virtual_machine_scale_set_vm_extension_list(test, rg, rg_2, checks=[])
+    cleanup_scenario(test, rg, rg_2)
 
 
 # Test class for Scenario
@@ -51,8 +57,9 @@ class VmScenarioTest(ScenarioTest):
 
 
     @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroupName'[:7], key='rg', parameter_name='rg')
-    def test_vm_Scenario(self, rg):
-        call_scenario(self, rg)
+    @ResourceGroupPreparer(name_prefix='clitestvm_myResourceGroup'[:7], key='rg_2', parameter_name='rg_2')
+    def test_vm_Scenario(self, rg, rg_2):
+        call_scenario(self, rg, rg_2)
         calc_coverage(__file__)
         raise_if()
 

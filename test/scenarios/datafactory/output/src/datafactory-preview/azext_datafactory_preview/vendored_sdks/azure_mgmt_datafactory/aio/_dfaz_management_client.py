@@ -19,12 +19,13 @@ from ._configuration import DFAZManagementClientConfiguration
 from .operations import FactoriesOperations
 from .operations import TriggersOperations
 from .operations import IntegrationRuntimesOperations
+from .operations import DFAZManagementClientOperationsMixin
 from .operations import DomainServicesOperations
 from .operations import GroupsOperations
 from .. import models
 
 
-class DFAZManagementClient(object):
+class DFAZManagementClient(DFAZManagementClientOperationsMixin):
     """The DFAZ Client.
 
     :ivar factories: FactoriesOperations operations

@@ -18,3 +18,7 @@ def cf_vm_cl(cli_ctx, *_):
 
 def cf_virtual_machine(cli_ctx, *_):
     return cf_vm_cl(cli_ctx).virtual_machines
+
+
+def cf_virtual_machine_scale_set_vm_extension(cli_ctx, *_):
+    return cf_vm_cl(cli_ctx).virtual_machine_scale_set_vm_extensions

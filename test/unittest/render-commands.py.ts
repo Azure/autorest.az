@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as nunjucks from 'nunjucks';
 import * as path from 'path';
@@ -12,13 +11,9 @@ import { readFile, writeFile, rmFile } from '@azure-tools/async-io';
 import { AzLinter } from '../../src/azlinter';
 sourceMapSupport.install();
 
-@suite
-export class Process {
-    @test(slow(600000), timeout(1500000)) async renderCommandsPYTest1() {
-        const tmplPath = path.join(
-            `${__dirname}`,
-            '../../../src/templates/generated/commands.py.njx',
-        );
+describe('renderCommandsPYTest', () => {
+    it('renderCommandsPYTestCase1', async () => {
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(tmplPath, {
             data: {
@@ -293,7 +288,7 @@ export class Process {
         });
         const oriFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/generated/ori_commands.py',
+            '../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
         const azLinter = new AzLinter();
@@ -301,18 +296,15 @@ export class Process {
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/generated/commands.py',
+            '../../test/unittest/expected/generated/commands.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 1 in commands.py is incorrect');
         await rmFile(oriFile);
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async renderCommandsPYTest2() {
-        const tmplPath = path.join(
-            `${__dirname}`,
-            '../../../src/templates/generated/commands.py.njx',
-        );
+    it('renderCommandsPYTestCase2', async () => {
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(tmplPath, {
             data: {
@@ -324,7 +316,7 @@ export class Process {
         });
         const oriFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/generated/ori_commands.py',
+            '../../test/unittest/expected/generated/ori_commands.py',
         );
         await writeFile(oriFile, result);
         const azLinter = new AzLinter();
@@ -332,10 +324,10 @@ export class Process {
         result = await readFile(oriFile);
         const expectedFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/generated/commands2.py',
+            '../../test/unittest/expected/generated/commands2.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 2 in commands.py is incorrect');
         await rmFile(oriFile);
-    }
-}
+    });
+});

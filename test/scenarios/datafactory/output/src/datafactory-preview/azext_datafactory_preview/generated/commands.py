@@ -22,7 +22,7 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._factories_operations#FactoriesOperations.{}',
         client_factory=cf_factory,
     )
-    with self.command_group('datafactory', datafactory_factory, is_experimental=True) as g:
+    with self.command_group('datafactory', datafactory_factory, client_factory=cf_factory, is_experimental=True) as g:
         g.custom_command('list', 'datafactory_list')
         g.custom_show_command('show', 'datafactory_show')
         g.custom_command('create', 'datafactory_create')
@@ -38,7 +38,7 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations#TriggersOperations.{}',
         client_factory=cf_trigger,
     )
-    with self.command_group('datafactory trigger', datafactory_trigger) as g:
+    with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger) as g:
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
         g.custom_command('create', 'datafactory_trigger_create')
@@ -58,12 +58,11 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}',
         client_factory=cf_integration_runtime,
     )
-    with self.command_group('datafactory integration-runtime', datafactory_integration_runtime) as g:
+    with self.command_group(
+        'datafactory integration-runtime', datafactory_integration_runtime, client_factory=cf_integration_runtime
+    ) as g:
         g.custom_command('list', 'datafactory_integration_runtime_list')
         g.custom_show_command('show', 'datafactory_integration_runtime_show')
-        g.custom_command(
-            'linked-integration-runtime create', 'datafactory_integration_runtime_linked_integration_runtime_create'
-        )
         g.custom_command('managed create', 'datafactory_integration_runtime_managed_create')
         g.custom_command('self-hosted create', 'datafactory_integration_runtime_self_hosted_create')
         g.custom_command('update', 'datafactory_integration_runtime_update')
@@ -80,13 +79,26 @@ def load_command_table(self, _):
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
         g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
 
+    from azext_datafactory_preview.generated._client_factory import cf_datafactory_cl
+
+    datafactory_ = CliCommandType(
+        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._dfaz_management_client_operations#DFAZManagementClientOperationsMixin.{}',
+        client_factory=cf_datafactory_cl,
+    )
+    with self.command_group(
+        'datafactory linked-integration-runtime', datafactory_, client_factory=cf_datafactory_cl
+    ) as g:
+        g.custom_command('create', 'datafactory_linked_integration_runtime_create')
+
     from azext_datafactory_preview.generated._client_factory import cf_domain_service
 
     datafactory_domain_service = CliCommandType(
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_operations#DomainServicesOperations.{}',
         client_factory=cf_domain_service,
     )
-    with self.command_group('datafactory domain-service', datafactory_domain_service) as g:
+    with self.command_group(
+        'datafactory domain-service', datafactory_domain_service, client_factory=cf_domain_service
+    ) as g:
         g.custom_command('create', 'datafactory_domain_service_create')
         g.custom_command('update', 'datafactory_domain_service_update')
 
@@ -96,5 +108,5 @@ def load_command_table(self, _):
         operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#GroupsOperations.{}',
         client_factory=cf_group,
     )
-    with self.command_group('datafactory group', datafactory_group) as g:
+    with self.command_group('datafactory group', datafactory_group, client_factory=cf_group) as g:
         g.custom_command('create', 'datafactory_group_create')

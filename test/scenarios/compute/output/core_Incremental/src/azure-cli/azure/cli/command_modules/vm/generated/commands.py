@@ -9,6 +9,7 @@
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
+# pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
 
@@ -21,5 +22,23 @@ def load_command_table(self, _):
         operations_tmpl='azure.mgmt.compute.operations._virtual_machines_operations#VirtualMachinesOperations.{}',
         client_factory=cf_virtual_machine,
     )
-    with self.command_group('vm virtual-machine', vm_virtual_machine, is_experimental=True) as g:
+    with self.command_group(
+        'vm virtual-machine', vm_virtual_machine, client_factory=cf_virtual_machine, is_experimental=True
+    ) as g:
         g.custom_command('assess-patch', 'vm_virtual_machine_assess_patch', minApi='2020-06-01')
+
+    from ..generated._client_factory import cf_virtual_machine_scale_set_vm_extension
+
+    vm_virtual_machine_scale_set_vm_extension = CliCommandType(
+        operations_tmpl='azure.mgmt.compute.operations._virtual_machine_scale_set_vm_extensions_operations#VirtualMachineScaleSetVmExtensionsOperations.{}',
+        client_factory=cf_virtual_machine_scale_set_vm_extension,
+    )
+    with self.command_group(
+        'vm virtual-machine-scale-set-vm-extension',
+        vm_virtual_machine_scale_set_vm_extension,
+        client_factory=cf_virtual_machine_scale_set_vm_extension,
+    ) as g:
+        g.custom_command('list', 'vm_virtual_machine_scale_set_vm_extension_list')
+        g.custom_show_command('show', 'vm_virtual_machine_scale_set_vm_extension_show')
+        g.custom_command('create', 'vm_virtual_machine_scale_set_vm_extension_create', supports_no_wait=True)
+        g.custom_wait_command('wait', 'vm_virtual_machine_scale_set_vm_extension_show')

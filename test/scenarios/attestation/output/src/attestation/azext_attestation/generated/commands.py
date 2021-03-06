@@ -24,7 +24,9 @@ def load_command_table(self, _):
         ),
         client_factory=cf_operation,
     )
-    with self.command_group('attestation', attestation_operation, is_experimental=True) as g:
+    with self.command_group(
+        'attestation', attestation_operation, client_factory=cf_operation, is_experimental=True
+    ) as g:
         g.custom_command('create-provider', 'attestation_create_provider')
         g.custom_command('list-operation', 'attestation_list_operation')
 
@@ -34,7 +36,9 @@ def load_command_table(self, _):
         operations_tmpl='azext_attestation.vendored_sdks.attestation.operations._attestation_providers_operations#AttestationProvidersOperations.{}',
         client_factory=cf_attestation_provider,
     )
-    with self.command_group('attestation attestation-provider', attestation_attestation_provider) as g:
+    with self.command_group(
+        'attestation attestation-provider', attestation_attestation_provider, client_factory=cf_attestation_provider
+    ) as g:
         g.custom_command('provider list', 'attestation_attestation_provider_provider_list')
         g.custom_show_command('show', 'attestation_attestation_provider_show')
         g.custom_command('update', 'attestation_attestation_provider_update')

@@ -18,9 +18,9 @@ directive:
       set:
           group: datafactory
     - where:
-          command: datafactory integration-runtime create-linked-integration-runtime
+          command: datafactory create-linked-integration-runtime
       set:
-          command: datafactory integration-runtime linked-integration-runtime create
+          command: datafactory linked-integration-runtime create
 
 cli:
     cli-directive:
