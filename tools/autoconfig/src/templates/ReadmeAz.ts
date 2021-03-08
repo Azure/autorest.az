@@ -90,25 +90,7 @@ export function GenerateReadmeAz(
         alreadyExists = true;
     }
 
-    let area = findGenArea(output);
     let missingOps;
-    if (area[1] <= 0) {
-        output.push(``);
-        output.push(startTagLine);
-        output.push('``` yaml $(az)');
-        output.push(`cli:`);
-        output.push(`  cli-directive:`);
-        if (!alreadyExists) {
-            output.push(`    - where:`);
-            output.push(`        group: '*'`);
-            output.push(`        op: '*'`);
-            output.push(`      hidden: true`);
-        }
-        output.push('```');
-        output.push(endTagLine);
-        area = findGenArea(output);
-    }
-
     if (alreadyExists) {
         missingOps = getHiddenOperations(model, generateTargets);
     } else {
@@ -119,6 +101,23 @@ export function GenerateReadmeAz(
     }
 
     if (missingOps.length > 0) {
+        let area = findGenArea(output);
+        if (area[1] <= 0) {
+            output.push(``);
+            output.push(startTagLine);
+            output.push('``` yaml $(az)');
+            output.push(`cli:`);
+            output.push(`  cli-directive:`);
+            if (!alreadyExists) {
+                output.push(`    - where:`);
+                output.push(`        group: '*'`);
+                output.push(`        op: '*'`);
+                output.push(`      hidden: true`);
+            }
+            output.push('```');
+            output.push(endTagLine);
+            area = findGenArea(output);
+        }
         const grouped = groupOperations(missingOps);
         const newDirective = [];
         for (const groupName in grouped) {
