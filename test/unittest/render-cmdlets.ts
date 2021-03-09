@@ -74,6 +74,13 @@ describe('renderTestsCmdlets', () => {
         },
     };
 
+    const data_empty = {
+        testData: {
+            className: 'PositiveTest',
+            cmds: [],
+        },
+    };
+
     it('renderPositive', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
@@ -81,20 +88,13 @@ describe('renderTestsCmdlets', () => {
         );
         nunjucks.configure({ autoescape: false });
         data.testData.className = 'PositiveTest';
-        let result = nunjucks.render(tmplPath, data);
-        const oriFile = path.join(
-            `${__dirname}`,
-            '../../test/unittest/expected/tests/cmdlet/ori_test_positive.py',
-        );
-        await writeFile(oriFile, result);
-        result = await readFile(oriFile);
+        const result = nunjucks.render(tmplPath, data);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/tests/cmdlet/test_positive.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic in test_positive.py is incorrect');
-        await rmFile(oriFile);
     });
 
     it('renderNegative', async () => {
@@ -104,19 +104,32 @@ describe('renderTestsCmdlets', () => {
         );
         nunjucks.configure({ autoescape: false });
         data.testData.className = 'NegativeTest';
-        let result = nunjucks.render(tmplPath, data);
-        const oriFile = path.join(
-            `${__dirname}`,
-            '../../test/unittest/expected/tests/cmdlet/ori_test_negative.py',
-        );
-        await writeFile(oriFile, result);
-        result = await readFile(oriFile);
+        const result = nunjucks.render(tmplPath, data);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/tests/cmdlet/test_negative.py',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic in test_negative.py is incorrect');
-        await rmFile(oriFile);
+    });
+
+    it('renderEmptyData', async () => {
+        const tmplPath = path.join(
+            `${__dirname}`,
+            '../../src/templates/tests/cmdlet/test_positive.py.njx',
+        );
+        nunjucks.configure({ autoescape: false });
+        data_empty.testData.className = 'PositiveTest';
+        const result = nunjucks.render(tmplPath, data_empty);
+        const expectedFile = path.join(
+            `${__dirname}`,
+            '../../test/unittest/expected/tests/cmdlet/test_positive_empty.py',
+        );
+        const expected = await readFile(expectedFile);
+        assert.deepStrictEqual(
+            result,
+            expected,
+            'render empty data in test_positive.py is incorrect',
+        );
     });
 });

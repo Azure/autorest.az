@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
 import { PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
-import { isTrue } from '../../utils/helper';
+import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
 import { CodeModelAz } from '../CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
@@ -119,7 +119,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
                 path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder),
             );
         GenerateMetaFile(this.model);
-        if (isTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))) {
+        if (thoughtAsTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))) {
             for (const boolVal of [false, true]) {
                 await this.generateFullSingleAndAddtoOutput(
                     new CliCmdletTest(this.model, boolVal),
