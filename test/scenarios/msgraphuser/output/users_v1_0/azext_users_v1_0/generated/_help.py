@@ -188,19 +188,6 @@ manager property set to this user.) Read-only. Nullable."
             id: Read-only.
 
             Multiple actions can be specified by using more than one --direct-reports argument.
-      - name: --license-details
-        short-summary: "A collection of this user's license details. Read-only."
-        long-summary: |
-            Usage: --license-details service-plans=XX sku-id=XX sku-part-number=XX id=XX
-
-            service-plans: Information about the service plans assigned with the license. Read-only, Not nullable
-            sku-id: Unique identifier (GUID) for the service SKU. Equal to the skuId property on the related \
-SubscribedSku object. Read-only
-            sku-part-number: Unique SKU display name. Equal to the skuPartNumber on the related SubscribedSku object; \
-for example: 'AAD_Premium'. Read-only
-            id: Read-only.
-
-            Multiple actions can be specified by using more than one --license-details argument.
       - name: --manager
         short-summary: "Represents an Azure Active Directory object. The directoryObject type is the base type for \
 many other directory entity types."
@@ -529,19 +516,6 @@ manager property set to this user.) Read-only. Nullable."
             id: Read-only.
 
             Multiple actions can be specified by using more than one --direct-reports argument.
-      - name: --license-details
-        short-summary: "A collection of this user's license details. Read-only."
-        long-summary: |
-            Usage: --license-details service-plans=XX sku-id=XX sku-part-number=XX id=XX
-
-            service-plans: Information about the service plans assigned with the license. Read-only, Not nullable
-            sku-id: Unique identifier (GUID) for the service SKU. Equal to the skuId property on the related \
-SubscribedSku object. Read-only
-            sku-part-number: Unique SKU display name. Equal to the skuPartNumber on the related SubscribedSku object; \
-for example: 'AAD_Premium'. Read-only
-            id: Read-only.
-
-            Multiple actions can be specified by using more than one --license-details argument.
       - name: --manager
         short-summary: "Represents an Azure Active Directory object. The directoryObject type is the base type for \
 many other directory entity types."
