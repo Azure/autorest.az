@@ -137,6 +137,7 @@ export interface CodeModelAz {
     Command_MethodName: string;
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
+    Command_OriginalCommandGroup: OperationGroup;
     Command_NeedGeneric: boolean;
     Command_MaxApi: string;
     Command_MinApi: string;

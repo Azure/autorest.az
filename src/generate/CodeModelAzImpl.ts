@@ -1187,6 +1187,13 @@ export class CodeModelCliImpl implements CodeModelAz {
         return polyOriginal;
     }
 
+    public get Command_OriginalCommandGroup(): OperationGroup {
+        if (!isNullOrUndefined(this.Command.language?.['az']?.['originalOperationGroup'])) {
+            return this.Command.language?.['az']?.['originalOperationGroup'];
+        }
+        return undefined;
+    }
+
     public get Command_NeedGeneric(): boolean {
         if (
             this.Command.language['az'].isSplitUpdate &&

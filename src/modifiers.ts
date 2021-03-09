@@ -226,6 +226,9 @@ export class Modifiers {
                     newGroup = newCommandArr.slice(0, commonIdx + 1).join(' ');
                     if (newIndexes.indexOf(groupIdx) === -1) {
                         this.codeModel.operationGroups[groupIdx].operations.splice(opIndex, 1);
+                        operation.language['az'][
+                            'originalOperationGroup'
+                        ] = this.codeModel.operationGroups[groupIdx];
                         // all the operation groups in the newIndexes have the same commandGroupName. therefore it doesn't matter when index we put it into.
                         this.codeModel.operationGroups[newIndexes[0]].operations.push(operation);
                     }
