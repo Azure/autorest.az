@@ -128,7 +128,9 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         ),
                     );
                 GenerateMetaFile(model);
-                if (thoughtAsTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))) {
+                if (
+                    thoughtAsTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))
+                ) {
                     for (const boolVal of [false, true]) {
                         await this.generateFullSingleAndAddtoOutput(
                             new CliCmdletTest(this.model, boolVal),
