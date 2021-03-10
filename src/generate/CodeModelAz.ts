@@ -127,7 +127,8 @@ export interface CodeModelAz {
     CommandGroup_Mode: string;
     CommandGroup_ClientFactoryName: string;
     CommandGroup_OperationTmplName: string;
-    CommandGroup_CustomCommandTypeName: string;
+    CommandGroup_CustomCommandTypeName(): string;
+    CommandGroup_HasCommand: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -138,6 +139,7 @@ export interface CodeModelAz {
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
     Command_OriginalCommandGroup: OperationGroup;
+    Command_CustomCommandTypeName: string;
     Command_NeedGeneric: boolean;
     Command_MaxApi: string;
     Command_MinApi: string;

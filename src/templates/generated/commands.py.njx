@@ -22,6 +22,16 @@ from {{lib}} import (
 )
 {% endif -%}
 {%- endfor %}
+{%- if data.hasExtension -%}
+{%- for extension in data.Extensions -%}
+{%- for commandGroup in extension.CommandGroups %}
+from {{data.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
+{{commandGroup.customCommandTypeName}} = CliCommandType(
+    operations_tmpl='{{commandGroup.operationTmplName}}',
+    client_factory={{commandGroup.clientFactoryName}})
+{% endfor %}
+{% endfor %}
+{% endif -%}
 
 def load_command_table(self, _):
 {%- if data.hasExtension -%}
@@ -30,10 +40,7 @@ def load_command_table(self, _):
 {% set groupMode = extension.mode %}
 {%- for commandGroup in extension.CommandGroups %}
 
-    from {{data.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
-    {{commandGroup.customCommandTypeName}} = CliCommandType(
-        operations_tmpl='{{commandGroup.operationTmplName}}',
-        client_factory={{commandGroup.clientFactoryName}})
+{% if commandGroup.hasCommand %}
     with self.command_group('{{commandGroup.name}}', {{commandGroup.customCommandTypeName}}, client_factory={{commandGroup.clientFactoryName}}
                             {%- for key, value in commandGroup.propertiesString %}
                                 {% if key != 'mode' %}
@@ -61,6 +68,7 @@ def load_command_table(self, _):
         {% if commandGroup.needWaitCommand -%} 
         g.custom_wait_command('wait', '{{commandGroup.showCustomFunctionName}}')
         {%- endif %}
+{% endif %}
 {%- endfor %}
 {% if not extensionModeDefined and extension.mode != 'stable' %}
     with self.command_group('{{extension.name}}', is_{{extension.mode}}=True):

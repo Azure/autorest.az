@@ -141,7 +141,7 @@ export enum CodeGenConstants {
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
     PYLINT_MAX_CODE_LENGTH = 119,
-    PYLINT_MAX_OPERATION_TEMPLATE_LENGTH = 92,
+    PYLINT_MAX_OPERATION_TEMPLATE_LENGTH = 96,
 
     //configuration keys under test-resources section
     test = 'test',
@@ -204,6 +204,7 @@ export class RenderInput {
         public sortBy: Record<string, SortOrder> = {},
         public conditions: [string, unknown][] = [],
         public converter: (item) => unknown = undefined,
+        public selector: any[] = [],
     ) {}
 }
 

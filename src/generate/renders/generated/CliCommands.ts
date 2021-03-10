@@ -20,6 +20,7 @@ export class CliCommands extends TemplateBase {
     private lineTooLong = false;
     private needWaitCommand = false;
     private showCustomFunctionName = '';
+    private groupCustomCommandTypeName = '';
     private extraNonStringProperties = ['resourceType', 'mode'];
     private extraProperties = ['maxApi', 'minApi'];
 
@@ -75,6 +76,7 @@ export class CliCommands extends TemplateBase {
         } else if (this.showCustomFunctionName !== '') {
             this.showCustomFunctionName = '';
         }
+        this.groupCustomCommandTypeName = item['customCommandTypeName'];
         return item;
     }
 
@@ -113,6 +115,12 @@ export class CliCommands extends TemplateBase {
                 item['propertiesString']['setter_name'] = "'begin_create_or_update'";
             }
         }
+        if (
+            !isNullOrUndefined(item['customCommandTypeName']) &&
+            item['customCommandTypeName'] !== this.groupCustomCommandTypeName
+        ) {
+            item['propertiesString']['custom_command_type'] = item['customCommandTypeName'];
+        }
         return item;
     }
 
@@ -147,10 +155,12 @@ export class CliCommands extends TemplateBase {
                         'minApi',
                         'resourceType',
                         'mode',
+                        'hasCommand',
                     ],
                     { name: SortOrder.ASEC },
                     [],
                     this.commandGroupConverter.bind(this),
+                    [false],
                 ),
             ],
             [
@@ -167,6 +177,7 @@ export class CliCommands extends TemplateBase {
                         'functionName',
                         'needGeneric',
                         'genericSetterArgName',
+                        'customCommandTypeName',
                     ],
                     {},
                     [],
