@@ -3,7 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { PathConstants } from '../../utils/models';
+import { PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
+import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
 import { CodeModelAz } from '../CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
@@ -28,6 +29,8 @@ import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliExtSetupCfg } from '../renders/extraExt/CliExtSetupCfg';
 import { CliExtHistory } from '../renders/extraExt/CliExtHistory';
 import { CliExtReadme } from '../renders/extraExt/CliExtReadme';
+import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
+import { SimpleTemplate } from '../renders/TemplateBase';
 
 export class AzExtensionFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -105,6 +108,8 @@ export class AzExtensionFullGenerator extends GeneratorBase {
         if (needPreparers.size > 0) {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestPrepare(this.model, [...needPreparers]),
+                true,
+                true,
             );
         }
         this.model
@@ -114,5 +119,31 @@ export class AzExtensionFullGenerator extends GeneratorBase {
                 path.join(this.azDirectory, PathConstants.testFolder, PathConstants.latestFolder),
             );
         GenerateMetaFile(this.model);
+        if (thoughtAsTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))) {
+            for (const boolVal of [false, true]) {
+                await this.generateFullSingleAndAddtoOutput(
+                    new CliCmdletTest(this.model, boolVal),
+                    true,
+                    true,
+                );
+            }
+            await this.generateFullSingleAndAddtoOutput(
+                new SimpleTemplate(
+                    this.model,
+                    path.join(
+                        this.model.AzextFolder,
+                        PathConstants.testFolder,
+                        PathConstants.cmdletFolder,
+                        PathConstants.conftestFile,
+                    ),
+                    path.join(
+                        PathConstants.templateRootFolder,
+                        PathConstants.testFolder,
+                        PathConstants.cmdletFolder,
+                        PathConstants.conftestFile + '.njx',
+                    ),
+                ),
+            );
+        }
     }
 }

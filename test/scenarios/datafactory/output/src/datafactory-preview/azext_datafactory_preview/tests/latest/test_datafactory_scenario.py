@@ -59,63 +59,62 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 # Env setup_scenario
 @try_manual
-def setup_scenario(test, rg):
+def setup_scenario(test):
     pass
 
 
 # Env cleanup_scenario
 @try_manual
-def cleanup_scenario(test, rg):
+def cleanup_scenario(test):
     pass
 
 
 # Testcase: Scenario
 @try_manual
-def call_scenario(test, rg):
-    setup_scenario(test, rg)
-    step_create(test, rg, checks=[])
-    step_show(test, rg, checks=[])
-    step_list(test, rg, checks=[])
-    step_list2(test, rg, checks=[])
-    step_update(test, rg, checks=[])
-    step_configure_factory_repo(test, rg, checks=[])
-    step_get_data_plane_access(test, rg, checks=[])
-    step_get_git_hub_access_token(test, rg, checks=[])
-    step_integration_runtime_self_hosted_create(test, rg, checks=[])
-    step_integration_runtime_show(test, rg, checks=[])
-    step_integration_runtime_list(test, rg, checks=[])
-    step_integration_runtime_update(test, rg, checks=[])
-    step_integration_runtime_get_connection_info(test, rg, checks=[])
-    step_integration_runtime_get_monitoring_data(test, rg, checks=[])
-    step_integration_runtime_get_status(test, rg, checks=[])
-    step_integration_runtime_list_auth_key(test, rg, checks=[])
-    step_integration_runtime_regenerate_auth_key(test, rg, checks=[])
-    step_integration_runtime_remove_link(test, rg, checks=[])
-    step_integration_runtime_start(test, rg, checks=[])
-    step_integration_runtime_stop(test, rg, checks=[])
-    step_integration_runtime_sync_credentials(test, rg, checks=[])
-    step_integration_runtime_upgrade(test, rg, checks=[])
-    step_linked_integration_runtime_create(test, rg, checks=[])
-    step_integration_runtime_delete(test, rg, checks=[])
-    step_trigger_create(test, rg, checks=[])
-    step_trigger_update(test, rg, checks=[])
-    step_trigger_show(test, rg, checks=[])
-    step_trigger_list(test, rg, checks=[])
-    step_trigger_get_event_subscription_status(test, rg, checks=[])
-    step_trigger_query_by_factory(test, rg, checks=[])
-    step_trigger_start(test, rg, checks=[])
-    step_trigger_stop(test, rg, checks=[])
-    step_trigger_subscribe_to_event(test, rg, checks=[])
-    step_trigger_unsubscribe_from_event(test, rg, checks=[])
-    step_trigger_delete(test, rg, checks=[])
-    step_delete(test, rg, checks=[])
-    cleanup_scenario(test, rg)
+def call_scenario(test):
+    setup_scenario(test)
+    step_create(test, checks=[])
+    step_show(test, checks=[])
+    step_list(test, checks=[])
+    step_list2(test, checks=[])
+    step_update(test, checks=[])
+    step_configure_factory_repo(test, checks=[])
+    step_get_data_plane_access(test, checks=[])
+    step_get_git_hub_access_token(test, checks=[])
+    step_integration_runtime_self_hosted_create(test, checks=[])
+    step_integration_runtime_show(test, checks=[])
+    step_integration_runtime_list(test, checks=[])
+    step_integration_runtime_update(test, checks=[])
+    step_integration_runtime_get_connection_info(test, checks=[])
+    step_integration_runtime_get_monitoring_data(test, checks=[])
+    step_integration_runtime_get_status(test, checks=[])
+    step_integration_runtime_list_auth_key(test, checks=[])
+    step_integration_runtime_regenerate_auth_key(test, checks=[])
+    step_integration_runtime_remove_link(test, checks=[])
+    step_integration_runtime_start(test, checks=[])
+    step_integration_runtime_stop(test, checks=[])
+    step_integration_runtime_sync_credentials(test, checks=[])
+    step_integration_runtime_upgrade(test, checks=[])
+    step_linked_integration_runtime_create(test, checks=[])
+    step_integration_runtime_delete(test, checks=[])
+    step_trigger_create(test, checks=[])
+    step_trigger_update(test, checks=[])
+    step_trigger_show(test, checks=[])
+    step_trigger_list(test, checks=[])
+    step_trigger_get_event_subscription_status(test, checks=[])
+    step_trigger_query_by_factory(test, checks=[])
+    step_trigger_start(test, checks=[])
+    step_trigger_stop(test, checks=[])
+    step_trigger_subscribe_to_event(test, checks=[])
+    step_trigger_unsubscribe_from_event(test, checks=[])
+    step_trigger_delete(test, checks=[])
+    step_delete(test, checks=[])
+    cleanup_scenario(test)
 
 
 # Test class for Scenario
 @try_manual
 class DatafactoryScenarioTest(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(DatafactoryScenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
@@ -130,10 +129,8 @@ class DatafactoryScenarioTest(ScenarioTest):
             'myDatafactoryLinkedIntegrationRuntime': 'bfa92911-9fb6-4fbe-8f23-beae87bc1c83',
         })
 
-
     @ResourceGroupPreparer(name_prefix='clitestdatafactory_exampleResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_datafactory_Scenario(self, rg):
-        call_scenario(self, rg)
+        call_scenario(self)
         calc_coverage(__file__)
         raise_if()
-

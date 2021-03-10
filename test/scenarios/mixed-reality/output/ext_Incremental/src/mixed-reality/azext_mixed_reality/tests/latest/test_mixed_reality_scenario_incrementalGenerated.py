@@ -31,52 +31,49 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 # Env setup_scenario
 @try_manual
-def setup_scenario(test, rg):
+def setup_scenario(test):
     pass
 
 
 # Env cleanup_scenario
 @try_manual
-def cleanup_scenario(test, rg):
+def cleanup_scenario(test):
     pass
 
 
 # Testcase: Scenario
 @try_manual
-def call_scenario(test, rg):
-    setup_scenario(test, rg)
+def call_scenario(test):
+    setup_scenario(test)
     # STEP NOT FOUND: Create spatial anchor account
-    step_create(test, rg, checks=[])
+    step_create(test, checks=[])
     # STEP NOT FOUND: Get remote rendering account key
     # STEP NOT FOUND: Get spatial anchor account key
     # STEP NOT FOUND: List spatial anchor accounts by resource group
-    step_list(test, rg, checks=[])
+    step_list(test, checks=[])
     # STEP NOT FOUND: Get spatial anchors account
-    step_show(test, rg, checks=[])
-    step_list2(test, rg, checks=[])
+    step_show(test, checks=[])
+    step_list2(test, checks=[])
     # STEP NOT FOUND: List spatial anchors accounts by subscription
     # STEP NOT FOUND: List available operations
-    step_regenerate_key(test, rg, checks=[])
-    step_regenerate_key2(test, rg, checks=[])
-    step_update(test, rg, checks=[])
+    step_regenerate_key(test, checks=[])
+    step_regenerate_key2(test, checks=[])
+    step_update(test, checks=[])
     # STEP NOT FOUND: Update spatial anchors account
     # STEP NOT FOUND: CheckLocalNameAvailability
     # STEP NOT FOUND: Delete spatial anchors account
-    step_delete(test, rg, checks=[])
-    cleanup_scenario(test, rg)
+    step_delete(test, checks=[])
+    cleanup_scenario(test)
 
 
 # Test class for Scenario
 @try_manual
 class Mixed_realityScenarioTest(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(Mixed_realityScenarioTest, self).__init__(*args, **kwargs)
 
-
     @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')
     def test_mixed_reality_Scenario(self, rg):
-        call_scenario(self, rg)
+        call_scenario(self)
         calc_coverage(__file__)
         raise_if()
-

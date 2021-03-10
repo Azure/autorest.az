@@ -7,6 +7,13 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=line-too-long
+
+from azure.cli.testsdk import ScenarioTest
 
 
-from .. import try_manual
+# Test class for Scenario
+class PositiveTest(ScenarioTest):
+
+    def __init__(self, *args, **kwargs):
+        super(PositiveTest, self).__init__(*args, **kwargs)
