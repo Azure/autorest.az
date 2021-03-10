@@ -193,7 +193,7 @@ describe('ScenarioTest', () => {
         const folders = fs.readdirSync(dir);
         const msg = '';
         let finalResult = true;
-        const allTests: Promise<boolean>[] = [];
+        const allTests: boolean[] = [];
         for (const rp of folders) {
             let result = true;
             console.log('Start Processing: ' + rp);
@@ -220,7 +220,7 @@ describe('ScenarioTest', () => {
                         }
                         outputDir = path.join(dir, rp, 'tmpoutput', dimension);
                         const extraOption = getOptions(dimension, outputDir);
-                        const test = runSingleTest(dir, rp, extraOption, dimension);
+                        const test = await runSingleTest(dir, rp, extraOption, dimension);
                         allTests.push(test);
                     }
                 } else {
