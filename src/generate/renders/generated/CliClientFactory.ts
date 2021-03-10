@@ -10,7 +10,7 @@ import { isNullOrUndefined } from '../../../utils/helper';
 export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     const header: HeaderGenerator = new HeaderGenerator();
     const output: string[] = header.getLines();
-    model.SelectFirstCommandGroup();
+    model.SelectFirstCommandGroup(true);
     output.push('');
     output.push('');
     output.push('def cf_' + model.Extension_NameUnderscored + '_cl(cli_ctx, *_):');
@@ -54,7 +54,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     output.push(output.pop() + ')');
     // End
 
-    if (model.SelectFirstCommandGroup()) {
+    if (model.SelectFirstCommandGroup(true)) {
         do {
             if (model.GetModuleOperationName() !== '') {
                 output.push('');
@@ -68,7 +68,7 @@ export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
                         model.GetModuleOperationNamePython(),
                 );
             }
-        } while (model.SelectNextCommandGroup());
+        } while (model.SelectNextCommandGroup(true));
     }
 
     output.push('');

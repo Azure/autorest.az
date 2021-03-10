@@ -878,7 +878,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     // Specification will be updated accordingly.
     //= ================================================================================================================
 
-    public SelectFirstCommandGroup(needCommandExist = true): boolean {
+    public SelectFirstCommandGroup(needRefer = false): boolean {
         // just enumerate through command groups in code-model-v4
         if (this.codeModel.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
@@ -887,7 +887,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.CommandGroup.language['cli'].removed
             ) {
                 if (this.SelectNextCommandGroup()) {
-                    if (needCommandExist && !this.SelectFirstCommand()) {
+                    if (
+                        !this.SelectFirstCommand() ||
+                        (needRefer && !this.CommandGroup_Referenced)
+                    ) {
                         return this.SelectNextCommandGroup();
                     }
                     return true;
@@ -895,7 +898,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 }
             }
-            if (needCommandExist && !this.SelectFirstCommand()) {
+            if (!this.SelectFirstCommand() || (needRefer && !this.CommandGroup_Referenced)) {
                 return this.SelectNextCommandGroup();
             }
             return true;
@@ -905,7 +908,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public SelectNextCommandGroup(needCommandExist = true): boolean {
+    public SelectNextCommandGroup(needRefer = false): boolean {
         if (this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
             if (
@@ -913,7 +916,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.CommandGroup.language['cli'].removed
             ) {
                 if (this.SelectNextCommandGroup()) {
-                    if (needCommandExist && !this.SelectFirstCommand()) {
+                    if (
+                        !this.SelectFirstCommand() ||
+                        (needRefer && !this.CommandGroup_Referenced)
+                    ) {
                         return this.SelectNextCommandGroup();
                     }
                     return true;
@@ -921,7 +927,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 }
             }
-            if (needCommandExist && !this.SelectFirstCommand()) {
+            if (!this.SelectFirstCommand() || (needRefer && !this.CommandGroup_Referenced)) {
                 return this.SelectNextCommandGroup();
             }
             return true;
@@ -969,8 +975,8 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup.language['az'].hasShowCommand;
     }
 
-    public get CommandGroup_HasCommand(): boolean {
-        return this.SelectFirstCommand();
+    public get CommandGroup_Referenced(): boolean {
+        return this.CommandGroup.language['az']['referenced'];
     }
 
     public get CommandGroup_DefaultName(): string {

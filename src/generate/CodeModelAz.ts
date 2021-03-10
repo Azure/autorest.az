@@ -112,8 +112,8 @@ export interface CodeModelAz {
     ResourceType: string | undefined;
     isComplexSchema(type: string): boolean;
 
-    SelectFirstCommandGroup(): boolean;
-    SelectNextCommandGroup(): boolean;
+    SelectFirstCommandGroup(needRefer?: boolean): boolean;
+    SelectNextCommandGroup(needRefer?: boolean): boolean;
 
     CommandGroup: OperationGroup;
     CommandGroup_Name: string;
@@ -128,7 +128,7 @@ export interface CodeModelAz {
     CommandGroup_ClientFactoryName: string;
     CommandGroup_OperationTmplName: string;
     CommandGroup_CustomCommandTypeName(): string;
-    CommandGroup_HasCommand: boolean;
+    CommandGroup_Referenced: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;

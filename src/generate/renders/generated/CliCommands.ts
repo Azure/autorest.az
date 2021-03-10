@@ -160,7 +160,7 @@ export class CliCommands extends TemplateBase {
                     { name: SortOrder.ASEC },
                     [],
                     this.commandGroupConverter.bind(this),
-                    [false],
+                    [true],
                 ),
             ],
             [

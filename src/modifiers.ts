@@ -229,6 +229,9 @@ export class Modifiers {
                         operation.language['az'][
                             'originalOperationGroup'
                         ] = this.codeModel.operationGroups[groupIdx];
+                        this.codeModel.operationGroups[groupIdx].language['az'][
+                            'referenced'
+                        ] = true;
                         // all the operation groups in the newIndexes have the same commandGroupName. therefore it doesn't matter when index we put it into.
                         this.codeModel.operationGroups[newIndexes[0]].operations.push(operation);
                     }
