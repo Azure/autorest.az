@@ -316,7 +316,7 @@ describe('renderCommandsPYTest', () => {
         });
         const oriFile = path.join(
             `${__dirname}`,
-            '../../test/unittest/expected/generated/ori_commands.py',
+            '../../test/unittest/expected/generated/ori_commands2.py',
         );
         await writeFile(oriFile, result);
         const azLinter = new AzLinter();

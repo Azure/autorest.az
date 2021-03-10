@@ -370,8 +370,8 @@ export function ToMultiLine(
             while (
                 firstCharIdx < ret[0].length &&
                 ret[0][firstCharIdx] === ' ' &&
-                firstCharIdx < newLine.length &&
-                newLine[firstCharIdx] === ' '
+                ((firstCharIdx < newLine.length && newLine[firstCharIdx] === ' ') ||
+                    firstCharIdx >= newLine.length)
             )
                 firstCharIdx++;
             if (
@@ -791,4 +791,10 @@ export function checkNested(obj, path: string) {
         obj = obj[args[i]];
     }
     return true;
+}
+
+export function thoughtAsTrue(t: any) {
+    return (
+        !isNullOrUndefined(t) && (t.toString().toLowerCase() === 'true' || typeof t === 'object')
+    );
 }

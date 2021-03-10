@@ -4,7 +4,8 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { PathConstants, SystemType, TemplateRender } from '../../utils/models';
+import { SystemType, PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
+import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
 import { CodeModelAz } from '../CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
@@ -28,6 +29,8 @@ import { CliTestScenario } from '../renders/tests/CliTestScenario';
 import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliExtSetupPy } from '../renders/extraExt/CliExtSetupPy';
+import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
+import { SimpleTemplate } from '../renders/TemplateBase';
 
 export class AzCoreIncrementalGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -122,7 +125,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         }
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
-        await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
+        await this.generateIncrementalSingleAndAddtoOutput(new CliTestStep(this.model), true);
         for (const testGroup of this.model.Extension_TestScenario
             ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
             : []) {
@@ -140,6 +143,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         if (needPreparers.size > 0) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestPrepare(this.model, [...needPreparers]),
+                true,
             );
         }
         this.model
@@ -153,5 +157,30 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
                 ),
             );
         GenerateMetaFile(this.model);
+        if (thoughtAsTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))) {
+            for (const boolVal of [false, true]) {
+                await this.generateIncrementalSingleAndAddtoOutput(
+                    new CliCmdletTest(this.model, boolVal),
+                    true,
+                );
+            }
+            await this.generateIncrementalSingleAndAddtoOutput(
+                new SimpleTemplate(
+                    this.model,
+                    path.join(
+                        this.model.AzextFolder,
+                        PathConstants.testFolder,
+                        PathConstants.cmdletFolder,
+                        PathConstants.conftestFile,
+                    ),
+                    path.join(
+                        PathConstants.templateRootFolder,
+                        PathConstants.testFolder,
+                        PathConstants.cmdletFolder,
+                        PathConstants.conftestFile + '.njx',
+                    ),
+                ),
+            );
+        }
     }
 }
