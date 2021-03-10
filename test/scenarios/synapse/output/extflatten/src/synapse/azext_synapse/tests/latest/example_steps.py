@@ -15,8 +15,7 @@ from .. import try_manual
 
 # EXAMPLE: /Workspaces/put/Create or update a workspace
 @try_manual
-def step_workspace_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=None):
+def step_workspace_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace create '
@@ -39,8 +38,7 @@ def step_workspace_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg
 
 # EXAMPLE: /Workspaces/get/Get a workspace
 @try_manual
-def step_workspace_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=None):
+def step_workspace_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace show '
@@ -51,8 +49,7 @@ def step_workspace_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9
 
 # EXAMPLE: /Workspaces/get/List workspaces in resource group
 @try_manual
-def step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=None):
+def step_workspace_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace list '
@@ -62,8 +59,7 @@ def step_workspace_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9
 
 # EXAMPLE: /Workspaces/get/List workspaces in subscription
 @try_manual
-def step_workspace_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=None):
+def step_workspace_list2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace list '
@@ -73,8 +69,7 @@ def step_workspace_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
 
 # EXAMPLE: /Workspaces/patch/Update a workspace
 @try_manual
-def step_workspace_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=None):
+def step_workspace_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace update '
@@ -88,8 +83,7 @@ def step_workspace_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg
 
 # EXAMPLE: /BigDataPools/put/Create or update a Big Data pool
 @try_manual
-def step_big_data_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_big_data_pool_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse big-data-pool create '
@@ -116,8 +110,7 @@ def step_big_data_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
 
 # EXAMPLE: /BigDataPools/get/Get a Big Data pool
 @try_manual
-def step_big_data_pool_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_big_data_pool_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse big-data-pool show '
@@ -129,8 +122,7 @@ def step_big_data_pool_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
 
 # EXAMPLE: /BigDataPools/get/List Big Data pools in a workspace
 @try_manual
-def step_big_data_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_big_data_pool_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse big-data-pool list '
@@ -141,8 +133,7 @@ def step_big_data_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
 
 # EXAMPLE: /BigDataPools/patch/Update a Big Data pool
 @try_manual
-def step_big_data_pool_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_big_data_pool_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse big-data-pool update '
@@ -155,8 +146,7 @@ def step_big_data_pool_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
 
 # EXAMPLE: /BigDataPools/delete/Delete a Big Data pool
 @try_manual
-def step_big_data_pool_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_big_data_pool_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse big-data-pool delete -y '
@@ -168,8 +158,7 @@ def step_big_data_pool_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
 
 # EXAMPLE: /IntegrationRuntimes/put/Create integration runtime
 @try_manual
-def step_integration_runtime_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime create '
@@ -182,8 +171,7 @@ def step_integration_runtime_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /IntegrationRuntimes/get/Get integration runtime
 @try_manual
-def step_integration_runtime_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime show '
@@ -195,8 +183,7 @@ def step_integration_runtime_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
 
 # EXAMPLE: /IntegrationRuntimes/get/List integration runtimes
 @try_manual
-def step_integration_runtime_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime list '
@@ -207,8 +194,7 @@ def step_integration_runtime_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
 
 # EXAMPLE: /IntegrationRuntimes/patch/Update integration runtime
 @try_manual
-def step_integration_runtime_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime update '
@@ -222,8 +208,7 @@ def step_integration_runtime_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /IntegrationRuntimes/post/Start integration runtime
 @try_manual
-def step_integration_runtime_start(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                   rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_start(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime start '
@@ -235,8 +220,7 @@ def step_integration_runtime_start(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7,
 
 # EXAMPLE: /IntegrationRuntimes/post/Stop integration runtime
 @try_manual
-def step_integration_runtime_stop(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_stop(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime stop '
@@ -248,8 +232,7 @@ def step_integration_runtime_stop(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
 
 # EXAMPLE: /IntegrationRuntimes/post/Upgrade integration runtime
 @try_manual
-def step_integration_runtime_upgrade(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_upgrade(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime upgrade '
@@ -261,8 +244,7 @@ def step_integration_runtime_upgrade(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_
 
 # EXAMPLE: /IntegrationRuntimeAuthKeys/post/List auth keys
 @try_manual
-def step_integration_runtime_auth_key_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_auth_key_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-auth-key list '
@@ -274,8 +256,7 @@ def step_integration_runtime_auth_key_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
 
 # EXAMPLE: /IntegrationRuntimeAuthKeys/post/Regenerate auth key
 @try_manual
-def step_integration_runtime_auth_key_regenerate(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_auth_key_regenerate(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-auth-key regenerate '
@@ -288,8 +269,7 @@ def step_integration_runtime_auth_key_regenerate(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /IntegrationRuntimeConnectionInfos/post/Get connection info
 @try_manual
-def step_integration_runtime_connection_info_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_connection_info_get(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-connection-info get '
@@ -301,8 +281,7 @@ def step_integration_runtime_connection_info_get(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /IntegrationRuntimeCredentials/post/Sync credentials
 @try_manual
-def step_integration_runtime_credentials_sync(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_credentials_sync(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-credentials sync '
@@ -314,8 +293,7 @@ def step_integration_runtime_credentials_sync(test, rg_5, rg, rg_2, rg_3, rg_4, 
 
 # EXAMPLE: /IntegrationRuntimeMonitoringData/post/Get monitoring data
 @try_manual
-def step_integration_runtime_monitoring_data_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_monitoring_data_get(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-monitoring-data get '
@@ -327,8 +305,7 @@ def step_integration_runtime_monitoring_data_get(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /IntegrationRuntimeNodeIpAddress/post/Get integration runtime node IP address
 @try_manual
-def step_integration_runtime_node_ip_address_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_node_ip_address_get(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-node-ip-address get '
@@ -341,8 +318,7 @@ def step_integration_runtime_node_ip_address_get(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /IntegrationRuntimeNodes/get/Get integration runtime node
 @try_manual
-def step_integration_runtime_node_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_node_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-node show '
@@ -355,8 +331,7 @@ def step_integration_runtime_node_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, r
 
 # EXAMPLE: /IntegrationRuntimeNodes/patch/Update integration runtime node
 @try_manual
-def step_integration_runtime_node_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_node_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-node update '
@@ -370,8 +345,7 @@ def step_integration_runtime_node_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
 
 # EXAMPLE: /IntegrationRuntimeNodes/delete/Delete integration runtime node
 @try_manual
-def step_integration_runtime_node_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_node_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-node delete -y '
@@ -384,8 +358,7 @@ def step_integration_runtime_node_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
 
 # EXAMPLE: /IntegrationRuntimeObjectMetadata/post/Get integration runtime object metadata
 @try_manual
-def step_integration_runtime_object_metadata_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_object_metadata_get(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-object-metadata get '
@@ -398,8 +371,7 @@ def step_integration_runtime_object_metadata_get(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /IntegrationRuntimeObjectMetadata/post/Refresh object metadata
 @try_manual
-def step_integration_runtime_object_metadata_refresh(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_object_metadata_refresh(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-object-metadata refresh '
@@ -411,8 +383,7 @@ def step_integration_runtime_object_metadata_refresh(test, rg_5, rg, rg_2, rg_3,
 
 # EXAMPLE: /IntegrationRuntimeStatus/post/Get status
 @try_manual
-def step_integration_runtime_status_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_status_get(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime-status get '
@@ -424,8 +395,7 @@ def step_integration_runtime_status_get(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, 
 
 # EXAMPLE: /IntegrationRuntimes/delete/Delete integration runtime
 @try_manual
-def step_integration_runtime_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_integration_runtime_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse integration-runtime delete -y '
@@ -437,8 +407,7 @@ def step_integration_runtime_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /IpFirewallRules/put/Create an IP firewall rule
 @try_manual
-def step_ip_firewall_rule_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_ip_firewall_rule_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse ip-firewall-rule create '
@@ -452,8 +421,7 @@ def step_ip_firewall_rule_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /IpFirewallRules/get/Create an IP firewall rule
 @try_manual
-def step_ip_firewall_rule_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_ip_firewall_rule_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse ip-firewall-rule show '
@@ -465,8 +433,7 @@ def step_ip_firewall_rule_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
 
 # EXAMPLE: /IpFirewallRules/get/List IP firewall rules in a workspace
 @try_manual
-def step_ip_firewall_rule_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_ip_firewall_rule_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse ip-firewall-rule list '
@@ -477,8 +444,7 @@ def step_ip_firewall_rule_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
 
 # EXAMPLE: /IpFirewallRules/post/Replace all IP firewall rules in a workspace
 @try_manual
-def step_ip_firewall_rule_replace_all(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                      rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_ip_firewall_rule_replace_all(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse ip-firewall-rule replace-all '
@@ -492,8 +458,7 @@ def step_ip_firewall_rule_replace_all(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg
 
 # EXAMPLE: /IpFirewallRules/delete/Delete an IP firewall rule from a workspace
 @try_manual
-def step_ip_firewall_rule_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_ip_firewall_rule_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse ip-firewall-rule delete -y '
@@ -505,8 +470,7 @@ def step_ip_firewall_rule_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /Operations/get/Get azure async operation header result
 @try_manual
-def step_operation_show_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_operation_show_azure_async_header_result(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse operation show-azure-async-header-result '
@@ -518,8 +482,7 @@ def step_operation_show_azure_async_header_result(test, rg_5, rg, rg_2, rg_3, rg
 
 # EXAMPLE: /Operations/get/Get location header result
 @try_manual
-def step_operation_show_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_operation_show_location_header_result(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse operation show-location-header-result '
@@ -531,8 +494,7 @@ def step_operation_show_location_header_result(test, rg_5, rg, rg_2, rg_3, rg_4,
 
 # EXAMPLE: /PrivateEndpointConnections/put/Approve private endpoint connection
 @try_manual
-def step_private_endpoint_connection_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_endpoint_connection_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-endpoint-connection create '
@@ -548,8 +510,7 @@ def step_private_endpoint_connection_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg
 
 # EXAMPLE: /PrivateEndpointConnections/get/Get private endpoint connection
 @try_manual
-def step_private_endpoint_connection_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_endpoint_connection_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-endpoint-connection show '
@@ -561,8 +522,7 @@ def step_private_endpoint_connection_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
 
 # EXAMPLE: /PrivateEndpointConnections/get/List private endpoint connections in workspace
 @try_manual
-def step_private_endpoint_connection_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                          rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_endpoint_connection_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-endpoint-connection list '
@@ -573,8 +533,7 @@ def step_private_endpoint_connection_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6
 
 # EXAMPLE: /PrivateEndpointConnections/delete/Delete private endpoint connection
 @try_manual
-def step_private_endpoint_connection_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_endpoint_connection_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-endpoint-connection delete -y '
@@ -586,8 +545,7 @@ def step_private_endpoint_connection_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg
 
 # EXAMPLE: /PrivateLinkHubs/put/Create or update a privateLinkHub
 @try_manual
-def step_private_link_hub_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub create '
@@ -600,8 +558,7 @@ def step_private_link_hub_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /PrivateLinkHubs/get/Get a privateLinkHub
 @try_manual
-def step_private_link_hub_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub show '
@@ -612,8 +569,7 @@ def step_private_link_hub_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
 
 # EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in resource group
 @try_manual
-def step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub list '
@@ -623,8 +579,7 @@ def step_private_link_hub_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
 
 # EXAMPLE: /PrivateLinkHubs/get/List privateLinkHubs in subscription
 @try_manual
-def step_private_link_hub_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_list2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub list '
@@ -634,8 +589,7 @@ def step_private_link_hub_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg
 
 # EXAMPLE: /PrivateLinkHubs/patch/Update a privateLinkHub
 @try_manual
-def step_private_link_hub_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub update '
@@ -647,8 +601,7 @@ def step_private_link_hub_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /PrivateLinkHubs/delete/Delete a privateLinkHub
 @try_manual
-def step_private_link_hub_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_hub_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-hub delete -y '
@@ -659,8 +612,7 @@ def step_private_link_hub_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /PrivateLinkResources/get/Get private link resources for workspace
 @try_manual
-def step_private_link_resource_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_private_link_resource_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse private-link-resource list '
@@ -671,8 +623,7 @@ def step_private_link_resource_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /SqlPools/put/Create a SQL Analytics pool
 @try_manual
-def step_sql_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool create '
@@ -697,8 +648,7 @@ def step_sql_pool_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
 
 # EXAMPLE: /SqlPools/get/Get a SQL Analytics pool
 @try_manual
-def step_sql_pool_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool show '
@@ -710,8 +660,7 @@ def step_sql_pool_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9,
 
 # EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace
 @try_manual
-def step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                       rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool list '
@@ -722,16 +671,13 @@ def step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9,
 
 # EXAMPLE: /SqlPools/get/List SQL Analytics pools in a workspace with filter
 @try_manual
-def step_sql_pool_list2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=None):
-    return step_sql_pool_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks)
+def step_sql_pool_list2(test, checks=None):
+    return step_sql_pool_list(test, checks)
 
 
 # EXAMPLE: /SqlPools/patch/Update a SQL Analytics pool
 @try_manual
-def step_sql_pool_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool update '
@@ -752,8 +698,7 @@ def step_sql_pool_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
 
 # EXAMPLE: /SqlPools/post/Pause a SQL Analytics pool
 @try_manual
-def step_sql_pool_pause(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                        rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_pause(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool pause '
@@ -765,8 +710,7 @@ def step_sql_pool_pause(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9
 
 # EXAMPLE: /SqlPools/post/Rename a SQL Analytics pool
 @try_manual
-def step_sql_pool_rename(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_rename(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool rename '
@@ -780,8 +724,7 @@ def step_sql_pool_rename(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
 
 # EXAMPLE: /SqlPools/post/Resume a SQL Analytics pool
 @try_manual
-def step_sql_pool_resume(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_resume(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool resume '
@@ -793,8 +736,7 @@ def step_sql_pool_resume(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
 
 # EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with all parameters
 @try_manual
-def step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_blob_auditing_policy_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-blob-auditing-policy create '
@@ -816,8 +758,7 @@ def step_sql_pool_blob_auditing_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, 
 
 # EXAMPLE: /SqlPoolBlobAuditingPolicies/put/Create or update a database's blob auditing policy with minimal parameters
 @try_manual
-def step_sql_pool_blob_auditing_policy_create2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_blob_auditing_policy_create2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-blob-auditing-policy create '
@@ -833,8 +774,7 @@ def step_sql_pool_blob_auditing_policy_create2(test, rg_5, rg, rg_2, rg_3, rg_4,
 
 # EXAMPLE: /SqlPoolBlobAuditingPolicies/get/Get blob auditing policy of a SQL Analytics pool
 @try_manual
-def step_sql_pool_blob_auditing_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_blob_auditing_policy_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-blob-auditing-policy show '
@@ -846,8 +786,7 @@ def step_sql_pool_blob_auditing_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg
 
 # EXAMPLE: /SqlPoolConnectionPolicies/get/Get a connection policy of a SQL Analytics pool
 @try_manual
-def step_sql_pool_connection_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_connection_policy_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-connection-policy show '
@@ -859,8 +798,7 @@ def step_sql_pool_connection_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
 
 # EXAMPLE: /SqlPoolDataWarehouseUserActivities/get/Get a SQL Analytics pool user activity
 @try_manual
-def step_sql_pool_data_warehouse_user_activity_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                    rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_data_warehouse_user_activity_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-data-warehouse-user-activity show '
@@ -872,8 +810,7 @@ def step_sql_pool_data_warehouse_user_activity_show(test, rg_5, rg, rg_2, rg_3, 
 
 # EXAMPLE: /SqlPoolGeoBackupPolicies/get/Get Sql pool geo backup policy
 @try_manual
-def step_sql_pool_geo_backup_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                         rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_geo_backup_policy_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-geo-backup-policy show '
@@ -885,8 +822,7 @@ def step_sql_pool_geo_backup_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6,
 
 # EXAMPLE: /SqlPoolMetadataSyncConfigs/put/Set metadata sync config for a SQL Analytics pool
 @try_manual
-def step_sql_pool_metadata_sync_config_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                              rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_metadata_sync_config_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-metadata-sync-config create '
@@ -899,8 +835,7 @@ def step_sql_pool_metadata_sync_config_create(test, rg_5, rg, rg_2, rg_3, rg_4, 
 
 # EXAMPLE: /SqlPoolMetadataSyncConfigs/get/Get metadata sync config for a SQL Analytics pool
 @try_manual
-def step_sql_pool_metadata_sync_config_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                            rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_metadata_sync_config_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-metadata-sync-config show '
@@ -912,8 +847,7 @@ def step_sql_pool_metadata_sync_config_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg
 
 # EXAMPLE: /SqlPoolOperationResults/get/Get the result of an operation on a SQL Analytics pool
 @try_manual
-def step_sql_pool_operation(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                            rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_operation(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-operation-result show-location-header-result '
@@ -926,8 +860,7 @@ def step_sql_pool_operation(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, 
 
 # EXAMPLE: /SqlPoolOperations/get/List the Sql Analytics pool management operations
 @try_manual
-def step_sql_pool_operation_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_operation_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-operation list '
@@ -939,8 +872,7 @@ def step_sql_pool_operation_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /SqlPoolReplicationLinks/get/Lists a Sql Analytic pool's replication links
 @try_manual
-def step_sql_pool_replication_link_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                        rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_replication_link_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-replication-link list '
@@ -952,8 +884,7 @@ def step_sql_pool_replication_link_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, 
 
 # EXAMPLE: /SqlPoolRestorePoints/get/Get a list of restore points of a SQL Analytics pool
 @try_manual
-def step_sql_pool_restore_point_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_restore_point_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-restore-point list '
@@ -965,8 +896,7 @@ def step_sql_pool_restore_point_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_
 
 # EXAMPLE: /SqlPoolRestorePoints/post/Creates Sql pool restore point.
 @try_manual
-def step_sql_pool_restore_point_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                       rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_restore_point_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-restore-point create '
@@ -979,8 +909,7 @@ def step_sql_pool_restore_point_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, r
 
 # EXAMPLE: /SqlPoolSchemas/get/List the schema in a SQL Analytics pool
 @try_manual
-def step_sql_pool_schema_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_schema_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-schema list '
@@ -992,8 +921,7 @@ def step_sql_pool_schema_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
 
 # EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Create a Sql pool's threat detection policy with all parameters
 @try_manual
-def step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_security_alert_policy_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-security-alert-policy create '
@@ -1013,8 +941,7 @@ def step_sql_pool_security_alert_policy_create(test, rg_5, rg, rg_2, rg_3, rg_4,
 
 # EXAMPLE: /SqlPoolSecurityAlertPolicies/put/Update a Sql pool's threat detection policy with minimal parameters
 @try_manual
-def step_sql_pool_security_alert_policy_update(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                               rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_security_alert_policy_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-security-alert-policy update '
@@ -1027,8 +954,7 @@ def step_sql_pool_security_alert_policy_update(test, rg_5, rg, rg_2, rg_3, rg_4,
 
 # EXAMPLE: /SqlPoolSecurityAlertPolicies/get/Get a security alert of a SQL Analytics pool
 @try_manual
-def step_sql_pool_security_alert_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                             rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_security_alert_policy_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-security-alert-policy show '
@@ -1040,8 +966,7 @@ def step_sql_pool_security_alert_policy_show(test, rg_5, rg, rg_2, rg_3, rg_4, r
 
 # EXAMPLE: /SqlPoolSensitivityLabels/put/Updates the sensitivity label of a given column with all parameters
 @try_manual
-def step_sql_pool_sensitivity_label_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_sensitivity_label_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-sensitivity-label create '
@@ -1060,8 +985,7 @@ def step_sql_pool_sensitivity_label_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
 
 # EXAMPLE: /SqlPoolSensitivityLabels/get/Gets the current sensitivity labels of a given SQL Analytics pool
 @try_manual
-def step_sql_pool_sensitivity_label_list_current(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                 rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_sensitivity_label_list_current(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-sensitivity-label list-current '
@@ -1073,8 +997,7 @@ def step_sql_pool_sensitivity_label_list_current(test, rg_5, rg, rg_2, rg_3, rg_
 
 # EXAMPLE: /SqlPoolSensitivityLabels/get/Gets the recommended sensitivity labels of a given SQL Analytics pool
 @try_manual
-def step_sql_pool_sensitivity_label_list_recommended(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_sensitivity_label_list_recommended(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-sensitivity-label list-recommended '
@@ -1086,8 +1009,7 @@ def step_sql_pool_sensitivity_label_list_recommended(test, rg_5, rg, rg_2, rg_3,
 
 # EXAMPLE: /SqlPoolSensitivityLabels/post/Disables sensitivity recommendations on a given column
 @try_manual
-def step_sql_pool_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                              rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_sensitivity(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-sensitivity-label disable-recommendation '
@@ -1102,8 +1024,7 @@ def step_sql_pool_sensitivity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8
 
 # EXAMPLE: /SqlPoolSensitivityLabels/post/Enables sensitivity recommendations on a given column
 @try_manual
-def step_sql_pool_sensitivity2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                               rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_sensitivity2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-sensitivity-label enable-recommendation '
@@ -1118,8 +1039,7 @@ def step_sql_pool_sensitivity2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_
 
 # EXAMPLE: /SqlPoolSensitivityLabels/delete/Deletes the sensitivity label of a given column
 @try_manual
-def step_sql_pool_sensitivity_label_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                           rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_sensitivity_label_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-sensitivity-label delete -y '
@@ -1134,8 +1054,7 @@ def step_sql_pool_sensitivity_label_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_
 
 # EXAMPLE: /SqlPoolTableColumns/get/List the columns in a table of a given schema in a SQL Analytics pool
 @try_manual
-def step_sql_pool_table_column_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_table_column_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-table-column list '
@@ -1149,8 +1068,7 @@ def step_sql_pool_table_column_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /SqlPoolTables/get/List the tables of a given schema in a SQL Analytics pool
 @try_manual
-def step_sql_pool_table_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_table_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-table list '
@@ -1163,8 +1081,7 @@ def step_sql_pool_table_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8,
 
 # EXAMPLE: /SqlPoolTransparentDataEncryptions/put/Create or update a Sql pool's transparent data encryption configuration
 @try_manual
-def step_sql_pool_transparent_data_encryption_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_transparent_data_encryption_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-transparent-data-encryption create '
@@ -1177,8 +1094,7 @@ def step_sql_pool_transparent_data_encryption_create(test, rg_5, rg, rg_2, rg_3,
 
 # EXAMPLE: /SqlPoolTransparentDataEncryptions/get/Get transparent data encryption configuration of a SQL Analytics pool
 @try_manual
-def step_sql_pool_transparent_data_encryption_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_transparent_data_encryption_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-transparent-data-encryption show '
@@ -1190,8 +1106,7 @@ def step_sql_pool_transparent_data_encryption_show(test, rg_5, rg, rg_2, rg_3, r
 
 # EXAMPLE: /SqlPoolUsages/get/List the usages of a SQL Analytics pool
 @try_manual
-def step_sql_pool_usage_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                             rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_usage_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-usage list '
@@ -1203,8 +1118,7 @@ def step_sql_pool_usage_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8,
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessmentRuleBaselines/put/Creates or updates a database's vulnerability assessment rule baseline.
 @try_manual
-def step_sql_pool_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment-rule-baseline create '
@@ -1221,8 +1135,7 @@ def step_sql_pool_vulnerability(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessmentRuleBaselines/delete/Removes a database's vulnerability assessment rule baseline.
 @try_manual
-def step_sql_pool_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment-rule-baseline delete -y '
@@ -1236,8 +1149,7 @@ def step_sql_pool_vulnerability2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with all parameters
 @try_manual
-def step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
@@ -1254,8 +1166,7 @@ def step_sql_pool_vulnerability_assessment_create(test, rg_5, rg, rg_2, rg_3, rg
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageAccountAccessKey is specified
 @try_manual
-def step_sql_pool_vulnerability_assessment_create2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_create2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
@@ -1269,8 +1180,7 @@ def step_sql_pool_vulnerability_assessment_create2(test, rg_5, rg, rg_2, rg_3, r
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/put/Create a database's vulnerability assessment with minimal parameters, when storageContainerSasKey is specified
 @try_manual
-def step_sql_pool_vulnerability_assessment_create3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                   rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_create3(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment create '
@@ -1284,8 +1194,7 @@ def step_sql_pool_vulnerability_assessment_create3(test, rg_5, rg, rg_2, rg_3, r
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/get/Get a Sql pool's vulnerability assessment
 @try_manual
-def step_sql_pool_vulnerability_assessment_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment show '
@@ -1297,8 +1206,7 @@ def step_sql_pool_vulnerability_assessment_show(test, rg_5, rg, rg_2, rg_3, rg_4
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/get/Get a vulnerability assessment of a SQL Analytics pool
 @try_manual
-def step_sql_pool_vulnerability_assessment_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11,
-                                                rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment list '
@@ -1310,8 +1218,7 @@ def step_sql_pool_vulnerability_assessment_list(test, rg_5, rg, rg_2, rg_3, rg_4
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessments/delete/Remove a database's vulnerability assessment
 @try_manual
-def step_sql_pool_vulnerability_assessment_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                  rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment delete -y '
@@ -1323,8 +1230,7 @@ def step_sql_pool_vulnerability_assessment_delete(test, rg_5, rg, rg_2, rg_3, rg
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/get/Get a vulnerability scan record of a SQL Analytics pool
 @try_manual
-def step_sql_pool_vulnerability_assessment_scan_list(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                     rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_scan_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment-scan list '
@@ -1336,8 +1242,7 @@ def step_sql_pool_vulnerability_assessment_scan_list(test, rg_5, rg, rg_2, rg_3,
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/post/Executes a Sql pool's vulnerability assessment scan.
 @try_manual
-def step_sql_pool_vulnerability3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                 rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability3(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment-scan initiate-scan '
@@ -1350,8 +1255,7 @@ def step_sql_pool_vulnerability3(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, r
 
 # EXAMPLE: /SqlPoolVulnerabilityAssessmentScans/post/Export a database's vulnerability assessment scan results.
 @try_manual
-def step_sql_pool_vulnerability_assessment_scan_export(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10,
-                                                       rg_11, rg_12, rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_vulnerability_assessment_scan_export(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool-vulnerability-assessment-scan export '
@@ -1364,8 +1268,7 @@ def step_sql_pool_vulnerability_assessment_scan_export(test, rg_5, rg, rg_2, rg_
 
 # EXAMPLE: /SqlPools/delete/Delete a SQL Analytics pool
 @try_manual
-def step_sql_pool_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                         rg_15, rg_16, rg_17, checks=None):
+def step_sql_pool_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse sql-pool delete -y '
@@ -1377,8 +1280,7 @@ def step_sql_pool_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_
 
 # EXAMPLE: /WorkspaceAadAdmins/put/Create or update workspace active directory admin
 @try_manual
-def step_workspace_aad_admin_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_workspace_aad_admin_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-aad-admin create '
@@ -1393,8 +1295,7 @@ def step_workspace_aad_admin_create(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /WorkspaceAadAdmins/get/Get workspace active directory admin
 @try_manual
-def step_workspace_aad_admin_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13,
-                                  rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_workspace_aad_admin_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-aad-admin show '
@@ -1405,8 +1306,7 @@ def step_workspace_aad_admin_show(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, 
 
 # EXAMPLE: /WorkspaceAadAdmins/delete/Delete workspace active directory admin
 @try_manual
-def step_workspace_aad_admin_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_workspace_aad_admin_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-aad-admin delete -y '
@@ -1417,8 +1317,7 @@ def step_workspace_aad_admin_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /WorkspaceManagedIdentitySqlControlSettings/put/Create or update managed identity sql control settings
 @try_manual
-def step_workspace_managed_identity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                    rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_workspace_managed_identity(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-managed-identity-sql-control-setting create '
@@ -1430,8 +1329,7 @@ def step_workspace_managed_identity(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7
 
 # EXAMPLE: /WorkspaceManagedIdentitySqlControlSettings/get/Get managed identity sql control settings
 @try_manual
-def step_workspace_managed_identity2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12,
-                                     rg_13, rg_14, rg_15, rg_16, rg_17, checks=None):
+def step_workspace_managed_identity2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace-managed-identity-sql-control-setting show '
@@ -1442,12 +1340,10 @@ def step_workspace_managed_identity2(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_
 
 # EXAMPLE: /Workspaces/delete/Delete a workspace
 @try_manual
-def step_workspace_delete(test, rg_5, rg, rg_2, rg_3, rg_4, rg_6, rg_7, rg_8, rg_9, rg_10, rg_11, rg_12, rg_13, rg_14,
-                          rg_15, rg_16, rg_17, checks=None):
+def step_workspace_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az synapse workspace delete -y '
              '--resource-group "{rg_2}" '
              '--name "{myWorkspace2}"',
              checks=checks)
-

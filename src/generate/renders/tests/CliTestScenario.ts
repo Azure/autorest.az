@@ -69,7 +69,6 @@ export class CliTestScenario extends TemplateBase {
         classInfo.push('@try_manual');
         const testClassName = Capitalize(this.groupName) + scenarioName + 'Test';
         classInfo.push('class ' + testClassName + '(ScenarioTest):');
-        classInfo.push('');
 
         const subscriptionId = model.GetSubscriptionKey();
         if (subscriptionId) {
@@ -215,7 +214,6 @@ export class CliTestScenario extends TemplateBase {
         classInfo.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);
         classInfo.push(...initiates);
         classInfo.push('');
-        classInfo.push('');
 
         function buildTestcase(testcaseName: string, minimum: boolean) {
             const ret = [...decorators];
@@ -235,7 +233,6 @@ export class CliTestScenario extends TemplateBase {
             );
             ret.push('        calc_coverage(__file__)');
             ret.push('        raise_if()');
-            ret.push('');
             ret.push('');
             return ret;
         }
