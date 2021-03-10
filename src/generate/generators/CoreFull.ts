@@ -1,5 +1,6 @@
 import * as path from 'path';
-import { SystemType, PathConstants } from '../../utils/models';
+import { SystemType, PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
+import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
 import { CodeModelAz } from '../CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
@@ -23,6 +24,9 @@ import { CliTestPrepare } from '../renders/tests/CliTestPrepare';
 import { CliTestScenario } from '../renders/tests/CliTestScenario';
 import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
+import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
+import { SimpleTemplate } from '../renders/TemplateBase';
+
 export class AzCoreFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
         super(model);
@@ -109,6 +113,8 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 if (needPreparers.size > 0) {
                     await this.generateFullSingleAndAddtoOutput(
                         new CliTestPrepare(model, [...needPreparers]),
+                        true,
+                        true,
                     );
                 }
                 model
@@ -122,6 +128,34 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         ),
                     );
                 GenerateMetaFile(model);
+                if (
+                    thoughtAsTrue(AzConfiguration.getValue(CodeGenConstants.genCmdletTest, false))
+                ) {
+                    for (const boolVal of [false, true]) {
+                        await this.generateFullSingleAndAddtoOutput(
+                            new CliCmdletTest(this.model, boolVal),
+                            true,
+                            true,
+                        );
+                    }
+                    await this.generateFullSingleAndAddtoOutput(
+                        new SimpleTemplate(
+                            this.model,
+                            path.join(
+                                model.AzextFolder,
+                                PathConstants.testFolder,
+                                PathConstants.cmdletFolder,
+                                PathConstants.conftestFile,
+                            ),
+                            path.join(
+                                PathConstants.templateRootFolder,
+                                PathConstants.testFolder,
+                                PathConstants.cmdletFolder,
+                                PathConstants.conftestFile + '.njx',
+                            ),
+                        ),
+                    );
+                }
             } while (model.SelectNextExtension());
         }
     }

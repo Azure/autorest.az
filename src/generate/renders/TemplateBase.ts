@@ -33,3 +33,24 @@ export abstract class TemplateBase {
 
     public abstract async GetRenderData(model: CodeModelAz): Promise<any>;
 }
+
+export class SimpleTemplate extends TemplateBase {
+    constructor(model: CodeModelAz, relativePath: string, tmplPath: string) {
+        super(model);
+        this.relativePath = relativePath;
+        this.tmplPath = tmplPath;
+    }
+
+    public async fullGeneration(): Promise<string[]> {
+        return await this.render();
+    }
+
+    public async incrementalGeneration(base: string): Promise<string[]> {
+        return await this.fullGeneration();
+    }
+
+    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
+        const output: string[] = [];
+        return output;
+    }
+}

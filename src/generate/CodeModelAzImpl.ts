@@ -2967,7 +2967,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public ConvertToCliParameters(exampleParams: ExampleParam[]): ExampleParam[] {
+    public ConvertToCliParameters(
+        exampleParams: ExampleParam[],
+        commandGroup: string,
+    ): ExampleParam[] {
         const ret: ExampleParam[] = [];
         for (const param of exampleParams) {
             // Object.entries(exampleParams).forEach(() => {
@@ -2976,9 +2979,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (paramName === 'resource_group_name') {
                     paramName = 'resource_group';
                 }
-                // else {
-                //     paramName = "name";
-                // }
             }
             paramName = paramName.split('_').join('-');
             ret.push(
@@ -3098,7 +3098,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         example.HttpMethod = this.Method_HttpMethod;
         example.ResourceClassName = this.CommandGroup_Key;
         const params = this.GetExampleParameters(exampleObj);
-        example.Parameters = this.ConvertToCliParameters(params);
+        example.Parameters = this.ConvertToCliParameters(params, this.CommandGroup_Key);
         example.MethodResponses = this.Method.responses || [];
         example.Method_IsLongRun = !!this.Method.extensions?.['x-ms-long-running-operation'];
         example.ExampleObj = exampleObj;

@@ -33,57 +33,56 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 # Env setup_scenario
 @try_manual
-def setup_scenario(test, rg):
+def setup_scenario(test):
     pass
 
 
 # Env cleanup_scenario
 @try_manual
-def cleanup_scenario(test, rg):
+def cleanup_scenario(test):
     pass
 
 
 # Testcase: Scenario
 @try_manual
-def call_scenario(test, rg):
-    setup_scenario(test, rg)
-    step_mn_scope_assignment_create(test, rg, checks=[
+def call_scenario(test):
+    setup_scenario(test)
+    step_mn_scope_assignment_create(test, checks=[
         test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft."
                    "ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
         test.check("name", "{myScopeAssignment}", case_sensitive=False),
     ])
-    step_mn_scope_assignment_show(test, rg, checks=[
+    step_mn_scope_assignment_show(test, checks=[
         test.check("assignedManagedNetwork", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft."
                    "ManagedNetwork/managedNetworks/{myManagedNetwork}", case_sensitive=False),
         test.check("name", "{myScopeAssignment}", case_sensitive=False),
     ])
-    step_mn_scope_assignment_list(test, rg, checks=[
+    step_mn_scope_assignment_list(test, checks=[
         test.check('length(@)', 1),
     ])
-    step_mn_scope_assignment_delete(test, rg, checks=[])
-    cleanup_scenario(test, rg)
+    step_mn_scope_assignment_delete(test, checks=[])
+    cleanup_scenario(test)
 
 
 @try_manual
-def call_scenario_min(test, rg):
-    setup_scenario(test, rg)
-    step_mn_scope_assignment_create_min(test, rg, checks=[
+def call_scenario_min(test):
+    setup_scenario(test)
+    step_mn_scope_assignment_create_min(test, checks=[
         test.check("name", "{myScopeAssignment}", case_sensitive=False),
     ])
-    step_mn_scope_assignment_show_min(test, rg, checks=[
+    step_mn_scope_assignment_show_min(test, checks=[
         test.check("name", "{myScopeAssignment}", case_sensitive=False),
     ])
-    step_mn_scope_assignment_list_min(test, rg, checks=[
+    step_mn_scope_assignment_list_min(test, checks=[
         test.check('length(@)', 1),
     ])
-    step_mn_scope_assignment_delete_min(test, rg, checks=[])
-    cleanup_scenario(test, rg)
+    step_mn_scope_assignment_delete_min(test, checks=[])
+    cleanup_scenario(test)
 
 
 # Test class for Scenario
 @try_manual
 class ScopeAssignmentsScenarioTest(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(ScopeAssignmentsScenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
@@ -97,7 +96,6 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
             'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
-
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
@@ -108,10 +106,9 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ScopeAssignments_Scenario(self, rg):
-        call_scenario(self, rg)
+        call_scenario(self)
         calc_coverage(__file__)
         raise_if()
-
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
@@ -123,7 +120,6 @@ class ScopeAssignmentsScenarioTest(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ScopeAssignments_Scenario_min(self, rg):
-        call_scenario_min(self, rg)
+        call_scenario_min(self)
         calc_coverage(__file__)
         raise_if()
-

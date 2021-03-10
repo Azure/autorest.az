@@ -51,10 +51,8 @@ def call_scenario(test, rg, rg_2, rg_3, rg_4):
 # Test class for Scenario
 @try_manual
 class FakedTestScenarioScenarioTest(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(FakedTestScenarioScenarioTest, self).__init__(*args, **kwargs)
-
 
     @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
     @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
@@ -66,4 +64,3 @@ class FakedTestScenarioScenarioTest(ScenarioTest):
         call_scenario(self, rg, rg_2, rg_3, rg_4)
         calc_coverage(__file__)
         raise_if()
-

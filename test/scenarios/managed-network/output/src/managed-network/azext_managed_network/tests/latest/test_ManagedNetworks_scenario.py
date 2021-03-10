@@ -51,50 +51,49 @@ TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 # Env setup_scenario1
 @try_manual
-def setup_scenario1(test, rg):
+def setup_scenario1(test):
     pass
 
 
 # Env cleanup_scenario1
 @try_manual
-def cleanup_scenario1(test, rg):
+def cleanup_scenario1(test):
     pass
 
 
 # Testcase: scenario1
 @try_manual
-def call_scenario1(test, rg):
-    setup_scenario1(test, rg)
-    step_mn_create(test, rg, checks=[
+def call_scenario1(test):
+    setup_scenario1(test)
+    step_mn_create(test, checks=[
         test.check("name", "{myManagedNetwork}", case_sensitive=False),
     ])
-    step_mn_group_create(test, rg, checks=[
+    step_mn_group_create(test, checks=[
         test.check("managementGroups", []),
         test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
     ])
-    step_managed_network_peering(test, rg, checks=[])
-    step_mn_show_modify(test, rg, checks=[])
-    cleanup_scenario1(test, rg)
+    step_managed_network_peering(test, checks=[])
+    step_mn_show_modify(test, checks=[])
+    cleanup_scenario1(test)
 
 
 @try_manual
-def call_scenario1_min(test, rg):
-    setup_scenario1(test, rg)
-    step_mn_create_min(test, rg, checks=[
+def call_scenario1_min(test):
+    setup_scenario1(test)
+    step_mn_create_min(test, checks=[
         test.check("name", "{myManagedNetwork}", case_sensitive=False),
     ])
-    step_mn_group_create_min(test, rg, checks=[
+    step_mn_group_create_min(test, checks=[
         test.check("name", "{myManagedNetworkGroup}", case_sensitive=False),
     ])
-    step_managed_network_peering_min(test, rg, checks=[])
-    step_mn_show_modify_min(test, rg, checks=[])
-    cleanup_scenario1(test, rg)
+    step_managed_network_peering_min(test, checks=[])
+    step_mn_show_modify_min(test, checks=[])
+    cleanup_scenario1(test)
 
 
 # Test class for scenario1
 @try_manual
 class ManagedNetworksscenario1Test(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(ManagedNetworksscenario1Test, self).__init__(*args, **kwargs)
         self.kwargs.update({
@@ -108,7 +107,6 @@ class ManagedNetworksscenario1Test(ScenarioTest):
             'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
-
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
@@ -119,10 +117,9 @@ class ManagedNetworksscenario1Test(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ManagedNetworks_scenario1(self, rg):
-        call_scenario1(self, rg)
+        call_scenario1(self)
         calc_coverage(__file__)
         raise_if()
-
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
@@ -134,50 +131,48 @@ class ManagedNetworksscenario1Test(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ManagedNetworks_scenario1_min(self, rg):
-        call_scenario1_min(self, rg)
+        call_scenario1_min(self)
         calc_coverage(__file__)
         raise_if()
 
-
 # Env setup_scenario2
 @try_manual
-def setup_scenario2(test, rg):
+def setup_scenario2(test):
     pass
 
 
 # Env cleanup_scenario2
 @try_manual
-def cleanup_scenario2(test, rg):
+def cleanup_scenario2(test):
     pass
 
 
 # Testcase: scenario2
 @try_manual
-def call_scenario2(test, rg):
-    setup_scenario2(test, rg)
-    step_mn_list(test, rg, checks=[])
-    step_mn_list2(test, rg, checks=[
+def call_scenario2(test):
+    setup_scenario2(test)
+    step_mn_list(test, checks=[])
+    step_mn_list2(test, checks=[
         test.check('length(@)', 1),
     ])
-    step_mn_delete(test, rg, checks=[])
-    step_mn_group_show(test, rg, checks=[])
-    cleanup_scenario2(test, rg)
+    step_mn_delete(test, checks=[])
+    step_mn_group_show(test, checks=[])
+    cleanup_scenario2(test)
 
 
 @try_manual
-def call_scenario2_min(test, rg):
-    setup_scenario2(test, rg)
-    step_mn_list_min(test, rg, checks=[])
-    step_mn_list2_min(test, rg, checks=[])
-    step_mn_delete_min(test, rg, checks=[])
-    step_mn_group_show_min(test, rg, checks=[])
-    cleanup_scenario2(test, rg)
+def call_scenario2_min(test):
+    setup_scenario2(test)
+    step_mn_list_min(test, checks=[])
+    step_mn_list2_min(test, checks=[])
+    step_mn_delete_min(test, checks=[])
+    step_mn_group_show_min(test, checks=[])
+    cleanup_scenario2(test)
 
 
 # Test class for scenario2
 @try_manual
 class ManagedNetworksscenario2Test(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(ManagedNetworksscenario2Test, self).__init__(*args, **kwargs)
         self.kwargs.update({
@@ -191,7 +186,6 @@ class ManagedNetworksscenario2Test(ScenarioTest):
             'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
-
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
@@ -202,10 +196,9 @@ class ManagedNetworksscenario2Test(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ManagedNetworks_scenario2(self, rg):
-        call_scenario2(self, rg)
+        call_scenario2(self)
         calc_coverage(__file__)
         raise_if()
-
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
@@ -217,50 +210,48 @@ class ManagedNetworksscenario2Test(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ManagedNetworks_scenario2_min(self, rg):
-        call_scenario2_min(self, rg)
+        call_scenario2_min(self)
         calc_coverage(__file__)
         raise_if()
 
-
 # Env setup_scenario3
 @try_manual
-def setup_scenario3(test, rg):
+def setup_scenario3(test):
     pass
 
 
 # Env cleanup_scenario3
 @try_manual
-def cleanup_scenario3(test, rg):
+def cleanup_scenario3(test):
     pass
 
 
 # Testcase: scenario3
 @try_manual
-def call_scenario3(test, rg):
-    setup_scenario3(test, rg)
-    step_mn_group_list(test, rg, checks=[])
-    step_managed_network_peering_policy_show(test, rg, checks=[])
-    step_managed_network_peering_policy_list(test, rg, checks=[])
-    step_managed_network_peering_policy_delete(test, rg, checks=[])
-    step_mn_group_delete(test, rg, checks=[])
-    cleanup_scenario3(test, rg)
+def call_scenario3(test):
+    setup_scenario3(test)
+    step_mn_group_list(test, checks=[])
+    step_managed_network_peering_policy_show(test, checks=[])
+    step_managed_network_peering_policy_list(test, checks=[])
+    step_managed_network_peering_policy_delete(test, checks=[])
+    step_mn_group_delete(test, checks=[])
+    cleanup_scenario3(test)
 
 
 @try_manual
-def call_scenario3_min(test, rg):
-    setup_scenario3(test, rg)
-    step_mn_group_list_min(test, rg, checks=[])
-    step_managed_network_peering_policy_show_min(test, rg, checks=[])
-    step_managed_network_peering_policy_list_min(test, rg, checks=[])
-    step_managed_network_peering_policy_delete_min(test, rg, checks=[])
-    step_mn_group_delete_min(test, rg, checks=[])
-    cleanup_scenario3(test, rg)
+def call_scenario3_min(test):
+    setup_scenario3(test)
+    step_mn_group_list_min(test, checks=[])
+    step_managed_network_peering_policy_show_min(test, checks=[])
+    step_managed_network_peering_policy_list_min(test, checks=[])
+    step_managed_network_peering_policy_delete_min(test, checks=[])
+    step_mn_group_delete_min(test, checks=[])
+    cleanup_scenario3(test)
 
 
 # Test class for scenario3
 @try_manual
 class ManagedNetworksscenario3Test(ScenarioTest):
-
     def __init__(self, *args, **kwargs):
         super(ManagedNetworksscenario3Test, self).__init__(*args, **kwargs)
         self.kwargs.update({
@@ -274,7 +265,6 @@ class ManagedNetworksscenario3Test(ScenarioTest):
             'myManagedNetworkPeeringPolicy': self.create_random_name(prefix='myHubAndSpoke'[:6], length=13),
         })
 
-
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetB'[:7], key='vn_2', resource_group_key='rg')
@@ -285,10 +275,9 @@ class ManagedNetworksscenario3Test(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ManagedNetworks_scenario3(self, rg):
-        call_scenario3(self, rg)
+        call_scenario3(self)
         calc_coverage(__file__)
         raise_if()
-
 
     @ResourceGroupPreparer(name_prefix='clitestmanaged_network_myResourceGroup'[:7], key='rg', parameter_name='rg')
     @VirtualNetworkPreparer(name_prefix='clitestmanaged_network_VnetA'[:7], key='vn', resource_group_key='rg')
@@ -300,7 +289,6 @@ class ManagedNetworksscenario3Test(ScenarioTest):
     @SubnetPreparer(name_prefix='clitestmanaged_network_subnetB'[:7], key='subnets_2', virtual_network_key='vn_2',
                     resource_group_key='rg')
     def test_ManagedNetworks_scenario3_min(self, rg):
-        call_scenario3_min(self, rg)
+        call_scenario3_min(self)
         calc_coverage(__file__)
         raise_if()
-

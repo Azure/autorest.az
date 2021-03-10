@@ -8,7 +8,7 @@ import { PreparerEntity, getResourceKey } from './ScenarioTool';
 import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
-import { CodeGenConstants, PathConstants } from '../../../utils/models';
+import { CodeGenConstants, PathConstants, AzConfiguration } from '../../../utils/models';
 
 let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: Record<string, any>;
 
@@ -50,7 +50,6 @@ export class CliTestStep extends TemplateBase {
         steps.push('');
         steps.push('from .. import try_manual');
         steps.push('');
-        steps.push('');
 
         const commandParams = model.GatherInternalResource();
         let config: any = [];
@@ -81,6 +80,7 @@ export class CliTestStep extends TemplateBase {
             allSteps.push(functionName);
             if (exampleId) {
                 const disabled: string = config[ci].disabled ? '# ' : '';
+                steps.push('');
                 steps.push('# EXAMPLE: ' + exampleId);
                 const createStep = (minimum = false) => {
                     steps.push('@try_manual');
@@ -191,11 +191,11 @@ export class CliTestStep extends TemplateBase {
                         steps.push('    pass');
                     }
                     steps.push('');
-                    steps.push('');
                 };
                 createStep();
                 if (model.GenMinTest) createStep(true);
             } else if (functionName) {
+                steps.push('');
                 steps.push(`# Env ${functionName}`);
                 steps.push('@try_manual');
                 steps.push(
@@ -204,7 +204,6 @@ export class CliTestStep extends TemplateBase {
                     ),
                 );
                 steps.push('    pass');
-                steps.push('');
                 steps.push('');
             }
         }
@@ -218,6 +217,12 @@ export class CliTestStep extends TemplateBase {
     }
 
     public static parameterLine(parameterNames, withChecksDef = false) {
+        if (
+            AzConfiguration.getValue(CodeGenConstants.az)[CodeGenConstants.useTestStepParam] !==
+            true
+        ) {
+            parameterNames = [];
+        }
         let ret = '';
         const paramList: string[] = deepCopy(parameterNames) as string[];
         if (withChecksDef) {
