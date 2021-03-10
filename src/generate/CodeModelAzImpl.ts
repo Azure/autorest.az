@@ -1807,6 +1807,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     ) {
                         return false;
                     } else if (p['schema'].type === SchemaType.Array) {
+                        if (this.isComplexSchema(p['schema']?.elementType?.type)) {
+                            return false;
+                        }
                         for (const mp of values(p['schema']?.elementType?.properties)) {
                             if (this.isComplexSchema(mp['schema'].type)) {
                                 return false;

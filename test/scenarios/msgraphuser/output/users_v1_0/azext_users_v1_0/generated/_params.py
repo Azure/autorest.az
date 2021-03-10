@@ -28,7 +28,6 @@ from azext_users_v1_0.action import (
     AddAppRoleAssignments,
     AddCreatedObjects,
     AddDirectReports,
-    AddLicenseDetails,
     AddManager,
     AddMemberOf,
     AddOauth2PermissionGrants,
@@ -225,8 +224,8 @@ def load_arguments(self, _):
         c.argument('direct_reports', action=AddDirectReports, nargs='+', help='The users and contacts that report to '
                    'the user. (The users and contacts that have their manager property set to this user.) Read-only. '
                    'Nullable.')
-        c.argument('license_details', action=AddLicenseDetails, nargs='+', help='A collection of this user\'s license '
-                   'details. Read-only.')
+        c.argument('license_details', type=validate_file_or_dict, help='A collection of this user\'s license details. '
+                   'Read-only. Expected value: json-string/@json-file.')
         c.argument('manager', action=AddManager, nargs='+', help='Represents an Azure Active Directory object. The '
                    'directoryObject type is the base type for many other directory entity types.')
         c.argument('member_of', action=AddMemberOf, nargs='+', help='The groups and directory roles that the user is a '
@@ -532,8 +531,8 @@ def load_arguments(self, _):
         c.argument('direct_reports', action=AddDirectReports, nargs='+', help='The users and contacts that report to '
                    'the user. (The users and contacts that have their manager property set to this user.) Read-only. '
                    'Nullable.')
-        c.argument('license_details', action=AddLicenseDetails, nargs='+', help='A collection of this user\'s license '
-                   'details. Read-only.')
+        c.argument('license_details', type=validate_file_or_dict, help='A collection of this user\'s license details. '
+                   'Read-only. Expected value: json-string/@json-file.')
         c.argument('manager', action=AddManager, nargs='+', help='Represents an Azure Active Directory object. The '
                    'directoryObject type is the base type for many other directory entity types.')
         c.argument('member_of', action=AddMemberOf, nargs='+', help='The groups and directory roles that the user is a '
