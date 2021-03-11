@@ -12,16 +12,54 @@
 # pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
+from azext_datafactory_preview.generated._client_factory import (
+    cf_factory,
+    cf_trigger,
+    cf_integration_runtime,
+    cf_datafactory_cl,
+    cf_domain_service,
+    cf_group,
+)
+
+
+datafactory_factory = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._factories_operations#FactoriesOperations.{}',
+    client_factory=cf_factory,
+)
+
+
+datafactory_trigger = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations#TriggersOperations.{}',
+    client_factory=cf_trigger,
+)
+
+
+datafactory_integration_runtime = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}',
+    client_factory=cf_integration_runtime,
+)
+
+
+datafactory_ = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._dfaz_management_client_operations#DFAZManagementClientOperationsMixin.{}',
+    client_factory=cf_datafactory_cl,
+)
+
+
+datafactory_domain_service = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_operations#DomainServicesOperations.{}',
+    client_factory=cf_domain_service,
+)
+
+
+datafactory_group = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#GroupsOperations.{}',
+    client_factory=cf_group,
+)
 
 
 def load_command_table(self, _):
 
-    from azext_datafactory_preview.generated._client_factory import cf_factory
-
-    datafactory_factory = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._factories_operations#FactoriesOperations.{}',
-        client_factory=cf_factory,
-    )
     with self.command_group('datafactory', datafactory_factory, client_factory=cf_factory, is_experimental=True) as g:
         g.custom_command('list', 'datafactory_list')
         g.custom_show_command('show', 'datafactory_show')
@@ -32,12 +70,6 @@ def load_command_table(self, _):
         g.custom_command('get-data-plane-access', 'datafactory_get_data_plane_access')
         g.custom_command('get-git-hub-access-token', 'datafactory_get_git_hub_access_token')
 
-    from azext_datafactory_preview.generated._client_factory import cf_trigger
-
-    datafactory_trigger = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations#TriggersOperations.{}',
-        client_factory=cf_trigger,
-    )
     with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger) as g:
         g.custom_command('list', 'datafactory_trigger_list')
         g.custom_show_command('show', 'datafactory_trigger_show')
@@ -52,12 +84,6 @@ def load_command_table(self, _):
         g.custom_command('unsubscribe-from-event', 'datafactory_trigger_unsubscribe_from_event', supports_no_wait=True)
         g.custom_wait_command('wait', 'datafactory_trigger_show')
 
-    from azext_datafactory_preview.generated._client_factory import cf_integration_runtime
-
-    datafactory_integration_runtime = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._integration_runtimes_operations#IntegrationRuntimesOperations.{}',
-        client_factory=cf_integration_runtime,
-    )
     with self.command_group(
         'datafactory integration-runtime', datafactory_integration_runtime, client_factory=cf_integration_runtime
     ) as g:
@@ -79,34 +105,16 @@ def load_command_table(self, _):
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
         g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
 
-    from azext_datafactory_preview.generated._client_factory import cf_datafactory_cl
-
-    datafactory_ = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._dfaz_management_client_operations#DFAZManagementClientOperationsMixin.{}',
-        client_factory=cf_datafactory_cl,
-    )
     with self.command_group(
         'datafactory linked-integration-runtime', datafactory_, client_factory=cf_datafactory_cl
     ) as g:
         g.custom_command('create', 'datafactory_linked_integration_runtime_create')
 
-    from azext_datafactory_preview.generated._client_factory import cf_domain_service
-
-    datafactory_domain_service = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_operations#DomainServicesOperations.{}',
-        client_factory=cf_domain_service,
-    )
     with self.command_group(
         'datafactory domain-service', datafactory_domain_service, client_factory=cf_domain_service
     ) as g:
         g.custom_command('create', 'datafactory_domain_service_create')
         g.custom_command('update', 'datafactory_domain_service_update')
 
-    from azext_datafactory_preview.generated._client_factory import cf_group
-
-    datafactory_group = CliCommandType(
-        operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#GroupsOperations.{}',
-        client_factory=cf_group,
-    )
     with self.command_group('datafactory group', datafactory_group, client_factory=cf_group) as g:
         g.custom_command('create', 'datafactory_group_create')
