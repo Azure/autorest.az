@@ -886,11 +886,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.CommandGroup.language['cli'].hidden ||
                 this.CommandGroup.language['cli'].removed
             ) {
-                if (this.SelectNextCommandGroup()) {
-                    if (
-                        !this.SelectFirstCommand() ||
-                        (needRefer && !this.CommandGroup_Referenced)
-                    ) {
+                if (needRefer && this.CommandGroup_Referenced) {
+                    return true;
+                } else if (this.SelectNextCommandGroup()) {
+                    if (!this.SelectFirstCommand()) {
                         return this.SelectNextCommandGroup();
                     }
                     return true;
@@ -898,7 +897,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 }
             }
-            if (!this.SelectFirstCommand() || (needRefer && !this.CommandGroup_Referenced)) {
+            if (needRefer && this.CommandGroup_Referenced) {
+                return true;
+            } else if (!this.SelectFirstCommand()) {
                 return this.SelectNextCommandGroup();
             }
             return true;
@@ -915,11 +916,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.CommandGroup.language['cli'].hidden ||
                 this.CommandGroup.language['cli'].removed
             ) {
-                if (this.SelectNextCommandGroup()) {
-                    if (
-                        !this.SelectFirstCommand() ||
-                        (needRefer && !this.CommandGroup_Referenced)
-                    ) {
+                if (needRefer && this.CommandGroup_Referenced) {
+                    return true;
+                } else if (this.SelectNextCommandGroup()) {
+                    if (!this.SelectFirstCommand()) {
                         return this.SelectNextCommandGroup();
                     }
                     return true;
@@ -927,7 +927,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 }
             }
-            if (!this.SelectFirstCommand() || (needRefer && !this.CommandGroup_Referenced)) {
+            if (needRefer && this.CommandGroup_Referenced) {
+                return true;
+            } else if (!this.SelectFirstCommand()) {
                 return this.SelectNextCommandGroup();
             }
             return true;
@@ -975,6 +977,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup.language['az'].hasShowCommand;
     }
 
+    public get CommandGroup_HasCommand(): boolean {
+        return this.SelectFirstCommand();
+    }
+
     public get CommandGroup_Referenced(): boolean {
         return this.CommandGroup.language['az']['referenced'];
     }
@@ -1007,11 +1013,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.CommandGroup?.language?.['cli']?.extensionMode;
     }
 
-    public get CommandGroup_ClientFactoryName(): string {
+    public CommandGroup_ClientFactoryName(group: OperationGroup = this.CommandGroup): string {
         const cfName: string =
             'cf_' +
-            (this.GetModuleOperationName() !== ''
-                ? this.GetModuleOperationName()
+            (this.GetModuleOperationName(group) !== ''
+                ? this.GetModuleOperationName(group)
                 : this.Extension_NameUnderscored + '_cl');
         return cfName;
     }
@@ -1213,9 +1219,9 @@ export class CodeModelCliImpl implements CodeModelAz {
         return undefined;
     }
 
-    public get Command_CustomCommandTypeName(): string {
+    public get Command_ClientFactoryName(): string {
         if (!isNullOrUndefined(this.Command_OriginalCommandGroup)) {
-            return this.CommandGroup_CustomCommandTypeName(this.Command_OriginalCommandGroup);
+            return this.CommandGroup_ClientFactoryName(this.Command_OriginalCommandGroup);
         }
         return undefined;
     }

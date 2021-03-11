@@ -25,10 +25,11 @@ from {{lib}} import (
 {%- if data.hasExtension -%}
 {%- for extension in data.Extensions -%}
 {%- for commandGroup in extension.CommandGroups %}
-from {{data.azextFolder}}.generated._client_factory import {{commandGroup.clientFactoryName}}
+{% if commandGroup.hasCommand %}
 {{commandGroup.customCommandTypeName}} = CliCommandType(
     operations_tmpl='{{commandGroup.operationTmplName}}',
     client_factory={{commandGroup.clientFactoryName}})
+{% endif %}
 {% endfor %}
 {% endfor %}
 {% endif -%}

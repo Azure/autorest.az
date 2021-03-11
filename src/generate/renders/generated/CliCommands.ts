@@ -17,10 +17,11 @@ import {
 import * as path from 'path';
 export class CliCommands extends TemplateBase {
     private importProfile = false;
+    private importClientFactories = [];
     private lineTooLong = false;
     private needWaitCommand = false;
     private showCustomFunctionName = '';
-    private groupCustomCommandTypeName = '';
+    private groupClientFactoryName = '';
     private extraNonStringProperties = ['resourceType', 'mode'];
     private extraProperties = ['maxApi', 'minApi'];
 
@@ -76,7 +77,8 @@ export class CliCommands extends TemplateBase {
         } else if (this.showCustomFunctionName !== '') {
             this.showCustomFunctionName = '';
         }
-        this.groupCustomCommandTypeName = item['customCommandTypeName'];
+        this.groupClientFactoryName = item['clientFactoryName'];
+        this.importClientFactories.push(item['clientFactoryName']);
         return item;
     }
 
@@ -116,10 +118,10 @@ export class CliCommands extends TemplateBase {
             }
         }
         if (
-            !isNullOrUndefined(item['customCommandTypeName']) &&
-            item['customCommandTypeName'] !== this.groupCustomCommandTypeName
+            !isNullOrUndefined(item['clientFactoryName']) &&
+            item['clientFactoryName'] !== this.groupClientFactoryName
         ) {
-            item['propertiesString']['custom_command_type'] = item['customCommandTypeName'];
+            item['propertiesString']['client_factory'] = item['clientFactoryName'];
         }
         return item;
     }
@@ -177,7 +179,7 @@ export class CliCommands extends TemplateBase {
                         'functionName',
                         'needGeneric',
                         'genericSetterArgName',
-                        'customCommandTypeName',
+                        'clientFactoryName',
                     ],
                     {},
                     [],
@@ -193,6 +195,16 @@ export class CliCommands extends TemplateBase {
         data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
         if (this.importProfile) {
             data['imports'].push([this.model.CliCoreLib + '.profiles', ['ResourceType']]);
+        }
+        if (
+            !isNullOrUndefined(this.importClientFactories) &&
+            Array.isArray(this.importClientFactories) &&
+            this.importClientFactories.length > 0
+        ) {
+            data['imports'].push([
+                this.model.AzextFolder + '.generated._client_factory',
+                this.importClientFactories,
+            ]);
         }
         data['pylints'].push(
             '# pylint: disable=too-many-statements',
