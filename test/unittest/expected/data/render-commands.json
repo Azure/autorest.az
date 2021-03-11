@@ -6,6 +6,16 @@
                 [
                     "CliCommandType"
                 ]
+            ],
+            [
+                "azext_datafactory_preview.generated._client_factory",
+                [
+                    "cf_factory",
+                    "cf_trigger",
+                    "cf_integration_runtime",
+                    "cf_domain_service",
+                    "cf_group"
+                ]
             ]
         ],
         "pylints": [

@@ -12,18 +12,31 @@
 # pylint: disable=line-too-long
 
 from azure.cli.core.commands import CliCommandType
+from azext_datafactory_preview.generated._client_factory import cf_factory, cf_linked_service, cf_integration_runtime
+
+
+datafactory_factory = CliCommandType(
+    operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._factory_operations#FactoryOperations.{}',
+    client_factory=cf_factory,
+)
+
+
+datafactory_integration_runtime = CliCommandType(
+    operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._integration_runtime_operations#IntegrationRuntimeOperations.{}',
+    client_factory=cf_integration_runtime,
+)
+
+
+datafactory_linked_service = CliCommandType(
+    operations_tmpl=(
+        'azext_datafactory.vendored_sdks.datafactory.operations._linked_service_operations#LinkedServiceOperations.{}'
+    ),
+    client_factory=cf_linked_service,
+)
 
 
 def load_command_table(self, _):
 
-    from azext_datafactory.generated._client_factory import cf_factory
-
-    datafactory_factory = CliCommandType(
-        operations_tmpl=(
-            'azext_datafactory.vendored_sdks.datafactory.operations._factory_operations#FactoryOperations.{}'
-        ),
-        client_factory=cf_factory,
-    )
     with self.command_group('datafactory factory', datafactory_factory, client_factory=cf_factory) as g:
         g.custom_command('list', 'datafactory_factory_list')
         g.custom_show_command('show', 'datafactory_factory_show')
@@ -34,12 +47,6 @@ def load_command_table(self, _):
         g.custom_command('get-data-plane-access', 'datafactory_factory_get_data_plane_access')
         g.custom_command('get-git-hub-access-token', 'datafactory_factory_get_git_hub_access_token')
 
-    from azext_datafactory.generated._client_factory import cf_integration_runtime
-
-    datafactory_integration_runtime = CliCommandType(
-        operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._integration_runtime_operations#IntegrationRuntimeOperations.{}',
-        client_factory=cf_integration_runtime,
-    )
     with self.command_group(
         'datafactory integration-runtime', datafactory_integration_runtime, client_factory=cf_integration_runtime
     ) as g:
@@ -64,12 +71,6 @@ def load_command_table(self, _):
         g.custom_command('upgrade', 'datafactory_integration_runtime_upgrade')
         g.custom_wait_command('wait', 'datafactory_integration_runtime_show')
 
-    from azext_datafactory.generated._client_factory import cf_linked_service
-
-    datafactory_linked_service = CliCommandType(
-        operations_tmpl='azext_datafactory.vendored_sdks.datafactory.operations._linked_service_operations#LinkedServiceOperations.{}',
-        client_factory=cf_linked_service,
-    )
     with self.command_group(
         'datafactory linked-service', datafactory_linked_service, client_factory=cf_linked_service, is_preview=True
     ) as g:
