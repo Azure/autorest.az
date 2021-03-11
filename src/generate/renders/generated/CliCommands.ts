@@ -78,7 +78,7 @@ export class CliCommands extends TemplateBase {
             this.showCustomFunctionName = '';
         }
         this.groupClientFactoryName = item['clientFactoryName'];
-        this.importClientFactories.push(item['clientFactoryName']);
+        this.importClientFactories.push(this.groupClientFactoryName);
         return item;
     }
 
