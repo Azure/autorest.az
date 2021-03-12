@@ -590,3 +590,19 @@ pipeline:
         input:
             - az/emitter
 ```
+
+``` yaml $(azmultiapi)
+pipeline:
+    az/multiapimerger:
+        input: az/merger
+        output-artifact: source-file-az-multiapi-merger
+    az/aznamer:
+        input: az/multiapimerger
+    az/multiapi/emitter:
+        - az/multiapimerger
+
+scope-az:
+    is-object: false
+    output-artifact:
+        - source-file-az-multiapi-merger
+```
