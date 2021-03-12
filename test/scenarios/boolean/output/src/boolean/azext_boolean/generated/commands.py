@@ -9,6 +9,7 @@
 # --------------------------------------------------------------------------
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
+# pylint: disable=bad-continuation
 
 from azure.cli.core.commands import CliCommandType
 from azext_boolean.generated._client_factory import cf_bool

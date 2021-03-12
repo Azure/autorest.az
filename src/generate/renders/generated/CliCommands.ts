@@ -209,6 +209,7 @@ export class CliCommands extends TemplateBase {
         data['pylints'].push(
             '# pylint: disable=too-many-statements',
             '# pylint: disable=too-many-locals',
+            '# pylint: disable=bad-continuation',
         );
         if (this.lineTooLong) {
             data['pylints'].push('# pylint: disable=line-too-long');
