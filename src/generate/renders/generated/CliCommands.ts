@@ -15,6 +15,8 @@ import {
     SortOrder,
 } from '../../../utils/models';
 import * as path from 'path';
+
+const commandRenderData = {};
 export class CliCommands extends TemplateBase {
     private importProfile = false;
     private lineTooLong = false;
@@ -113,6 +115,15 @@ export class CliCommands extends TemplateBase {
                 item['propertiesString']['setter_name'] = "'begin_create_or_update'";
             }
         }
+        if (isNullOrUndefined(commandRenderData[item['functionName']])) {
+            commandRenderData[item['functionName']] = item;
+        } else {
+            let apiVersions = commandRenderData[item['functionName']]['apiVersions'].concat(
+                item['apiVersions'],
+            );
+            apiVersions = apiVersions.filter((element, idx, arr) => arr.indexOf(element) === idx);
+            commandRenderData[item['functionName']]['apiVersions'] = apiVersions;
+        }
         return item;
     }
 
@@ -167,6 +178,7 @@ export class CliCommands extends TemplateBase {
                         'functionName',
                         'needGeneric',
                         'genericSetterArgName',
+                        'apiVersions',
                     ],
                     {},
                     [],

@@ -6,6 +6,7 @@ import * as path from 'path';
 import { Channel, Session } from '@autorest/extension-base';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import {
+    ApiVersion,
     CodeModel,
     Operation,
     OperationGroup,
@@ -1243,6 +1244,20 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command.language['cli']?.['min-api'];
     }
 
+    public get Command_ApiVersions(): ApiVersion[] {
+        let result: Set<string> = new Set<string>();
+        if (this.SelectFirstMethod()) {
+            do {
+                for (const apiVersion of this.Method_ApiVersions) {
+                    result = result.add(apiVersion.version);
+                }
+            } while (this.SelectNextMethod());
+        }
+        return [...result].map((element) => {
+            return { version: element };
+        });
+    }
+
     public get Command_ResourceType(): string | undefined {
         return this.formResourceType(this.Command.language['cli']?.['resource-type']);
     }
@@ -1365,6 +1380,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get Method_MinApi(): string {
         return this.Method.language['cli']?.['min-api'];
+    }
+
+    public get Method_ApiVersions(): ApiVersion[] {
+        return this.Method.apiVersions;
     }
 
     public get Method_ResourceType(): string | undefined {
@@ -1630,6 +1649,10 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_MinApi(): string {
         return this.MethodParameter.language['cli']?.['min-api'];
+    }
+
+    public get MethodParameter_ApiVersions(): ApiVersion[] {
+        return this.MethodParameter.schema.apiVersions;
     }
 
     public get MethodParameter_ResourceType(): string | undefined {

@@ -475,6 +475,7 @@ scope-az:
         #- source-file-aznamer
         #- source-file-modifiers
         #- source-file-merger
+        - source-file-az-multiapi-merger
         - source-file-extension
     output-folder: $(az-output-folder)
 
@@ -539,7 +540,7 @@ pipeline:
             - az/emitter
 ```
 
-``` yaml !$(sdk-flatten) || $(sdk-no-flatten)
+``` yaml !$(azmultiapi) && (!$(sdk-flatten) || $(sdk-no-flatten))
 
 #payload-flattening-threshold: 4
 #recursive-payload-flattening: true
@@ -592,17 +593,56 @@ pipeline:
 ```
 
 ``` yaml $(azmultiapi)
+#payload-flattening-threshold: 4
+#recursive-payload-flattening: true
+
+cli:
+    naming:
+        m4:
+            parameter: 'snake'
+            property: 'snake'
+            operation: 'snake'
+            operationGroup:  'snake'
+            choice:  'pascal'
+            choiceValue:  'pascal'
+            constant:  'snake'
+            type:  'snake'
+
 pipeline:
+    python/m2r:
+        input: clicommon/cli-m4namer
+    az/azentry:
+        input: clicommon/identity
+    az/renamer:
+        input: az/azentry
+    az/merger:
+        input:
+            - az/renamer
+            - python/namer
+        #output-artifact: source-file-merger
     az/multiapimerger:
         input: az/merger
         output-artifact: source-file-az-multiapi-merger
     az/aznamer:
         input: az/multiapimerger
-    az/multiapi/emitter:
-        - az/multiapimerger
-
-scope-az:
-    is-object: false
-    output-artifact:
-        - source-file-az-multiapi-merger
+        #output-artifact: source-file-aznamer
+    az/modifiers:
+        input: az/aznamer
+        #output-artifact: source-file-modifiers
+    az/azgenerator:
+        input: az/modifiers
+        output-artifact: source-file-extension
+    az/emitter:
+        input:
+            #- az/hider
+            #- az/clicommon
+            #- az/merger
+            - az/multiapimerger
+            #- az/aznamer
+            #- az/modifiers
+            - az/azgenerator
+        scope: scope-az
+    az/azlinter:
+        input:
+            - az/emitter
 ```

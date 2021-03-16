@@ -3,7 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
+import {
+    ApiVersion,
+    Operation,
+    OperationGroup,
+    Parameter,
+    Property,
+    Schema,
+} from '@azure-tools/codemodel';
 import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
 import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
@@ -142,6 +149,7 @@ export interface CodeModelAz {
     Command_MinApi: string;
     Command_ResourceType: string | undefined;
     Command_GenericSetterParameter(Operation): Parameter;
+    Command_ApiVersions: ApiVersion[];
 
     Command_Help: string;
     Command_IsLongRun: boolean;
@@ -171,6 +179,7 @@ export interface CodeModelAz {
     Method_NeedGeneric: boolean;
     Method_Mode: string;
     Method_AzExamples: CommandExample[];
+    Method_ApiVersions: ApiVersion[];
     // Method_SetAzExamples(examples: CommandExample[]): void;
     Operation_IsHidden(op?: Operation): boolean;
 
@@ -197,6 +206,7 @@ export interface CodeModelAz {
     MethodParameter_IsDiscriminator: boolean;
     MethodParameter_IdPart: string;
     MethodParameter_ArgGroup: string;
+    MethodParameter_ApiVersions: ApiVersion[];
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;
