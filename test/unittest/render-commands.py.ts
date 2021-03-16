@@ -24,6 +24,11 @@ describe('renderCommandsPYTest', () => {
                 ],
                 imports: {
                     'azure.cli.core.commands': ['CliCommandType'],
+                    'azext_datafactory_preview.generated._client_factory': [
+                        'cf_factory',
+                        'cf_linked_service',
+                        'cf_integration_runtime',
+                    ],
                 },
                 hasExtension: true,
                 Extensions: [

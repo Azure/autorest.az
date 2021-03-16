@@ -112,22 +112,24 @@ export interface CodeModelAz {
     ResourceType: string | undefined;
     isComplexSchema(type: string): boolean;
 
-    SelectFirstCommandGroup(): boolean;
-    SelectNextCommandGroup(): boolean;
+    SelectFirstCommandGroup(needRefer?: boolean): boolean;
+    SelectNextCommandGroup(needRefer?: boolean): boolean;
 
     CommandGroup: OperationGroup;
     CommandGroup_Name: string;
     CommandGroup_Help: string;
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
+    CommandGroup_HasCommand: boolean;
     CommandGroup_CliKey: string;
     CommandGroup_MaxApi: string;
     CommandGroup_MinApi: string;
     CommandGroup_ResourceType: string | undefined;
     CommandGroup_Mode: string;
-    CommandGroup_ClientFactoryName: string;
+    CommandGroup_ClientFactoryName(group?: OperationGroup): string;
     CommandGroup_OperationTmplName: string;
-    CommandGroup_CustomCommandTypeName: string;
+    CommandGroup_CustomCommandTypeName(group?: OperationGroup): string;
+    CommandGroup_Referenced: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -137,6 +139,8 @@ export interface CodeModelAz {
     Command_MethodName: string;
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
+    Command_OriginalCommandGroup: OperationGroup;
+    Command_ClientFactoryName: string;
     Command_NeedGeneric: boolean;
     Command_MaxApi: string;
     Command_MinApi: string;
@@ -242,7 +246,7 @@ export interface CodeModelAz {
     Schema_FlattenedFrom(Schema): Schema;
     Schema_IsPositional(Schema): boolean;
 
-    GetModuleOperationName(): string;
+    GetModuleOperationName(group?: OperationGroup): string;
     GetModuleOperationNamePython(): string;
     GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
