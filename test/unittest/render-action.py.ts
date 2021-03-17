@@ -180,4 +180,55 @@ describe('renderActionPYTest', () => {
         );
         await rmFile(oriFile);
     });
+
+    it('single shorthand syntax action test', async () => {
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
+        nunjucks.configure({ autoescape: false });
+        let result = nunjucks.render(tmplPath, {
+            data: {
+                pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
+                actions: [
+                    {
+                        name: 'Subnets',
+                        namePython: 'subnets',
+                        type: 'array',
+                        actionType: 'ShortHandSyntax',
+                        baseClass: '_AppendAction',
+                        subProperties: [
+                            {
+                                mapsTo: 'id',
+                                namePython: 'id',
+                            },
+                            {
+                                mapsTo: 'name',
+                                namePython: 'name',
+                            },
+                        ],
+                        subPropertiesMapsTo: ['id', 'name'],
+                        subPropertiesNamePython: ['id', 'name'],
+                        constants: {},
+                    },
+                ],
+            },
+        });
+        const oriFile = path.join(
+            `${__dirname}`,
+            '../../test/unittest/expected/generated/ori_short_hand_syntax_action.py',
+        );
+        await writeFile(oriFile, result);
+        const azLinter = new AzLinter();
+        await azLinter.process(oriFile);
+        result = await readFile(oriFile);
+        const expectedFile = path.join(
+            `${__dirname}`,
+            '../../test/unittest/expected/generated/short_hand_syntax_action.py',
+        );
+        const expected = await readFile(expectedFile);
+        assert.deepStrictEqual(
+            result,
+            expected,
+            'render shorthand syntax action in action.py is incorrect',
+        );
+        await rmFile(oriFile);
+    });
 });

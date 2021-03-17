@@ -39,7 +39,6 @@
     "@types/chai": "^4.2.7",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.0",
-    "@types/nunjucks": "",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
     "@typescript-eslint/parser": "^4.11.0",
     "bufferutil": "^4.0.1",
