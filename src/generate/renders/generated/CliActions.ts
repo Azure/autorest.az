@@ -7,8 +7,64 @@ import { Parameter, SchemaType } from '@azure-tools/codemodel';
 import { ToPythonString, ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
 import { CodeModelAz } from '../../CodeModelAz';
 import { HeaderGenerator } from '../Header';
+import { TemplateBase } from '../TemplateBase';
+import * as path from 'path';
+import { CodeModelTypes, PathConstants, RenderInput, SortOrder } from '../../../utils/models';
 
 let allActions: Map<string, boolean>;
+
+export class CliCommands extends TemplateBase {
+    constructor(model: CodeModelAz) {
+        super(model);
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.commandsFile,
+        );
+        this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/action.py.njx');
+    }
+
+    public async GetRenderData(): Promise<Record<string, unknown>> {
+        let data = { imports: [], pylints: [] };
+        data['imports'].push([this.model.CliCoreLib + '.commands', ['CliCommandType']]);
+
+        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+            CodeModelTypes,
+            RenderInput
+        >([
+            [
+                'extension',
+                new RenderInput(['name'], {
+                    name: SortOrder.ASEC,
+                }),
+            ],
+            ['commandGroup', new RenderInput(['name'], { name: SortOrder.ASEC })],
+            ['command', new RenderInput(['methodName'])],
+            ['method', new RenderInput(['nameAz', 'cliKey'], { nameAz: SortOrder.ASEC })],
+            ['methodParameter', new RenderInput(['mapsTo', 'type', 'namePython', 'actionName', 'schema'])],
+        ]);
+
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+            ['command', 'method'],
+            ['method', 'methodParameter'],
+        ];
+        data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
+        data['pylints'].push('# pylint: disable=protected-access', '# pylint: disable=no-self-use');
+        const result = { data: { imports: [], pylints: [] } };
+        result.data = data;
+        return result;
+    }
+
+    public async fullGeneration(): Promise<string[]> {
+        return this.render();
+    }
+
+    public async incrementalGeneration(): Promise<string[]> {
+        return this.render();
+    }
+}
 
 export function GenerateAzureCliActions(model: CodeModelAz): string[] {
     allActions = new Map<string, boolean>();
@@ -36,9 +92,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                                 .python?.name;
                                         const valueToMatch =
                                             model.MethodParameter.schema?.['discriminatorValue'];
-                                        const subActionName = model.Schema_ActionName(
-                                            model.MethodParameter.schema,
-                                        );
+                                        const subActionName = model.MethodParameter_ActionName;
                                         if (
                                             isNullOrUndefined(subActionName) ||
                                             allActions.has(subActionName)
@@ -73,9 +127,7 @@ export function GenerateAzureCliActions(model: CodeModelAz): string[] {
                                             );
                                         }
                                     }
-                                    const actionName = model.Schema_ActionName(
-                                        model.MethodParameter.schema,
-                                    );
+                                    const actionName = model.MethodParameter_ActionName;
                                     if (isNullOrUndefined(actionName)) {
                                         if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
                                             baseParam = model.MethodParameter;

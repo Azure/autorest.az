@@ -267,7 +267,7 @@ function getShorthandSyntaxAction(
     }
 
     let options: Parameter[] = [];
-    if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+    if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
         if (baseParam && model.MethodParameter['polyBaseParam'] === baseParam) {
             const keyToMatch = baseParam.schema?.['discriminator']?.property?.language.python?.name;
             const valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
@@ -370,7 +370,7 @@ function getPositionalActionHelp(
 
     const positionalKeys = model.MethodParameter_PositionalKeys;
     let options: Parameter[] = [];
-    if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+    if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
         if (baseParam && model.MethodParameter['polyBaseParam'] === baseParam) {
             const keyToMatch = baseParam.schema?.['discriminator']?.property?.language.python?.name;
             const valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
@@ -467,7 +467,7 @@ function getKeyValueActionHelp(
     }
 
     let options: Parameter[] = [];
-    if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+    if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
         if (baseParam && model.MethodParameter['polyBaseParam'] === baseParam) {
             const keyToMatch = baseParam.schema?.['discriminator']?.property?.language.python?.name;
             const valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];

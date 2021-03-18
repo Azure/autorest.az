@@ -49,6 +49,7 @@ import {
     ExampleParam,
     MethodParam,
     KeyValueType,
+    SubProperty,
 } from './CodeModelAz';
 import {
     azOptions,
@@ -1644,11 +1645,32 @@ export class CodeModelCliImpl implements CodeModelAz {
         param.language['az'].mapsto = newName;
     }
 
-    public Schema_ActionName(schema: Schema = this.MethodParameter.schema) {
+    public get MethodParameter_ActionName() {
+        const schema = this.MethodParameter.schema;
         if (this.paramActionNameReference.has(schema)) {
             return this.paramActionNameReference.get(schema);
         }
-        return null;
+        return undefined;
+    }
+
+    public get MethodParameter_SubProperties(): SubProperty[] {
+        const result = [];
+        if (this.EnterSubMethodParameters()) {
+            if (this.SelectFirstMethodParameter(true)) {
+                do {
+                    if (this.Parameter_DefaultValue(this.SubMethodParameter) !== undefined) {
+                        result.push({
+                            nameAz: this.Parameter_NameAz,
+                            namePython: this.Parameter_NamePython,
+                            type: this.Parameter_Type,
+                            defaultValue: this.Parameter_DefaultValue,
+                        });
+                    }
+                } while (this.SelectNextMethodParameter(true));
+            }
+            this.ExitSubMethodParameters();
+        }
+        return result;
     }
 
     public get MethodParameter_Name(): string {
