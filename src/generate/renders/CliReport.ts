@@ -69,7 +69,7 @@ export class CliReport extends TemplateBase {
                     converter,
                 ),
             ],
-            ['azExample', new RenderInput(['commandStringItems'], {}, [['isGenerated', false]])],
+            ['azExample', new RenderInput(['commandStringItems'], {}, [['isGenerated', true]])],
         ]);
 
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[

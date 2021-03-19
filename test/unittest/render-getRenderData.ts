@@ -84,7 +84,7 @@ describe('RenderSetupPy', () => {
                     converter,
                 ),
             ],
-            ['azExample', new RenderInput(['commandStringItems'], {}, [['isGenerated', false]])],
+            ['azExample', new RenderInput(['commandStringItems'], {}, [['isGenerated', true]])],
         ]);
 
         if (arrayOutputFormat) {
