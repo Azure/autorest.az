@@ -39,6 +39,7 @@ from azext_users_v1_0.action import (
     AddPhotos,
     AddExtensions,
     AddDeviceManagementTroubleshootingEvents,
+    AddWithinSizeRange,
     AddResources,
     AddApplication,
     AddMasterCategories,
@@ -277,6 +278,178 @@ def load_arguments(self, _):
                    'Nullable. Expected value: json-string/@json-file.')
         c.argument('online_meetings', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
         c.argument('joined_teams', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
+        c.argument('body_contains', nargs='+', help='Represents the strings that should appear in the body of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('body_or_subject_contains', nargs='+', help='Represents the strings that should appear in the body '
+                   'or subject of an incoming message in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('categories', nargs='+', help='Represents the categories that an incoming message should be labeled '
+                   'with in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('from_addresses', type=validate_file_or_dict, help='Represents the specific sender email addresses '
+                   'of an incoming message in order for the condition or exception to apply. Expected value: '
+                   'json-string/@json-file.', arg_group='Exceptions')
+        c.argument('has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must have attachments in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('header_contains', nargs='+', help='Represents the strings that appear in the headers of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('importance', arg_type=get_enum_type(['low', 'normal', 'high']), help='importance',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_approval_request', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be an approval request in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_automatic_forward', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be automatically forwarded in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_automatic_reply', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be an auto reply in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_encrypted', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be encrypted in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_meeting_request', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be a meeting request in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_meeting_response', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be a meeting response in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_non_delivery_report', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be a non-delivery report in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_permission_controlled', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be permission controlled (RMS-protected) in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('exceptions_is_read_receipt', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be a read receipt in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_signed', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be S/MIME-signed in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_voicemail', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be a voice mail in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('message_action_flag', arg_type=get_enum_type(['any', 'call', 'doNotForward', 'followUp', 'fyi',
+                                                                  'forward', 'noResponseNecessary', 'read', 'reply',
+                                                                  'replyToAll', 'review']), help='messageActionFlag',
+                   arg_group='Exceptions')
+        c.argument('not_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
+                   'must not be a recipient of an incoming message in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('recipient_contains', nargs='+', help='Represents the strings that appear in either the '
+                   'toRecipients or ccRecipients properties of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('sender_contains', nargs='+', help='Represents the strings that appear in the from property of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('sensitivity', arg_type=get_enum_type(['normal', 'personal', 'private', 'confidential']),
+                   help='sensitivity', arg_group='Exceptions')
+        c.argument('sent_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
+                   'must be in the ccRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('sent_only_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be the only recipient in an incoming message in order for the condition or exception '
+                   'to apply.', arg_group='Exceptions')
+        c.argument('sent_to_addresses', type=validate_file_or_dict, help='Represents the email addresses that an '
+                   'incoming message must have been sent to in order for the condition or exception to apply. Expected '
+                   'value: json-string/@json-file.', arg_group='Exceptions')
+        c.argument('sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
+                   'must be in the toRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('sent_to_or_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be in either a toRecipients or ccRecipients property of an incoming message in order '
+                   'for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('subject_contains', nargs='+', help='Represents the strings that appear in the subject of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('within_size_range', action=AddWithinSizeRange, nargs='+', help='sizeRange',
+                   arg_group='Exceptions')
+        c.argument('microsoft_graph_message_rule_predicates_body_contains', nargs='+', help='Represents the strings '
+                   'that should appear in the body of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains',
+                   nargs='+', help='Represents the strings that should appear in the body or subject of an incoming '
+                   'message in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_categories', nargs='+', help='Represents the categories '
+                   'that an incoming message should be labeled with in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_from_addresses', type=validate_file_or_dict,
+                   help='Represents the specific sender email addresses of an incoming message in order for the '
+                   'condition or exception to apply. Expected value: json-string/@json-file.', arg_group='Conditions')
+        c.argument('boolean_has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must have attachments in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_header_contains', nargs='+', help='Represents the strings '
+                   'that appear in the headers of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_importance', arg_type=get_enum_type(['low', 'normal', 'high']), help='importance',
+                   arg_group='Conditions')
+        c.argument('is_approval_request', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be an approval request in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_automatic_forward', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be automatically forwarded in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_automatic_reply', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be an auto reply in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_encrypted', arg_type=get_three_state_flag(), help='Indicates whether an incoming message must '
+                   'be encrypted in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_meeting_request', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be a meeting request in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_meeting_response', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be a meeting response in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_non_delivery_report', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be a non-delivery report in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_permission_controlled', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be permission controlled (RMS-protected) in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('is_read_receipt', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be a read receipt in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_signed', arg_type=get_three_state_flag(), help='Indicates whether an incoming message must be '
+                   'S/MIME-signed in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_voicemail', arg_type=get_three_state_flag(), help='Indicates whether an incoming message must '
+                   'be a voice mail in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_action_flag_message_action_flag', arg_type=get_enum_type(['any', 'call',
+                                                                                                      'doNotForward',
+                                                                                                      'followUp',
+                                                                                                      'fyi', 'forward',
+                                                                                                      'noResponseNecessary',
+                                                                                                      'read', 'reply',
+                                                                                                      'replyToAll',
+                                                                                                      'review']),
+                   help='messageActionFlag', arg_group='Conditions')
+        c.argument('boolean_not_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must not be a recipient of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_recipient_contains', nargs='+', help='Represents the '
+                   'strings that appear in either the toRecipients or ccRecipients properties of an incoming message '
+                   'in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_sender_contains', nargs='+', help='Represents the strings '
+                   'that appear in the from property of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_sensitivity', arg_type=get_enum_type(['normal', 'personal', 'private',
+                                                                          'confidential']), help='sensitivity',
+                   arg_group='Conditions')
+        c.argument('boolean_sent_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be in the ccRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Conditions')
+        c.argument('boolean_sent_only_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of '
+                   'the mailbox must be the only recipient in an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses',
+                   type=validate_file_or_dict, help='Represents the email addresses that an incoming message must have '
+                   'been sent to in order for the condition or exception to apply. Expected value: '
+                   'json-string/@json-file.', arg_group='Conditions')
+        c.argument('boolean_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be in the toRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Conditions')
+        c.argument('boolean_sent_to_or_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of '
+                   'the mailbox must be in either a toRecipients or ccRecipients property of an incoming message in '
+                   'order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_subject_contains', nargs='+', help='Represents the strings '
+                   'that appear in the subject of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_size_range_within_size_range', action=AddWithinSizeRange, nargs='+',
+                   help='sizeRange', arg_group='Conditions')
         c.argument('microsoft_graph_entity_id', type=str, help='Read-only.', arg_group='Onenote')
         c.argument('notebooks', type=validate_file_or_dict, help='The collection of OneNote notebooks that are owned '
                    'by the user or group. Read-only. Nullable. Expected value: json-string/@json-file.',
@@ -584,6 +757,178 @@ def load_arguments(self, _):
                    'Nullable. Expected value: json-string/@json-file.')
         c.argument('online_meetings', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
         c.argument('joined_teams', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
+        c.argument('body_contains', nargs='+', help='Represents the strings that should appear in the body of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('body_or_subject_contains', nargs='+', help='Represents the strings that should appear in the body '
+                   'or subject of an incoming message in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('categories', nargs='+', help='Represents the categories that an incoming message should be labeled '
+                   'with in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('from_addresses', type=validate_file_or_dict, help='Represents the specific sender email addresses '
+                   'of an incoming message in order for the condition or exception to apply. Expected value: '
+                   'json-string/@json-file.', arg_group='Exceptions')
+        c.argument('has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must have attachments in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('header_contains', nargs='+', help='Represents the strings that appear in the headers of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('importance', arg_type=get_enum_type(['low', 'normal', 'high']), help='importance',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_approval_request', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be an approval request in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_automatic_forward', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be automatically forwarded in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_automatic_reply', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be an auto reply in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_encrypted', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be encrypted in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_meeting_request', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be a meeting request in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_meeting_response', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be a meeting response in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_non_delivery_report', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be a non-delivery report in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_permission_controlled', arg_type=get_three_state_flag(), help='Indicates whether an '
+                   'incoming message must be permission controlled (RMS-protected) in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('exceptions_is_read_receipt', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be a read receipt in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_signed', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be S/MIME-signed in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('exceptions_is_voicemail', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be a voice mail in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('message_action_flag', arg_type=get_enum_type(['any', 'call', 'doNotForward', 'followUp', 'fyi',
+                                                                  'forward', 'noResponseNecessary', 'read', 'reply',
+                                                                  'replyToAll', 'review']), help='messageActionFlag',
+                   arg_group='Exceptions')
+        c.argument('not_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
+                   'must not be a recipient of an incoming message in order for the condition or exception to apply.',
+                   arg_group='Exceptions')
+        c.argument('recipient_contains', nargs='+', help='Represents the strings that appear in either the '
+                   'toRecipients or ccRecipients properties of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('sender_contains', nargs='+', help='Represents the strings that appear in the from property of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('sensitivity', arg_type=get_enum_type(['normal', 'personal', 'private', 'confidential']),
+                   help='sensitivity', arg_group='Exceptions')
+        c.argument('sent_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
+                   'must be in the ccRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('sent_only_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be the only recipient in an incoming message in order for the condition or exception '
+                   'to apply.', arg_group='Exceptions')
+        c.argument('sent_to_addresses', type=validate_file_or_dict, help='Represents the email addresses that an '
+                   'incoming message must have been sent to in order for the condition or exception to apply. Expected '
+                   'value: json-string/@json-file.', arg_group='Exceptions')
+        c.argument('sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
+                   'must be in the toRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Exceptions')
+        c.argument('sent_to_or_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be in either a toRecipients or ccRecipients property of an incoming message in order '
+                   'for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('subject_contains', nargs='+', help='Represents the strings that appear in the subject of an '
+                   'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
+        c.argument('within_size_range', action=AddWithinSizeRange, nargs='+', help='sizeRange',
+                   arg_group='Exceptions')
+        c.argument('microsoft_graph_message_rule_predicates_body_contains', nargs='+', help='Represents the strings '
+                   'that should appear in the body of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains',
+                   nargs='+', help='Represents the strings that should appear in the body or subject of an incoming '
+                   'message in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_categories', nargs='+', help='Represents the categories '
+                   'that an incoming message should be labeled with in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_from_addresses', type=validate_file_or_dict,
+                   help='Represents the specific sender email addresses of an incoming message in order for the '
+                   'condition or exception to apply. Expected value: json-string/@json-file.', arg_group='Conditions')
+        c.argument('boolean_has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must have attachments in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_header_contains', nargs='+', help='Represents the strings '
+                   'that appear in the headers of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_importance', arg_type=get_enum_type(['low', 'normal', 'high']), help='importance',
+                   arg_group='Conditions')
+        c.argument('is_approval_request', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be an approval request in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_automatic_forward', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be automatically forwarded in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_automatic_reply', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be an auto reply in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_encrypted', arg_type=get_three_state_flag(), help='Indicates whether an incoming message must '
+                   'be encrypted in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_meeting_request', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be a meeting request in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_meeting_response', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be a meeting response in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_non_delivery_report', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be a non-delivery report in order for the condition or exception to apply.',
+                   arg_group='Conditions')
+        c.argument('is_permission_controlled', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
+                   'message must be permission controlled (RMS-protected) in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('is_read_receipt', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
+                   'must be a read receipt in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_signed', arg_type=get_three_state_flag(), help='Indicates whether an incoming message must be '
+                   'S/MIME-signed in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('is_voicemail', arg_type=get_three_state_flag(), help='Indicates whether an incoming message must '
+                   'be a voice mail in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_action_flag_message_action_flag', arg_type=get_enum_type(['any', 'call',
+                                                                                                      'doNotForward',
+                                                                                                      'followUp',
+                                                                                                      'fyi', 'forward',
+                                                                                                      'noResponseNecessary',
+                                                                                                      'read', 'reply',
+                                                                                                      'replyToAll',
+                                                                                                      'review']),
+                   help='messageActionFlag', arg_group='Conditions')
+        c.argument('boolean_not_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must not be a recipient of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_recipient_contains', nargs='+', help='Represents the '
+                   'strings that appear in either the toRecipients or ccRecipients properties of an incoming message '
+                   'in order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_sender_contains', nargs='+', help='Represents the strings '
+                   'that appear in the from property of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_sensitivity', arg_type=get_enum_type(['normal', 'personal', 'private',
+                                                                          'confidential']), help='sensitivity',
+                   arg_group='Conditions')
+        c.argument('boolean_sent_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be in the ccRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Conditions')
+        c.argument('boolean_sent_only_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of '
+                   'the mailbox must be the only recipient in an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses',
+                   type=validate_file_or_dict, help='Represents the email addresses that an incoming message must have '
+                   'been sent to in order for the condition or exception to apply. Expected value: '
+                   'json-string/@json-file.', arg_group='Conditions')
+        c.argument('boolean_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
+                   'mailbox must be in the toRecipients property of an incoming message in order for the condition or '
+                   'exception to apply.', arg_group='Conditions')
+        c.argument('boolean_sent_to_or_cc_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of '
+                   'the mailbox must be in either a toRecipients or ccRecipients property of an incoming message in '
+                   'order for the condition or exception to apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_message_rule_predicates_subject_contains', nargs='+', help='Represents the strings '
+                   'that appear in the subject of an incoming message in order for the condition or exception to '
+                   'apply.', arg_group='Conditions')
+        c.argument('microsoft_graph_size_range_within_size_range', action=AddWithinSizeRange, nargs='+',
+                   help='sizeRange', arg_group='Conditions')
         c.argument('microsoft_graph_entity_id', type=str, help='Read-only.', arg_group='Onenote')
         c.argument('notebooks', type=validate_file_or_dict, help='The collection of OneNote notebooks that are owned '
                    'by the user or group. Read-only. Nullable. Expected value: json-string/@json-file.',

@@ -293,6 +293,24 @@ publishedPermissionScopes property of the resource service principal.
 
             Multiple actions can be specified by using more than one --device-management-troubleshooting-events \
 argument.
+      - name: --within-size-range
+        short-summary: "sizeRange"
+        long-summary: |
+            Usage: --within-size-range maximum-size=XX minimum-size=XX
+
+            maximum-size: The maximum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
+            minimum-size: The minimum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
+      - name: --microsoft-graph-size-range-within-size-range
+        short-summary: "sizeRange"
+        long-summary: |
+            Usage: --microsoft-graph-size-range-within-size-range maximum-size=XX minimum-size=XX
+
+            maximum-size: The maximum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
+            minimum-size: The minimum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
       - name: --resources
         short-summary: "The image and other file resources in OneNote pages. Getting a resources collection is not \
 supported, but you can get the binary content of a specific resource. Read-only. Nullable."
@@ -621,6 +639,24 @@ publishedPermissionScopes property of the resource service principal.
 
             Multiple actions can be specified by using more than one --device-management-troubleshooting-events \
 argument.
+      - name: --within-size-range
+        short-summary: "sizeRange"
+        long-summary: |
+            Usage: --within-size-range maximum-size=XX minimum-size=XX
+
+            maximum-size: The maximum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
+            minimum-size: The minimum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
+      - name: --microsoft-graph-size-range-within-size-range
+        short-summary: "sizeRange"
+        long-summary: |
+            Usage: --microsoft-graph-size-range-within-size-range maximum-size=XX minimum-size=XX
+
+            maximum-size: The maximum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
+            minimum-size: The minimum size (in kilobytes) that an incoming message must have in order for a condition \
+or exception to apply.
       - name: --resources
         short-summary: "The image and other file resources in OneNote pages. Getting a resources collection is not \
 supported, but you can get the binary content of a specific resource. Read-only. Nullable."

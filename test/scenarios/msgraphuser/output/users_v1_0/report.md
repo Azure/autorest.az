@@ -224,6 +224,66 @@
 |**--activities**|array|The user's activities across devices. Read-only. Nullable.|activities|activities|
 |**--online-meetings**|array||online_meetings|onlineMeetings|
 |**--joined-teams**|array||joined_teams|joinedTeams|
+|**--body-contains**|array|Represents the strings that should appear in the body of an incoming message in order for the condition or exception to apply.|body_contains|bodyContains|
+|**--body-or-subject-contains**|array|Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply.|body_or_subject_contains|bodyOrSubjectContains|
+|**--categories**|array|Represents the categories that an incoming message should be labeled with in order for the condition or exception to apply.|categories|categories|
+|**--from-addresses**|array|Represents the specific sender email addresses of an incoming message in order for the condition or exception to apply.|from_addresses|fromAddresses|
+|**--has-attachments**|boolean|Indicates whether an incoming message must have attachments in order for the condition or exception to apply.|has_attachments|hasAttachments|
+|**--header-contains**|array|Represents the strings that appear in the headers of an incoming message in order for the condition or exception to apply.|header_contains|headerContains|
+|**--importance**|choice|importance|importance|importance|
+|**--exceptions-is-approval-request**|boolean|Indicates whether an incoming message must be an approval request in order for the condition or exception to apply.|is_approval_request|isApprovalRequest|
+|**--exceptions-is-automatic-forward**|boolean|Indicates whether an incoming message must be automatically forwarded in order for the condition or exception to apply.|is_automatic_forward|isAutomaticForward|
+|**--exceptions-is-automatic-reply**|boolean|Indicates whether an incoming message must be an auto reply in order for the condition or exception to apply.|is_automatic_reply|isAutomaticReply|
+|**--exceptions-is-encrypted**|boolean|Indicates whether an incoming message must be encrypted in order for the condition or exception to apply.|is_encrypted|isEncrypted|
+|**--exceptions-is-meeting-request**|boolean|Indicates whether an incoming message must be a meeting request in order for the condition or exception to apply.|is_meeting_request|isMeetingRequest|
+|**--exceptions-is-meeting-response**|boolean|Indicates whether an incoming message must be a meeting response in order for the condition or exception to apply.|is_meeting_response|isMeetingResponse|
+|**--exceptions-is-non-delivery-report**|boolean|Indicates whether an incoming message must be a non-delivery report in order for the condition or exception to apply.|is_non_delivery_report|isNonDeliveryReport|
+|**--exceptions-is-permission-controlled**|boolean|Indicates whether an incoming message must be permission controlled (RMS-protected) in order for the condition or exception to apply.|is_permission_controlled|isPermissionControlled|
+|**--exceptions-is-read-receipt**|boolean|Indicates whether an incoming message must be a read receipt in order for the condition or exception to apply.|is_read_receipt|isReadReceipt|
+|**--exceptions-is-signed**|boolean|Indicates whether an incoming message must be S/MIME-signed in order for the condition or exception to apply.|is_signed|isSigned|
+|**--exceptions-is-voicemail**|boolean|Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply.|is_voicemail|isVoicemail|
+|**--message-action-flag**|choice|messageActionFlag|message_action_flag|messageActionFlag|
+|**--not-sent-to-me**|boolean|Indicates whether the owner of the mailbox must not be a recipient of an incoming message in order for the condition or exception to apply.|not_sent_to_me|notSentToMe|
+|**--recipient-contains**|array|Represents the strings that appear in either the toRecipients or ccRecipients properties of an incoming message in order for the condition or exception to apply.|recipient_contains|recipientContains|
+|**--sender-contains**|array|Represents the strings that appear in the from property of an incoming message in order for the condition or exception to apply.|sender_contains|senderContains|
+|**--sensitivity**|choice|sensitivity|sensitivity|sensitivity|
+|**--sent-cc-me**|boolean|Indicates whether the owner of the mailbox must be in the ccRecipients property of an incoming message in order for the condition or exception to apply.|sent_cc_me|sentCcMe|
+|**--sent-only-to-me**|boolean|Indicates whether the owner of the mailbox must be the only recipient in an incoming message in order for the condition or exception to apply.|sent_only_to_me|sentOnlyToMe|
+|**--sent-to-addresses**|array|Represents the email addresses that an incoming message must have been sent to in order for the condition or exception to apply.|sent_to_addresses|sentToAddresses|
+|**--sent-to-me**|boolean|Indicates whether the owner of the mailbox must be in the toRecipients property of an incoming message in order for the condition or exception to apply.|sent_to_me|sentToMe|
+|**--sent-to-or-cc-me**|boolean|Indicates whether the owner of the mailbox must be in either a toRecipients or ccRecipients property of an incoming message in order for the condition or exception to apply.|sent_to_or_cc_me|sentToOrCcMe|
+|**--subject-contains**|array|Represents the strings that appear in the subject of an incoming message in order for the condition or exception to apply.|subject_contains|subjectContains|
+|**--within-size-range**|object|sizeRange|within_size_range|withinSizeRange|
+|**--microsoft-graph-message-rule-predicates-body-contains**|array|Represents the strings that should appear in the body of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_body_contains|bodyContains|
+|**--microsoft-graph-message-rule-predicates-body-or-subject-contains-body-or-subject-contains**|array|Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains|bodyOrSubjectContains|
+|**--microsoft-graph-message-rule-predicates-categories**|array|Represents the categories that an incoming message should be labeled with in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_categories|categories|
+|**--microsoft-graph-message-rule-predicates-from-addresses**|array|Represents the specific sender email addresses of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_from_addresses|fromAddresses|
+|**--boolean-has-attachments**|boolean|Indicates whether an incoming message must have attachments in order for the condition or exception to apply.|boolean_has_attachments|hasAttachments|
+|**--microsoft-graph-message-rule-predicates-header-contains**|array|Represents the strings that appear in the headers of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_header_contains|headerContains|
+|**--microsoft-graph-importance**|choice|importance|microsoft_graph_importance|importance|
+|**--is-approval-request**|boolean|Indicates whether an incoming message must be an approval request in order for the condition or exception to apply.|is_approval_request|isApprovalRequest|
+|**--is-automatic-forward**|boolean|Indicates whether an incoming message must be automatically forwarded in order for the condition or exception to apply.|is_automatic_forward|isAutomaticForward|
+|**--is-automatic-reply**|boolean|Indicates whether an incoming message must be an auto reply in order for the condition or exception to apply.|is_automatic_reply|isAutomaticReply|
+|**--is-encrypted**|boolean|Indicates whether an incoming message must be encrypted in order for the condition or exception to apply.|is_encrypted|isEncrypted|
+|**--is-meeting-request**|boolean|Indicates whether an incoming message must be a meeting request in order for the condition or exception to apply.|is_meeting_request|isMeetingRequest|
+|**--is-meeting-response**|boolean|Indicates whether an incoming message must be a meeting response in order for the condition or exception to apply.|is_meeting_response|isMeetingResponse|
+|**--is-non-delivery-report**|boolean|Indicates whether an incoming message must be a non-delivery report in order for the condition or exception to apply.|is_non_delivery_report|isNonDeliveryReport|
+|**--is-permission-controlled**|boolean|Indicates whether an incoming message must be permission controlled (RMS-protected) in order for the condition or exception to apply.|is_permission_controlled|isPermissionControlled|
+|**--is-read-receipt**|boolean|Indicates whether an incoming message must be a read receipt in order for the condition or exception to apply.|is_read_receipt|isReadReceipt|
+|**--is-signed**|boolean|Indicates whether an incoming message must be S/MIME-signed in order for the condition or exception to apply.|is_signed|isSigned|
+|**--is-voicemail**|boolean|Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply.|is_voicemail|isVoicemail|
+|**--microsoft-graph-message-action-flag-message-action-flag**|choice|messageActionFlag|microsoft_graph_message_action_flag_message_action_flag|messageActionFlag|
+|**--boolean-not-sent-to-me**|boolean|Indicates whether the owner of the mailbox must not be a recipient of an incoming message in order for the condition or exception to apply.|boolean_not_sent_to_me|notSentToMe|
+|**--microsoft-graph-message-rule-predicates-recipient-contains**|array|Represents the strings that appear in either the toRecipients or ccRecipients properties of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_recipient_contains|recipientContains|
+|**--microsoft-graph-message-rule-predicates-sender-contains**|array|Represents the strings that appear in the from property of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_sender_contains|senderContains|
+|**--microsoft-graph-sensitivity**|choice|sensitivity|microsoft_graph_sensitivity|sensitivity|
+|**--boolean-sent-cc-me**|boolean|Indicates whether the owner of the mailbox must be in the ccRecipients property of an incoming message in order for the condition or exception to apply.|boolean_sent_cc_me|sentCcMe|
+|**--boolean-sent-only-to-me**|boolean|Indicates whether the owner of the mailbox must be the only recipient in an incoming message in order for the condition or exception to apply.|boolean_sent_only_to_me|sentOnlyToMe|
+|**--microsoft-graph-message-rule-predicates-sent-to-addresses-sent-to-addresses**|array|Represents the email addresses that an incoming message must have been sent to in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses|sentToAddresses|
+|**--boolean-sent-to-me**|boolean|Indicates whether the owner of the mailbox must be in the toRecipients property of an incoming message in order for the condition or exception to apply.|boolean_sent_to_me|sentToMe|
+|**--boolean-sent-to-or-cc-me**|boolean|Indicates whether the owner of the mailbox must be in either a toRecipients or ccRecipients property of an incoming message in order for the condition or exception to apply.|boolean_sent_to_or_cc_me|sentToOrCcMe|
+|**--microsoft-graph-message-rule-predicates-subject-contains**|array|Represents the strings that appear in the subject of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_subject_contains|subjectContains|
+|**--microsoft-graph-size-range-within-size-range**|object|sizeRange|microsoft_graph_size_range_within_size_range|withinSizeRange|
 |**--microsoft-graph-entity-id**|string|Read-only.|microsoft_graph_entity_id|id|
 |**--notebooks**|array|The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.|notebooks|notebooks|
 |**--operations**|array|The status of OneNote operations. Getting an operations collection is not supported, but you can get the status of long-running operations if the Operation-Location header is returned in the response. Read-only. Nullable.|operations|operations|
@@ -368,6 +428,66 @@
 |**--activities**|array|The user's activities across devices. Read-only. Nullable.|activities|activities|
 |**--online-meetings**|array||online_meetings|onlineMeetings|
 |**--joined-teams**|array||joined_teams|joinedTeams|
+|**--body-contains**|array|Represents the strings that should appear in the body of an incoming message in order for the condition or exception to apply.|body_contains|bodyContains|
+|**--body-or-subject-contains**|array|Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply.|body_or_subject_contains|bodyOrSubjectContains|
+|**--categories**|array|Represents the categories that an incoming message should be labeled with in order for the condition or exception to apply.|categories|categories|
+|**--from-addresses**|array|Represents the specific sender email addresses of an incoming message in order for the condition or exception to apply.|from_addresses|fromAddresses|
+|**--has-attachments**|boolean|Indicates whether an incoming message must have attachments in order for the condition or exception to apply.|has_attachments|hasAttachments|
+|**--header-contains**|array|Represents the strings that appear in the headers of an incoming message in order for the condition or exception to apply.|header_contains|headerContains|
+|**--importance**|choice|importance|importance|importance|
+|**--exceptions-is-approval-request**|boolean|Indicates whether an incoming message must be an approval request in order for the condition or exception to apply.|is_approval_request|isApprovalRequest|
+|**--exceptions-is-automatic-forward**|boolean|Indicates whether an incoming message must be automatically forwarded in order for the condition or exception to apply.|is_automatic_forward|isAutomaticForward|
+|**--exceptions-is-automatic-reply**|boolean|Indicates whether an incoming message must be an auto reply in order for the condition or exception to apply.|is_automatic_reply|isAutomaticReply|
+|**--exceptions-is-encrypted**|boolean|Indicates whether an incoming message must be encrypted in order for the condition or exception to apply.|is_encrypted|isEncrypted|
+|**--exceptions-is-meeting-request**|boolean|Indicates whether an incoming message must be a meeting request in order for the condition or exception to apply.|is_meeting_request|isMeetingRequest|
+|**--exceptions-is-meeting-response**|boolean|Indicates whether an incoming message must be a meeting response in order for the condition or exception to apply.|is_meeting_response|isMeetingResponse|
+|**--exceptions-is-non-delivery-report**|boolean|Indicates whether an incoming message must be a non-delivery report in order for the condition or exception to apply.|is_non_delivery_report|isNonDeliveryReport|
+|**--exceptions-is-permission-controlled**|boolean|Indicates whether an incoming message must be permission controlled (RMS-protected) in order for the condition or exception to apply.|is_permission_controlled|isPermissionControlled|
+|**--exceptions-is-read-receipt**|boolean|Indicates whether an incoming message must be a read receipt in order for the condition or exception to apply.|is_read_receipt|isReadReceipt|
+|**--exceptions-is-signed**|boolean|Indicates whether an incoming message must be S/MIME-signed in order for the condition or exception to apply.|is_signed|isSigned|
+|**--exceptions-is-voicemail**|boolean|Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply.|is_voicemail|isVoicemail|
+|**--message-action-flag**|choice|messageActionFlag|message_action_flag|messageActionFlag|
+|**--not-sent-to-me**|boolean|Indicates whether the owner of the mailbox must not be a recipient of an incoming message in order for the condition or exception to apply.|not_sent_to_me|notSentToMe|
+|**--recipient-contains**|array|Represents the strings that appear in either the toRecipients or ccRecipients properties of an incoming message in order for the condition or exception to apply.|recipient_contains|recipientContains|
+|**--sender-contains**|array|Represents the strings that appear in the from property of an incoming message in order for the condition or exception to apply.|sender_contains|senderContains|
+|**--sensitivity**|choice|sensitivity|sensitivity|sensitivity|
+|**--sent-cc-me**|boolean|Indicates whether the owner of the mailbox must be in the ccRecipients property of an incoming message in order for the condition or exception to apply.|sent_cc_me|sentCcMe|
+|**--sent-only-to-me**|boolean|Indicates whether the owner of the mailbox must be the only recipient in an incoming message in order for the condition or exception to apply.|sent_only_to_me|sentOnlyToMe|
+|**--sent-to-addresses**|array|Represents the email addresses that an incoming message must have been sent to in order for the condition or exception to apply.|sent_to_addresses|sentToAddresses|
+|**--sent-to-me**|boolean|Indicates whether the owner of the mailbox must be in the toRecipients property of an incoming message in order for the condition or exception to apply.|sent_to_me|sentToMe|
+|**--sent-to-or-cc-me**|boolean|Indicates whether the owner of the mailbox must be in either a toRecipients or ccRecipients property of an incoming message in order for the condition or exception to apply.|sent_to_or_cc_me|sentToOrCcMe|
+|**--subject-contains**|array|Represents the strings that appear in the subject of an incoming message in order for the condition or exception to apply.|subject_contains|subjectContains|
+|**--within-size-range**|object|sizeRange|within_size_range|withinSizeRange|
+|**--microsoft-graph-message-rule-predicates-body-contains**|array|Represents the strings that should appear in the body of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_body_contains|bodyContains|
+|**--microsoft-graph-message-rule-predicates-body-or-subject-contains-body-or-subject-contains**|array|Represents the strings that should appear in the body or subject of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains|bodyOrSubjectContains|
+|**--microsoft-graph-message-rule-predicates-categories**|array|Represents the categories that an incoming message should be labeled with in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_categories|categories|
+|**--microsoft-graph-message-rule-predicates-from-addresses**|array|Represents the specific sender email addresses of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_from_addresses|fromAddresses|
+|**--boolean-has-attachments**|boolean|Indicates whether an incoming message must have attachments in order for the condition or exception to apply.|boolean_has_attachments|hasAttachments|
+|**--microsoft-graph-message-rule-predicates-header-contains**|array|Represents the strings that appear in the headers of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_header_contains|headerContains|
+|**--microsoft-graph-importance**|choice|importance|microsoft_graph_importance|importance|
+|**--is-approval-request**|boolean|Indicates whether an incoming message must be an approval request in order for the condition or exception to apply.|is_approval_request|isApprovalRequest|
+|**--is-automatic-forward**|boolean|Indicates whether an incoming message must be automatically forwarded in order for the condition or exception to apply.|is_automatic_forward|isAutomaticForward|
+|**--is-automatic-reply**|boolean|Indicates whether an incoming message must be an auto reply in order for the condition or exception to apply.|is_automatic_reply|isAutomaticReply|
+|**--is-encrypted**|boolean|Indicates whether an incoming message must be encrypted in order for the condition or exception to apply.|is_encrypted|isEncrypted|
+|**--is-meeting-request**|boolean|Indicates whether an incoming message must be a meeting request in order for the condition or exception to apply.|is_meeting_request|isMeetingRequest|
+|**--is-meeting-response**|boolean|Indicates whether an incoming message must be a meeting response in order for the condition or exception to apply.|is_meeting_response|isMeetingResponse|
+|**--is-non-delivery-report**|boolean|Indicates whether an incoming message must be a non-delivery report in order for the condition or exception to apply.|is_non_delivery_report|isNonDeliveryReport|
+|**--is-permission-controlled**|boolean|Indicates whether an incoming message must be permission controlled (RMS-protected) in order for the condition or exception to apply.|is_permission_controlled|isPermissionControlled|
+|**--is-read-receipt**|boolean|Indicates whether an incoming message must be a read receipt in order for the condition or exception to apply.|is_read_receipt|isReadReceipt|
+|**--is-signed**|boolean|Indicates whether an incoming message must be S/MIME-signed in order for the condition or exception to apply.|is_signed|isSigned|
+|**--is-voicemail**|boolean|Indicates whether an incoming message must be a voice mail in order for the condition or exception to apply.|is_voicemail|isVoicemail|
+|**--microsoft-graph-message-action-flag-message-action-flag**|choice|messageActionFlag|microsoft_graph_message_action_flag_message_action_flag|messageActionFlag|
+|**--boolean-not-sent-to-me**|boolean|Indicates whether the owner of the mailbox must not be a recipient of an incoming message in order for the condition or exception to apply.|boolean_not_sent_to_me|notSentToMe|
+|**--microsoft-graph-message-rule-predicates-recipient-contains**|array|Represents the strings that appear in either the toRecipients or ccRecipients properties of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_recipient_contains|recipientContains|
+|**--microsoft-graph-message-rule-predicates-sender-contains**|array|Represents the strings that appear in the from property of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_sender_contains|senderContains|
+|**--microsoft-graph-sensitivity**|choice|sensitivity|microsoft_graph_sensitivity|sensitivity|
+|**--boolean-sent-cc-me**|boolean|Indicates whether the owner of the mailbox must be in the ccRecipients property of an incoming message in order for the condition or exception to apply.|boolean_sent_cc_me|sentCcMe|
+|**--boolean-sent-only-to-me**|boolean|Indicates whether the owner of the mailbox must be the only recipient in an incoming message in order for the condition or exception to apply.|boolean_sent_only_to_me|sentOnlyToMe|
+|**--microsoft-graph-message-rule-predicates-sent-to-addresses-sent-to-addresses**|array|Represents the email addresses that an incoming message must have been sent to in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses|sentToAddresses|
+|**--boolean-sent-to-me**|boolean|Indicates whether the owner of the mailbox must be in the toRecipients property of an incoming message in order for the condition or exception to apply.|boolean_sent_to_me|sentToMe|
+|**--boolean-sent-to-or-cc-me**|boolean|Indicates whether the owner of the mailbox must be in either a toRecipients or ccRecipients property of an incoming message in order for the condition or exception to apply.|boolean_sent_to_or_cc_me|sentToOrCcMe|
+|**--microsoft-graph-message-rule-predicates-subject-contains**|array|Represents the strings that appear in the subject of an incoming message in order for the condition or exception to apply.|microsoft_graph_message_rule_predicates_subject_contains|subjectContains|
+|**--microsoft-graph-size-range-within-size-range**|object|sizeRange|microsoft_graph_size_range_within_size_range|withinSizeRange|
 |**--microsoft-graph-entity-id**|string|Read-only.|microsoft_graph_entity_id|id|
 |**--notebooks**|array|The collection of OneNote notebooks that are owned by the user or group. Read-only. Nullable.|notebooks|notebooks|
 |**--operations**|array|The status of OneNote operations. Getting an operations collection is not supported, but you can get the status of long-running operations if the Operation-Location header is returned in the response. Read-only. Nullable.|operations|operations|
