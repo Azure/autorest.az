@@ -36,7 +36,7 @@ export class CliExtReadme extends TemplateBase {
                 const exampleCommandList: string[] = [];
                 if (this.model.SelectFirstCommand()) {
                     do {
-                        exampleList = exampleList.concat(this.model.GetExamples());
+                        exampleList = exampleList.concat(this.model.GetExamples(false));
                     } while (this.model.SelectNextCommand());
                 }
 

@@ -102,6 +102,12 @@
         "x-ms-examples": {
           "AttestationProviders_Create": {
             "$ref": "./examples/Create_AttestationProvider.json"
+          },
+          "AttestationProviders_Create_MaximumSet_Gen": {
+            "$ref": "./examples/Create_AttestationProvider_MaximumSet_Gen.json"
+          },
+          "AttestationProviders_Create_MinimumSet_Gen": {
+            "$ref": "./examples/Create_AttestationProvider_MinimumSet_Gen.json"
           }
         },
         "parameters": [
