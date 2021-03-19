@@ -544,8 +544,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         }
                                         if (
                                             nameParamReference.has(paramFlattenedName) &&
-                                            nameParamReference.get(paramFlattenedName).schema !==
-                                                param.schema
+                                            nameParamReference.get(paramFlattenedName)[
+                                                'targetProperty'
+                                            ] !== param['targetPropert']
                                         ) {
                                             let tmpName = paramFlattenedName;
                                             const preParam = nameParamReference.get(
