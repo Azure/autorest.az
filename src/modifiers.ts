@@ -93,7 +93,7 @@ function isWhereCommandDirective(it: any): it is WhereCommandDirective {
 }
 
 function hasSpecialChars(str: string): boolean {
-    return !/^[a-zA-Z0-9]+$/.test(str);
+    return !/^[a-zA-Z0-9- ]+$/.test(str);
 }
 
 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
