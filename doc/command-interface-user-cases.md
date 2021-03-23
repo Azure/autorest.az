@@ -14,7 +14,6 @@ az group3 cmd2*
 
 ### Solution
 ```
-# Answer:
 directive:
     - where:
         group: group1
@@ -114,6 +113,14 @@ az group1 sub-group1 cmd*
 ==>
 az group2 sub-group2 cmd*
 ```
+#### Solution
+```
+directive:
+    - where:
+        group: group1 sub-group1
+      set:
+        group: group2 sub-group2
+```
 
 ### 1.4 Add command group
 
@@ -124,6 +131,22 @@ az group cmd*
 az group [add-group] cmd*
 az [add-group] group cmd*
 ```
+#### Solution
+```
+// ==> az group [add-group] cmd*
+directive:
+    - where:
+        group: group
+      set:
+        group: group [add-group]
+
+// ==> az [add-group] group cmd*
+directive:
+    - where:
+        group: group
+      set:
+        group: [add-group] group
+```
 
 #### 1.4.2 Multiple-layers
 ```
@@ -132,6 +155,30 @@ az group cmd*
 az group [add-group1] [add-group2] cmd*
 az [add-group1] [add-group2] group cmd*
 az [add-group1] group [add-group2] cmd*
+```
+
+#### Solution
+```
+// ==> az group [add-group1] [add-group2] cmd*
+directive:
+    - where:
+        group: group
+      set:
+        group: group [add-group1] [add-group2]
+
+// ==> az [add-group1] [add-group2] group cmd*
+directive:
+    - where:
+        group: group
+      set:
+        group: [add-group1] [add-group2] group
+
+// ==> az [add-group1] group [add-group2] cmd*
+directive:
+    - where:
+        group: group
+      set:
+        group: [add-group1] group [add-group2]
 ```
 
 ### 1.5 Remove command group
@@ -145,11 +192,19 @@ az group cmd*
 ```
 #### Solution
 ```
+// ==> az sub-group cmd*
 directive:
     - where:
         group: group sub-group
       set:
-        group: subgroup
+        group: sub-group
+
+// ==> az group cmd*
+directive:
+    - where:
+        group: group sub-group
+      set:
+        group: group
 ```
 
 #### 1.5.1 Multiple-layers
@@ -160,7 +215,29 @@ az group cmd*
 az sub-group1 cmd*
 az sub-group2 cmd*
 ```
+#### Solution
+```
+// ==> az group cmd*
+directive:
+    - where:
+        group: group sub-group1 sub-group2
+      set:
+        group: group
 
+// ==> az sub-group1 cmd*
+directive:
+    - where:
+        group: group sub-group1 sub-group2
+      set:
+        group: sub-group1
+
+// ==> az sub-group2 cmd*
+directive:
+    - where:
+        group: group sub-group1 sub-group2
+      set:
+        group: sub-group2
+```
 
 ## 2. Command
 
@@ -198,6 +275,15 @@ az group sub-group cmd2
 ==>
 az group sub-group cmd1
 ```
+### Solution
+```
+cli:
+    cli-directive:
+        - where: 
+            group: groupName // the group name in swagger camel case format
+            op: cmd2Name // the cmd2 name in swagger camel case format
+          hidden: true 
+```
 
 ### 2.3 Move command
 
@@ -207,7 +293,6 @@ az group sub-group cmd1
 ==>
 az group cmd1
 ```
-
 #### Solution
 ```
 directive:
@@ -283,7 +368,6 @@ cli:
             param: param2
 
 // or 
-
 cli:
     cli-directive:
         - where:
@@ -304,7 +388,7 @@ cli:
     cli-directive:
         - where:
             param: param2
-          hide: true
+          hidden: true
           defaultValue: val2
 ```
 Please note that for non-required parameter we don't need to set the default value for it. but if it's required parameter, then default value is essential.  
@@ -352,6 +436,7 @@ cli:
         - where:
             param: param1
           required: true
+
 // from required to non-required
 cli:
     cli-directive:
@@ -468,11 +553,11 @@ Examples
 ==>
 --param1:   description2
 ```
-#### Solution [probably unsupported]
+#### Solution
 ```
 directive:
     - where:
-        parameter: param1
+        parameter-name: param1
       set:
         parameter-description: description2
 ```
@@ -483,18 +568,19 @@ directive:
 --param1 [Preview]     :   description
 --param1 [Experimental]:   description
 ```
-
 #### Solution
 ```
 cli:
     cli-directive:
+        // set as Preview
         - where:
             group: group // swagger camel case format
             op: cmd1 // swagger camel case format
             param: param1 // swagger camel case format
           set:
             extensionMode: preview
-        // or
+
+        // set as Experimental
         - where:
             group: group // swagger camel case format
             op: cmd2 // swagger camel case format
