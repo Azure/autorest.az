@@ -39,6 +39,7 @@ def load_command_table(self, _):
         'vm virtual-machine-scale-set-vm-extension',
         vm_virtual_machine_scale_set_vm_extension,
         client_factory=cf_virtual_machine_scale_set_vm_extension,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'vm_virtual_machine_scale_set_vm_extension_list')
         g.custom_show_command('show', 'vm_virtual_machine_scale_set_vm_extension_show')

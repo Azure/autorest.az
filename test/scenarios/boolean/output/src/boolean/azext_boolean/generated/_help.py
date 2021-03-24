@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+help['bool'] = '''
+    type: group
+    short-summary: Manage Auto Rest Test Service
+'''
+
 helps['test-server bool'] = """
     type: group
     short-summary: Manage bool

@@ -13,5 +13,8 @@
 from .generated.custom import *  # noqa: F403
 try:
     from .manual.custom import *  # noqa: F403
-except ImportError:
-    pass
+except ModuleNotFoundError as e:
+    if e.name.endswith('manual.custom'):
+        pass
+    else:
+        raise e;

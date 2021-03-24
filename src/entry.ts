@@ -134,6 +134,16 @@ function processGenerationOption(session: Session<CodeModel>) {
         ? AzConfiguration.getValue(CodeGenConstants.compatibleLevel)
         : compatibleLevel;
     const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
+    session.message({
+        Channel: Channel.Warning,
+        Text: 'NOTE: You are currently generating based on ' + compatibleLevel + ' SDK ',
+    });
+    let extensionMode = ExtensionMode.Experimental;
+    if (cliCore) {
+        extensionMode = ExtensionMode.Stable;
+    }
+    extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode) || extensionMode;
+    AzConfiguration.setValue(CodeGenConstants.extensionMode, extensionMode);
     AzConfiguration.setValue(CodeGenConstants.isCliCore, cliCore);
     AzConfiguration.setValue(CodeGenConstants.sdkNeeded, isSdkNeeded);
     AzConfiguration.setValue(CodeGenConstants.sdkTrack1, isTrack1);

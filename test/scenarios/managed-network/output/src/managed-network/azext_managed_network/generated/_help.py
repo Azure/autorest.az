@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+help['managed-network'] = '''
+    type: group
+    short-summary: Manage Managed Network
+'''
+
 helps['managed-network mn'] = """
     type: group
     short-summary: Manage mn with managed network
