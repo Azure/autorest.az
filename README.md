@@ -76,6 +76,8 @@ This *--sdk-flatten* option is still in private releases. It will only take effe
 This *--generate-sdk* has two available value "yes" or "no". By default the value is "yes" for Azure CLI extensions generation, and "no" for Azure CLI main repo modules.
 1. --compatible-level  
 This *--generate-sdk* has two available value "track1" or "track2". By default the value is "track2" for Azure CLI extensions generation, and "track1" for Azure CLI main repo modules.
+1. --extension-mode  
+This *--extension-mode* option is to set the global extension mode for the generated modules. it has three available value 'experimental' or 'preview' or 'stable'. By default the value is 'experimental' for Azure CLI extensions generation. And 'stable' for Azure CLI main repo modules but the command groups mode will still be 'experimental' if not specified.
 1. --target-mode  
 This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. By default Autorest.az will generate code targeting azure-cli-extensions repo. Setting `--target-mode=core` if you want to generate azure-cli repo command modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track1`.
 

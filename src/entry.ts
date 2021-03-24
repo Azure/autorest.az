@@ -130,7 +130,7 @@ function processGenerationOption(session: Session<CodeModel>) {
         : compatibleLevel;
     const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
     session.message({
-        Channel: Channel.Warning,
+        Channel: Channel.Information,
         Text: 'NOTE: You are currently generating based on ' + compatibleLevel + ' SDK ',
     });
     // handling extension mode, if it's extension the default extension mode is experimental. if it's core, the default module mode is stable.
