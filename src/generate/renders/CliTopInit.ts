@@ -197,11 +197,11 @@ export class CliTopInit extends TemplateBase {
                 '.manual.commands import load_command_table as load_command_table_manual',
         );
         output.push('            load_command_table_manual(self, args)');
-        output.push('        except ModuleNotFoundError as e:');
+        output.push('        except ImportError as e:');
         output.push("            if e.name.endswith('manual.commands'):");
         output.push('                pass');
         output.push('            else:');
-        output.push('                raise e;');
+        output.push('                raise e');
         output.push('        return self.command_table');
         output.push('');
         output.push('    def load_arguments(self, command):');
@@ -214,11 +214,11 @@ export class CliTopInit extends TemplateBase {
                 '.manual._params import load_arguments as load_arguments_manual',
         );
         output.push('            load_arguments_manual(self, command)');
-        output.push('        except ModuleNotFoundError as e:');
+        output.push('        except ImportError as e:');
         output.push("            if e.name.endswith('manual._params'):");
         output.push('                pass');
         output.push('            else:');
-        output.push('                raise e;');
+        output.push('                raise e');
         output.push('');
         output.push('');
         output.push('COMMAND_LOADER_CLS = ' + model.Extension_NameClass + 'CommandsLoader');

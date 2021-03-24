@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['datafactory'] = '''
+helps['datafactory'] = '''
     type: group
     short-summary: Manage DFAZ
 '''

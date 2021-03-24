@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['kusto'] = '''
+helps['kusto'] = '''
     type: group
     short-summary: Manage Kusto
 '''

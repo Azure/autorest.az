@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['managed-network'] = '''
+helps['managed-network'] = '''
     type: group
     short-summary: Manage Managed Network
 '''

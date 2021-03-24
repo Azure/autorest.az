@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['vm'] = '''
+helps['vm'] = '''
     type: group
     short-summary: Manage Compute
 '''

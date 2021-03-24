@@ -13,7 +13,7 @@
 from knack.help_files import helps
 
 
-help['synapse'] = '''
+helps['synapse'] = '''
     type: group
     short-summary: Manage Synapse
 '''

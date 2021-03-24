@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['attestation'] = '''
+helps['attestation'] = '''
     type: group
     short-summary: Manage Attestation
 '''

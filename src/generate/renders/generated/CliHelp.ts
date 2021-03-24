@@ -26,7 +26,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
 
     output.push('');
     model.GatherInternalResource();
-    output.push("help['" + model.Extension_Name + "'] = '''");
+    output.push("helps['" + model.Extension_Name + "'] = '''");
     output.push('    type: group');
     output.push('    short-summary: ' + model.Extension_Description);
     output.push("'''");

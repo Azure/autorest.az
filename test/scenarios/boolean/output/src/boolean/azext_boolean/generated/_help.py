@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['bool'] = '''
+helps['bool'] = '''
     type: group
     short-summary: Manage Auto Rest Test Service
 '''

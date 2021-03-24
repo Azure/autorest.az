@@ -99,11 +99,11 @@ export class CliTopAction extends TemplateBase {
         output.push(indentStr + 'from .generated.action import *  # noqa: F403');
         output.push(indentStr + 'try:');
         output.push(indentStr + '    from .manual.action import *  # noqa: F403');
-        output.push('except ModuleNotFoundError as e:');
+        output.push('except ImportError as e:');
         output.push("    if e.name.endswith('manual.action'):");
         output.push('        pass');
         output.push('    else:');
-        output.push('        raise e;');
+        output.push('        raise e');
         output.push('');
         return output;
     }

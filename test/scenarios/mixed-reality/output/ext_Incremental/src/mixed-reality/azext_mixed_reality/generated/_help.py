@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-help['mixed-reality'] = '''
+helps['mixed-reality'] = '''
     type: group
     short-summary: Manage Mixed Reality
 '''

@@ -12,11 +12,11 @@
 from .generated._help import helps  # pylint: disable=reimported
 try:
     from .manual._help import helps  # pylint: disable=reimported
-except ModuleNotFoundError as e:
+except ImportError as e:
     if e.name.endswith('manual._help'):
         pass
     else:
-        raise e;
+        raise e
 
 from knack.help_files import helps  # pylint: disable=unused-import
 # pylint: disable=line-too-long, too-many-lines
