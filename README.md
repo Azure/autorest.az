@@ -12,14 +12,15 @@
 &nbsp;  &nbsp;  [b. Live Tests](#Live-Tests)  
 [4. Advanced Features](#Advanced-Features)  
 &nbsp;  [4.1. Folder Customization](#Folder-Customization)  
-&nbsp;  [4.2. CLI User Interface Customization](#CLI-User-Interface-Customization)  
+&nbsp;  [4.2. CLI User Interface Customization](#CLI-User-Interface-Customization)   
 &nbsp;  &nbsp;  [a. Add Parent Extension](#Add-Parent-Extension)  
-&nbsp;  &nbsp;  [b. Set Extension/Command Groups/Commands/Parameters Mode](#Set-Extension/Command-Groups/Commands/Parameters-Mode)   
-&nbsp;  &nbsp;  [c. Set min-api/max-api in Command Groups/Commands/Parameters](#Set-min-api/max-api-in-Command-Groups/Commands/Parameters)  
-&nbsp;  &nbsp;  [d. Move Command Groups/Command Layer](#Move-Command-Groups/Command-Layer)  
-&nbsp;  &nbsp;  [e. Rename/Hide Command Groups/Commands/Parameters](#Rename/Hide-Command-Groups/Commands/Parameters)   
-&nbsp;  &nbsp;  [f. Client Factory Customization](#Client-Factory-Customization)  
-&nbsp;  &nbsp;  [g. Parameter Specific Customization](#Parameter-Specific-Customization)  
+&nbsp;  &nbsp;  [b. Customize Extension Description](#Customize-Extension-Description) 
+&nbsp;  &nbsp;  [c. Set Extension/Command Groups/Commands/Parameters Mode](#Set-Extension/Command-Groups/Commands/Parameters-Mode)   
+&nbsp;  &nbsp;  [d. Set min-api/max-api in Command Groups/Commands/Parameters](#Set-min-api/max-api-in-Command-Groups/Commands/Parameters)  
+&nbsp;  &nbsp;  [e. Move Command Groups/Command Layer](#Move-Command-Groups/Command-Layer)  
+&nbsp;  &nbsp;  [f. Rename/Hide Command Groups/Commands/Parameters](#Rename/Hide-Command-Groups/Commands/Parameters)   
+&nbsp;  &nbsp;  [g. Client Factory Customization](#Client-Factory-Customization)  
+&nbsp;  &nbsp;  [h. Parameter Specific Customization](#Parameter-Specific-Customization)  
 &nbsp;  &nbsp;  &nbsp;  [i. flatten a parameter](#flatten-a-parameter)  
 &nbsp;  &nbsp;  &nbsp;  [ii. set a parameter as required](#set-a-parameter-as-required)  
 &nbsp;  &nbsp;  &nbsp;  [iii. set default value for a parameter](#set-default-value-for-a-parameter)  
@@ -227,6 +228,12 @@ az:
   extensions: app-insight
   parent-extension: monitor
 ```
+
+### **Customize Extension Description**
+Customers can customize what can be show when run `az -h` after their extension or module has been on-boarded to Azure CLI. By default, we will simply show RP name info in it.  
+```
+extension-description: RP description.
+``` 
 
 ### **Set Extension/Command Groups/Commands/Parameters Mode**   
 In Azure CLI, we allow user to set different mode like is_preview or is_experimental for different kinds of layers including extension/command groups/commands/parameters. We can configure it in readme.az.md so the generated code can work in different mode.  
