@@ -12866,6 +12866,10 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
     :type settings: ~users.models.MicrosoftGraphUserSettings
     :param onenote: onenote.
     :type onenote: ~users.models.MicrosoftGraphOnenote
+    :param conditions: messageRulePredicates.
+    :type conditions: ~users.models.MicrosoftGraphMessageRulePredicates
+    :param exceptions: messageRulePredicates.
+    :type exceptions: ~users.models.MicrosoftGraphMessageRulePredicates
     :param activities: The user's activities across devices. Read-only. Nullable.
     :type activities: list[~users.models.MicrosoftGraphUserActivity]
     :param online_meetings:
@@ -12985,6 +12989,8 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
         'insights': {'key': 'insights', 'type': 'MicrosoftGraphOfficeGraphInsights'},
         'settings': {'key': 'settings', 'type': 'MicrosoftGraphUserSettings'},
         'onenote': {'key': 'onenote', 'type': 'MicrosoftGraphOnenote'},
+        'conditions': {'key': 'conditions', 'type': 'MicrosoftGraphMessageRulePredicates'},
+        'exceptions': {'key': 'exceptions', 'type': 'MicrosoftGraphMessageRulePredicates'},
         'activities': {'key': 'activities', 'type': '[MicrosoftGraphUserActivity]'},
         'online_meetings': {'key': 'onlineMeetings', 'type': '[MicrosoftGraphOnlineMeeting]'},
         'joined_teams': {'key': 'joinedTeams', 'type': '[MicrosoftGraphTeam]'},
@@ -13099,6 +13105,8 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
         self.insights = kwargs.get('insights', None)
         self.settings = kwargs.get('settings', None)
         self.onenote = kwargs.get('onenote', None)
+        self.conditions = kwargs.get('conditions', None)
+        self.exceptions = kwargs.get('exceptions', None)
         self.activities = kwargs.get('activities', None)
         self.online_meetings = kwargs.get('online_meetings', None)
         self.joined_teams = kwargs.get('joined_teams', None)

@@ -15080,6 +15080,10 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
     :type settings: ~users.models.MicrosoftGraphUserSettings
     :param onenote: onenote.
     :type onenote: ~users.models.MicrosoftGraphOnenote
+    :param conditions: messageRulePredicates.
+    :type conditions: ~users.models.MicrosoftGraphMessageRulePredicates
+    :param exceptions: messageRulePredicates.
+    :type exceptions: ~users.models.MicrosoftGraphMessageRulePredicates
     :param activities: The user's activities across devices. Read-only. Nullable.
     :type activities: list[~users.models.MicrosoftGraphUserActivity]
     :param online_meetings:
@@ -15199,6 +15203,8 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
         'insights': {'key': 'insights', 'type': 'MicrosoftGraphOfficeGraphInsights'},
         'settings': {'key': 'settings', 'type': 'MicrosoftGraphUserSettings'},
         'onenote': {'key': 'onenote', 'type': 'MicrosoftGraphOnenote'},
+        'conditions': {'key': 'conditions', 'type': 'MicrosoftGraphMessageRulePredicates'},
+        'exceptions': {'key': 'exceptions', 'type': 'MicrosoftGraphMessageRulePredicates'},
         'activities': {'key': 'activities', 'type': '[MicrosoftGraphUserActivity]'},
         'online_meetings': {'key': 'onlineMeetings', 'type': '[MicrosoftGraphOnlineMeeting]'},
         'joined_teams': {'key': 'joinedTeams', 'type': '[MicrosoftGraphTeam]'},
@@ -15313,6 +15319,8 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
         insights: Optional["MicrosoftGraphOfficeGraphInsights"] = None,
         settings: Optional["MicrosoftGraphUserSettings"] = None,
         onenote: Optional["MicrosoftGraphOnenote"] = None,
+        conditions: Optional["MicrosoftGraphMessageRulePredicates"] = None,
+        exceptions: Optional["MicrosoftGraphMessageRulePredicates"] = None,
         activities: Optional[List["MicrosoftGraphUserActivity"]] = None,
         online_meetings: Optional[List["MicrosoftGraphOnlineMeeting"]] = None,
         joined_teams: Optional[List["MicrosoftGraphTeam"]] = None,
@@ -15423,6 +15431,8 @@ class MicrosoftGraphUser(MicrosoftGraphDirectoryObject):
         self.insights = insights
         self.settings = settings
         self.onenote = onenote
+        self.conditions = conditions
+        self.exceptions = exceptions
         self.activities = activities
         self.online_meetings = online_meetings
         self.joined_teams = joined_teams

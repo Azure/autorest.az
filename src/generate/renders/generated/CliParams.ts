@@ -391,8 +391,9 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                             argument += ", arg_group='" + model.MethodParameter_ArgGroup + "'";
                         }
                     }
+                    const lastItem = model.Method_NameAz.split(' ').last;
                     if (
-                        !model.Method_NameAz.startsWith('list') &&
+                        !lastItem.startsWith('list') &&
                         !model.Method_NameAz.split(' ').last.startsWith('create')
                     ) {
                         if (!isNullOrUndefined(model.MethodParameter_IdPart)) {

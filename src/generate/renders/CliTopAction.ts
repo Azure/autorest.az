@@ -66,7 +66,7 @@ export class CliTopAction extends TemplateBase {
                 let hasLoadLogic = false;
                 if (skipLineIdx !== -1) {
                     for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
-                        if (baseSplit.indexOf('from .generated.action import *') > -1) {
+                        if (baseSplit[i].indexOf('from .generated.action import *') > -1) {
                             hasLoadLogic = true;
                             break;
                         }

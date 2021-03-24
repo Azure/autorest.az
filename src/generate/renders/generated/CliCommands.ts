@@ -17,9 +17,11 @@ import {
 import * as path from 'path';
 export class CliCommands extends TemplateBase {
     private importProfile = false;
+    private importClientFactories = [];
     private lineTooLong = false;
     private needWaitCommand = false;
     private showCustomFunctionName = '';
+    private groupClientFactoryName = '';
     private extraNonStringProperties = ['resourceType', 'mode'];
     private extraProperties = ['maxApi', 'minApi'];
 
@@ -75,6 +77,8 @@ export class CliCommands extends TemplateBase {
         } else if (this.showCustomFunctionName !== '') {
             this.showCustomFunctionName = '';
         }
+        this.groupClientFactoryName = item['clientFactoryName'];
+        this.importClientFactories.push(this.groupClientFactoryName);
         return item;
     }
 
@@ -113,6 +117,12 @@ export class CliCommands extends TemplateBase {
                 item['propertiesString']['setter_name'] = "'begin_create_or_update'";
             }
         }
+        if (
+            !isNullOrUndefined(item['clientFactoryName']) &&
+            item['clientFactoryName'] !== this.groupClientFactoryName
+        ) {
+            item['propertiesString']['client_factory'] = item['clientFactoryName'];
+        }
         return item;
     }
 
@@ -147,10 +157,12 @@ export class CliCommands extends TemplateBase {
                         'minApi',
                         'resourceType',
                         'mode',
+                        'hasCommand',
                     ],
                     { name: SortOrder.ASEC },
                     [],
                     this.commandGroupConverter.bind(this),
+                    [true],
                 ),
             ],
             [
@@ -167,6 +179,7 @@ export class CliCommands extends TemplateBase {
                         'functionName',
                         'needGeneric',
                         'genericSetterArgName',
+                        'clientFactoryName',
                     ],
                     {},
                     [],
@@ -183,9 +196,20 @@ export class CliCommands extends TemplateBase {
         if (this.importProfile) {
             data['imports'].push([this.model.CliCoreLib + '.profiles', ['ResourceType']]);
         }
+        if (
+            !isNullOrUndefined(this.importClientFactories) &&
+            Array.isArray(this.importClientFactories) &&
+            this.importClientFactories.length > 0
+        ) {
+            data['imports'].push([
+                this.model.AzextFolder + '.generated._client_factory',
+                this.importClientFactories,
+            ]);
+        }
         data['pylints'].push(
             '# pylint: disable=too-many-statements',
             '# pylint: disable=too-many-locals',
+            '# pylint: disable=bad-continuation',
         );
         if (this.lineTooLong) {
             data['pylints'].push('# pylint: disable=line-too-long');

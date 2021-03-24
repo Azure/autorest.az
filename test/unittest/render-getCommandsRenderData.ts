@@ -94,7 +94,7 @@ describe('getCommandsRender', () => {
         let result = render(tmplPath, data);
         const oriFile = path.join(
             `${__dirname}`,
-            '../../test/unittest/expected/generated/ori_commands.py',
+            '../../test/unittest/expected/generated/ori_commands3.py',
         );
         await writeFile(oriFile, result);
         const azLinter = new AzLinter();
