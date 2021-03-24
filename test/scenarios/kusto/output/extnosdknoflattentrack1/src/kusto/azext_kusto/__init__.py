@@ -12,11 +12,11 @@ from azure.cli.core import AzCommandsLoader
 from azext_kusto.generated._help import helps  # pylint: disable=unused-import
 try:
     from azext_kusto.manual._help import helps  # pylint: disable=reimported
-except ModuleNotFoundError as e:
+except ImportError as e:
     if e.name.endswith('manual._help'):
         pass
     else:
-        raise e;
+        raise e
 
 
 class KustoManagementClientCommandsLoader(AzCommandsLoader):

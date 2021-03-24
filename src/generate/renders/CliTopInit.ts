@@ -95,11 +95,11 @@ export class CliTopInit extends TemplateBase {
             indentStr + '    from .manual._params import load_arguments as load_arguments_manual',
         );
         output.push(indentStr + '    load_arguments_manual(self, command)');
-        output.push(indentStr + 'except ModuleNotFoundError as e:');
+        output.push(indentStr + 'except ImportError as e:');
         output.push(indentStr + "    if e.name.endswith('manual._params'):");
         output.push(indentStr + '        pass');
         output.push(indentStr + '    else:');
-        output.push(indentStr + '        raise e;');
+        output.push(indentStr + '        raise e');
         return output;
     }
 
@@ -118,11 +118,11 @@ export class CliTopInit extends TemplateBase {
                 '    from .manual.commands import load_command_table as load_command_table_manual',
         );
         output.push(indentStr + '    load_command_table_manual(self, args)');
-        output.push(indentStr + 'except ModuleNotFoundError as e:');
+        output.push(indentStr + 'except ImportError as e:');
         output.push(indentStr + "    if e.name.endswith('manual.commands'):");
         output.push(indentStr + '        pass');
         output.push(indentStr + '    else:');
-        output.push(indentStr + '        raise e;');
+        output.push(indentStr + '        raise e');
         return output;
     }
 
@@ -146,11 +146,11 @@ export class CliTopInit extends TemplateBase {
                     importPath +
                     '.manual._help import helps  # pylint: disable=reimported',
             );
-            output.push('except ModuleNotFoundError as e:');
+            output.push('except ImportError as e:');
             output.push("    if e.name.endswith('manual._help'):");
             output.push('        pass');
             output.push('    else:');
-            output.push('        raise e;');
+            output.push('        raise e');
             output.push('');
         } else {
             importPath = '';

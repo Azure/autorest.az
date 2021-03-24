@@ -30,11 +30,11 @@ class MixedRealityCommandsLoader(AzCommandsLoader):
             load_command_table_generated(self, args)
             from .manual.commands import load_command_table as load_command_table_manual
             load_command_table_manual(self, args)
-        except ModuleNotFoundError as e:
+        except ImportError as e:
             if e.name.endswith('manual.commands'):
                 pass
             else:
-                raise e;
+                raise e
         return self.command_table
 
     def load_arguments(self, command):
@@ -45,11 +45,11 @@ class MixedRealityCommandsLoader(AzCommandsLoader):
             load_arguments_generated(self, command)
             from .manual._params import load_arguments as load_arguments_manual
             load_arguments_manual(self, command)
-        except ModuleNotFoundError as e:
+        except ImportError as e:
             if e.name.endswith('manual._params'):
                 pass
             else:
-                raise e;
+                raise e
 
 
 COMMAND_LOADER_CLS = MixedRealityCommandsLoader
