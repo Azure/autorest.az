@@ -304,7 +304,9 @@ synapse_private_link_hub = CliCommandType(
 
 def load_command_table(self, _):
 
-    with self.command_group('synapse big-data-pool', synapse_big_data_pool, client_factory=cf_big_data_pool) as g:
+    with self.command_group(
+        'synapse big-data-pool', synapse_big_data_pool, client_factory=cf_big_data_pool, is_experimental=True
+    ) as g:
         g.custom_command('list', 'synapse_big_data_pool_list')
         g.custom_show_command('show', 'synapse_big_data_pool_show')
         g.custom_command('create', 'synapse_big_data_pool_create', supports_no_wait=True)
@@ -312,12 +314,14 @@ def load_command_table(self, _):
         g.custom_command('delete', 'synapse_big_data_pool_delete', supports_no_wait=True, confirmation=True)
         g.custom_wait_command('wait', 'synapse_big_data_pool_show')
 
-    with self.command_group('synapse operation', synapse_operation, client_factory=cf_operation) as g:
+    with self.command_group(
+        'synapse operation', synapse_operation, client_factory=cf_operation, is_experimental=True
+    ) as g:
         g.custom_command('show-azure-async-header-result', 'synapse_operation_show_azure_async_header_result')
         g.custom_command('show-location-header-result', 'synapse_operation_show_location_header_result')
 
     with self.command_group(
-        'synapse ip-firewall-rule', synapse_ip_firewall_rule, client_factory=cf_ip_firewall_rule
+        'synapse ip-firewall-rule', synapse_ip_firewall_rule, client_factory=cf_ip_firewall_rule, is_experimental=True
     ) as g:
         g.custom_command('list', 'synapse_ip_firewall_rule_list')
         g.custom_show_command('show', 'synapse_ip_firewall_rule_show')
@@ -327,7 +331,7 @@ def load_command_table(self, _):
         g.custom_command('replace-all', 'synapse_ip_firewall_rule_replace_all', supports_no_wait=True)
         g.custom_wait_command('wait', 'synapse_ip_firewall_rule_show')
 
-    with self.command_group('synapse sql-pool', synapse_sqlpool, client_factory=cf_sqlpool) as g:
+    with self.command_group('synapse sql-pool', synapse_sqlpool, client_factory=cf_sqlpool, is_experimental=True) as g:
         g.custom_command('list', 'synapse_sql_pool_list')
         g.custom_show_command('show', 'synapse_sql_pool_show')
         g.custom_command('create', 'synapse_sql_pool_create', supports_no_wait=True)
@@ -342,6 +346,7 @@ def load_command_table(self, _):
         'synapse sql-pool-metadata-sync-config',
         synapse_sqlpool_metadata_sync_config,
         client_factory=cf_sqlpool_metadata_sync_config,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_metadata_sync_config_show')
         g.custom_command('create', 'synapse_sql_pool_metadata_sync_config_create')
@@ -350,6 +355,7 @@ def load_command_table(self, _):
         'synapse sql-pool-operation-result',
         synapse_sqlpool_operation_result,
         client_factory=cf_sqlpool_operation_result,
+        is_experimental=True,
     ) as g:
         g.custom_command('show-location-header-result', 'synapse_sql_pool_operation_result_show_location_header_result')
 
@@ -357,6 +363,7 @@ def load_command_table(self, _):
         'synapse sql-pool-geo-backup-policy',
         synapse_sqlpool_geo_backup_policy,
         client_factory=cf_sqlpool_geo_backup_policy,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_geo_backup_policy_show')
 
@@ -364,11 +371,15 @@ def load_command_table(self, _):
         'synapse sql-pool-data-warehouse-user-activity',
         synapse_sqlpool_data_warehouse_user_activity,
         client_factory=cf_sqlpool_data_warehouse_user_activity,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_data_warehouse_user_activity_show')
 
     with self.command_group(
-        'synapse sql-pool-restore-point', synapse_sqlpool_restore_point, client_factory=cf_sqlpool_restore_point
+        'synapse sql-pool-restore-point',
+        synapse_sqlpool_restore_point,
+        client_factory=cf_sqlpool_restore_point,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_restore_point_list')
         g.custom_command('create', 'synapse_sql_pool_restore_point_create')
@@ -377,6 +388,7 @@ def load_command_table(self, _):
         'synapse sql-pool-replication-link',
         synapse_sqlpool_replication_link,
         client_factory=cf_sqlpool_replication_link,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_replication_link_list')
 
@@ -384,6 +396,7 @@ def load_command_table(self, _):
         'synapse sql-pool-transparent-data-encryption',
         synapse_sqlpool_transparent_data_encryption,
         client_factory=cf_sqlpool_transparent_data_encryption,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_transparent_data_encryption_show')
         g.custom_command('create', 'synapse_sql_pool_transparent_data_encryption_create')
@@ -393,23 +406,30 @@ def load_command_table(self, _):
         'synapse sql-pool-blob-auditing-policy',
         synapse_sqlpool_blob_auditing_policy,
         client_factory=cf_sqlpool_blob_auditing_policy,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_blob_auditing_policy_show')
         g.custom_command('create', 'synapse_sql_pool_blob_auditing_policy_create')
         g.generic_update_command('update', custom_func_name='synapse_sql_pool_blob_auditing_policy_update')
 
     with self.command_group(
-        'synapse sql-pool-operation', synapse_sqlpool_operation, client_factory=cf_sqlpool_operation
+        'synapse sql-pool-operation',
+        synapse_sqlpool_operation,
+        client_factory=cf_sqlpool_operation,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_operation_list')
 
-    with self.command_group('synapse sql-pool-usage', synapse_sqlpool_usage, client_factory=cf_sqlpool_usage) as g:
+    with self.command_group(
+        'synapse sql-pool-usage', synapse_sqlpool_usage, client_factory=cf_sqlpool_usage, is_experimental=True
+    ) as g:
         g.custom_command('list', 'synapse_sql_pool_usage_list')
 
     with self.command_group(
         'synapse sql-pool-sensitivity-label',
         synapse_sqlpool_sensitivity_label,
         client_factory=cf_sqlpool_sensitivity_label,
+        is_experimental=True,
     ) as g:
         g.custom_command('create', 'synapse_sql_pool_sensitivity_label_create')
         g.custom_command('update', 'synapse_sql_pool_sensitivity_label_update')
@@ -419,14 +439,21 @@ def load_command_table(self, _):
         g.custom_command('list-current', 'synapse_sql_pool_sensitivity_label_list_current')
         g.custom_command('list-recommended', 'synapse_sql_pool_sensitivity_label_list_recommended')
 
-    with self.command_group('synapse sql-pool-schema', synapse_sqlpool_schema, client_factory=cf_sqlpool_schema) as g:
+    with self.command_group(
+        'synapse sql-pool-schema', synapse_sqlpool_schema, client_factory=cf_sqlpool_schema, is_experimental=True
+    ) as g:
         g.custom_command('list', 'synapse_sql_pool_schema_list')
 
-    with self.command_group('synapse sql-pool-table', synapse_sqlpool_table, client_factory=cf_sqlpool_table) as g:
+    with self.command_group(
+        'synapse sql-pool-table', synapse_sqlpool_table, client_factory=cf_sqlpool_table, is_experimental=True
+    ) as g:
         g.custom_command('list', 'synapse_sql_pool_table_list')
 
     with self.command_group(
-        'synapse sql-pool-table-column', synapse_sqlpool_table_column, client_factory=cf_sqlpool_table_column
+        'synapse sql-pool-table-column',
+        synapse_sqlpool_table_column,
+        client_factory=cf_sqlpool_table_column,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_table_column_list')
 
@@ -434,6 +461,7 @@ def load_command_table(self, _):
         'synapse sql-pool-connection-policy',
         synapse_sqlpool_connection_policy,
         client_factory=cf_sqlpool_connection_policy,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_connection_policy_show')
 
@@ -441,6 +469,7 @@ def load_command_table(self, _):
         'synapse sql-pool-vulnerability-assessment',
         synapse_sqlpool_vulnerability_assessment,
         client_factory=cf_sqlpool_vulnerability_assessment,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_list')
         g.custom_show_command('show', 'synapse_sql_pool_vulnerability_assessment_show')
@@ -452,6 +481,7 @@ def load_command_table(self, _):
         'synapse sql-pool-vulnerability-assessment-scan',
         synapse_sqlpool_vulnerability_assessment_scan,
         client_factory=cf_sqlpool_vulnerability_assessment_scan,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_sql_pool_vulnerability_assessment_scan_list')
         g.custom_command('export', 'synapse_sql_pool_vulnerability_assessment_scan_export')
@@ -461,6 +491,7 @@ def load_command_table(self, _):
         'synapse sql-pool-security-alert-policy',
         synapse_sqlpool_security_alert_policy,
         client_factory=cf_sqlpool_security_alert_policy,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_sql_pool_security_alert_policy_show')
         g.custom_command('create', 'synapse_sql_pool_security_alert_policy_create')
@@ -470,12 +501,15 @@ def load_command_table(self, _):
         'synapse sql-pool-vulnerability-assessment-rule-baseline',
         synapse_sqlpool_vulnerability_assessment_rule_baseline,
         client_factory=cf_sqlpool_vulnerability_assessment_rule_baseline,
+        is_experimental=True,
     ) as g:
         g.custom_command('create', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_create')
         g.custom_command('update', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_update')
         g.custom_command('delete', 'synapse_sql_pool_vulnerability_assessment_rule_baseline_delete', confirmation=True)
 
-    with self.command_group('synapse workspace', synapse_workspace, client_factory=cf_workspace) as g:
+    with self.command_group(
+        'synapse workspace', synapse_workspace, client_factory=cf_workspace, is_experimental=True
+    ) as g:
         g.custom_command('list', 'synapse_workspace_list')
         g.custom_show_command('show', 'synapse_workspace_show')
         g.custom_command('create', 'synapse_workspace_create', supports_no_wait=True)
@@ -484,7 +518,10 @@ def load_command_table(self, _):
         g.custom_wait_command('wait', 'synapse_workspace_show')
 
     with self.command_group(
-        'synapse workspace-aad-admin', synapse_workspace_aadadmin, client_factory=cf_workspace_aadadmin
+        'synapse workspace-aad-admin',
+        synapse_workspace_aadadmin,
+        client_factory=cf_workspace_aadadmin,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_workspace_aad_admin_show')
         g.custom_command('create', 'synapse_workspace_aad_admin_create', supports_no_wait=True)
@@ -501,6 +538,7 @@ def load_command_table(self, _):
         'synapse workspace-managed-identity-sql-control-setting',
         synapse_workspace_managed_identity_sqlcontrol_setting,
         client_factory=cf_workspace_managed_identity_sqlcontrol_setting,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_workspace_managed_identity_sql_control_setting_show')
         g.custom_command('create', 'synapse_workspace_managed_identity_sql_control_setting_create')
@@ -511,7 +549,10 @@ def load_command_table(self, _):
         )
 
     with self.command_group(
-        'synapse integration-runtime', synapse_integration_runtime, client_factory=cf_integration_runtime
+        'synapse integration-runtime',
+        synapse_integration_runtime,
+        client_factory=cf_integration_runtime,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_integration_runtime_list')
         g.custom_show_command('show', 'synapse_integration_runtime_show')
@@ -527,6 +568,7 @@ def load_command_table(self, _):
         'synapse integration-runtime-node-ip-address',
         synapse_integration_runtime_node_ip_address,
         client_factory=cf_integration_runtime_node_ip_address,
+        is_experimental=True,
     ) as g:
         g.custom_command('get', 'synapse_integration_runtime_node_ip_address_get')
 
@@ -534,12 +576,16 @@ def load_command_table(self, _):
         'synapse integration-runtime-object-metadata',
         synapse_integration_runtime_object_metadata,
         client_factory=cf_integration_runtime_object_metadata,
+        is_experimental=True,
     ) as g:
         g.custom_command('get', 'synapse_integration_runtime_object_metadata_get')
         g.custom_command('refresh', 'synapse_integration_runtime_object_metadata_refresh')
 
     with self.command_group(
-        'synapse integration-runtime-node', synapse_integration_runtime_node, client_factory=cf_integration_runtime_node
+        'synapse integration-runtime-node',
+        synapse_integration_runtime_node,
+        client_factory=cf_integration_runtime_node,
+        is_experimental=True,
     ) as g:
         g.custom_show_command('show', 'synapse_integration_runtime_node_show')
         g.custom_command('update', 'synapse_integration_runtime_node_update')
@@ -549,6 +595,7 @@ def load_command_table(self, _):
         'synapse integration-runtime-credentials',
         synapse_integration_runtime_credentials,
         client_factory=cf_integration_runtime_credentials,
+        is_experimental=True,
     ) as g:
         g.custom_command('sync', 'synapse_integration_runtime_credentials_sync')
 
@@ -556,6 +603,7 @@ def load_command_table(self, _):
         'synapse integration-runtime-connection-info',
         synapse_integration_runtime_connection_info,
         client_factory=cf_integration_runtime_connection_info,
+        is_experimental=True,
     ) as g:
         g.custom_command('get', 'synapse_integration_runtime_connection_info_get')
 
@@ -563,6 +611,7 @@ def load_command_table(self, _):
         'synapse integration-runtime-auth-key',
         synapse_integration_runtime_auth_key,
         client_factory=cf_integration_runtime_auth_key,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_integration_runtime_auth_key_list')
         g.custom_command('regenerate', 'synapse_integration_runtime_auth_key_regenerate')
@@ -571,6 +620,7 @@ def load_command_table(self, _):
         'synapse integration-runtime-monitoring-data',
         synapse_integration_runtime_monitoring_data,
         client_factory=cf_integration_runtime_monitoring_data,
+        is_experimental=True,
     ) as g:
         g.custom_command('get', 'synapse_integration_runtime_monitoring_data_get')
 
@@ -578,11 +628,15 @@ def load_command_table(self, _):
         'synapse integration-runtime-status',
         synapse_integration_runtime_status,
         client_factory=cf_integration_runtime_status,
+        is_experimental=True,
     ) as g:
         g.custom_command('get', 'synapse_integration_runtime_status_get')
 
     with self.command_group(
-        'synapse private-link-resource', synapse_private_link_resource, client_factory=cf_private_link_resource
+        'synapse private-link-resource',
+        synapse_private_link_resource,
+        client_factory=cf_private_link_resource,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_private_link_resource_list')
         g.custom_show_command('show', 'synapse_private_link_resource_show')
@@ -591,6 +645,7 @@ def load_command_table(self, _):
         'synapse private-endpoint-connection',
         synapse_private_endpoint_connection,
         client_factory=cf_private_endpoint_connection,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'synapse_private_endpoint_connection_list')
         g.custom_show_command('show', 'synapse_private_endpoint_connection_show')
@@ -601,13 +656,10 @@ def load_command_table(self, _):
         g.custom_wait_command('wait', 'synapse_private_endpoint_connection_show')
 
     with self.command_group(
-        'synapse private-link-hub', synapse_private_link_hub, client_factory=cf_private_link_hub
+        'synapse private-link-hub', synapse_private_link_hub, client_factory=cf_private_link_hub, is_experimental=True
     ) as g:
         g.custom_command('list', 'synapse_private_link_hub_list')
         g.custom_show_command('show', 'synapse_private_link_hub_show')
         g.custom_command('create', 'synapse_private_link_hub_create')
         g.custom_command('update', 'synapse_private_link_hub_update')
         g.custom_command('delete', 'synapse_private_link_hub_delete', confirmation=True)
-
-    with self.command_group('synapse', is_experimental=True):
-        pass
