@@ -4120,6 +4120,10 @@ components:
               $ref: '#/components/schemas/microsoft.graph.userSettings'
             onenote:
               $ref: '#/components/schemas/microsoft.graph.onenote'
+            conditions:
+              $ref: '#/components/schemas/microsoft.graph.messageRulePredicates'
+            exceptions:
+              $ref: '#/components/schemas/microsoft.graph.messageRulePredicates'
             activities:
               type: array
               items:
@@ -4135,7 +4139,7 @@ components:
                 $ref: '#/components/schemas/microsoft.graph.team'
           additionalProperties:
             type: object
-          description: Represents an Azure Active Directory user object.
+          description: Represents an Azure Active Directory user object
     microsoft.graph.directoryObject:
       allOf:
         - $ref: '#/components/schemas/microsoft.graph.entity'

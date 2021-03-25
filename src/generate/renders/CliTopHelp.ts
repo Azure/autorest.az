@@ -54,7 +54,7 @@ export class CliTopHelp extends TemplateBase {
                 let hasLoadLogic = false;
                 if (skipLineIdx !== -1) {
                     for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
-                        if (baseSplit.indexOf('from .generated._help import helps') > -1) {
+                        if (baseSplit[i].indexOf('from .generated._help import helps') > -1) {
                             hasLoadLogic = true;
                             break;
                         }
@@ -88,8 +88,11 @@ export class CliTopHelp extends TemplateBase {
         output.push(
             indentStr + '    from .manual._help import helps  # pylint: disable=reimported',
         );
-        output.push(indentStr + 'except ImportError:');
-        output.push(indentStr + '    pass');
+        output.push(indentStr + 'except ImportError as e:');
+        output.push(indentStr + "    if e.name.endswith('manual._help'):");
+        output.push(indentStr + '        pass');
+        output.push(indentStr + '    else:');
+        output.push(indentStr + '        raise e');
         return output;
     }
 

@@ -58,11 +58,6 @@ export async function processRequest(host: Host) {
 }
 
 function processSimpleOption() {
-    // handling extension-mode by default it's experimental.
-    let extensionMode = ExtensionMode.Experimental;
-    extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode) || extensionMode;
-    AzConfiguration.setValue(CodeGenConstants.extensionMode, extensionMode);
-
     // handling default debug
     if (isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.debug))) {
         AzConfiguration.setValue(CodeGenConstants.debug, false);
@@ -134,6 +129,17 @@ function processGenerationOption(session: Session<CodeModel>) {
         ? AzConfiguration.getValue(CodeGenConstants.compatibleLevel)
         : compatibleLevel;
     const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
+    session.message({
+        Channel: Channel.Information,
+        Text: 'NOTE: You are currently generating based on ' + compatibleLevel + ' SDK ',
+    });
+    // handling extension mode, if it's extension the default extension mode is experimental. if it's core, the default module mode is stable.
+    let extensionMode = ExtensionMode.Experimental;
+    if (cliCore) {
+        extensionMode = ExtensionMode.Stable;
+    }
+    extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode) || extensionMode;
+    AzConfiguration.setValue(CodeGenConstants.extensionMode, extensionMode);
     AzConfiguration.setValue(CodeGenConstants.isCliCore, cliCore);
     AzConfiguration.setValue(CodeGenConstants.sdkNeeded, isSdkNeeded);
     AzConfiguration.setValue(CodeGenConstants.sdkTrack1, isTrack1);

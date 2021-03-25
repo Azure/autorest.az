@@ -62,7 +62,7 @@ kusto_data_connection = CliCommandType(
 
 def load_command_table(self, _):
 
-    with self.command_group('kusto cluster', kusto_cluster, client_factory=cf_cluster) as g:
+    with self.command_group('kusto cluster', kusto_cluster, client_factory=cf_cluster, is_experimental=True) as g:
         g.custom_command('list', 'kusto_cluster_list')
         g.custom_show_command('show', 'kusto_cluster_show')
         g.custom_command('create', 'kusto_cluster_create', supports_no_wait=True)
@@ -83,6 +83,7 @@ def load_command_table(self, _):
         'kusto cluster-principal-assignment',
         kusto_cluster_principal_assignment,
         client_factory=cf_cluster_principal_assignment,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'kusto_cluster_principal_assignment_list')
         g.custom_show_command('show', 'kusto_cluster_principal_assignment_show')
@@ -95,7 +96,7 @@ def load_command_table(self, _):
         )
         g.custom_wait_command('wait', 'kusto_cluster_principal_assignment_show')
 
-    with self.command_group('kusto database', kusto_database, client_factory=cf_database) as g:
+    with self.command_group('kusto database', kusto_database, client_factory=cf_database, is_experimental=True) as g:
         g.custom_command('list', 'kusto_database_list')
         g.custom_show_command('show', 'kusto_database_show')
         g.custom_command('create', 'kusto_database_create', supports_no_wait=True)
@@ -110,6 +111,7 @@ def load_command_table(self, _):
         'kusto database-principal-assignment',
         kusto_database_principal_assignment,
         client_factory=cf_database_principal_assignment,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'kusto_database_principal_assignment_list')
         g.custom_show_command('show', 'kusto_database_principal_assignment_show')
@@ -126,6 +128,7 @@ def load_command_table(self, _):
         'kusto attached-database-configuration',
         kusto_attached_database_configuration,
         client_factory=cf_attached_database_configuration,
+        is_experimental=True,
     ) as g:
         g.custom_command('list', 'kusto_attached_database_configuration_list')
         g.custom_show_command('show', 'kusto_attached_database_configuration_show')
@@ -138,7 +141,9 @@ def load_command_table(self, _):
         )
         g.custom_wait_command('wait', 'kusto_attached_database_configuration_show')
 
-    with self.command_group('kusto data-connection', kusto_data_connection, client_factory=cf_data_connection) as g:
+    with self.command_group(
+        'kusto data-connection', kusto_data_connection, client_factory=cf_data_connection, is_experimental=True
+    ) as g:
         g.custom_command('list', 'kusto_data_connection_list')
         g.custom_show_command('show', 'kusto_data_connection_show')
         g.custom_command('create', 'kusto_data_connection_create', supports_no_wait=True)
@@ -148,6 +153,3 @@ def load_command_table(self, _):
             'data-connection-validation', 'kusto_data_connection_data_connection_validation', supports_no_wait=True
         )
         g.custom_wait_command('wait', 'kusto_data_connection_show')
-
-    with self.command_group('kusto', is_experimental=True):
-        pass

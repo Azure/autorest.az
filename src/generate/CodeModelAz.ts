@@ -106,6 +106,7 @@ export interface CodeModelAz {
     azOutputFolder: string;
     Extension_Name: string;
     Extension_Parent: string;
+    Extension_Description: string;
     Extension_NameUnderscored: string;
     ConfiguredScenario: boolean;
     Extension_NameClass: string;

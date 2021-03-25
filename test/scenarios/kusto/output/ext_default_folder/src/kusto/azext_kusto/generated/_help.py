@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+helps['kusto'] = '''
+    type: group
+    short-summary: Manage Kusto
+'''
+
 helps['kusto cluster'] = """
     type: group
     short-summary: Manage cluster with kusto
