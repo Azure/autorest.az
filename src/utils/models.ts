@@ -129,6 +129,7 @@ export enum CodeGenConstants {
     testResources = 'test-resources',
     preparers = 'preparers',
     genCmdletTest = 'gen-cmdlet-test',
+    extensionDescription = 'extension-description',
 
     // some configuration keys under az section
     namespace = 'namespace',

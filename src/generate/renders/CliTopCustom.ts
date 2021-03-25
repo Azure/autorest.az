@@ -93,8 +93,11 @@ export class CliTopCustom extends TemplateBase {
         output.push(indentStr + 'from .generated.custom import *  # noqa: F403');
         output.push(indentStr + 'try:');
         output.push(indentStr + '    from .manual.custom import *  # noqa: F403');
-        output.push(indentStr + 'except ImportError:');
-        output.push(indentStr + '    pass');
+        output.push(indentStr + 'except ImportError as e:');
+        output.push(indentStr + "    if e.name.endswith('manual.custom'):");
+        output.push(indentStr + '        pass');
+        output.push(indentStr + '    else:');
+        output.push(indentStr + '        raise e');
         output.push('');
         return output;
     }

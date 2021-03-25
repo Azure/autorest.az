@@ -15,5 +15,8 @@
 from .generated.action import *  # noqa: F403
 try:
     from .manual.action import *  # noqa: F403
-except ImportError:
-    pass
+except ImportError as e:
+    if e.name.endswith('manual.action'):
+        pass
+    else:
+        raise e
