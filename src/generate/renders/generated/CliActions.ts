@@ -13,7 +13,7 @@ import { CodeModelTypes, PathConstants, RenderInput, SortOrder } from '../../../
 
 let allActions: Map<string, boolean>;
 
-export class CliCommands extends TemplateBase {
+export class CliActions extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = path.join(
@@ -41,7 +41,20 @@ export class CliCommands extends TemplateBase {
             ['commandGroup', new RenderInput(['name'], { name: SortOrder.ASEC })],
             ['command', new RenderInput(['methodName'])],
             ['method', new RenderInput(['nameAz', 'cliKey'], { nameAz: SortOrder.ASEC })],
-            ['methodParameter', new RenderInput(['mapsTo', 'type', 'namePython', 'actionName', 'schema'])],
+            [
+                'methodParameter',
+                new RenderInput(
+                    ['mapsTo', 'type', 'namePython'], // , 'actionType', 'actionName', 'propertiesMap'
+                    {
+                        mapsTo: SortOrder.ASEC,
+                    },
+                    [
+                        ['isList', false],
+                        ['isListOfSimple', false],
+                        ['isSimpleArray', true],
+                    ],
+                ),
+            ],
         ]);
 
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[

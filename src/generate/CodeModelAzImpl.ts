@@ -94,6 +94,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
+    allActions: Map<Parameter, string>;
     private _testScenario: any;
     private _defaultTestScenario: any[];
     private _configuredScenario: boolean;
@@ -475,6 +476,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
+        this.allActions = new Map<Parameter, string>();
         const nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
         const pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
         if (this.SelectFirstCommandGroup()) {
@@ -691,10 +693,15 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     preAction.action.schema,
                                                     preActionUniqueName,
                                                 );
+                                                this.allActions.set(
+                                                    preAction.action,
+                                                    preActionUniqueName,
+                                                );
                                                 this.paramActionNameReference.set(
                                                     param.schema,
                                                     actionUniqueName,
                                                 );
+                                                this.allActions.set(param, actionUniqueName);
                                                 nameActionReference.set(
                                                     preActionUniqueName,
                                                     preAction,
@@ -710,6 +717,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     param.schema,
                                                     actionName,
                                                 );
+                                                this.allActions.set(param, actionName);
                                             }
                                         }
                                     } while (this.SelectNextMethodParameter());
@@ -750,6 +758,44 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
         });
+    }
+
+    private GetActionData() {
+        const actions = [];
+        this.allActions.forEach((actionName: string, param: Parameter) => {
+            const action = {
+                actionName: actionName,
+            };
+            action['namePython'] = this.Parameter_NamePython(param);
+            action['type'] = this.Schema_Type(param.schema);
+            if (action['type'] === SchemaType.Array) {
+                action['baseClass'] = '_AppendAction';
+            } else {
+                action['baseClass'] = 'Action';
+            }
+            action['subProperties'] = [];
+            action['subPropertiesMapsTo'] = [];
+            action['subPropertiesNamePython'] = [];
+            action['constants'] = {};
+            this.EnterSubMethodParameters(param);
+            if (this.SelectFirstMethodParameter(true)) {
+                do {
+                    if (this.MethodParameter_Type === SchemaType.Constant) {
+                        action['constant'][`'` + this.MethodParameter_NamePython + `'`] = 'val';
+                    } else if (this.MethodParameter['readOnly']) {
+                        continue;
+                    } else {
+                        action['subProperties'].append({
+                            mapsTo: this.MethodParameter_MapsTo,
+                            namePython: this.MethodParameter_NamePython,
+                        });
+                        action['subPropertiesMapsTo'].append(this.MethodParameter_MapsTo);
+                        action['subPropertiesNamePython'].append(this.MethodParameter_NamePython);
+                    }
+                } while (this.SelectNextMethodParameter(true));
+            }
+        });
+        return actions;
     }
     //= ================================================================================================================
     // Extension level information
