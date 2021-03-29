@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+helps['vm'] = '''
+    type: group
+    short-summary: Manage Compute
+'''
+
 helps['vm virtual-machine'] = """
     type: group
     short-summary: Manage virtual machine with vm

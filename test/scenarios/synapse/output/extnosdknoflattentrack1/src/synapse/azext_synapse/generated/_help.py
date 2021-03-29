@@ -13,6 +13,11 @@
 from knack.help_files import helps
 
 
+helps['synapse'] = '''
+    type: group
+    short-summary: Manage Synapse
+'''
+
 helps['synapse big-data-pool'] = """
     type: group
     short-summary: Manage big data pool with synapse

@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+helps['datafactory'] = '''
+    type: group
+    short-summary: Manage DFAZ
+'''
+
 helps['datafactory'] = """
     type: group
     short-summary: Manage factory with datafactory
