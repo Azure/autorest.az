@@ -781,20 +781,40 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.EnterSubMethodParameters(param);
             if (this.SelectFirstMethodParameter(true)) {
                 do {
-                    if (this.MethodParameter_Type === SchemaType.Constant) {
-                        action['constant'][`'` + this.MethodParameter_NamePython + `'`] = 'val';
-                    } else if (this.MethodParameter['readOnly']) {
+                    const tmpParam = this.SubMethodParameter;
+                    const baseParam = tmpParam['polyBaseParam'];
+                    const keyToMatch =
+                        baseParam?.schema?.discriminator?.property?.language.python?.name;
+                    const valueToMatch = tmpParam.schema?.['discriminatorValue'];
+                    const pythonName = this.Parameter_NamePython(tmpParam);
+                    const mapsTo = this.Parameter_MapsTo(tmpParam);
+                    if (
+                        this.Parameter_Type(tmpParam) === SchemaType.Constant &&
+                        !isNullOrUndefined(tmpParam.schema['value']?.['value'])
+                    ) {
+                        action['constant'][
+                            `'${pythonName}'`
+                        ] = `'${tmpParam.schema['value']['value']}'`;
+                    } else if (tmpParam['readOnly']) {
                         continue;
+                    } else if (
+                        keyToMatch === pythonName &&
+                        !isNullOrUndefined(keyToMatch) &&
+                        !isNullOrUndefined(valueToMatch)
+                    ) {
+                        action['constant'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
                     } else {
-                        action['subProperties'].append({
-                            mapsTo: this.MethodParameter_MapsTo,
-                            namePython: this.MethodParameter_NamePython,
+                        action['subProperties'].push({
+                            mapsTo: mapsTo,
+                            namePython: pythonName,
                         });
-                        action['subPropertiesMapsTo'].append(this.MethodParameter_MapsTo);
-                        action['subPropertiesNamePython'].append(this.MethodParameter_NamePython);
+                        action['subPropertiesMapsTo'].push(mapsTo);
+                        action['subPropertiesNamePython'].push(pythonName);
                     }
                 } while (this.SelectNextMethodParameter(true));
             }
+            actions.push(action);
+            this.ExitSubMethodParameters();
         });
         return actions;
     }
@@ -1809,13 +1829,13 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_IsShorthandSyntax(this.MethodParameter);
     }
 
-    public isComplexSchema(type: string): boolean {
+    public isComplexSchema(type: string, param: any): boolean {
         if (
             type === SchemaType.Array ||
             type === SchemaType.Object ||
             type === SchemaType.Dictionary ||
             type === SchemaType.Any ||
-            this.MethodParameter.language['cli'].json === true
+            param.language['cli'].json === true
         ) {
             return true;
         } else {
@@ -1908,22 +1928,22 @@ export class CodeModelCliImpl implements CodeModelAz {
                     ) {
                         return false;
                     } else if (p['schema'].type === SchemaType.Array) {
-                        if (this.isComplexSchema(p['schema']?.elementType?.type)) {
+                        if (this.isComplexSchema(p['schema']?.elementType?.type, p['schema'])) {
                             return false;
                         }
                         for (const mp of values(p['schema']?.elementType?.properties)) {
-                            if (this.isComplexSchema(mp['schema'].type)) {
+                            if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                                 return false;
                             }
                         }
                         for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                             for (const pp of values(parent['properties'])) {
-                                if (this.isComplexSchema(pp['schema'].type)) {
+                                if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                     return false;
                                 }
                             }
                         }
-                    } else if (this.isComplexSchema(p['schema'].type)) {
+                    } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
                         return false;
                     }
                 }
@@ -1948,18 +1968,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 } else if (p['schema'].type === SchemaType.Array) {
                     for (const mp of values(p['schema']?.elementType?.properties)) {
-                        if (this.isComplexSchema(mp['schema'].type)) {
+                        if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                             return false;
                         }
                     }
                     for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                         for (const pp of values(parent['properties'])) {
-                            if (this.isComplexSchema(pp['schema'].type)) {
+                            if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                 return false;
                             }
                         }
                     }
-                } else if (this.isComplexSchema(p['schema'].type)) {
+                } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
                     // objects.objects
                     return false;
                 }
@@ -1981,7 +2001,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if (mp['readOnly']) {
                         continue;
                     }
-                    if (this.isComplexSchema(mp['schema'].type)) {
+                    if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                         return false;
                     }
                 }
@@ -1990,12 +2010,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                         if (pp['readOnly']) {
                             continue;
                         }
-                        if (this.isComplexSchema(pp['schema'].type)) {
+                        if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                             return false;
                         }
                     }
                 }
-            } else if (this.isComplexSchema(p.type)) {
+            } else if (this.isComplexSchema(p.type, p)) {
                 // dicts.objects or dicts.dictionaries
                 return false;
             }
@@ -2052,7 +2072,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private Parameter_IsSimpleArray(param: Parameter): boolean {
         if (this.Parameter_Type(param) === SchemaType.Array) {
             const elementType = param.schema['elementType'].type;
-            if (!this.isComplexSchema(elementType)) {
+            if (!this.isComplexSchema(elementType, param.schema)) {
                 return true;
             }
         }
@@ -2064,7 +2084,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        if (this.isComplexSchema(this.Parameter_Type(param))) {
+        if (this.isComplexSchema(this.Parameter_Type(param), param)) {
             return true;
         }
         return false;
@@ -2156,7 +2176,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (schema.language['cli'].json === true) {
             return true;
         }
-        if (this.isComplexSchema(this.Schema_Type(schema))) {
+        if (this.isComplexSchema(this.Schema_Type(schema), schema)) {
             return true;
         }
         return false;

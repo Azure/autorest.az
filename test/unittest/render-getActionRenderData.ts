@@ -55,8 +55,8 @@ describe('getActionsRender', () => {
             CodeGenConstants.pythonNamespace,
             'azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory',
         );
-        const cliCommandsRender = new CliActions(model);
-        const data = await cliCommandsRender.GetRenderData();
+        const cliActionRender = new CliActions(model);
+        const data = await cliActionRender.GetRenderData();
         return data;
     }
 

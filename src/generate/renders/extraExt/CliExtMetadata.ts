@@ -15,7 +15,7 @@ export class CliTopMetadata extends TemplateBase {
         this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
-            model.AzextFolder,
+            'azext',
             PathConstants.metadataFile + PathConstants.njxFileExtension,
         );
     }
