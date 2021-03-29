@@ -20,7 +20,7 @@ from knack.util import CLIError
 
 {% for action in data.actions %}
 {% if action.actionType == 'KeyValue' %}
-class Add{{action.name}}(argparse.{{action.baseClass}}):
+class {{action.actionName}}(argparse.{{action.baseClass}}):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         namespace.{{action.namePython}} = action
@@ -52,12 +52,12 @@ class Add{{action.name}}(argparse.{{action.baseClass}}):
         return d
 {% elif 'Positional' == action.actionType %}
 
-class Add{{action.name}}(argparse.{{action.baseClass}}):
+class {{action.actionName}}(argparse.{{action.baseClass}}):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         {% if action.type == 'array' %} 
         for item in action:
-           super(Add{{action.name}}, self).__call__(parser, namespace, item, option_string)
+           super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
         {% else %}
         namespace.{{action.namePython}} = action[0]
         {% endif %}
@@ -80,12 +80,12 @@ class Add{{action.name}}(argparse.{{action.baseClass}}):
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
 {% elif 'ShortHandSyntax' == action.actionType %} 
 
-class Add{{action.name}}(argparse.{{action.baseClass}}):
+class {{action.actionName}}(argparse.{{action.baseClass}}):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
         {% if action.type == 'array' %} 
         for item in action:
-           super(Add{{action.name}}, self).__call__(parser, namespace, item, option_string)
+           super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
         {% else %}
         namespace.{{action.namePython}} = action[0]
         {% endif %}

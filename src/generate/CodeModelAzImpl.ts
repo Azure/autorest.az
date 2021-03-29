@@ -766,8 +766,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.allActions.forEach((actionName: string, param: Parameter) => {
             const action = {
                 actionName: actionName,
+                actionType: 'KeyValue',
             };
-            action['namePython'] = this.Parameter_NamePython(param);
+            action.actionType = this.Parameter_IsPositional(param)
+                ? 'Positional'
+                : action.actionType;
+            action.actionType = this.Parameter_IsShorthandSyntax(param)
+                ? 'ShortHandSyntax'
+                : action.actionType;
+            action['namePython'] = param.schema?.language?.python?.name;
             action['type'] = this.Schema_Type(param.schema);
             if (action['type'] === SchemaType.Array) {
                 action['baseClass'] = '_AppendAction';
