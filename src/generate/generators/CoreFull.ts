@@ -151,7 +151,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                                 PathConstants.templateRootFolder,
                                 PathConstants.testFolder,
                                 PathConstants.cmdletFolder,
-                                PathConstants.conftestFile + '.njx',
+                                PathConstants.conftestFile + PathConstants.njxFileExtension,
                             ),
                         ),
                     );

@@ -50,7 +50,6 @@ import {
     ExampleParam,
     MethodParam,
     KeyValueType,
-    SubProperty,
 } from './CodeModelAz';
 import {
     azOptions,
@@ -762,7 +761,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         });
     }
 
-    private GetActionData() {
+    public GetActionData() {
         const actions = [];
         this.allActions.forEach((actionName: string, param: Parameter) => {
             const action = {
@@ -1712,26 +1711,6 @@ export class CodeModelCliImpl implements CodeModelAz {
             return this.paramActionNameReference.get(schema);
         }
         return undefined;
-    }
-
-    public get MethodParameter_SubProperties(): SubProperty[] {
-        const result = [];
-        if (this.EnterSubMethodParameters()) {
-            if (this.SelectFirstMethodParameter(true)) {
-                do {
-                    if (this.Parameter_DefaultValue(this.SubMethodParameter) !== undefined) {
-                        result.push({
-                            nameAz: this.Parameter_NameAz,
-                            namePython: this.Parameter_NamePython,
-                            type: this.Parameter_Type,
-                            defaultValue: this.Parameter_DefaultValue,
-                        });
-                    }
-                } while (this.SelectNextMethodParameter(true));
-            }
-            this.ExitSubMethodParameters();
-        }
-        return result;
     }
 
     public get MethodParameter_Name(): string {

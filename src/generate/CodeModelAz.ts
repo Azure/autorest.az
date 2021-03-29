@@ -31,12 +31,6 @@ export enum KeyValueType {
     SimpleArray,
 }
 
-export type SubProperty = {
-    nameAz: string;
-    namePython: string;
-    type: string;
-    defaultValue: string;
-};
 export class ExampleParam {
     name: string;
     value: any;
@@ -208,7 +202,6 @@ export interface CodeModelAz {
     MethodParameter_IsDiscriminator: boolean;
     MethodParameter_IdPart: string;
     MethodParameter_ArgGroup: string;
-    MethodParameter_SubProperties: SubProperty[];
     MethodParameter: Parameter;
     MethodParameters: Array<Parameter>;
     SubMethodParameter: Parameter;
@@ -297,5 +290,6 @@ export interface CodeModelAz {
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
     );
+    GetActionData(): any[];
     GetTestUniqueResource: boolean;
 }

@@ -160,7 +160,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                         PathConstants.templateRootFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
-                        PathConstants.conftestFile + '.njx',
+                        PathConstants.conftestFile + PathConstants.njxFileExtension,
                     ),
                 ),
             );

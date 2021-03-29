@@ -19,55 +19,21 @@ export class CliActions extends TemplateBase {
         this.relativePath = path.join(
             model.AzextFolder,
             PathConstants.generatedFolder,
-            PathConstants.commandsFile,
+            PathConstants.actionFile,
         );
-        this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/action.py.njx');
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.generatedFolder,
+            PathConstants.actionFile + PathConstants.njxFileExtension,
+        );
     }
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
-        let data = { imports: [], pylints: [] };
+        const data = { imports: [], pylints: [], actions: [] };
         data['imports'].push([this.model.CliCoreLib + '.commands', ['CliCommandType']]);
-
-        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
-            CodeModelTypes,
-            RenderInput
-        >([
-            [
-                'extension',
-                new RenderInput(['name'], {
-                    name: SortOrder.ASEC,
-                }),
-            ],
-            ['commandGroup', new RenderInput(['name'], { name: SortOrder.ASEC })],
-            ['command', new RenderInput(['methodName'])],
-            ['method', new RenderInput(['nameAz', 'cliKey'], { nameAz: SortOrder.ASEC })],
-            [
-                'methodParameter',
-                new RenderInput(
-                    ['mapsTo', 'type', 'namePython'], // , 'actionType', 'actionName', 'propertiesMap'
-                    {
-                        mapsTo: SortOrder.ASEC,
-                    },
-                    [
-                        ['isList', false],
-                        ['isListOfSimple', false],
-                        ['isSimpleArray', true],
-                    ],
-                ),
-            ],
-        ]);
-
-        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-            ['extension', 'commandGroup'],
-            ['commandGroup', 'command'],
-            ['command', 'method'],
-            ['method', 'methodParameter'],
-        ];
-        data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
+        data.actions = this.model.GetActionData();
         data['pylints'].push('# pylint: disable=protected-access', '# pylint: disable=no-self-use');
-        const result = { data: { imports: [], pylints: [] } };
-        result.data = data;
-        return result;
+        return data;
     }
 
     public async fullGeneration(): Promise<string[]> {

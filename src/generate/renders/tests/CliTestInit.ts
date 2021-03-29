@@ -15,7 +15,11 @@ export class CliTestInit extends TemplateBase {
             PathConstants.testFolder,
             PathConstants.initFile,
         );
-        this.tmplPath = path.join(PathConstants.templateRootFolder, 'tests/init.py.njx');
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.testFolder,
+            PathConstants.initFile + PathConstants.njxFileExtension,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {
