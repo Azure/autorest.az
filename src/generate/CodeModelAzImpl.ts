@@ -774,7 +774,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             action.actionType = this.Parameter_IsShorthandSyntax(param)
                 ? 'ShortHandSyntax'
                 : action.actionType;
-            action['namePython'] = param.schema?.language?.python?.name;
+            action['namePython'] = param['targetProperty']?.language?.python?.name;
             action['type'] = this.Schema_Type(param.schema);
             if (action['type'] === SchemaType.Array) {
                 action['baseClass'] = '_AppendAction';
@@ -1842,7 +1842,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             type === SchemaType.Object ||
             type === SchemaType.Dictionary ||
             type === SchemaType.Any ||
-            param.language['cli'].json === true
+            param?.language?.['cli']?.json === true
         ) {
             return true;
         } else {

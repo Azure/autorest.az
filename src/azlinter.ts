@@ -16,7 +16,7 @@ export async function processRequest(host: Host): Promise<void> {
         const folder = AzConfiguration.getValue(CodeGenConstants.azOutputFolder);
         const azextFolder = AzConfiguration.getValue(CodeGenConstants.azextFolder);
         const azLinter = new AzLinter();
-        const fileName = path.join(
+        let fileName = path.join(
             folder,
             azextFolder,
             PathConstants.generatedFolder,
@@ -24,13 +24,13 @@ export async function processRequest(host: Host): Promise<void> {
         );
         await azLinter.process(fileName);
 
-        // fileName = path.join(
-        //     folder,
-        //     azextFolder,
-        //     PathConstants.generatedFolder,
-        //     PathConstants.actionFile,
-        // );
-        // await azLinter.process(fileName);
+        fileName = path.join(
+            folder,
+            azextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.actionFile,
+        );
+        await azLinter.process(fileName);
 
         if (NeedPreparers().size > 0) {
             await azLinter.process(
