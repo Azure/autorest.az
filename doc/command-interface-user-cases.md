@@ -55,13 +55,13 @@ We can only split commands within one group into separate groups from the comman
 ```
 directive:
     - where:
-        command: az group3 cmd1*
+        command: group3 cmd1*
       set:
-        command: az group1 cmd1*
+        command: group1 cmd1*
     - where:
-        command: az group3 cmd2*
+        command: group3 cmd2*
       set:
-        command: az group2 cmd2*
+        command: group2 cmd2*
 ```
 An example would be:
 ```

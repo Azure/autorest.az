@@ -912,7 +912,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (needRefer && this.CommandGroup_Referenced) {
                 return true;
             } else if (!this.SelectFirstCommand()) {
-                return this.SelectNextCommandGroup();
+                return this.SelectNextCommandGroup(needRefer);
             }
             return true;
         } else {
@@ -942,7 +942,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (needRefer && this.CommandGroup_Referenced) {
                 return true;
             } else if (!this.SelectFirstCommand()) {
-                return this.SelectNextCommandGroup();
+                return this.SelectNextCommandGroup(needRefer);
             }
             return true;
         } else {
