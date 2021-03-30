@@ -22,7 +22,6 @@ from knack.util import CLIError
 class AddKeys(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddKeys, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -39,54 +38,71 @@ class AddKeys(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'alg':
+
                 d['alg'] = v[0]
 
             elif kl == 'crv':
+
                 d['crv'] = v[0]
 
             elif kl == 'd':
+
                 d['d'] = v[0]
 
             elif kl == 'dp':
+
                 d['dp'] = v[0]
 
             elif kl == 'dq':
+
                 d['dq'] = v[0]
 
             elif kl == 'e':
+
                 d['e'] = v[0]
 
             elif kl == 'k':
+
                 d['k'] = v[0]
 
             elif kl == 'kid':
+
                 d['kid'] = v[0]
 
             elif kl == 'kty':
+
                 d['kty'] = v[0]
 
             elif kl == 'n':
+
                 d['n'] = v[0]
 
             elif kl == 'p':
+
                 d['p'] = v[0]
 
             elif kl == 'q':
+
                 d['q'] = v[0]
 
             elif kl == 'qi':
+
                 d['qi'] = v[0]
 
             elif kl == 'use':
+
                 d['use'] = v[0]
 
             elif kl == 'x':
+
                 d['x'] = v[0]
 
-            elif kl == 'x5_c':
-                d['x5_c'] = v[0]
+            elif kl == 'x5-c':
+
+                d['x5_c'] = v
 
             elif kl == 'y':
+
                 d['y'] = v[0]
 
             else:

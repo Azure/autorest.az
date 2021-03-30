@@ -22,7 +22,6 @@ from knack.util import CLIError
 class AddSubstatuses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddSubstatuses, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -39,18 +38,23 @@ class AddSubstatuses(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'code':
+
                 d['code'] = v[0]
 
             elif kl == 'level':
+
                 d['level'] = v[0]
 
-            elif kl == 'display_status':
+            elif kl == 'display-status':
+
                 d['display_status'] = v[0]
 
             elif kl == 'message':
+
                 d['message'] = v[0]
 
             elif kl == 'time':
+
                 d['time'] = v[0]
 
             else:
@@ -65,7 +69,6 @@ class AddSubstatuses(argparse._AppendAction):
 class AddStatuses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddStatuses, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -82,18 +85,23 @@ class AddStatuses(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'code':
+
                 d['code'] = v[0]
 
             elif kl == 'level':
+
                 d['level'] = v[0]
 
-            elif kl == 'display_status':
+            elif kl == 'display-status':
+
                 d['display_status'] = v[0]
 
             elif kl == 'message':
+
                 d['message'] = v[0]
 
             elif kl == 'time':
+
                 d['time'] = v[0]
 
             else:

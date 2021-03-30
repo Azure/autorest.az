@@ -42,8 +42,12 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             kl = k.lower()
             v = properties[k]
             {% for subprop in action.subProperties %}
-            {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.mapsTo}}':
+            {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
+                {% if subprop.type == 'array' %}
+                d['{{subprop.namePython}}'] = v
+                {% else %}
                 d['{{subprop.namePython}}'] = v[0]
+                {% endif %}
             {% endfor %}
             {% if action.subProperties.length > 0 %}
             else:
@@ -108,10 +112,14 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             for k in properties:
                 kl = k.lower()
                 v = properties[k]
-                {% for subprop in action.subProperties %}
-                {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.mapsTo}}':
+                {% for subprop in action.subProperties -%}
+                {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
+                    {%- if subprop.type == 'array' -%}
+                    d['{{subprop.namePython}}'] = v
+                    {%- else %}
                     d['{{subprop.namePython}}'] = v[0]
-                {% endfor %}
+                    {%- endif %}
+                {%- endfor %}
                 {% if action.subProperties.length > 0 %}
                 else:
                     raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.

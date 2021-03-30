@@ -22,7 +22,6 @@ from knack.util import CLIError
 class AddAutoScale(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.auto_scale = action
 
     def get_action(self, values, option_string):
@@ -38,13 +37,16 @@ class AddAutoScale(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'min_node_count':
+            if kl == 'min-node-count':
+
                 d['min_node_count'] = v[0]
 
             elif kl == 'enabled':
+
                 d['enabled'] = v[0]
 
-            elif kl == 'max_node_count':
+            elif kl == 'max-node-count':
+
                 d['max_node_count'] = v[0]
 
             else:
@@ -59,7 +61,6 @@ class AddAutoScale(argparse.Action):
 class AddAutoPause(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.auto_pause = action
 
     def get_action(self, values, option_string):
@@ -75,10 +76,12 @@ class AddAutoPause(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'delay_in_minutes':
+            if kl == 'delay-in-minutes':
+
                 d['delay_in_minutes'] = v[0]
 
             elif kl == 'enabled':
+
                 d['enabled'] = v[0]
 
             else:
@@ -93,7 +96,6 @@ class AddAutoPause(argparse.Action):
 class AddLibraryRequirements(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.library_requirements = action
 
     def get_action(self, values, option_string):
@@ -110,9 +112,11 @@ class AddLibraryRequirements(argparse.Action):
             v = properties[k]
 
             if kl == 'content':
+
                 d['content'] = v[0]
 
             elif kl == 'filename':
+
                 d['filename'] = v[0]
 
             else:
@@ -127,7 +131,6 @@ class AddLibraryRequirements(argparse.Action):
 class AddSku(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.sku = action
 
     def get_action(self, values, option_string):
@@ -144,9 +147,11 @@ class AddSku(argparse.Action):
             v = properties[k]
 
             if kl == 'tier':
+
                 d['tier'] = v[0]
 
             elif kl == 'name':
+
                 d['name'] = v[0]
 
             else:
@@ -160,7 +165,6 @@ class AddSku(argparse.Action):
 class AddRecurringScans(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.recurring_scans = action
 
     def get_action(self, values, option_string):
@@ -176,14 +180,17 @@ class AddRecurringScans(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'is_enabled':
+            if kl == 'is-enabled':
+
                 d['is_enabled'] = v[0]
 
-            elif kl == 'email_subscription_admins':
+            elif kl == 'email-subscription-admins':
+
                 d['email_subscription_admins'] = v[0]
 
             elif kl == 'emails':
-                d['emails'] = v[0]
+
+                d['emails'] = v
 
             else:
                 raise CLIError(
@@ -197,7 +204,6 @@ class AddRecurringScans(argparse.Action):
 class AddBaselineResults(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddBaselineResults, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -214,7 +220,8 @@ class AddBaselineResults(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'result':
-                d['result'] = v[0]
+
+                d['result'] = v
 
             else:
                 raise CLIError(
@@ -228,7 +235,6 @@ class AddBaselineResults(argparse._AppendAction):
 class AddDefaultDataLakeStorage(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.default_data_lake_storage = action
 
     def get_action(self, values, option_string):
@@ -244,10 +250,12 @@ class AddDefaultDataLakeStorage(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'account_url':
+            if kl == 'account-url':
+
                 d['account_url'] = v[0]
 
             elif kl == 'filesystem':
+
                 d['filesystem'] = v[0]
 
             else:
@@ -262,7 +270,6 @@ class AddDefaultDataLakeStorage(argparse.Action):
 class AddConnectivityEndpoints(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.connectivity_endpoints = action
 
     def get_action(self, values, option_string):

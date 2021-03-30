@@ -22,7 +22,6 @@ from knack.util import CLIError
 class AddSubscriptions(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddSubscriptions, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -39,6 +38,7 @@ class AddSubscriptions(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -52,7 +52,6 @@ class AddSubscriptions(argparse._AppendAction):
 class AddVirtualNetworks(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddVirtualNetworks, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -69,6 +68,7 @@ class AddVirtualNetworks(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -100,7 +100,6 @@ class AddSubnets(argparse._AppendAction):
             for k in properties:
                 kl = k.lower()
                 v = properties[k]
-
                 if kl == 'id':
                     d['id'] = v[0]
 
@@ -116,7 +115,6 @@ class AddSubnets(argparse._AppendAction):
 class AddHub(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.hub = action
 
     def get_action(self, values, option_string):
@@ -133,6 +131,7 @@ class AddHub(argparse.Action):
             v = properties[k]
 
             if kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -147,7 +146,6 @@ class AddHub(argparse.Action):
 class AddSpokes(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddSpokes, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -164,6 +162,7 @@ class AddSpokes(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -178,7 +177,6 @@ class AddSpokes(argparse._AppendAction):
 class AddMesh(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddMesh, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -195,6 +193,7 @@ class AddMesh(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'id':
+
                 d['id'] = v[0]
 
             else:

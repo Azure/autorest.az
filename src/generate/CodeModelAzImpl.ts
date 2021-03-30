@@ -800,6 +800,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     const pythonName = this.Parameter_NamePython(tmpParam);
                     const mapsTo = this.Parameter_MapsTo(tmpParam);
                     const nameAz = this.Parameter_NameAz(tmpParam);
+                    const subType = this.Parameter_Type(tmpParam);
                     if (
                         this.Parameter_Type(tmpParam) === SchemaType.Constant &&
                         !isNullOrUndefined(tmpParam.schema['value']?.['value'])
@@ -818,8 +819,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                         action['constants'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
                     } else {
                         action['subProperties'].push({
-                            mapsTo: mapsTo,
                             namePython: pythonName,
+                            nameAz: nameAz,
+                            type: subType,
                         });
                         action['subPropertiesMapsTo'].push(mapsTo);
                         action['subPropertiesNamePython'].push(pythonName);

@@ -58,7 +58,6 @@ class AddFactoryVstsConfiguration(argparse.Action):
 class AddFactoryGitHubConfiguration(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.factory_git_hub_configuration = action
 
     def get_action(self, values, option_string):
@@ -74,22 +73,28 @@ class AddFactoryGitHubConfiguration(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'host_name':
+            if kl == 'host-name':
+
                 d['host_name'] = v[0]
 
-            elif kl == 'account_name':
+            elif kl == 'account-name':
+
                 d['account_name'] = v[0]
 
-            elif kl == 'repository_name':
+            elif kl == 'repository-name':
+
                 d['repository_name'] = v[0]
 
-            elif kl == 'collaboration_branch':
+            elif kl == 'collaboration-branch':
+
                 d['collaboration_branch'] = v[0]
 
-            elif kl == 'root_folder':
+            elif kl == 'root-folder':
+
                 d['root_folder'] = v[0]
 
-            elif kl == 'last_commit_id':
+            elif kl == 'last-commit-id':
+
                 d['last_commit_id'] = v[0]
 
             else:
@@ -130,7 +135,6 @@ class AddFakeIdentity(argparse.Action):
 class AddReplicaSets(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddReplicaSets, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -147,9 +151,11 @@ class AddReplicaSets(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'location':
+
                 d['location'] = v[0]
 
-            elif kl == 'subnet_id':
+            elif kl == 'subnet-id':
+
                 d['subnet_id'] = v[0]
 
             else:

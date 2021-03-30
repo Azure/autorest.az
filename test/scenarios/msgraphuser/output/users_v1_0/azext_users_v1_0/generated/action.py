@@ -22,7 +22,6 @@ from knack.util import CLIError
 class AddAssignedLicenses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddAssignedLicenses, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -38,10 +37,12 @@ class AddAssignedLicenses(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'disabled_plans':
-                d['disabled_plans'] = v[0]
+            if kl == 'disabled-plans':
 
-            elif kl == 'sku_id':
+                d['disabled_plans'] = v
+
+            elif kl == 'sku-id':
+
                 d['sku_id'] = v[0]
 
             else:
@@ -56,7 +57,6 @@ class AddAssignedLicenses(argparse._AppendAction):
 class AddAssignedPlans(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddAssignedPlans, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -72,16 +72,20 @@ class AddAssignedPlans(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'assigned_date_time':
+            if kl == 'assigned-date-time':
+
                 d['assigned_date_time'] = v[0]
 
-            elif kl == 'capability_status':
+            elif kl == 'capability-status':
+
                 d['capability_status'] = v[0]
 
             elif kl == 'service':
+
                 d['service'] = v[0]
 
-            elif kl == 'service_plan_id':
+            elif kl == 'service-plan-id':
+
                 d['service_plan_id'] = v[0]
 
             else:
@@ -96,7 +100,6 @@ class AddAssignedPlans(argparse._AppendAction):
 class AddIdentities(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddIdentities, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -113,12 +116,15 @@ class AddIdentities(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'issuer':
+
                 d['issuer'] = v[0]
 
-            elif kl == 'issuer_assigned_id':
+            elif kl == 'issuer-assigned-id':
+
                 d['issuer_assigned_id'] = v[0]
 
-            elif kl == 'sign_in_type':
+            elif kl == 'sign-in-type':
+
                 d['sign_in_type'] = v[0]
 
             else:
@@ -133,7 +139,6 @@ class AddIdentities(argparse._AppendAction):
 class AddLicenseAssignmentStates(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddLicenseAssignmentStates, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -149,19 +154,24 @@ class AddLicenseAssignmentStates(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'assigned_by_group':
+            if kl == 'assigned-by-group':
+
                 d['assigned_by_group'] = v[0]
 
-            elif kl == 'disabled_plans':
-                d['disabled_plans'] = v[0]
+            elif kl == 'disabled-plans':
+
+                d['disabled_plans'] = v
 
             elif kl == 'error':
+
                 d['error'] = v[0]
 
-            elif kl == 'sku_id':
+            elif kl == 'sku-id':
+
                 d['sku_id'] = v[0]
 
             elif kl == 'state':
+
                 d['state'] = v[0]
 
             else:
@@ -176,7 +186,6 @@ class AddLicenseAssignmentStates(argparse._AppendAction):
 class AddOnPremisesExtensionAttributes(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.on_premises_extension_attributes = action
 
     def get_action(self, values, option_string):
@@ -192,49 +201,64 @@ class AddOnPremisesExtensionAttributes(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'extension_attribute1':
+            if kl == 'extension-attribute1':
+
                 d['extension_attribute1'] = v[0]
 
-            elif kl == 'extension_attribute10':
+            elif kl == 'extension-attribute10':
+
                 d['extension_attribute10'] = v[0]
 
-            elif kl == 'extension_attribute11':
+            elif kl == 'extension-attribute11':
+
                 d['extension_attribute11'] = v[0]
 
-            elif kl == 'extension_attribute12':
+            elif kl == 'extension-attribute12':
+
                 d['extension_attribute12'] = v[0]
 
-            elif kl == 'extension_attribute13':
+            elif kl == 'extension-attribute13':
+
                 d['extension_attribute13'] = v[0]
 
-            elif kl == 'extension_attribute14':
+            elif kl == 'extension-attribute14':
+
                 d['extension_attribute14'] = v[0]
 
-            elif kl == 'extension_attribute15':
+            elif kl == 'extension-attribute15':
+
                 d['extension_attribute15'] = v[0]
 
-            elif kl == 'extension_attribute2':
+            elif kl == 'extension-attribute2':
+
                 d['extension_attribute2'] = v[0]
 
-            elif kl == 'extension_attribute3':
+            elif kl == 'extension-attribute3':
+
                 d['extension_attribute3'] = v[0]
 
-            elif kl == 'extension_attribute4':
+            elif kl == 'extension-attribute4':
+
                 d['extension_attribute4'] = v[0]
 
-            elif kl == 'extension_attribute5':
+            elif kl == 'extension-attribute5':
+
                 d['extension_attribute5'] = v[0]
 
-            elif kl == 'extension_attribute6':
+            elif kl == 'extension-attribute6':
+
                 d['extension_attribute6'] = v[0]
 
-            elif kl == 'extension_attribute7':
+            elif kl == 'extension-attribute7':
+
                 d['extension_attribute7'] = v[0]
 
-            elif kl == 'extension_attribute8':
+            elif kl == 'extension-attribute8':
+
                 d['extension_attribute8'] = v[0]
 
-            elif kl == 'extension_attribute9':
+            elif kl == 'extension-attribute9':
+
                 d['extension_attribute9'] = v[0]
 
             else:
@@ -252,7 +276,6 @@ class AddOnPremisesExtensionAttributes(argparse.Action):
 class AddOnPremisesProvisioningErrors(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddOnPremisesProvisioningErrors, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -269,15 +292,19 @@ class AddOnPremisesProvisioningErrors(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'category':
+
                 d['category'] = v[0]
 
-            elif kl == 'occurred_date_time':
+            elif kl == 'occurred-date-time':
+
                 d['occurred_date_time'] = v[0]
 
-            elif kl == 'property_causing_error':
+            elif kl == 'property-causing-error':
+
                 d['property_causing_error'] = v[0]
 
             elif kl == 'value':
+
                 d['value'] = v[0]
 
             else:
@@ -292,7 +319,6 @@ class AddOnPremisesProvisioningErrors(argparse._AppendAction):
 class AddPasswordProfile(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.password_profile = action
 
     def get_action(self, values, option_string):
@@ -308,13 +334,16 @@ class AddPasswordProfile(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'force_change_password_next_sign_in':
+            if kl == 'force-change-password-next-sign-in':
+
                 d['force_change_password_next_sign_in'] = v[0]
 
-            elif kl == 'force_change_password_next_sign_in_with_mfa':
+            elif kl == 'force-change-password-next-sign-in-with-mfa':
+
                 d['force_change_password_next_sign_in_with_mfa'] = v[0]
 
             elif kl == 'password':
+
                 d['password'] = v[0]
 
             else:
@@ -331,7 +360,6 @@ class AddPasswordProfile(argparse.Action):
 class AddProvisionedPlans(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddProvisionedPlans, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -347,13 +375,16 @@ class AddProvisionedPlans(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'capability_status':
+            if kl == 'capability-status':
+
                 d['capability_status'] = v[0]
 
-            elif kl == 'provisioning_status':
+            elif kl == 'provisioning-status':
+
                 d['provisioning_status'] = v[0]
 
             elif kl == 'service':
+
                 d['service'] = v[0]
 
             else:
@@ -368,7 +399,6 @@ class AddProvisionedPlans(argparse._AppendAction):
 class AddAppRoleAssignments(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddAppRoleAssignments, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -384,31 +414,40 @@ class AddAppRoleAssignments(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'app_role_id':
+            if kl == 'app-role-id':
+
                 d['app_role_id'] = v[0]
 
-            elif kl == 'created_date_time':
+            elif kl == 'created-date-time':
+
                 d['created_date_time'] = v[0]
 
-            elif kl == 'principal_display_name':
+            elif kl == 'principal-display-name':
+
                 d['principal_display_name'] = v[0]
 
-            elif kl == 'principal_id':
+            elif kl == 'principal-id':
+
                 d['principal_id'] = v[0]
 
-            elif kl == 'principal_type':
+            elif kl == 'principal-type':
+
                 d['principal_type'] = v[0]
 
-            elif kl == 'resource_display_name':
+            elif kl == 'resource-display-name':
+
                 d['resource_display_name'] = v[0]
 
-            elif kl == 'resource_id':
+            elif kl == 'resource-id':
+
                 d['resource_id'] = v[0]
 
-            elif kl == 'deleted_date_time':
+            elif kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -424,7 +463,6 @@ class AddAppRoleAssignments(argparse._AppendAction):
 class AddCreatedObjects(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddCreatedObjects, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -440,10 +478,12 @@ class AddCreatedObjects(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -458,7 +498,6 @@ class AddCreatedObjects(argparse._AppendAction):
 class AddDirectReports(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddDirectReports, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -474,10 +513,12 @@ class AddDirectReports(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -492,7 +533,6 @@ class AddDirectReports(argparse._AppendAction):
 class AddManager(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.manager = action
 
     def get_action(self, values, option_string):
@@ -508,10 +548,12 @@ class AddManager(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -526,7 +568,6 @@ class AddManager(argparse.Action):
 class AddMemberOf(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddMemberOf, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -542,10 +583,12 @@ class AddMemberOf(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -560,7 +603,6 @@ class AddMemberOf(argparse._AppendAction):
 class AddOauth2PermissionGrants(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddOauth2PermissionGrants, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -576,22 +618,28 @@ class AddOauth2PermissionGrants(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'client_id':
+            if kl == 'client-id':
+
                 d['client_id'] = v[0]
 
-            elif kl == 'consent_type':
+            elif kl == 'consent-type':
+
                 d['consent_type'] = v[0]
 
-            elif kl == 'principal_id':
+            elif kl == 'principal-id':
+
                 d['principal_id'] = v[0]
 
-            elif kl == 'resource_id':
+            elif kl == 'resource-id':
+
                 d['resource_id'] = v[0]
 
             elif kl == 'scope':
+
                 d['scope'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -606,7 +654,6 @@ class AddOauth2PermissionGrants(argparse._AppendAction):
 class AddOwnedDevices(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddOwnedDevices, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -622,10 +669,12 @@ class AddOwnedDevices(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -640,7 +689,6 @@ class AddOwnedDevices(argparse._AppendAction):
 class AddOwnedObjects(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddOwnedObjects, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -656,10 +704,12 @@ class AddOwnedObjects(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -674,7 +724,6 @@ class AddOwnedObjects(argparse._AppendAction):
 class AddRegisteredDevices(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddRegisteredDevices, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -690,10 +739,12 @@ class AddRegisteredDevices(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -708,7 +759,6 @@ class AddRegisteredDevices(argparse._AppendAction):
 class AddTransitiveMemberOf(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddTransitiveMemberOf, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -724,10 +774,12 @@ class AddTransitiveMemberOf(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'deleted_date_time':
+            if kl == 'deleted-date-time':
+
                 d['deleted_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -742,7 +794,6 @@ class AddTransitiveMemberOf(argparse._AppendAction):
 class AddPhoto(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.photo = action
 
     def get_action(self, values, option_string):
@@ -759,12 +810,15 @@ class AddPhoto(argparse.Action):
             v = properties[k]
 
             if kl == 'height':
+
                 d['height'] = v[0]
 
             elif kl == 'width':
+
                 d['width'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -779,7 +833,6 @@ class AddPhoto(argparse.Action):
 class AddPhotos(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddPhotos, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -796,12 +849,15 @@ class AddPhotos(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'height':
+
                 d['height'] = v[0]
 
             elif kl == 'width':
+
                 d['width'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -816,7 +872,6 @@ class AddPhotos(argparse._AppendAction):
 class AddExtensions(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddExtensions, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -833,6 +888,7 @@ class AddExtensions(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -846,7 +902,6 @@ class AddExtensions(argparse._AppendAction):
 class AddDeviceManagementTroubleshootingEvents(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddDeviceManagementTroubleshootingEvents, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -862,13 +917,16 @@ class AddDeviceManagementTroubleshootingEvents(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'correlation_id':
+            if kl == 'correlation-id':
+
                 d['correlation_id'] = v[0]
 
-            elif kl == 'event_date_time':
+            elif kl == 'event-date-time':
+
                 d['event_date_time'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -883,7 +941,6 @@ class AddDeviceManagementTroubleshootingEvents(argparse._AppendAction):
 class AddWithinSizeRange(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.within_size_range = action
 
     def get_action(self, values, option_string):
@@ -899,10 +956,12 @@ class AddWithinSizeRange(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'maximum_size':
+            if kl == 'maximum-size':
+
                 d['maximum_size'] = v[0]
 
-            elif kl == 'minimum_size':
+            elif kl == 'minimum-size':
+
                 d['minimum_size'] = v[0]
 
             else:
@@ -917,7 +976,6 @@ class AddWithinSizeRange(argparse.Action):
 class AddResources(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddResources, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -934,15 +992,19 @@ class AddResources(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'content':
+
                 d['content'] = v[0]
 
-            elif kl == 'content_url':
+            elif kl == 'content-url':
+
                 d['content_url'] = v[0]
 
-            elif kl == 'gen_self':
+            elif kl == 'self':
+
                 d['self_property'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -957,7 +1019,6 @@ class AddResources(argparse._AppendAction):
 class AddApplication(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.application = action
 
     def get_action(self, values, option_string):
@@ -973,10 +1034,12 @@ class AddApplication(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'display_name':
+            if kl == 'display-name':
+
                 d['display_name'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -991,7 +1054,6 @@ class AddApplication(argparse.Action):
 class AddMasterCategories(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddMasterCategories, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -1008,12 +1070,15 @@ class AddMasterCategories(argparse._AppendAction):
             v = properties[k]
 
             if kl == 'color':
+
                 d['color'] = v[0]
 
-            elif kl == 'display_name':
+            elif kl == 'display-name':
+
                 d['display_name'] = v[0]
 
             elif kl == 'id':
+
                 d['id'] = v[0]
 
             else:
@@ -1028,7 +1093,6 @@ class AddMasterCategories(argparse._AppendAction):
 class AddLanguage(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.language = action
 
     def get_action(self, values, option_string):
@@ -1044,10 +1108,12 @@ class AddLanguage(argparse.Action):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'display_name':
+            if kl == 'display-name':
+
                 d['display_name'] = v[0]
 
             elif kl == 'locale':
+
                 d['locale'] = v[0]
 
             else:
@@ -1062,7 +1128,6 @@ class AddLanguage(argparse.Action):
 class AddServicePlans(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         self.get_action(values, option_string)
-
         super(AddServicePlans, self).__call__(parser, namespace, item, option_string)
 
     def get_action(self, values, option_string):
@@ -1078,16 +1143,20 @@ class AddServicePlans(argparse._AppendAction):
             kl = k.lower()
             v = properties[k]
 
-            if kl == 'applies_to':
+            if kl == 'applies-to':
+
                 d['applies_to'] = v[0]
 
-            elif kl == 'provisioning_status':
+            elif kl == 'provisioning-status':
+
                 d['provisioning_status'] = v[0]
 
-            elif kl == 'service_plan_id':
+            elif kl == 'service-plan-id':
+
                 d['service_plan_id'] = v[0]
 
-            elif kl == 'service_plan_name':
+            elif kl == 'service-plan-name':
+
                 d['service_plan_name'] = v[0]
 
             else:
