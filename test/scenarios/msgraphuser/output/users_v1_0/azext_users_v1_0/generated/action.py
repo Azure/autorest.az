@@ -21,8 +21,8 @@ from knack.util import CLIError
 
 class AddAssignedLicenses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddAssignedLicenses, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddAssignedLicenses, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -56,8 +56,8 @@ class AddAssignedLicenses(argparse._AppendAction):
 
 class AddAssignedPlans(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddAssignedPlans, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddAssignedPlans, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -99,8 +99,8 @@ class AddAssignedPlans(argparse._AppendAction):
 
 class AddIdentities(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddIdentities, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddIdentities, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -138,8 +138,8 @@ class AddIdentities(argparse._AppendAction):
 
 class AddLicenseAssignmentStates(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddLicenseAssignmentStates, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddLicenseAssignmentStates, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -275,8 +275,8 @@ class AddOnPremisesExtensionAttributes(argparse.Action):
 
 class AddOnPremisesProvisioningErrors(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddOnPremisesProvisioningErrors, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddOnPremisesProvisioningErrors, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -359,8 +359,8 @@ class AddPasswordProfile(argparse.Action):
 
 class AddProvisionedPlans(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddProvisionedPlans, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddProvisionedPlans, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -398,8 +398,8 @@ class AddProvisionedPlans(argparse._AppendAction):
 
 class AddAppRoleAssignments(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddAppRoleAssignments, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddAppRoleAssignments, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -462,8 +462,8 @@ class AddAppRoleAssignments(argparse._AppendAction):
 
 class AddCreatedObjects(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddCreatedObjects, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddCreatedObjects, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -497,8 +497,8 @@ class AddCreatedObjects(argparse._AppendAction):
 
 class AddDirectReports(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddDirectReports, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddDirectReports, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -567,8 +567,8 @@ class AddManager(argparse.Action):
 
 class AddMemberOf(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddMemberOf, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddMemberOf, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -602,8 +602,8 @@ class AddMemberOf(argparse._AppendAction):
 
 class AddOauth2PermissionGrants(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddOauth2PermissionGrants, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddOauth2PermissionGrants, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -653,8 +653,8 @@ class AddOauth2PermissionGrants(argparse._AppendAction):
 
 class AddOwnedDevices(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddOwnedDevices, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddOwnedDevices, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -688,8 +688,8 @@ class AddOwnedDevices(argparse._AppendAction):
 
 class AddOwnedObjects(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddOwnedObjects, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddOwnedObjects, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -723,8 +723,8 @@ class AddOwnedObjects(argparse._AppendAction):
 
 class AddRegisteredDevices(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddRegisteredDevices, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddRegisteredDevices, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -758,8 +758,8 @@ class AddRegisteredDevices(argparse._AppendAction):
 
 class AddTransitiveMemberOf(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddTransitiveMemberOf, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddTransitiveMemberOf, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -832,8 +832,8 @@ class AddPhoto(argparse.Action):
 
 class AddPhotos(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddPhotos, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddPhotos, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -871,8 +871,8 @@ class AddPhotos(argparse._AppendAction):
 
 class AddExtensions(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddExtensions, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddExtensions, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -901,8 +901,8 @@ class AddExtensions(argparse._AppendAction):
 
 class AddDeviceManagementTroubleshootingEvents(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddDeviceManagementTroubleshootingEvents, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddDeviceManagementTroubleshootingEvents, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -975,8 +975,8 @@ class AddWithinSizeRange(argparse.Action):
 
 class AddResources(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddResources, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddResources, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -1053,8 +1053,8 @@ class AddApplication(argparse.Action):
 
 class AddMasterCategories(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddMasterCategories, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddMasterCategories, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -1127,8 +1127,8 @@ class AddLanguage(argparse.Action):
 
 class AddServicePlans(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddServicePlans, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddServicePlans, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:

@@ -21,8 +21,8 @@ from knack.util import CLIError
 
 class AddTrustedExternalTenants(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddTrustedExternalTenants, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddTrustedExternalTenants, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -173,8 +173,8 @@ class AddKeyVaultProperties(argparse.Action):
 
 class AddClustersValue(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddClustersValue, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddClustersValue, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -282,8 +282,8 @@ class AddReadOnlyFollowingDatabase(argparse.Action):
 
 class AddDatabasesValue(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddDatabasesValue, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddDatabasesValue, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:

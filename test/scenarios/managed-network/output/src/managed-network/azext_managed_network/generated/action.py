@@ -21,8 +21,8 @@ from knack.util import CLIError
 
 class AddSubscriptions(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddSubscriptions, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddSubscriptions, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -51,8 +51,8 @@ class AddSubscriptions(argparse._AppendAction):
 
 class AddVirtualNetworks(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddVirtualNetworks, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddVirtualNetworks, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -145,8 +145,8 @@ class AddHub(argparse.Action):
 
 class AddSpokes(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddSpokes, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddSpokes, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -176,8 +176,8 @@ class AddSpokes(argparse._AppendAction):
 
 class AddMesh(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddMesh, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddMesh, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:

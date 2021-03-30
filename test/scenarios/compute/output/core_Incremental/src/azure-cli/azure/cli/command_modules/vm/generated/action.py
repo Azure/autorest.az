@@ -21,8 +21,8 @@ from knack.util import CLIError
 
 class AddSubstatuses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddSubstatuses, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddSubstatuses, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
@@ -68,8 +68,8 @@ class AddSubstatuses(argparse._AppendAction):
 
 class AddStatuses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddStatuses, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddStatuses, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:

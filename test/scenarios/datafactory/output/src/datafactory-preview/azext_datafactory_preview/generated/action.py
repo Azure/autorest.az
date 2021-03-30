@@ -134,8 +134,8 @@ class AddFakeIdentity(argparse.Action):
 
 class AddReplicaSets(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        self.get_action(values, option_string)
-        super(AddReplicaSets, self).__call__(parser, namespace, item, option_string)
+        action = self.get_action(values, option_string)
+        super(AddReplicaSets, self).__call__(parser, namespace, action, option_string)
 
     def get_action(self, values, option_string):
         try:
