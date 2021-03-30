@@ -21,7 +21,8 @@ describe('renderActionPYTest', () => {
                 actions: [
                     {
                         name: 'FactoryVstsConfiguration',
-                        namePython: 'factory_vsts_configuration',
+                        nameAz: 'factory-vsts-configuration',
+                        mapsTo: 'factory_vsts_configuration',
                         type: 'object',
                         actionType: 'Positional',
                         baseClass: 'Action',
@@ -73,6 +74,15 @@ describe('renderActionPYTest', () => {
                             'root_folder',
                             'collaboration_branch',
                         ],
+                        subPropertiesNameAz: [
+                            'type',
+                            'project-name',
+                            'tenant-id',
+                            'account-name',
+                            'repository-name',
+                            'root-folder',
+                            'collaboration-branch',
+                        ],
                     },
                 ],
             },
@@ -107,7 +117,8 @@ describe('renderActionPYTest', () => {
                 actions: [
                     {
                         name: 'FactoryGitHubConfiguration',
-                        namePython: 'factory_git_hub_configuration',
+                        mapsTo: 'factory_git_hub_configuration',
+                        nameAz: 'factory-git-hub-configuration',
                         type: 'object',
                         actionType: 'KeyValue',
                         baseClass: 'Action',
@@ -153,6 +164,14 @@ describe('renderActionPYTest', () => {
                             'root_folder',
                             'last_commit_id',
                         ],
+                        subPropertiesNameAz: [
+                            'host-name',
+                            'account-name',
+                            'repository-name',
+                            'collaboration-branch',
+                            'root-folder',
+                            'last-commit-id',
+                        ],
                         constants: {
                             "'type'": "'FactoryGitHubConfiguration'",
                         },
@@ -190,7 +209,8 @@ describe('renderActionPYTest', () => {
                 actions: [
                     {
                         name: 'Subnets',
-                        namePython: 'subnets',
+                        nameAz: 'subnets',
+                        mapsTo: 'subnets',
                         type: 'array',
                         actionType: 'ShortHandSyntax',
                         baseClass: '_AppendAction',
@@ -206,6 +226,7 @@ describe('renderActionPYTest', () => {
                         ],
                         subPropertiesMapsTo: ['id', 'name'],
                         subPropertiesNamePython: ['id', 'name'],
+                        subPropertiesNameAz: ['id', 'name'],
                         constants: {},
                     },
                 ],

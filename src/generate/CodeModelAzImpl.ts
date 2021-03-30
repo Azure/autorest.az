@@ -763,7 +763,11 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetActionData() {
         const actions = [];
+        SchemaType.Array;
         this.allActions.forEach((actionName: string, param: Parameter) => {
+            if (actionName === 'AddEventGridDataConnection') {
+                param;
+            }
             const action = {
                 actionName: actionName,
                 actionType: 'KeyValue',
@@ -774,8 +778,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             action.actionType = this.Parameter_IsShorthandSyntax(param)
                 ? 'ShortHandSyntax'
                 : action.actionType;
-            action['namePython'] = param['targetProperty']?.language?.python?.name;
+            action['mapsTo'] = this.Parameter_MapsTo(param);
             action['type'] = this.Schema_Type(param.schema);
+            action['nameAz'] = this.Parameter_NameAz(param);
             if (action['type'] === SchemaType.Array) {
                 action['baseClass'] = '_AppendAction';
             } else {
@@ -784,22 +789,22 @@ export class CodeModelCliImpl implements CodeModelAz {
             action['subProperties'] = [];
             action['subPropertiesMapsTo'] = [];
             action['subPropertiesNamePython'] = [];
+            action['subPropertiesNameAz'] = [];
             action['constants'] = {};
-            this.EnterSubMethodParameters(param);
-            if (this.SelectFirstMethodParameter(true)) {
+            const baseParam = param['polyBaseParam'];
+            const keyToMatch = baseParam?.schema?.discriminator?.property?.language.python?.name;
+            const valueToMatch = param.schema?.['discriminatorValue'];
+            if (this.EnterSubMethodParameters(param) && this.SelectFirstMethodParameter(true)) {
                 do {
                     const tmpParam = this.SubMethodParameter;
-                    const baseParam = tmpParam['polyBaseParam'];
-                    const keyToMatch =
-                        baseParam?.schema?.discriminator?.property?.language.python?.name;
-                    const valueToMatch = tmpParam.schema?.['discriminatorValue'];
                     const pythonName = this.Parameter_NamePython(tmpParam);
                     const mapsTo = this.Parameter_MapsTo(tmpParam);
+                    const nameAz = this.Parameter_NameAz(tmpParam);
                     if (
                         this.Parameter_Type(tmpParam) === SchemaType.Constant &&
                         !isNullOrUndefined(tmpParam.schema['value']?.['value'])
                     ) {
-                        action['constant'][
+                        action['constants'][
                             `'${pythonName}'`
                         ] = `'${tmpParam.schema['value']['value']}'`;
                     } else if (tmpParam['readOnly']) {
@@ -807,9 +812,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     } else if (
                         keyToMatch === pythonName &&
                         !isNullOrUndefined(keyToMatch) &&
-                        !isNullOrUndefined(valueToMatch)
+                        !isNullOrUndefined(valueToMatch) &&
+                        tmpParam['isDiscriminator']
                     ) {
-                        action['constant'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
+                        action['constants'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
                     } else {
                         action['subProperties'].push({
                             mapsTo: mapsTo,
@@ -817,6 +823,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         });
                         action['subPropertiesMapsTo'].push(mapsTo);
                         action['subPropertiesNamePython'].push(pythonName);
+                        action['subPropertiesNameAz'].push(nameAz);
                     }
                 } while (this.SelectNextMethodParameter(true));
             }

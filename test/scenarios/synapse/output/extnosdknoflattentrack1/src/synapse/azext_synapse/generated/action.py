@@ -7,7 +7,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+
+
 # pylint: disable=protected-access
+
+# pylint: disable=no-self-use
+
 
 import argparse
 from collections import defaultdict
@@ -17,9 +22,10 @@ from knack.util import CLIError
 class AddAutoScale(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.auto_scale = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -31,24 +37,32 @@ class AddAutoScale(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'min-node-count':
+
+            if kl == 'min_node_count':
                 d['min_node_count'] = v[0]
+
             elif kl == 'enabled':
                 d['enabled'] = v[0]
-            elif kl == 'max-node-count':
+
+            elif kl == 'max_node_count':
                 d['max_node_count'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter auto_scale. All possible keys are: '
-                               'min-node-count, enabled, max-node-count'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter auto-scale. All possible keys are: min-node-count,'
+                    ' enabled, max-node-count'.format(k)
+                )
+
         return d
 
 
 class AddAutoPause(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.auto_pause = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -60,22 +74,29 @@ class AddAutoPause(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'delay-in-minutes':
+
+            if kl == 'delay_in_minutes':
                 d['delay_in_minutes'] = v[0]
+
             elif kl == 'enabled':
                 d['enabled'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter auto_pause. All possible keys are: '
-                               'delay-in-minutes, enabled'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter auto-pause. All possible keys are: delay-in-minutes,'
+                    ' enabled'.format(k)
+                )
+
         return d
 
 
 class AddLibraryRequirements(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.library_requirements = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -87,22 +108,29 @@ class AddLibraryRequirements(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'content':
                 d['content'] = v[0]
+
             elif kl == 'filename':
                 d['filename'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter library_requirements. All possible keys '
-                               'are: content, filename'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter library-requirements. All possible keys are: content,'
+                    ' filename'.format(k)
+                )
+
         return d
 
 
 class AddSku(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.sku = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -114,22 +142,28 @@ class AddSku(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'tier':
                 d['tier'] = v[0]
+
             elif kl == 'name':
                 d['name'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter sku. All possible keys are: tier, name'.
-                format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter sku. All possible keys are: tier, name'.format(k)
+                )
+
         return d
 
 
 class AddRecurringScans(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.recurring_scans = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -138,28 +172,35 @@ class AddRecurringScans(argparse.Action):
         except ValueError:
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
-        d['email_subscription_admins'] = True
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'is-enabled':
+
+            if kl == 'is_enabled':
                 d['is_enabled'] = v[0]
-            elif kl == 'email-subscription-admins':
+
+            elif kl == 'email_subscription_admins':
                 d['email_subscription_admins'] = v[0]
+
             elif kl == 'emails':
-                d['emails'] = v
+                d['emails'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter recurring_scans. All possible keys are: '
-                               'is-enabled, email-subscription-admins, emails'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter recurring-scans. All possible keys are: is-enabled,'
+                    ' email-subscription-admins, emails'.format(k)
+                )
+
         return d
 
 
 class AddBaselineResults(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        super(AddBaselineResults, self).__call__(parser, namespace, action, option_string)
+        self.get_action(values, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        super(AddBaselineResults, self).__call__(parser, namespace, item, option_string)
+
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -171,20 +212,26 @@ class AddBaselineResults(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'result':
-                d['result'] = v
+                d['result'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter baseline_results. All possible keys are: '
-                               'result'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter baseline-results. All possible keys are: result'
+                    .format(k)
+                )
+
         return d
 
 
 class AddDefaultDataLakeStorage(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.default_data_lake_storage = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -196,22 +243,29 @@ class AddDefaultDataLakeStorage(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'account-url':
+
+            if kl == 'account_url':
                 d['account_url'] = v[0]
+
             elif kl == 'filesystem':
                 d['filesystem'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter default_data_lake_storage. All possible '
-                               'keys are: account-url, filesystem'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter default-data-lake-storage. All possible keys are:'
+                    ' account-url, filesystem'.format(k)
+                )
+
         return d
 
 
 class AddConnectivityEndpoints(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.connectivity_endpoints = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -221,6 +275,7 @@ class AddConnectivityEndpoints(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+            k.lower()
             v = properties[k]
-            d[k] = v[0]
+
         return d

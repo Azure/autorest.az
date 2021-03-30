@@ -23,7 +23,11 @@ from knack.util import CLIError
 class {{action.actionName}}(argparse.{{action.baseClass}}):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        namespace.{{action.namePython}} = action
+        {% if action.type == 'array' -%} 
+        super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
+        {% else -%}
+        namespace.{{action.mapsTo}} = action
+        {%- endif %}
 
     def get_action(self, values, option_string):
         try:
@@ -43,7 +47,7 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             {% endfor %}
             {% if action.subProperties.length > 0 %}
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter {{action.namePython}}. All possible keys are: {{ action.subPropertiesMapsTo | join(', ') }}'.
+                raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                 format(k))
             {% endif %}
         {% for key, value in action.constants %}
@@ -59,7 +63,7 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
         for item in action:
            super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
         {% else %}
-        namespace.{{action.namePython}} = action[0]
+        namespace.{{action.mapsTo}} = action[0]
         {% endif %}
 
     def get_action(self, values, option_string=None):
@@ -87,7 +91,7 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
         for item in action:
            super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
         {% else %}
-        namespace.{{action.namePython}} = action[0]
+        namespace.{{action.mapsTo}} = action[0]
         {% endif %}
 
     def get_action(self, values, option_string):
@@ -110,7 +114,7 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
                 {% endfor %}
                 {% if action.subProperties.length > 0 %}
                 else:
-                    raise CLIError('Unsupported Key {} is provided for parameter {{action.namePython}}. All possible keys are: {{ action.subPropertiesMapsTo | join(', ') }}'.
+                    raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                     format(k))
                 {% endif %}
             ret.append(d)

@@ -7,7 +7,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+
+
 # pylint: disable=protected-access
+
+# pylint: disable=no-self-use
+
 
 import argparse
 from collections import defaultdict
@@ -16,10 +21,11 @@ from knack.util import CLIError
 
 class AddTrustedExternalTenants(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        super(AddTrustedExternalTenants, self).__call__(parser, namespace, action, option_string)
+        self.get_action(values, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        super(AddTrustedExternalTenants, self).__call__(parser, namespace, item, option_string)
+
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -31,20 +37,26 @@ class AddTrustedExternalTenants(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'value':
                 d['value'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter trusted_external_tenants. All possible '
-                               'keys are: value'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter trusted-external-tenants. All possible keys are:'
+                    ' value'.format(k)
+                )
+
         return d
 
 
 class AddOptimizedAutoscale(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.optimized_autoscale = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -56,26 +68,35 @@ class AddOptimizedAutoscale(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'version':
                 d['version'] = v[0]
-            elif kl == 'is-enabled':
+
+            elif kl == 'is_enabled':
                 d['is_enabled'] = v[0]
+
             elif kl == 'minimum':
                 d['minimum'] = v[0]
+
             elif kl == 'maximum':
                 d['maximum'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter optimized_autoscale. All possible keys '
-                               'are: version, is-enabled, minimum, maximum'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter optimized-autoscale. All possible keys are: version,'
+                    ' is-enabled, minimum, maximum'.format(k)
+                )
+
         return d
 
 
 class AddVirtualNetworkConfiguration(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.virtual_network_configuration = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -87,25 +108,32 @@ class AddVirtualNetworkConfiguration(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'subnet-id':
+
+            if kl == 'subnet_id':
                 d['subnet_id'] = v[0]
-            elif kl == 'engine-public-ip-id':
+
+            elif kl == 'engine_public_ip_id':
                 d['engine_public_ip_id'] = v[0]
-            elif kl == 'data-management-public-ip-id':
+
+            elif kl == 'data_management_public_ip_id':
                 d['data_management_public_ip_id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter virtual_network_configuration. All '
-                               'possible keys are: subnet-id, engine-public-ip-id, data-management-public-ip-id'.
-                               format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter virtual-network-configuration. All possible keys are:'
+                    ' subnet-id, engine-public-ip-id, data-management-public-ip-id'.format(k)
+                )
+
         return d
 
 
 class AddKeyVaultProperties(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.key_vault_properties = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -117,24 +145,32 @@ class AddKeyVaultProperties(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'key-name':
+
+            if kl == 'key_name':
                 d['key_name'] = v[0]
-            elif kl == 'key-version':
+
+            elif kl == 'key_version':
                 d['key_version'] = v[0]
-            elif kl == 'key-vault-uri':
+
+            elif kl == 'key_vault_uri':
                 d['key_vault_uri'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter key_vault_properties. All possible keys '
-                               'are: key-name, key-version, key-vault-uri'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter key-vault-properties. All possible keys are:'
+                    ' key-name, key-version, key-vault-uri'.format(k)
+                )
+
         return d
 
 
 class AddClustersValue(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        super(AddClustersValue, self).__call__(parser, namespace, action, option_string)
+        self.get_action(values, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        super(AddClustersValue, self).__call__(parser, namespace, item, option_string)
+
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -146,20 +182,26 @@ class AddClustersValue(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'language-extension-name':
+
+            if kl == 'language_extension_name':
                 d['language_extension_name'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter value. All possible keys are: '
-                               'language-extension-name'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter value. All possible keys are: language-extension-name'
+                    .format(k)
+                )
+
         return d
 
 
 class AddReadWriteDatabase(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.read_write_database = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -171,25 +213,34 @@ class AddReadWriteDatabase(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'soft-delete-period':
+
+            if kl == 'soft_delete_period':
                 d['soft_delete_period'] = v[0]
-            elif kl == 'hot-cache-period':
+
+            elif kl == 'hot_cache_period':
                 d['hot_cache_period'] = v[0]
+
             elif kl == 'location':
                 d['location'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter read_write_database. All possible keys '
-                               'are: soft-delete-period, hot-cache-period, location'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter read-write-database. All possible keys are:'
+                    ' soft-delete-period, hot-cache-period, location'.format(k)
+                )
+
         d['kind'] = 'ReadWrite'
+
         return d
 
 
 class AddReadOnlyFollowingDatabase(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         namespace.read_only_following_database = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -201,23 +252,31 @@ class AddReadOnlyFollowingDatabase(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'hot-cache-period':
+
+            if kl == 'hot_cache_period':
                 d['hot_cache_period'] = v[0]
+
             elif kl == 'location':
                 d['location'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter read_only_following_database. All '
-                               'possible keys are: hot-cache-period, location'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter read-only-following-database. All possible keys are:'
+                    ' hot-cache-period, location'.format(k)
+                )
+
         d['kind'] = 'ReadOnlyFollowing'
+
         return d
 
 
 class AddDatabasesValue(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        super(AddDatabasesValue, self).__call__(parser, namespace, action, option_string)
+        self.get_action(values, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        super(AddDatabasesValue, self).__call__(parser, namespace, item, option_string)
+
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -229,19 +288,29 @@ class AddDatabasesValue(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'role':
                 d['role'] = v[0]
+
             elif kl == 'name':
                 d['name'] = v[0]
+
             elif kl == 'type':
                 d['type'] = v[0]
+
             elif kl == 'fqn':
                 d['fqn'] = v[0]
+
             elif kl == 'email':
                 d['email'] = v[0]
-            elif kl == 'app-id':
+
+            elif kl == 'app_id':
                 d['app_id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter value. All possible keys are: role, name, '
-                               'type, fqn, email, app-id'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter value. All possible keys are: role, name, type, fqn,'
+                    ' email, app-id'.format(k)
+                )
+
         return d

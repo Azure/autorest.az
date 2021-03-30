@@ -7,7 +7,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+
+
 # pylint: disable=protected-access
+
+# pylint: disable=no-self-use
+
 
 import argparse
 from collections import defaultdict
@@ -16,10 +21,11 @@ from knack.util import CLIError
 
 class AddSubstatuses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        super(AddSubstatuses, self).__call__(parser, namespace, action, option_string)
+        self.get_action(values, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        super(AddSubstatuses, self).__call__(parser, namespace, item, option_string)
+
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -31,28 +37,38 @@ class AddSubstatuses(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'code':
                 d['code'] = v[0]
+
             elif kl == 'level':
                 d['level'] = v[0]
-            elif kl == 'display-status':
+
+            elif kl == 'display_status':
                 d['display_status'] = v[0]
+
             elif kl == 'message':
                 d['message'] = v[0]
+
             elif kl == 'time':
                 d['time'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter substatuses. All possible keys are: code, '
-                               'level, display-status, message, time'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter substatuses. All possible keys are: code, level,'
+                    ' display-status, message, time'.format(k)
+                )
+
         return d
 
 
 class AddStatuses(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        super(AddStatuses, self).__call__(parser, namespace, action, option_string)
+        self.get_action(values, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+        super(AddStatuses, self).__call__(parser, namespace, item, option_string)
+
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -64,17 +80,26 @@ class AddStatuses(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'code':
                 d['code'] = v[0]
+
             elif kl == 'level':
                 d['level'] = v[0]
-            elif kl == 'display-status':
+
+            elif kl == 'display_status':
                 d['display_status'] = v[0]
+
             elif kl == 'message':
                 d['message'] = v[0]
+
             elif kl == 'time':
                 d['time'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter statuses. All possible keys are: code, '
-                               'level, display-status, message, time'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter statuses. All possible keys are: code, level,'
+                    ' display-status, message, time'.format(k)
+                )
+
         return d
