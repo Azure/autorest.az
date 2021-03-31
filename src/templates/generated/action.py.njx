@@ -125,14 +125,14 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
                 {% endif %}
                 v = properties[k]
                 {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
-                {% for subprop in action.subProperties -%}
+                {% for subprop in action.subProperties %}
                 {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
-                    {%- if subprop.type == 'array' -%}
+                    {% if subprop.type == 'array' %}
                     d['{{subprop.namePython}}'] = v
-                    {%- else %}
+                    {% else %}
                     d['{{subprop.namePython}}'] = v[0]
-                    {%- endif %}
-                {%- endfor %}
+                    {% endif %}
+                {% endfor %}
                 {% if action.subProperties.length > 0 %}
                 else:
                     raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.

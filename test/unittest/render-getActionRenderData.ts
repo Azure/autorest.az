@@ -47,7 +47,7 @@ describe('getActionsRender', () => {
         model = codeModel;
     }
 
-    async function getCommandsRenderData() {
+    async function getActionsRenderData() {
         await init('datafactory', fileName);
         AzConfiguration.setValue(CodeGenConstants.extensionMode, ExtensionMode.Experimental);
         AzConfiguration.setValue(CodeGenConstants.azextFolder, 'azext_datafactory_preview');
@@ -76,36 +76,35 @@ describe('getActionsRender', () => {
 
     it('getActionRenderDataTest1', async () => {
         const expected = JSON.parse(
-            await readFile(path.join(resources, 'expected', 'data/render-commands.json')),
+            await readFile(path.join(resources, 'expected', 'data/actions.json')),
         );
-        const data = await getCommandsRenderData();
-        console.log(JSON.stringify(data));
-        // data = JSON.parse(JSON.stringify(data));
-        // assert.deepStrictEqual(
-        //     data,
-        //     expected,
-        //     'Getting render data error from extension to methodParameter ',
-        // );
+        let data = await getActionsRenderData();
+        data = JSON.parse(JSON.stringify(data));
+        assert.deepStrictEqual(
+            data,
+            expected,
+            'Getting render data error from extension to methodParameter ',
+        );
     });
 
-    // it('getCommandRenderDataTest2', async () => {
-    //     const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
-    //     const data = await getCommandsRenderData();
-    //     let result = render(tmplPath, data);
-    //     const oriFile = path.join(
-    //         `${__dirname}`,
-    //         '../../test/unittest/expected/generated/ori_commands3.py',
-    //     );
-    //     await writeFile(oriFile, result);
-    //     const azLinter = new AzLinter();
-    //     await azLinter.process(oriFile);
-    //     result = await readFile(oriFile);
-    //     const expectedFile = path.join(
-    //         `${__dirname}`,
-    //         '../../test/unittest/expected/generated/commands3.py',
-    //     );
-    //     const expected = await readFile(expectedFile);
-    //     assert.deepStrictEqual(result, expected, 'render logic for commands.py is incorrect');
-    //     await rmFile(oriFile);
-    // });
+    it('getActionRenderDataTest2', async () => {
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
+        const data = await getActionsRenderData();
+        let result = render(tmplPath, data);
+        const oriFile = path.join(
+            `${__dirname}`,
+            '../../test/unittest/expected/generated/ori_action.py',
+        );
+        await writeFile(oriFile, result);
+        const azLinter = new AzLinter();
+        await azLinter.process(oriFile);
+        result = await readFile(oriFile);
+        const expectedFile = path.join(
+            `${__dirname}`,
+            '../../test/unittest/expected/generated/action.py',
+        );
+        const expected = await readFile(expectedFile);
+        assert.deepStrictEqual(result, expected, 'render logic for action.py is incorrect');
+        await rmFile(oriFile);
+    });
 });

@@ -30,7 +30,6 @@ export class CliActions extends TemplateBase {
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
         const data = { imports: [], pylints: [], actions: [] };
-        data['imports'].push([this.model.CliCoreLib + '.commands', ['CliCommandType']]);
         data.actions = this.model.GetActionData();
         data['pylints'].push('# pylint: disable=protected-access', '# pylint: disable=no-self-use');
         const result = { data: { imports: [], pylints: [] } };
