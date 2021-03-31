@@ -34,7 +34,9 @@ class AddSubscriptions(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'id':
@@ -64,7 +66,9 @@ class AddVirtualNetworks(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'id':
@@ -98,8 +102,11 @@ class AddSubnets(argparse._AppendAction):
                 raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
             d = {}
             for k in properties:
+
                 kl = k.lower()
+
                 v = properties[k]
+
                 if kl == 'id':
                     d['id'] = v[0]
 
@@ -127,7 +134,9 @@ class AddHub(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'id':
@@ -158,7 +167,9 @@ class AddSpokes(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'id':
@@ -189,7 +200,9 @@ class AddMesh(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'id':

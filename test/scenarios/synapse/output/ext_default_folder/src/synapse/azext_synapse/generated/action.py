@@ -34,7 +34,9 @@ class AddAutoScale(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'min-node-count':
@@ -73,7 +75,9 @@ class AddAutoPause(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'delay-in-minutes':
@@ -108,7 +112,9 @@ class AddLibraryRequirements(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'content':
@@ -143,7 +149,9 @@ class AddSku(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'tier':
@@ -177,7 +185,9 @@ class AddRecurringScans(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'is-enabled':
@@ -216,7 +226,9 @@ class AddBaselineResults(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'result':
@@ -247,7 +259,9 @@ class AddDefaultDataLakeStorage(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'account-url':
@@ -282,7 +296,9 @@ class AddConnectivityEndpoints(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-            k.lower()
+
             v = properties[k]
+
+            d[k] = v[0]
 
         return d

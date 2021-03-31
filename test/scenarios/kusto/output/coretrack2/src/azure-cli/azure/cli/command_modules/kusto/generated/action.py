@@ -34,7 +34,9 @@ class AddSku(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'name':
@@ -73,7 +75,9 @@ class AddTrustedExternalTenants(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'value':
@@ -104,7 +108,9 @@ class AddOptimizedAutoscale(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'version':
@@ -147,7 +153,9 @@ class AddVirtualNetworkConfiguration(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'subnet-id':
@@ -186,7 +194,9 @@ class AddKeyVaultProperties(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'key-name':
@@ -225,7 +235,9 @@ class AddClustersValue(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'language-extension-name':
@@ -256,7 +268,9 @@ class AddReadWriteDatabase(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'soft-delete-period':
@@ -297,7 +311,9 @@ class AddReadOnlyFollowingDatabase(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'hot-cache-period':
@@ -334,7 +350,9 @@ class AddDatabasesValue(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'role':
@@ -385,7 +403,9 @@ class AddEventHubDataConnection(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'event-hub-resource-id':
@@ -447,7 +467,9 @@ class AddIotHubDataConnection(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'iot-hub-resource-id':
@@ -509,7 +531,9 @@ class AddEventGridDataConnection(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'storage-account-resource-id':

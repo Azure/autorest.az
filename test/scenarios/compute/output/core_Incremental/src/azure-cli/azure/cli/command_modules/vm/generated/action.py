@@ -34,7 +34,9 @@ class AddSubstatuses(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'code':
@@ -81,7 +83,9 @@ class AddStatuses(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'code':

@@ -39,8 +39,11 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+            {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
             kl = k.lower()
+            {% endif %}
             v = properties[k]
+            {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
             {% for subprop in action.subProperties %}
             {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
                 {% if subprop.type == 'array' %}
@@ -53,6 +56,13 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             else:
                 raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                 format(k))
+            {% endif %}
+            {% else %}
+            {% if subprop.type == 'array' %}
+            d[k] = v
+            {% else %}
+            d[k] = v[0]
+            {% endif %}
             {% endif %}
         {% for key, value in action.constants %}
         d[{{key}}] = {{value}}
@@ -110,8 +120,11 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
                 raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
             d = {}
             for k in properties:
+                {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
                 kl = k.lower()
+                {% endif %}
                 v = properties[k]
+                {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
                 {% for subprop in action.subProperties -%}
                 {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
                     {%- if subprop.type == 'array' -%}
@@ -124,6 +137,13 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
                 else:
                     raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                     format(k))
+                {% endif %}
+                {% else %}
+                {% if subprop.type == 'array' %}
+                d[k] = v
+                {% else %}
+                d[k] = v[0]
+                {% endif %}
                 {% endif %}
             ret.append(d)
         return ret

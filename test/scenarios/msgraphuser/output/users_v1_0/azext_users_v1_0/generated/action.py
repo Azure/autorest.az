@@ -34,7 +34,9 @@ class AddAssignedLicenses(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'disabled-plans':
@@ -69,7 +71,9 @@ class AddAssignedPlans(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'assigned-date-time':
@@ -112,7 +116,9 @@ class AddIdentities(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'issuer':
@@ -151,7 +157,9 @@ class AddLicenseAssignmentStates(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'assigned-by-group':
@@ -198,7 +206,9 @@ class AddOnPremisesExtensionAttributes(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'extension-attribute1':
@@ -288,7 +298,9 @@ class AddOnPremisesProvisioningErrors(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'category':
@@ -331,7 +343,9 @@ class AddPasswordProfile(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'force-change-password-next-sign-in':
@@ -372,7 +386,9 @@ class AddProvisionedPlans(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'capability-status':
@@ -411,7 +427,9 @@ class AddAppRoleAssignments(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'app-role-id':
@@ -475,7 +493,9 @@ class AddCreatedObjects(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -510,7 +530,9 @@ class AddDirectReports(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -545,7 +567,9 @@ class AddManager(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -580,7 +604,9 @@ class AddMemberOf(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -615,7 +641,9 @@ class AddOauth2PermissionGrants(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'client-id':
@@ -666,7 +694,9 @@ class AddOwnedDevices(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -701,7 +731,9 @@ class AddOwnedObjects(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -736,7 +768,9 @@ class AddRegisteredDevices(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -771,7 +805,9 @@ class AddTransitiveMemberOf(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'deleted-date-time':
@@ -806,7 +842,9 @@ class AddPhoto(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'height':
@@ -845,7 +883,9 @@ class AddPhotos(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'height':
@@ -884,7 +924,9 @@ class AddExtensions(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'id':
@@ -914,7 +956,9 @@ class AddDeviceManagementTroubleshootingEvents(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'correlation-id':
@@ -953,7 +997,9 @@ class AddWithinSizeRange(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'maximum-size':
@@ -988,7 +1034,9 @@ class AddResources(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'content':
@@ -1031,7 +1079,9 @@ class AddApplication(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'display-name':
@@ -1066,7 +1116,9 @@ class AddMasterCategories(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'color':
@@ -1105,7 +1157,9 @@ class AddLanguage(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'display-name':
@@ -1140,7 +1194,9 @@ class AddServicePlans(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'applies-to':

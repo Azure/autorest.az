@@ -794,9 +794,11 @@ export class CodeModelCliImpl implements CodeModelAz {
             const baseParam = param['polyBaseParam'];
             const keyToMatch = baseParam?.schema?.discriminator?.property?.language.python?.name;
             const valueToMatch = param.schema?.['discriminatorValue'];
+            const allSubParameters = [];
             if (this.EnterSubMethodParameters(param) && this.SelectFirstMethodParameter(true)) {
                 do {
                     const tmpParam = this.SubMethodParameter;
+                    allSubParameters.push(tmpParam);
                     const pythonName = this.Parameter_NamePython(tmpParam);
                     const mapsTo = this.Parameter_MapsTo(tmpParam);
                     const nameAz = this.Parameter_NameAz(tmpParam);
@@ -828,7 +830,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                         action['subPropertiesNameAz'].push(nameAz);
                     }
                 } while (this.SelectNextMethodParameter(true));
+                if (action['actionType'] === 'Positional') {
+                    const keys = this.Parameter_PositionalKeys(param, allSubParameters);
+                    action['subPropertiesNamePython'] = keys;
+                }
             }
+            SchemaType.Dictionary;
             actions.push(action);
             this.ExitSubMethodParameters();
         });

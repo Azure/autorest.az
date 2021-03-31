@@ -30,24 +30,16 @@ class AddFactoryVstsConfiguration(argparse.Action):
             value_chunk_list = [values[x: x + 7] for x in range(0, len(values), 7)]
             value_list = []
             for chunk in value_chunk_list:
-                (
-                    project_name,
-                    tenant_id,
-                    account_name,
-                    repository_name,
-                    collaboration_branch,
-                    root_folder,
-                    last_commit_id,
-                ) = chunk
+                type, project_name, tenant_id, account_name, repository_name, root_folder, collaboration_branch = chunk
                 value_list.append(
                     {
+                        'type': type,
                         'project_name': project_name,
                         'tenant_id': tenant_id,
                         'account_name': account_name,
                         'repository_name': repository_name,
-                        'collaboration_branch': collaboration_branch,
                         'root_folder': root_folder,
-                        'last_commit_id': last_commit_id,
+                        'collaboration_branch': collaboration_branch,
                     }
                 )
             return value_list
@@ -70,7 +62,9 @@ class AddFactoryGitHubConfiguration(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'host-name':
@@ -147,7 +141,9 @@ class AddReplicaSets(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
 
             if kl == 'location':
