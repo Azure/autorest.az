@@ -28,7 +28,7 @@ export abstract class TemplateBase {
     public async render(): Promise<string[]> {
         nunjucks.configure({ autoescape: false });
         const output = nunjucks.render(this.tmplPath, await this.GetRenderData(this.model));
-        return [output];
+        return output;
     }
 
     public abstract async GetRenderData(model: CodeModelAz): Promise<any>;
