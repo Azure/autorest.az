@@ -88,8 +88,11 @@ export class CliTopHelp extends TemplateBase {
         output.push(
             indentStr + '    from .manual._help import helps  # pylint: disable=reimported',
         );
-        output.push(indentStr + 'except ImportError:');
-        output.push(indentStr + '    pass');
+        output.push(indentStr + 'except ImportError as e:');
+        output.push(indentStr + "    if e.name.endswith('manual._help'):");
+        output.push(indentStr + '        pass');
+        output.push(indentStr + '    else:');
+        output.push(indentStr + '        raise e');
         return output;
     }
 

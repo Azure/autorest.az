@@ -43,6 +43,7 @@ import {
     DataGraph,
     SortOrder,
     CliCommandType,
+    ExtensionMode,
 } from '../utils/models';
 import {
     CodeModelAz,
@@ -826,6 +827,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.parentExtension;
     }
 
+    public get Extension_Description(): string {
+        if (!isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.extensionDescription))) {
+            return 'Manage ' + AzConfiguration.getValue(CodeGenConstants.extensionDescription);
+        }
+        return (
+            'Manage ' +
+            ToSentence(this.Extension_NameClass.replace(/ManagementClient|Client/gi, ''))
+        );
+    }
+
     public get Extension_Mode(): string {
         let extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode);
         this.codeModel.operationGroups.forEach((operationGroup) => {
@@ -1010,6 +1021,9 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CommandGroup_Mode(): string {
         if (isNullOrUndefined(this.CommandGroup?.language?.['cli']?.extensionMode)) {
+            if (this.IsCliCore && this.Extension_Mode === ExtensionMode.Stable) {
+                return ExtensionMode.Experimental;
+            }
             return this.Extension_Mode;
         }
         return this.CommandGroup?.language?.['cli']?.extensionMode;

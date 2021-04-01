@@ -6,7 +6,7 @@
 import { CodeModelAz } from '../../CodeModelAz';
 import { SchemaType, Parameter } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
-import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
+import { ToMultiLine, isNullOrUndefined, ToSentence } from '../../../utils/helper';
 import { CodeGenConstants } from '../../../utils/models';
 
 let showExampleStr: string;
@@ -24,7 +24,12 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     let output: string[] = [];
     output.push('');
 
+    output.push('');
     model.GatherInternalResource();
+    output.push("helps['" + model.Extension_Name + "'] = '''");
+    output.push('    type: group');
+    output.push('    short-summary: ' + model.Extension_Description);
+    output.push("'''");
     if (model.SelectFirstCommandGroup()) {
         do {
             // if there's no operation in this command group

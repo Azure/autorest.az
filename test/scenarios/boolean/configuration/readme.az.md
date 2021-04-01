@@ -13,5 +13,5 @@ az:
   client-authentication-policy: SansIOHTTPPolicy
 az-output-folder: $(azure-cli-extension-folder)/src/boolean
 python-sdk-output-folder: "$(az-output-folder)/azext_boolean/vendored_sdks/boolean"
-
+extension-description: Bool Services in Test Server 
 ```
