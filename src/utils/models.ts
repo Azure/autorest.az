@@ -96,6 +96,8 @@ export class PathConstants {
     public static incTestScenarioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario_incrementalGenerated.py';
     }
+
+    public static readonly portalMappingFile: string = 'portal_mapping.json';
 }
 
 export enum CodeGenConstants {
