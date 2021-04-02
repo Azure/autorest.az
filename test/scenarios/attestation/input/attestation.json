@@ -52,7 +52,7 @@
         }
       }
     },
-    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}": {
       "get": {
         "tags": ["AttestationProviders"],
         "operationId": "AttestationProviders_Get",
@@ -68,6 +68,9 @@
           },
           {
             "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/OfferTypeParameter"
           },
           {
             "name": "providerName",
@@ -110,6 +113,9 @@
           },
           {
             "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/OfferTypeParameter"
           },
           {
             "name": "providerName",
@@ -170,6 +176,9 @@
             "$ref": "#/parameters/ResourceGroupNameParameter"
           },
           {
+            "$ref": "#/parameters/OfferTypeParameter"
+          },
+          {
             "name": "providerName",
             "in": "path",
             "required": true,
@@ -220,6 +229,9 @@
           },
           {
             "$ref": "#/parameters/ResourceGroupNameParameter"
+          },
+          {
+            "$ref": "#/parameters/OfferTypeParameter"
           },
           {
             "name": "providerName",
@@ -638,6 +650,21 @@
       "type": "string",
       "description": "The ID of the target subscription.",
       "minLength": 1
+    },
+    "OfferTypeParameter": {
+      "name": "offerType",
+      "in": "path",
+      "required": true,
+      "description": "Offer Type, currently only virtualmachine type is supported.",
+      "x-ms-parameter-location": "method",
+      "enum": [
+        "virtualmachine"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "OfferType",
+        "modelAsString": true
+      }
     },
     "ResourceGroupNameParameter": {
       "name": "resourceGroupName",
