@@ -17,10 +17,12 @@ class {{testData.className}}(ScenarioTest):
 
     def __init__(self, *args, **kwargs):
         super({{testData.className}}, self).__init__(*args, **kwargs)
-{% for cmd in testData.cmds %}
-    # EXAMPLE: {{cmd.id}}
-    def test_{{cmd.name}}(self):
-        self.cmd({% for line in cmd.lines %}'{{line}}'
+{% for testCase in testData.testCases %}
+    def test_{{testCase.functionName}}(self):
+{%- for exampleInfo in testCase.exampleInfos %}
+        # From {{exampleInfo.id}}
+        self.cmd({% for line in exampleInfo.lines %}'{{line}}'
                  {% endfor -%}
-                 '{{cmd.lastLine}}')
+                 '{{exampleInfo.lastLine}}')
+{% endfor -%}
 {% endfor -%}
