@@ -153,6 +153,14 @@ function processFolderPath() {
     const pythonSdkOutputFolder: string = AzConfiguration.getValue(
         CodeGenConstants.pythonSdkOutputFolder,
     );
+
+    if (isNullOrUndefined(extensionName)) {
+        throw new Error('--az.extensions should not be null!');
+    }
+    if (isNullOrUndefined(pythonSdkOutputFolder)) {
+        throw new Error('--python-sdk-output-folder should not be null!');
+    }
+
     let sdkFolder = pythonSdkOutputFolder.replace(azOutputFolder, '');
     if (sdkFolder.startsWith('/')) {
         sdkFolder = sdkFolder.substring(1, sdkFolder.length);
