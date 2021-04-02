@@ -90,6 +90,7 @@ export class CliTopCustom extends TemplateBase {
         const indentStr: string = getIndentString(indent);
 
         output.push('');
+        output.push(indentStr + '# pylint: disable=unused-wildcard-import,wildcard-import');
         output.push(indentStr + 'from .generated.custom import *  # noqa: F403');
         output.push(indentStr + 'try:');
         output.push(indentStr + '    from .manual.custom import *  # noqa: F403');

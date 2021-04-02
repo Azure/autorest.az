@@ -93,7 +93,6 @@ export class HeaderGenerator {
         } else {
             output.push('#');
             output.push('# Generation mode: Incremental');
-            output.push('# pylint: disable=unused-wildcard-import,wildcard-import');
         }
 
         output.push('# --------------------------------------------------------------------------');
