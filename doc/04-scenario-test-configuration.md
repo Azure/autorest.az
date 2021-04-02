@@ -18,7 +18,7 @@ Notice 2: *Even if no configuration is provided, you can still override the auto
 ## How to configure?
 
 ### Basic test-scenario
-In basic test-scenario, all test examples are composed in one testcase.
+In basic test-scenario, all test examples are composed in one test case.
 Test scenario configuration can be done in file readme.cli.md, here is an example for it.
 ~~~
 cli:
@@ -44,8 +44,8 @@ Two kind of step can be used in the test-scenario, they are:
         },
 ~~~
 
-### Mutli-testcase scenario
-You can config multiple testcases in the test-scenario with below format:
+### Mutli-test-cases scenario
+You can config multiple test cases in the test-scenario with below format:
 ~~~
 cli:
   cli-name: managednetwork
@@ -68,11 +68,11 @@ cli:
       - name: ScopeAssignmentsList
       - name: ScopeAssignmentsDelete
 ~~~
-In above sample, four testcases are configured, and they will be generated in two test files:
-- test_ManagedNetworks_scenario.py: three testcases will be generated in it: ManagedNetworks_scenario1, ManagedNetworks_scenario2, ManagedNetworks_scenario3.
-- test_ScopeAssignments_scenario.py: one testcase generated in it: ScopeAssignments.
+In above sample, four test cases are configured, and they will be generated in two test files:
+- test_ManagedNetworks_scenario.py: three test cases will be generated in it: ManagedNetworks_scenario1, ManagedNetworks_scenario2, ManagedNetworks_scenario3.
+- test_ScopeAssignments_scenario.py: one test case generated in it: ScopeAssignments.
 
-Note: the part before the underscore('_') in the testcase name will be used to descibe in which test file the case will be generated.
+Note: the part before the underscore('_') in the test case name will be used to descibe in which test file the case will be generated.
 
 
 ## What if multiple examples in swagger have duplicated name?
@@ -426,7 +426,7 @@ az:
 ~~~
 
 ## How to generate cmdlet tests
-The cmdlet tests can be run under virtual server to check CLI command availability. Each CLI operation is a testcase in cmdlet tests:
+The cmdlet tests can be run under virtual server to check CLI command availability. Each CLI operation is a test case in cmdlet tests:
 ~~~
 class PositiveTest(ScenarioTest):
     # EXAMPLE: /Operation/get/Operations_List
