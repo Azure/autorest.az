@@ -31,6 +31,7 @@ import {
     ToSentence,
     isNullOrUndefined,
     ToMultiLine,
+    isGeneratedExampleId,
 } from '../utils/helper';
 import {
     CodeGenConstants,
@@ -2507,6 +2508,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.AzExample.CommandString;
     }
 
+    public get AzExample_Id(): string {
+        return this.AzExample.Id;
+    }
+
+    public get AzExample_HttpMethod(): string {
+        return this.AzExample.HttpMethod;
+    }
+
     public get AzExample_CommandStringItems(): string[] {
         const items = [];
         ToMultiLine(
@@ -2517,6 +2526,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         );
         return items;
     }
+
+    public get AzExample_RawCommandStringItems(): string[] {
+        return this.AzExample.commandStringItems;
+    }
+
+    public get AzExample_IsGenerated(): boolean {
+        return isGeneratedExampleId(this.AzExample?.Id);
+    }
+
     /**
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
@@ -3107,18 +3125,24 @@ export class CodeModelCliImpl implements CodeModelAz {
         return true;
     }
 
-    public GetExamples(): CommandExample[] {
-        if (!isNullOrUndefined(this.Method_AzExamples) && this.Method_AzExamples.length > 0) {
+    public GetExamples(includeGenerated: boolean): CommandExample[] {
+        if (
+            !isNullOrUndefined(this.Method_AzExamples) &&
+            this.Method_AzExamples.length > 0 &&
+            includeGenerated
+        ) {
             return this.Method_AzExamples;
         }
         const examples: CommandExample[] = [];
         if (this.Examples) {
             Object.entries(this.Examples).forEach(([id, exampleObj]) => {
-                const example = this.CreateCommandExample(id, exampleObj);
-                if (!isNullOrUndefined(example)) examples.push(example);
+                if (includeGenerated || !isGeneratedExampleId(id)) {
+                    const example = this.CreateCommandExample(id, exampleObj);
+                    if (!isNullOrUndefined(example)) examples.push(example);
+                }
             });
         }
-        this.Method_AzExamples = examples;
+        if (includeGenerated) this.Method_AzExamples = examples;
         return examples;
     }
 
@@ -3429,7 +3453,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             const dependResources = [];
             const dependParameters = [];
 
-            const examples = this.GetExamples();
+            const examples = this.GetExamples(false);
             // recognize depends by endpoint in examples
             for (const example of examples) {
                 for (const param of example.Parameters) {
@@ -3511,9 +3535,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         });
 
         if (isNullOrUndefined(this._defaultTestScenario)) {
-            this._defaultTestScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            const allExamples = this.GetAllExamples();
+            this._defaultTestScenario = GenerateDefaultTestScenario(allExamples);
             this._defaultTestScenario = GenerateDefaultTestScenarioByDependency(
-                this.GetAllExamples(),
+                allExamples,
                 this.resourcePool,
                 this._defaultTestScenario,
             );
@@ -3670,7 +3695,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (isNullOrUndefined(example)) return;
                 examples = [example];
             } else {
-                examples = this.GetExamples();
+                examples = this.GetExamples(true);
             }
             for (const example of examples) {
                 if (id && !this.matchExample(example, id)) continue;

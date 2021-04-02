@@ -19,8 +19,8 @@ class NegativeTest(ScenarioTest):
     def __init__(self, *args, **kwargs):
         super(NegativeTest, self).__init__(*args, **kwargs)
 
-    # EXAMPLE: /Operation/put/AttestationProviders_Create
     def test_create_provider(self):
+        # From /Operation/put/AttestationProviders_Create
         try:
             self.cmd('az attestation create-provider '
                      '--provider-name "myattestationprovider" '
@@ -31,8 +31,29 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Operation/get/Operations_List
+        # From /Operation/put/AttestationProviders_Create_MaximumSet_Gen
+        try:
+            self.cmd('az attestation create-provider '
+                     '--provider-name "myattestationprovider" '
+                     '--resource-group "MyResourceGroup"')
+            raise Exception("Error Expected!")
+        except ResourceNotFoundError as e:
+            assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
+
+        # From /Operation/put/AttestationProviders_Create_MinimumSet_Gen
+        try:
+            self.cmd('az attestation create-provider '
+                     '--resource-group "MyResourceGroup"')
+            raise Exception("Error Expected!")
+        except ResourceNotFoundError as e:
+            assert e.message.startswith("(500)")
+        except SystemExit as e:
+            assert e.__context__.message.startswith("(500)")
+
     def test_list_operation(self):
+        # From /Operation/get/Operations_List
         try:
             self.cmd('az attestation list-operation')
             raise Exception("Error Expected!")
@@ -41,8 +62,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /AttestationProviders/get/AttestationProviders_ListByResourceGroup
     def test_attestation_provider_provider_list(self):
+        # From /AttestationProviders/get/AttestationProviders_ListByResourceGroup
         try:
             self.cmd('az attestation attestation-provider provider list '
                      '--resource-group "testrg1"')
@@ -52,8 +73,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /AttestationProviders/get/AttestationProviders_List
     def test_attestation_provider_provider_list2(self):
+        # From /AttestationProviders/get/AttestationProviders_List
         try:
             self.cmd('az attestation attestation-provider provider list')
             raise Exception("Error Expected!")
@@ -62,8 +83,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /AttestationProviders/get/AttestationProviders_Get
     def test_attestation_provider_show(self):
+        # From /AttestationProviders/get/AttestationProviders_Get
         try:
             self.cmd('az attestation attestation-provider show '
                      '--provider-name "myattestationprovider" '
@@ -74,8 +95,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /AttestationProviders/patch/AttestationProviders_Update
     def test_attestation_provider_update(self):
+        # From /AttestationProviders/patch/AttestationProviders_Update
         try:
             self.cmd('az attestation attestation-provider update '
                      '--provider-name "myattestationprovider" '
@@ -87,8 +108,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /AttestationProviders/delete/AttestationProviders_Delete
     def test_attestation_provider_delete(self):
+        # From /AttestationProviders/delete/AttestationProviders_Delete
         try:
             self.cmd('az attestation attestation-provider delete -y '
                      '--provider-name "myattestationprovider" '
