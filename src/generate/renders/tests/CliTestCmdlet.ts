@@ -103,10 +103,7 @@ export class CliCmdletTest extends TemplateBase {
                                         );
                                 }
 
-                                if (
-                                    commandLines[0].indexOf(' delete') > -1 &&
-                                    example.httpMethod.toLowerCase() === 'delete'
-                                ) {
+                                if (example.Method === 'delete') {
                                     commandLines[0] += ' -y';
                                 }
                                 const exampleInfo = new ExampleInfo();
