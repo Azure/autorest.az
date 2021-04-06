@@ -3,6 +3,7 @@
     "resourceGroupName": "MyResourceGroup",
     "subscriptionId": "00000000-0000-0000-0000-000000000000",
     "api-version": "2018-09-01-preview",
+    "offerType": "virtualmachine",
     "providerName": "myattestationprovider",
     "updateParams": {
       "tags": {
@@ -15,7 +16,7 @@
   "responses": {
     "200": {
       "body": {
-        "id": "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Attestation/attestationProviders/myattestationprovider",
+        "id": "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.Attestation/offerType/virtualmachine/attestationProviders/myattestationprovider",
         "name": "myattestationprovider",
         "type": "Microsoft.Attestation/attestationProviders",
         "location": "East US",

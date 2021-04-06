@@ -78,7 +78,7 @@ export class CommandExample {
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
     public ExampleObj: any;
-    public commandStringItems;
+    public commandStringItems: string[];
     public CommandString: string;
     public WaitCommandString: string;
 }
@@ -272,7 +272,7 @@ export interface CodeModelAz {
     AzExample: CommandExample;
     AzExample_CommandString: string;
     AzExample_CommandStringItems: string[];
-    GetExamples(): CommandExample[];
+    GetExamples(includeGenerated: boolean): CommandExample[];
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
