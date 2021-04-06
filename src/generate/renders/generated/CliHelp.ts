@@ -622,7 +622,7 @@ function generateCommandHelp(model: CodeModelAz, debug = false) {
 
     if (model.SelectFirstMethod()) {
         do {
-            for (const example of model.GetExamples()) {
+            for (const example of model.GetExamples(false)) {
                 if (!examplesStarted) {
                     output.push('    examples:');
                     examplesStarted = true;

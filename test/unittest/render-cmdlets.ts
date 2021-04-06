@@ -14,61 +14,104 @@ describe('renderTestsCmdlets', () => {
     const data = {
         testData: {
             className: 'PositiveTest',
-            cmds: [
+            testCases: [
                 {
-                    id: '/Operation/put/AttestationProviders_Create',
-                    name: 'create_provider',
-                    lines: [
-                        'az attestation create-provider ',
-                        '--provider-name "myattestationprovider" ',
+                    exampleInfos: [
+                        {
+                            id: '/Operation/put/AttestationProviders_Create',
+                            lines: [
+                                'az attestation create-provider ',
+                                '--provider-name "myattestationprovider" ',
+                            ],
+                            lastLine: '--resource-group "MyResourceGroup"',
+                        },
+                        {
+                            id: '/Operation/put/AttestationProviders_Create_MaximumSet_Gen',
+                            lines: [
+                                'az attestation create-provider ',
+                                '--provider-name "myattestationprovider" ',
+                            ],
+                            lastLine: '--resource-group "MyResourceGroup"',
+                        },
+                        {
+                            id: '/Operation/put/AttestationProviders_Create_MinimumSet_Gen',
+                            lines: ['az attestation create-provider '],
+                            lastLine: '--resource-group "MyResourceGroup"',
+                        },
                     ],
-                    lastLine: '--resource-group "MyResourceGroup"',
+                    functionName: 'create_provider',
                 },
                 {
-                    id: '/Operation/get/Operations_List',
-                    name: 'list_operation',
-                    lines: [],
-                    lastLine: 'az attestation list-operation',
-                },
-                {
-                    id: '/AttestationProviders/get/AttestationProviders_ListByResourceGroup',
-                    name: 'attestation_provider_provider_list',
-                    lines: ['az attestation attestation-provider provider list '],
-                    lastLine: '--resource-group "testrg1"',
-                },
-                {
-                    id: '/AttestationProviders/get/AttestationProviders_List',
-                    name: 'attestation_provider_provider_list2',
-                    lines: [],
-                    lastLine: 'az attestation attestation-provider provider list',
-                },
-                {
-                    id: '/AttestationProviders/get/AttestationProviders_Get',
-                    name: 'attestation_provider_show',
-                    lines: [
-                        'az attestation attestation-provider show ',
-                        '--provider-name "myattestationprovider" ',
+                    exampleInfos: [
+                        {
+                            id: '/Operation/get/Operations_List',
+                            lines: [],
+                            lastLine: 'az attestation list-operation',
+                        },
                     ],
-                    lastLine: '--resource-group "MyResourceGroup"',
+                    functionName: 'list_operation',
                 },
                 {
-                    id: '/AttestationProviders/patch/AttestationProviders_Update',
-                    name: 'attestation_provider_update',
-                    lines: [
-                        'az attestation attestation-provider update ',
-                        '--provider-name "myattestationprovider" ',
-                        '--resource-group "MyResourceGroup" ',
+                    exampleInfos: [
+                        {
+                            id:
+                                '/AttestationProviders/get/AttestationProviders_ListByResourceGroup',
+                            lines: ['az attestation attestation-provider provider list '],
+                            lastLine: '--resource-group "testrg1"',
+                        },
                     ],
-                    lastLine: '--tags Property1="Value1" Property2="Value2" Property3="Value3"',
+                    functionName: 'attestation_provider_provider_list',
                 },
                 {
-                    id: '/AttestationProviders/delete/AttestationProviders_Delete',
-                    name: 'attestation_provider_delete',
-                    lines: [
-                        'az attestation attestation-provider delete -y ',
-                        '--provider-name "myattestationprovider" ',
+                    exampleInfos: [
+                        {
+                            id: '/AttestationProviders/get/AttestationProviders_List',
+                            lines: [],
+                            lastLine: 'az attestation attestation-provider provider list',
+                        },
                     ],
-                    lastLine: '--resource-group "sample-resource-group"',
+                    functionName: 'attestation_provider_provider_list2',
+                },
+                {
+                    exampleInfos: [
+                        {
+                            id: '/AttestationProviders/get/AttestationProviders_Get',
+                            lines: [
+                                'az attestation attestation-provider show ',
+                                '--provider-name "myattestationprovider" ',
+                            ],
+                            lastLine: '--resource-group "MyResourceGroup"',
+                        },
+                    ],
+                    functionName: 'attestation_provider_show',
+                },
+                {
+                    exampleInfos: [
+                        {
+                            id: '/AttestationProviders/patch/AttestationProviders_Update',
+                            lines: [
+                                'az attestation attestation-provider update ',
+                                '--provider-name "myattestationprovider" ',
+                                '--resource-group "MyResourceGroup" ',
+                            ],
+                            lastLine:
+                                '--tags Property1="Value1" Property2="Value2" Property3="Value3"',
+                        },
+                    ],
+                    functionName: 'attestation_provider_update',
+                },
+                {
+                    exampleInfos: [
+                        {
+                            id: '/AttestationProviders/delete/AttestationProviders_Delete',
+                            lines: [
+                                'az attestation attestation-provider delete -y ',
+                                '--provider-name "myattestationprovider" ',
+                            ],
+                            lastLine: '--resource-group "sample-resource-group"',
+                        },
+                    ],
+                    functionName: 'attestation_provider_delete',
                 },
             ],
         },
