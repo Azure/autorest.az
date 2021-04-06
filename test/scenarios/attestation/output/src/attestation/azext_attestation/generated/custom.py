@@ -25,6 +25,7 @@ def attestation_create_provider(client,
     creation_params['properties']['policy_signing_certificates'] = {}
     creation_params['properties']['policy_signing_certificates']['keys'] = keys
     return client.create(resource_group_name=resource_group_name,
+                         offer_type="virtualmachine",
                          provider_name=provider_name,
                          creation_params=creation_params)
 
@@ -44,6 +45,7 @@ def attestation_attestation_provider_show(client,
                                           resource_group_name,
                                           provider_name):
     return client.get(resource_group_name=resource_group_name,
+                      offer_type="virtualmachine",
                       provider_name=provider_name)
 
 
@@ -54,6 +56,7 @@ def attestation_attestation_provider_update(client,
     update_params = {}
     update_params['tags'] = tags
     return client.update(resource_group_name=resource_group_name,
+                         offer_type="virtualmachine",
                          provider_name=provider_name,
                          update_params=update_params)
 
@@ -62,4 +65,5 @@ def attestation_attestation_provider_delete(client,
                                             resource_group_name,
                                             provider_name):
     return client.delete(resource_group_name=resource_group_name,
+                         offer_type="virtualmachine",
                          provider_name=provider_name)

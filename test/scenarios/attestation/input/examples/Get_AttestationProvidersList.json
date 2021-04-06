@@ -1,14 +1,15 @@
 {
   "parameters": {
     "subscriptionId": "00000000-0000-0000-0000-000000000000",
-    "api-version": "2018-09-01-preview"
+    "api-version": "2018-09-01-preview",
+    "offerType": "virtualmachine"
   },
   "responses": {
     "200": {
       "body": {
         "value": [
           {
-            "id": "subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg1/providers/Microsoft.Attestation/attestationProviders/myattestationprovider",
+            "id": "subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg1/providers/Microsoft.Attestation/offerType/virtualmachine/attestationProviders/myattestationprovider",
             "name": "myattestationprovider",
             "type": "Microsoft.Attestation/attestationProviders",
             "location": "East US",
@@ -17,7 +18,7 @@
             }
           },
           {
-            "id": "subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg2/providers/Microsoft.Attestation/attestationProviders/codes2",
+            "id": "subscriptions/6c96b33e-f5b8-40a6-9011-5cb1c58b0915/resourceGroups/testrg2/providers/Microsoft.Attestation/offerType/virtualmachine/attestationProviders/codes2",
             "name": "codes2",
             "type": "Microsoft.Attestation/attestationProviders",
             "location": "East US",

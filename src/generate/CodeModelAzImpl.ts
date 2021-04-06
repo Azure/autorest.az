@@ -1513,7 +1513,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.currentSubOptionIndex = 0;
             const parameter = this.submethodparameters[this.currentSubOptionIndex];
             if (this.Parameter_IsHidden(parameter) && !containHidden) {
-                if (!this.SelectNextMethodParameter()) {
+                if (!this.SelectNextMethodParameter(containHidden)) {
                     return false;
                 }
             }
@@ -1525,7 +1525,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 (this.MethodParameter_IsHidden && !containHidden) ||
                 this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1
             ) {
-                if (this.SelectNextMethodParameter()) {
+                if (this.SelectNextMethodParameter(containHidden)) {
                     return true;
                 } else {
                     return false;
@@ -1546,7 +1546,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             const parameter = this.submethodparameters[this.currentSubOptionIndex];
             if (this.Parameter_IsHidden(parameter) && !containHidden) {
-                if (!this.SelectNextMethodParameter()) {
+                if (!this.SelectNextMethodParameter(containHidden)) {
                     return false;
                 }
             }
@@ -1558,7 +1558,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 (this.MethodParameter_IsHidden && !containHidden) ||
                 this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1
             ) {
-                if (this.SelectNextMethodParameter()) {
+                if (this.SelectNextMethodParameter(containHidden)) {
                     return true;
                 } else {
                     return false;
