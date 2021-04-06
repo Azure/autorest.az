@@ -226,7 +226,7 @@ def load_arguments(self, _):
                    'the user. (The users and contacts that have their manager property set to this user.) Read-only. '
                    'Nullable.')
         c.argument('license_details', type=validate_file_or_dict, help='A collection of this user\'s license details. '
-                   'Read-only. Expected value: json-string/@json-file.')
+                   'Read-only. Expected value: json-string/json-file/@json-file.')
         c.argument('manager', action=AddManager, nargs='+', help='Represents an Azure Active Directory object. The '
                    'directoryObject type is the base type for many other directory entity types.')
         c.argument('member_of', action=AddMemberOf, nargs='+', help='The groups and directory roles that the user is a '
@@ -238,46 +238,51 @@ def load_arguments(self, _):
                    'user. Read-only. Nullable.')
         c.argument('registered_devices', action=AddRegisteredDevices, nargs='+', help='Devices that are registered for '
                    'the user. Read-only. Nullable.')
-        c.argument('scoped_role_member_of', type=validate_file_or_dict,
-                   help=' Expected value: json-string/@json-file.')
+        c.argument('scoped_role_member_of', type=validate_file_or_dict, help=' Expected value: '
+                   'json-string/json-file/@json-file.')
         c.argument('transitive_member_of', action=AddTransitiveMemberOf, nargs='+', help='')
-        c.argument('calendar', type=validate_file_or_dict, help='calendar Expected value: json-string/@json-file.')
+        c.argument('calendar', type=validate_file_or_dict, help='calendar Expected value: '
+                   'json-string/json-file/@json-file.')
         c.argument('calendar_groups', type=validate_file_or_dict, help='The user\'s calendar groups. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('calendars', type=validate_file_or_dict, help='The user\'s calendars. Read-only. Nullable. Expected '
-                   'value: json-string/@json-file.')
+                   'value: json-string/json-file/@json-file.')
         c.argument('calendar_view', type=validate_file_or_dict, help='The calendar view for the calendar. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('contact_folders', type=validate_file_or_dict, help='The user\'s contacts folders. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('contacts', type=validate_file_or_dict, help='The user\'s contacts. Read-only. Nullable. Expected '
-                   'value: json-string/@json-file.')
+                   'value: json-string/json-file/@json-file.')
         c.argument('events', type=validate_file_or_dict, help='The user\'s events. Default is to show Events under the '
-                   'Default Calendar. Read-only. Nullable. Expected value: json-string/@json-file.')
+                   'Default Calendar. Read-only. Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('mail_folders', type=validate_file_or_dict, help='The user\'s mail folders. Read-only. Nullable. '
-                   'Expected value: json-string/@json-file.')
+                   'Expected value: json-string/json-file/@json-file.')
         c.argument('messages', type=validate_file_or_dict, help='The messages in a mailbox or folder. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('people', type=validate_file_or_dict, help='People that are relevant to the user. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('photo', action=AddPhoto, nargs='+', help='profilePhoto')
         c.argument('photos', action=AddPhotos, nargs='+', help='')
-        c.argument('drive', type=validate_file_or_dict, help='drive Expected value: json-string/@json-file.')
+        c.argument('drive', type=validate_file_or_dict,
+                   help='drive Expected value: json-string/json-file/@json-file.')
         c.argument('drives', type=validate_file_or_dict, help='A collection of drives available for this user. '
-                   'Read-only. Expected value: json-string/@json-file.')
-        c.argument('followed_sites', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
+                   'Read-only. Expected value: json-string/json-file/@json-file.')
+        c.argument('followed_sites', type=validate_file_or_dict, help=' Expected value: json-string/json-file/@json-fil'
+                   'e.')
         c.argument('extensions', action=AddExtensions, nargs='+', help='The collection of open extensions defined for '
                    'the user. Read-only. Nullable.')
         c.argument('managed_devices', type=validate_file_or_dict, help='The managed devices associated with the user. '
-                   'Expected value: json-string/@json-file.')
+                   'Expected value: json-string/json-file/@json-file.')
         c.argument('managed_app_registrations', type=validate_file_or_dict, help='Zero or more managed app '
-                   'registrations that belong to the user. Expected value: json-string/@json-file.')
+                   'registrations that belong to the user. Expected value: json-string/json-file/@json-file.')
         c.argument('device_management_troubleshooting_events', action=AddDeviceManagementTroubleshootingEvents,
                    nargs='+', help='The list of troubleshooting events for this user.')
         c.argument('activities', type=validate_file_or_dict, help='The user\'s activities across devices. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
-        c.argument('online_meetings', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
-        c.argument('joined_teams', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
+        c.argument('online_meetings', type=validate_file_or_dict, help=' Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('joined_teams', type=validate_file_or_dict, help=' Expected value: json-string/json-file/@json-file.'
+                   '')
         c.argument('body_contains', nargs='+', help='Represents the strings that should appear in the body of an '
                    'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
         c.argument('body_or_subject_contains', nargs='+', help='Represents the strings that should appear in the body '
@@ -287,7 +292,7 @@ def load_arguments(self, _):
                    'with in order for the condition or exception to apply.', arg_group='Exceptions')
         c.argument('from_addresses', type=validate_file_or_dict, help='Represents the specific sender email addresses '
                    'of an incoming message in order for the condition or exception to apply. Expected value: '
-                   'json-string/@json-file.', arg_group='Exceptions')
+                   'json-string/json-file/@json-file.', arg_group='Exceptions')
         c.argument('has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
                    'must have attachments in order for the condition or exception to apply.', arg_group='Exceptions')
         c.argument('header_contains', nargs='+', help='Represents the strings that appear in the headers of an '
@@ -349,7 +354,7 @@ def load_arguments(self, _):
                    'to apply.', arg_group='Exceptions')
         c.argument('sent_to_addresses', type=validate_file_or_dict, help='Represents the email addresses that an '
                    'incoming message must have been sent to in order for the condition or exception to apply. Expected '
-                   'value: json-string/@json-file.', arg_group='Exceptions')
+                   'value: json-string/json-file/@json-file.', arg_group='Exceptions')
         c.argument('sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
                    'must be in the toRecipients property of an incoming message in order for the condition or '
                    'exception to apply.', arg_group='Exceptions')
@@ -371,7 +376,8 @@ def load_arguments(self, _):
                    arg_group='Conditions')
         c.argument('microsoft_graph_message_rule_predicates_from_addresses', type=validate_file_or_dict,
                    help='Represents the specific sender email addresses of an incoming message in order for the '
-                   'condition or exception to apply. Expected value: json-string/@json-file.', arg_group='Conditions')
+                   'condition or exception to apply. Expected value: json-string/json-file/@json-file.',
+                   arg_group='Conditions')
         c.argument('boolean_has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
                    'message must have attachments in order for the condition or exception to apply.',
                    arg_group='Conditions')
@@ -438,7 +444,7 @@ def load_arguments(self, _):
         c.argument('microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses',
                    type=validate_file_or_dict, help='Represents the email addresses that an incoming message must have '
                    'been sent to in order for the condition or exception to apply. Expected value: '
-                   'json-string/@json-file.', arg_group='Conditions')
+                   'json-string/json-file/@json-file.', arg_group='Conditions')
         c.argument('boolean_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
                    'mailbox must be in the toRecipients property of an incoming message in order for the condition or '
                    'exception to apply.', arg_group='Conditions')
@@ -452,23 +458,23 @@ def load_arguments(self, _):
                    help='sizeRange', arg_group='Conditions')
         c.argument('microsoft_graph_entity_id', type=str, help='Read-only.', arg_group='Onenote')
         c.argument('notebooks', type=validate_file_or_dict, help='The collection of OneNote notebooks that are owned '
-                   'by the user or group. Read-only. Nullable. Expected value: json-string/@json-file.',
+                   'by the user or group. Read-only. Nullable. Expected value: json-string/json-file/@json-file.',
                    arg_group='Onenote')
         c.argument('operations', type=validate_file_or_dict, help='The status of OneNote operations. Getting an '
                    'operations collection is not supported, but you can get the status of long-running operations if '
                    'the Operation-Location header is returned in the response. Read-only. Nullable. Expected value: '
-                   'json-string/@json-file.', arg_group='Onenote')
+                   'json-string/json-file/@json-file.', arg_group='Onenote')
         c.argument('pages', type=validate_file_or_dict, help='The pages in all OneNote notebooks that are owned by the '
-                   'user or group.  Read-only. Nullable. Expected value: json-string/@json-file.',
+                   'user or group.  Read-only. Nullable. Expected value: json-string/json-file/@json-file.',
                    arg_group='Onenote')
         c.argument('resources', action=AddResources, nargs='+', help='The image and other file resources in OneNote '
                    'pages. Getting a resources collection is not supported, but you can get the binary content of a '
                    'specific resource. Read-only. Nullable.', arg_group='Onenote')
         c.argument('section_groups', type=validate_file_or_dict, help='The section groups in all OneNote notebooks '
-                   'that are owned by the user or group.  Read-only. Nullable. Expected value: json-string/@json-file.',
-                   arg_group='Onenote')
+                   'that are owned by the user or group.  Read-only. Nullable. Expected value: '
+                   'json-string/json-file/@json-file.', arg_group='Onenote')
         c.argument('sections', type=validate_file_or_dict, help='The sections in all OneNote notebooks that are owned '
-                   'by the user or group.  Read-only. Nullable. Expected value: json-string/@json-file.',
+                   'by the user or group.  Read-only. Nullable. Expected value: json-string/json-file/@json-file.',
                    arg_group='Onenote')
         c.argument('id1', type=str, help='Read-only.', arg_group='Settings')
         c.argument('contribution_to_content_discovery_as_organization_disabled', arg_type=get_three_state_flag(),
@@ -490,38 +496,38 @@ def load_arguments(self, _):
         c.argument('user', action=AddApplication, nargs='+', help='identity', arg_group='Settings Shift Preferences '
                    'Last Modified By')
         c.argument('availability', type=validate_file_or_dict, help='Availability of the user to be scheduled for work '
-                   'and its recurrence pattern. Expected value: json-string/@json-file.', arg_group='Settings Shift '
-                   'Preferences')
+                   'and its recurrence pattern. Expected value: json-string/json-file/@json-file.',
+                   arg_group='Settings Shift Preferences')
         c.argument('id3', type=str, help='Read-only.', arg_group='Insights')
         c.argument('shared', type=validate_file_or_dict, help='Calculated relationship identifying documents shared '
                    'with or by the user. This includes URLs, file attachments, and reference attachments to OneDrive '
                    'for Business and SharePoint files found in Outlook messages and meetings. This also includes URLs '
                    'and reference attachments to Teams conversations. Ordered by recency of share. Expected value: '
-                   'json-string/@json-file.', arg_group='Insights')
+                   'json-string/json-file/@json-file.', arg_group='Insights')
         c.argument('trending', type=validate_file_or_dict, help='Calculated relationship identifying documents '
                    'trending around a user. Trending documents are calculated based on activity of the user\'s closest '
                    'network of people and include files stored in OneDrive for Business and SharePoint. Trending '
                    'insights help the user to discover potentially useful content that the user has access to, but has '
-                   'never viewed before. Expected value: json-string/@json-file.', arg_group='Insights')
+                   'never viewed before. Expected value: json-string/json-file/@json-file.', arg_group='Insights')
         c.argument('used', type=validate_file_or_dict, help='Calculated relationship identifying the latest documents '
                    'viewed or modified by a user, including OneDrive for Business and SharePoint documents, ranked by '
-                   'recency of use. Expected value: json-string/@json-file.', arg_group='Insights')
+                   'recency of use. Expected value: json-string/json-file/@json-file.', arg_group='Insights')
         c.argument('id4', type=str, help='Read-only.', arg_group='Planner')
         c.argument('plans', type=validate_file_or_dict, help='Read-only. Nullable. Returns the plannerTasks assigned '
-                   'to the user. Expected value: json-string/@json-file.', arg_group='Planner')
+                   'to the user. Expected value: json-string/json-file/@json-file.', arg_group='Planner')
         c.argument('tasks', type=validate_file_or_dict, help='Read-only. Nullable. Returns the plannerPlans shared '
-                   'with the user. Expected value: json-string/@json-file.', arg_group='Planner')
+                   'with the user. Expected value: json-string/json-file/@json-file.', arg_group='Planner')
         c.argument('id5', type=str, help='Read-only.', arg_group='Outlook')
         c.argument('master_categories', action=AddMasterCategories, nargs='+', help='A list of categories defined for '
                    'the user.', arg_group='Outlook')
         c.argument('id6', type=str, help='Read-only.', arg_group='Inference Classification')
         c.argument('overrides', type=validate_file_or_dict, help='A set of overrides for a user to always classify '
                    'messages from specific senders in certain ways: focused, or other. Read-only. Nullable. Expected '
-                   'value: json-string/@json-file.', arg_group='Inference Classification')
+                   'value: json-string/json-file/@json-file.', arg_group='Inference Classification')
         c.argument('archive_folder', type=str, help='Folder ID of an archive folder for the user.', arg_group='Mailbox '
                    'Settings')
         c.argument('automatic_replies_setting', type=validate_file_or_dict, help='automaticRepliesSetting Expected '
-                   'value: json-string/@json-file.', arg_group='Mailbox Settings')
+                   'value: json-string/json-file/@json-file.', arg_group='Mailbox Settings')
         c.argument('date_format', type=str, help='The date format for the user\'s mailbox.', arg_group='Mailbox '
                    'Settings')
         c.argument('delegate_meeting_message_delivery_options', arg_type=get_enum_type([
@@ -536,7 +542,7 @@ def load_arguments(self, _):
         c.argument('time_zone', type=str, help='The default time zone for the user\'s mailbox.', arg_group='Mailbox '
                    'Settings')
         c.argument('working_hours', type=validate_file_or_dict, help='workingHours Expected value: '
-                   'json-string/@json-file.', arg_group='Mailbox Settings')
+                   'json-string/json-file/@json-file.', arg_group='Mailbox Settings')
 
     with self.argument_context('users user update') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -705,7 +711,7 @@ def load_arguments(self, _):
                    'the user. (The users and contacts that have their manager property set to this user.) Read-only. '
                    'Nullable.')
         c.argument('license_details', type=validate_file_or_dict, help='A collection of this user\'s license details. '
-                   'Read-only. Expected value: json-string/@json-file.')
+                   'Read-only. Expected value: json-string/json-file/@json-file.')
         c.argument('manager', action=AddManager, nargs='+', help='Represents an Azure Active Directory object. The '
                    'directoryObject type is the base type for many other directory entity types.')
         c.argument('member_of', action=AddMemberOf, nargs='+', help='The groups and directory roles that the user is a '
@@ -717,46 +723,51 @@ def load_arguments(self, _):
                    'user. Read-only. Nullable.')
         c.argument('registered_devices', action=AddRegisteredDevices, nargs='+', help='Devices that are registered for '
                    'the user. Read-only. Nullable.')
-        c.argument('scoped_role_member_of', type=validate_file_or_dict,
-                   help=' Expected value: json-string/@json-file.')
+        c.argument('scoped_role_member_of', type=validate_file_or_dict, help=' Expected value: '
+                   'json-string/json-file/@json-file.')
         c.argument('transitive_member_of', action=AddTransitiveMemberOf, nargs='+', help='')
-        c.argument('calendar', type=validate_file_or_dict, help='calendar Expected value: json-string/@json-file.')
+        c.argument('calendar', type=validate_file_or_dict, help='calendar Expected value: '
+                   'json-string/json-file/@json-file.')
         c.argument('calendar_groups', type=validate_file_or_dict, help='The user\'s calendar groups. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('calendars', type=validate_file_or_dict, help='The user\'s calendars. Read-only. Nullable. Expected '
-                   'value: json-string/@json-file.')
+                   'value: json-string/json-file/@json-file.')
         c.argument('calendar_view', type=validate_file_or_dict, help='The calendar view for the calendar. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('contact_folders', type=validate_file_or_dict, help='The user\'s contacts folders. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('contacts', type=validate_file_or_dict, help='The user\'s contacts. Read-only. Nullable. Expected '
-                   'value: json-string/@json-file.')
+                   'value: json-string/json-file/@json-file.')
         c.argument('events', type=validate_file_or_dict, help='The user\'s events. Default is to show Events under the '
-                   'Default Calendar. Read-only. Nullable. Expected value: json-string/@json-file.')
+                   'Default Calendar. Read-only. Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('mail_folders', type=validate_file_or_dict, help='The user\'s mail folders. Read-only. Nullable. '
-                   'Expected value: json-string/@json-file.')
+                   'Expected value: json-string/json-file/@json-file.')
         c.argument('messages', type=validate_file_or_dict, help='The messages in a mailbox or folder. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('people', type=validate_file_or_dict, help='People that are relevant to the user. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
         c.argument('photo', action=AddPhoto, nargs='+', help='profilePhoto')
         c.argument('photos', action=AddPhotos, nargs='+', help='')
-        c.argument('drive', type=validate_file_or_dict, help='drive Expected value: json-string/@json-file.')
+        c.argument('drive', type=validate_file_or_dict,
+                   help='drive Expected value: json-string/json-file/@json-file.')
         c.argument('drives', type=validate_file_or_dict, help='A collection of drives available for this user. '
-                   'Read-only. Expected value: json-string/@json-file.')
-        c.argument('followed_sites', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
+                   'Read-only. Expected value: json-string/json-file/@json-file.')
+        c.argument('followed_sites', type=validate_file_or_dict, help=' Expected value: json-string/json-file/@json-fil'
+                   'e.')
         c.argument('extensions', action=AddExtensions, nargs='+', help='The collection of open extensions defined for '
                    'the user. Read-only. Nullable.')
         c.argument('managed_devices', type=validate_file_or_dict, help='The managed devices associated with the user. '
-                   'Expected value: json-string/@json-file.')
+                   'Expected value: json-string/json-file/@json-file.')
         c.argument('managed_app_registrations', type=validate_file_or_dict, help='Zero or more managed app '
-                   'registrations that belong to the user. Expected value: json-string/@json-file.')
+                   'registrations that belong to the user. Expected value: json-string/json-file/@json-file.')
         c.argument('device_management_troubleshooting_events', action=AddDeviceManagementTroubleshootingEvents,
                    nargs='+', help='The list of troubleshooting events for this user.')
         c.argument('activities', type=validate_file_or_dict, help='The user\'s activities across devices. Read-only. '
-                   'Nullable. Expected value: json-string/@json-file.')
-        c.argument('online_meetings', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
-        c.argument('joined_teams', type=validate_file_or_dict, help=' Expected value: json-string/@json-file.')
+                   'Nullable. Expected value: json-string/json-file/@json-file.')
+        c.argument('online_meetings', type=validate_file_or_dict, help=' Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('joined_teams', type=validate_file_or_dict, help=' Expected value: json-string/json-file/@json-file.'
+                   '')
         c.argument('body_contains', nargs='+', help='Represents the strings that should appear in the body of an '
                    'incoming message in order for the condition or exception to apply.', arg_group='Exceptions')
         c.argument('body_or_subject_contains', nargs='+', help='Represents the strings that should appear in the body '
@@ -766,7 +777,7 @@ def load_arguments(self, _):
                    'with in order for the condition or exception to apply.', arg_group='Exceptions')
         c.argument('from_addresses', type=validate_file_or_dict, help='Represents the specific sender email addresses '
                    'of an incoming message in order for the condition or exception to apply. Expected value: '
-                   'json-string/@json-file.', arg_group='Exceptions')
+                   'json-string/json-file/@json-file.', arg_group='Exceptions')
         c.argument('has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming message '
                    'must have attachments in order for the condition or exception to apply.', arg_group='Exceptions')
         c.argument('header_contains', nargs='+', help='Represents the strings that appear in the headers of an '
@@ -828,7 +839,7 @@ def load_arguments(self, _):
                    'to apply.', arg_group='Exceptions')
         c.argument('sent_to_addresses', type=validate_file_or_dict, help='Represents the email addresses that an '
                    'incoming message must have been sent to in order for the condition or exception to apply. Expected '
-                   'value: json-string/@json-file.', arg_group='Exceptions')
+                   'value: json-string/json-file/@json-file.', arg_group='Exceptions')
         c.argument('sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the mailbox '
                    'must be in the toRecipients property of an incoming message in order for the condition or '
                    'exception to apply.', arg_group='Exceptions')
@@ -850,7 +861,8 @@ def load_arguments(self, _):
                    arg_group='Conditions')
         c.argument('microsoft_graph_message_rule_predicates_from_addresses', type=validate_file_or_dict,
                    help='Represents the specific sender email addresses of an incoming message in order for the '
-                   'condition or exception to apply. Expected value: json-string/@json-file.', arg_group='Conditions')
+                   'condition or exception to apply. Expected value: json-string/json-file/@json-file.',
+                   arg_group='Conditions')
         c.argument('boolean_has_attachments', arg_type=get_three_state_flag(), help='Indicates whether an incoming '
                    'message must have attachments in order for the condition or exception to apply.',
                    arg_group='Conditions')
@@ -917,7 +929,7 @@ def load_arguments(self, _):
         c.argument('microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses',
                    type=validate_file_or_dict, help='Represents the email addresses that an incoming message must have '
                    'been sent to in order for the condition or exception to apply. Expected value: '
-                   'json-string/@json-file.', arg_group='Conditions')
+                   'json-string/json-file/@json-file.', arg_group='Conditions')
         c.argument('boolean_sent_to_me', arg_type=get_three_state_flag(), help='Indicates whether the owner of the '
                    'mailbox must be in the toRecipients property of an incoming message in order for the condition or '
                    'exception to apply.', arg_group='Conditions')
@@ -931,23 +943,23 @@ def load_arguments(self, _):
                    help='sizeRange', arg_group='Conditions')
         c.argument('microsoft_graph_entity_id', type=str, help='Read-only.', arg_group='Onenote')
         c.argument('notebooks', type=validate_file_or_dict, help='The collection of OneNote notebooks that are owned '
-                   'by the user or group. Read-only. Nullable. Expected value: json-string/@json-file.',
+                   'by the user or group. Read-only. Nullable. Expected value: json-string/json-file/@json-file.',
                    arg_group='Onenote')
         c.argument('operations', type=validate_file_or_dict, help='The status of OneNote operations. Getting an '
                    'operations collection is not supported, but you can get the status of long-running operations if '
                    'the Operation-Location header is returned in the response. Read-only. Nullable. Expected value: '
-                   'json-string/@json-file.', arg_group='Onenote')
+                   'json-string/json-file/@json-file.', arg_group='Onenote')
         c.argument('pages', type=validate_file_or_dict, help='The pages in all OneNote notebooks that are owned by the '
-                   'user or group.  Read-only. Nullable. Expected value: json-string/@json-file.',
+                   'user or group.  Read-only. Nullable. Expected value: json-string/json-file/@json-file.',
                    arg_group='Onenote')
         c.argument('resources', action=AddResources, nargs='+', help='The image and other file resources in OneNote '
                    'pages. Getting a resources collection is not supported, but you can get the binary content of a '
                    'specific resource. Read-only. Nullable.', arg_group='Onenote')
         c.argument('section_groups', type=validate_file_or_dict, help='The section groups in all OneNote notebooks '
-                   'that are owned by the user or group.  Read-only. Nullable. Expected value: json-string/@json-file.',
-                   arg_group='Onenote')
+                   'that are owned by the user or group.  Read-only. Nullable. Expected value: '
+                   'json-string/json-file/@json-file.', arg_group='Onenote')
         c.argument('sections', type=validate_file_or_dict, help='The sections in all OneNote notebooks that are owned '
-                   'by the user or group.  Read-only. Nullable. Expected value: json-string/@json-file.',
+                   'by the user or group.  Read-only. Nullable. Expected value: json-string/json-file/@json-file.',
                    arg_group='Onenote')
         c.argument('id1', type=str, help='Read-only.', arg_group='Settings')
         c.argument('contribution_to_content_discovery_as_organization_disabled', arg_type=get_three_state_flag(),
@@ -969,38 +981,38 @@ def load_arguments(self, _):
         c.argument('user', action=AddApplication, nargs='+', help='identity', arg_group='Settings Shift Preferences '
                    'Last Modified By')
         c.argument('availability', type=validate_file_or_dict, help='Availability of the user to be scheduled for work '
-                   'and its recurrence pattern. Expected value: json-string/@json-file.', arg_group='Settings Shift '
-                   'Preferences')
+                   'and its recurrence pattern. Expected value: json-string/json-file/@json-file.',
+                   arg_group='Settings Shift Preferences')
         c.argument('id3', type=str, help='Read-only.', arg_group='Insights')
         c.argument('shared', type=validate_file_or_dict, help='Calculated relationship identifying documents shared '
                    'with or by the user. This includes URLs, file attachments, and reference attachments to OneDrive '
                    'for Business and SharePoint files found in Outlook messages and meetings. This also includes URLs '
                    'and reference attachments to Teams conversations. Ordered by recency of share. Expected value: '
-                   'json-string/@json-file.', arg_group='Insights')
+                   'json-string/json-file/@json-file.', arg_group='Insights')
         c.argument('trending', type=validate_file_or_dict, help='Calculated relationship identifying documents '
                    'trending around a user. Trending documents are calculated based on activity of the user\'s closest '
                    'network of people and include files stored in OneDrive for Business and SharePoint. Trending '
                    'insights help the user to discover potentially useful content that the user has access to, but has '
-                   'never viewed before. Expected value: json-string/@json-file.', arg_group='Insights')
+                   'never viewed before. Expected value: json-string/json-file/@json-file.', arg_group='Insights')
         c.argument('used', type=validate_file_or_dict, help='Calculated relationship identifying the latest documents '
                    'viewed or modified by a user, including OneDrive for Business and SharePoint documents, ranked by '
-                   'recency of use. Expected value: json-string/@json-file.', arg_group='Insights')
+                   'recency of use. Expected value: json-string/json-file/@json-file.', arg_group='Insights')
         c.argument('id4', type=str, help='Read-only.', arg_group='Planner')
         c.argument('plans', type=validate_file_or_dict, help='Read-only. Nullable. Returns the plannerTasks assigned '
-                   'to the user. Expected value: json-string/@json-file.', arg_group='Planner')
+                   'to the user. Expected value: json-string/json-file/@json-file.', arg_group='Planner')
         c.argument('tasks', type=validate_file_or_dict, help='Read-only. Nullable. Returns the plannerPlans shared '
-                   'with the user. Expected value: json-string/@json-file.', arg_group='Planner')
+                   'with the user. Expected value: json-string/json-file/@json-file.', arg_group='Planner')
         c.argument('id5', type=str, help='Read-only.', arg_group='Outlook')
         c.argument('master_categories', action=AddMasterCategories, nargs='+', help='A list of categories defined for '
                    'the user.', arg_group='Outlook')
         c.argument('id6', type=str, help='Read-only.', arg_group='Inference Classification')
         c.argument('overrides', type=validate_file_or_dict, help='A set of overrides for a user to always classify '
                    'messages from specific senders in certain ways: focused, or other. Read-only. Nullable. Expected '
-                   'value: json-string/@json-file.', arg_group='Inference Classification')
+                   'value: json-string/json-file/@json-file.', arg_group='Inference Classification')
         c.argument('archive_folder', type=str, help='Folder ID of an archive folder for the user.', arg_group='Mailbox '
                    'Settings')
         c.argument('automatic_replies_setting', type=validate_file_or_dict, help='automaticRepliesSetting Expected '
-                   'value: json-string/@json-file.', arg_group='Mailbox Settings')
+                   'value: json-string/json-file/@json-file.', arg_group='Mailbox Settings')
         c.argument('date_format', type=str, help='The date format for the user\'s mailbox.', arg_group='Mailbox '
                    'Settings')
         c.argument('delegate_meeting_message_delivery_options', arg_type=get_enum_type([
@@ -1015,7 +1027,7 @@ def load_arguments(self, _):
         c.argument('time_zone', type=str, help='The default time zone for the user\'s mailbox.', arg_group='Mailbox '
                    'Settings')
         c.argument('working_hours', type=validate_file_or_dict, help='workingHours Expected value: '
-                   'json-string/@json-file.', arg_group='Mailbox Settings')
+                   'json-string/json-file/@json-file.', arg_group='Mailbox Settings')
 
     with self.argument_context('users user delete') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -1044,42 +1056,42 @@ def load_arguments(self, _):
     with self.argument_context('users user create-ref-created-object') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-direct-report') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-member-of') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-oauth2-permission-grant') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-owned-device') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-owned-object') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-registered-device') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user create-ref-transitive-member-of') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref value Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user delete-extension') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -1209,7 +1221,7 @@ def load_arguments(self, _):
     with self.argument_context('users user set-ref-manager') as c:
         c.argument('user_id', type=str, help='key: id of user')
         c.argument('body', type=validate_file_or_dict, help='New navigation property ref values Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('users user show-extension') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -1296,8 +1308,8 @@ def load_arguments(self, _):
         c.argument('user', action=AddApplication, nargs='+', help='identity', arg_group='Shift Preferences Last '
                    'Modified By')
         c.argument('availability', type=validate_file_or_dict, help='Availability of the user to be scheduled for work '
-                   'and its recurrence pattern. Expected value: json-string/@json-file.',
-                   arg_group='Shift Preferences')
+                   'and its recurrence pattern. Expected value: json-string/json-file/@json-file.', arg_group='Shift '
+                   'Preferences')
 
     with self.argument_context('users user-outlook create-master-category') as c:
         c.argument('user_id', type=str, help='key: id of user')
@@ -1363,4 +1375,4 @@ def load_arguments(self, _):
         c.argument('device', action=AddApplication, nargs='+', help='identity', arg_group='Last Modified By')
         c.argument('user', action=AddApplication, nargs='+', help='identity', arg_group='Last Modified By')
         c.argument('availability', type=validate_file_or_dict, help='Availability of the user to be scheduled for work '
-                   'and its recurrence pattern. Expected value: json-string/@json-file.')
+                   'and its recurrence pattern. Expected value: json-string/json-file/@json-file.')

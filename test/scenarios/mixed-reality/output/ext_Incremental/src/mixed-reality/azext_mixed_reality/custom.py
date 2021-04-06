@@ -10,6 +10,7 @@
 # Generation mode: Incremental
 # --------------------------------------------------------------------------
 
+# pylint: disable=unused-wildcard-import,wildcard-import
 from .generated.custom import *  # noqa: F403
 try:
     from .manual.custom import *  # noqa: F403

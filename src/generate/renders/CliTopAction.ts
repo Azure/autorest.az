@@ -45,7 +45,7 @@ export class CliTopAction extends TemplateBase {
             headerGenerator.disableUnusedWildcardImport = true;
             headerGenerator.generationMode = GenerationMode.Incremental;
             let output: string[] = headerGenerator.getLines();
-            output = output.concat(this.loadGeneratedAction(0));
+            output = output.concat(this.loadGeneratedAction(0, true));
             return output;
         } else {
             const existingMode: GenerationMode = HeaderGenerator.GetCliGenerationMode(base);
@@ -79,7 +79,7 @@ export class CliTopAction extends TemplateBase {
 
                 // Add loading code block
                 if (!hasLoadLogic) {
-                    output = output.concat(this.loadGeneratedAction(0));
+                    output = output.concat(this.loadGeneratedAction(0, true));
                 }
 
                 const appendLineStartIdx = skipLineIdx < keepLineIdx ? keepLineIdx : skipLineIdx;
@@ -91,12 +91,14 @@ export class CliTopAction extends TemplateBase {
         }
     }
 
-    private loadGeneratedAction(indent: number): string[] {
+    private loadGeneratedAction(indent: number, incremental = false): string[] {
         const output: string[] = [];
         const indentStr: string = getIndentString(indent);
 
         output.push('');
-        output.push(indentStr + '# pylint: disable=unused-wildcard-import,wildcard-import');
+        if (incremental) {
+            output.push(indentStr + '# pylint: disable=unused-wildcard-import,wildcard-import');
+        }
         output.push(indentStr + 'from .generated.action import *  # noqa: F403');
         output.push(indentStr + 'try:');
         output.push(indentStr + '    from .manual.action import *  # noqa: F403');

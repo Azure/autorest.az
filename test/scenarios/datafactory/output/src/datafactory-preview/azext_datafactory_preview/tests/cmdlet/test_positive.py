@@ -50,7 +50,7 @@ class PositiveTest(ScenarioTest):
 
     def test_delete(self):
         # From /Factories/delete/Factories_Delete
-        self.cmd('az datafactory delete -y '
+        self.cmd('az datafactory delete '
                  '--name "myFactory" '
                  '--resource-group "myResourceGroup"')
 
@@ -112,7 +112,7 @@ class PositiveTest(ScenarioTest):
 
     def test_trigger_delete(self):
         # From /Triggers/delete/Triggers_Delete
-        self.cmd('az datafactory trigger delete -y '
+        self.cmd('az datafactory trigger delete '
                  '--factory-name "myFactory" '
                  '--resource-group "myResourceGroup" '
                  '--name "myTrigger"')
@@ -191,7 +191,7 @@ class PositiveTest(ScenarioTest):
 
     def test_integration_runtime_delete(self):
         # From /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
-        self.cmd('az datafactory integration-runtime delete -y '
+        self.cmd('az datafactory integration-runtime delete '
                  '--factory-name "myFactory" '
                  '--name "myIntegrationRuntime" '
                  '--resource-group "myResourceGroup"')
