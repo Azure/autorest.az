@@ -147,6 +147,10 @@ export interface CodeModelAz {
     Command_MinApi: string;
     Command_ResourceType: string | undefined;
     Command_GenericSetterParameter(Operation): Parameter;
+    Command_ApiVersion: string;
+    Command_ResourceProviderType: string;
+    Command_HttpMethod: string;
+    Command_HttpURL: string;
 
     Command_Help: string;
     Command_IsLongRun: boolean;
@@ -168,6 +172,10 @@ export interface CodeModelAz {
     Method_CliKey: string;
     Method_MaxApi: string;
     Method_MinApi: string;
+    Method_ApiVersion: string;
+    Method_ResourceProviderType: string;
+    Method_HttpMethod: string;
+    Method_HttpURL: string;
     Method_ResourceType: string | undefined;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
@@ -189,6 +197,7 @@ export interface CodeModelAz {
     MethodParameter_CliKey: string;
     MethodParameter_MaxApi: string;
     MethodParameter_MinApi: string;
+    MethodParameter_RestApiPath: string[];
     MethodParameter_ResourceType: string | undefined;
     MethodParameter_IsArray: boolean;
     MethodParameter_NamePython: string;

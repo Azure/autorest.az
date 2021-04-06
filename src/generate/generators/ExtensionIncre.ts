@@ -30,6 +30,7 @@ import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
+import { CliPortalMapping } from '../renders/generated/PortalMapping';
 
 export class AzExtensionIncrementalGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -89,7 +90,9 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
 
         // Add Import from generated folder (Report)
         await this.generateIncrementalSingleAndAddtoOutput(new CliReport(this.model));
-
+        if (AzConfiguration.getValue(CodeGenConstants.PORTAL_MAPPING)) {
+            await this.generateFullSingleAndAddtoOutput(new CliPortalMapping(this.model));
+        }
         // Add Import from generated folder (Action)
         const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';

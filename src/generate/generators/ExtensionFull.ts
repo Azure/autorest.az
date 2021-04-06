@@ -31,6 +31,7 @@ import { CliExtHistory } from '../renders/extraExt/CliExtHistory';
 import { CliExtReadme } from '../renders/extraExt/CliExtReadme';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
+import { CliPortalMapping } from '../renders/generated/PortalMapping';
 
 export class AzExtensionFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -83,6 +84,9 @@ export class AzExtensionFullGenerator extends GeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliReport(this.model));
+        if (AzConfiguration.getValue(CodeGenConstants.PORTAL_MAPPING)) {
+            await this.generateFullSingleAndAddtoOutput(new CliPortalMapping(this.model));
+        }
         await this.generateFullSingleAndAddtoOutput(new CliExtHistory(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model), false);
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupCfg(this.model));

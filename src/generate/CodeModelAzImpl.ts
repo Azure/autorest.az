@@ -1298,6 +1298,26 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Command.language['cli']?.['min-api'];
     }
 
+    public get Command_ApiVersion(): string {
+        if (this.Command.apiVersions.length > 0) {
+            return this.Command.apiVersions?.[0]?.version;
+        }
+        return undefined;
+    }
+
+    public get Command_HttpMethod(): string {
+        return this.Request.protocol.http.method;
+    }
+
+    public get Command_HttpURL(): string {
+        return this.Request.protocol.http.path;
+    }
+
+    public get Command_ResourceProviderType(): string {
+        const regexMatch = parseResourceId(this.Command_HttpURL);
+        return regexMatch.get('namespace') + '/' + regexMatch.get('type');
+    }
+
     public get Command_ResourceType(): string | undefined {
         return this.formResourceType(this.Command.language['cli']?.['resource-type']);
     }
@@ -1422,6 +1442,26 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Method.language['cli']?.['min-api'];
     }
 
+    public get Method_ApiVersion(): string {
+        if (this.Command.apiVersions.length > 0) {
+            return this.Command.apiVersions?.[0]?.version;
+        }
+        return undefined;
+    }
+
+    public get Method_HttpMethodOri(): string {
+        return this.Request.protocol?.http?.method;
+    }
+
+    public get Method_HttpURL(): string {
+        return this.Request?.protocol?.http?.path;
+    }
+
+    public get Method_ResourceProviderType(): string {
+        const regexMatch = parseResourceId(this.Method_HttpURL);
+        return regexMatch.get('namespace') + '/' + regexMatch.get('type');
+    }
+
     public get Method_ResourceType(): string | undefined {
         return this.formResourceType(this.Method.language['cli']?.['resource-type']);
     }
@@ -1439,7 +1479,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method_HttpMethod(): string {
-        const ret = this.Method.requests[0].protocol?.http?.method || 'unknown';
+        const ret = this.Method_HttpMethodOri || 'unknown';
         return ret.toLowerCase();
     }
 
@@ -1685,6 +1725,14 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_MinApi(): string {
         return this.MethodParameter.language['cli']?.['min-api'];
+    }
+
+    public get MethodParameter_RestApiPath(): string[] {
+        const restApiPath = [];
+        if (!this.MethodParameter_IsFlattened) {
+            restApiPath.push(this.MethodParameter_CliKey);
+        }
+        return restApiPath;
     }
 
     public get MethodParameter_ResourceType(): string | undefined {

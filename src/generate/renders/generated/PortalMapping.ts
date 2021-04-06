@@ -56,11 +56,32 @@ export class CliPortalMapping extends TemplateBase {
             ['extension', new RenderInput(['name'], { name: SortOrder.ASEC })],
             ['commandGroup', new RenderInput(['name', 'cliKey'], { name: SortOrder.ASEC })],
             ['command', new RenderInput(['name'])],
-            ['method', new RenderInput(['nameAz', 'cliKey'], { nameAz: SortOrder.ASEC })],
+            [
+                'method',
+                new RenderInput(
+                    [
+                        'nameAz',
+                        'cliKey',
+                        'apiVersion',
+                        'httpMethodOri',
+                        'httpURL',
+                        'resourceProviderType',
+                    ],
+                    { nameAz: SortOrder.ASEC },
+                ),
+            ],
             [
                 'methodParameter',
                 new RenderInput(
-                    ['mapsTo', 'type', 'description', 'cliKey', 'namePython', 'nameAz'],
+                    [
+                        'mapsTo',
+                        'type',
+                        'description',
+                        'cliKey',
+                        'namePython',
+                        'nameAz',
+                        'restApiPath',
+                    ],
                     {},
                     [],
                     converter,

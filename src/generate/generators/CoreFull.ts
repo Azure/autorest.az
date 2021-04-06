@@ -5,6 +5,7 @@ import { GeneratorBase } from './Base';
 import { CodeModelAz } from '../CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
 import { CliReport } from '../renders/CliReport';
+import { CliPortalMapping } from '../renders/generated/PortalMapping';
 import { CliTopAction } from '../renders/CliTopAction';
 import { CliTopCustom } from '../renders/CliTopCustom';
 import { CliTopHelp } from '../renders/CliTopHelp';
@@ -80,6 +81,9 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 await this.generateFullSingleAndAddtoOutput(new CliTopHelp(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopInit(model));
                 await this.generateFullSingleAndAddtoOutput(new CliReport(model));
+                if (AzConfiguration.getValue(CodeGenConstants.PORTAL_MAPPING)) {
+                    await this.generateFullSingleAndAddtoOutput(new CliPortalMapping(model));
+                }
                 await this.generateFullSingleAndAddtoOutput(new CliMainDocSourceJsonMap(model));
                 const requirementGenerator = new CliMainRequirement(model);
                 for (const sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
