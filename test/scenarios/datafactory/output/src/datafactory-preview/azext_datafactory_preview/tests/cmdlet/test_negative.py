@@ -19,8 +19,8 @@ class NegativeTest(ScenarioTest):
     def __init__(self, *args, **kwargs):
         super(NegativeTest, self).__init__(*args, **kwargs)
 
-    # EXAMPLE: /Factories/get/Factories_ListByResourceGroup
     def test_list2(self):
+        # From /Factories/get/Factories_ListByResourceGroup
         try:
             self.cmd('az datafactory list '
                      '--resource-group "myResourceGroup"')
@@ -30,8 +30,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/get/Factories_List
     def test_list(self):
+        # From /Factories/get/Factories_List
         try:
             self.cmd('az datafactory list')
             raise Exception("Error Expected!")
@@ -40,8 +40,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/get/Factories_Get
     def test_show(self):
+        # From /Factories/get/Factories_Get
         try:
             self.cmd('az datafactory show '
                      '--name "myFactory" '
@@ -52,8 +52,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/put/Factories_CreateOrUpdate
     def test_create(self):
+        # From /Factories/put/Factories_CreateOrUpdate
         try:
             self.cmd('az datafactory create '
                      '--location "East US" '
@@ -66,8 +66,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/patch/Factories_Update
     def test_update(self):
+        # From /Factories/patch/Factories_Update
         try:
             self.cmd('az datafactory update '
                      '--name "myFactory" '
@@ -79,8 +79,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/delete/Factories_Delete
     def test_delete(self):
+        # From /Factories/delete/Factories_Delete
         try:
             self.cmd('az datafactory delete -y '
                      '--name "myFactory" '
@@ -91,8 +91,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/post/Factories_ConfigureFactoryRepo
     def test_configure_factory_repo(self):
+        # From /Factories/post/Factories_ConfigureFactoryRepo
         try:
             self.cmd('az datafactory configure-factory-repo '
                      '--factory-resource-id "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/myResourceGroup/providers/Microsoft.DataFactory/factories/myFactory" '
@@ -104,8 +104,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/post/Factories_GetDataPlaneAccess
     def test_get_data_plane_access(self):
+        # From /Factories/post/Factories_GetDataPlaneAccess
         try:
             self.cmd('az datafactory get-data-plane-access '
                      '--name "myFactory" '
@@ -121,8 +121,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Factories/post/Factories_GetGitHubAccessToken
     def test_get_git_hub_access_token(self):
+        # From /Factories/post/Factories_GetGitHubAccessToken
         try:
             self.cmd('az datafactory get-git-hub-access-token '
                      '--name "myFactory" '
@@ -136,8 +136,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/get/Triggers_ListByFactory
     def test_trigger_list(self):
+        # From /Triggers/get/Triggers_ListByFactory
         try:
             self.cmd('az datafactory trigger list '
                      '--factory-name "myFactory" '
@@ -148,8 +148,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/get/Triggers_Get
     def test_trigger_show(self):
+        # From /Triggers/get/Triggers_Get
         try:
             self.cmd('az datafactory trigger show '
                      '--factory-name "myFactory" '
@@ -161,8 +161,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/put/Triggers_Create
     def test_trigger_create(self):
+        # From /Triggers/put/Triggers_Create
         try:
             self.cmd('az datafactory trigger create '
                      '--factory-name "myFactory" '
@@ -175,8 +175,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/put/Triggers_Update
     def test_trigger_update(self):
+        # From /Triggers/put/Triggers_Update
         try:
             self.cmd('az datafactory trigger update '
                      '--factory-name "myFactory" '
@@ -189,8 +189,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/delete/Triggers_Delete
     def test_trigger_delete(self):
+        # From /Triggers/delete/Triggers_Delete
         try:
             self.cmd('az datafactory trigger delete -y '
                      '--factory-name "myFactory" '
@@ -202,8 +202,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/post/Triggers_GetEventSubscriptionStatus
     def test_trigger_get_event_subscription_status(self):
+        # From /Triggers/post/Triggers_GetEventSubscriptionStatus
         try:
             self.cmd('az datafactory trigger get-event-subscription-status '
                      '--factory-name "myFactory" '
@@ -215,8 +215,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/post/Triggers_QueryByFactory
     def test_trigger_query_by_factory(self):
+        # From /Triggers/post/Triggers_QueryByFactory
         try:
             self.cmd('az datafactory trigger query-by-factory '
                      '--factory-name "myFactory" '
@@ -228,8 +228,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/post/Triggers_Start
     def test_trigger_start(self):
+        # From /Triggers/post/Triggers_Start
         try:
             self.cmd('az datafactory trigger start '
                      '--factory-name "myFactory" '
@@ -241,8 +241,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/post/Triggers_Stop
     def test_trigger_stop(self):
+        # From /Triggers/post/Triggers_Stop
         try:
             self.cmd('az datafactory trigger stop '
                      '--factory-name "myFactory" '
@@ -254,8 +254,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/post/Triggers_SubscribeToEvents
     def test_trigger_subscribe_to_event(self):
+        # From /Triggers/post/Triggers_SubscribeToEvents
         try:
             self.cmd('az datafactory trigger subscribe-to-event '
                      '--factory-name "myFactory" '
@@ -267,8 +267,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /Triggers/post/Triggers_UnsubscribeFromEvents
     def test_trigger_unsubscribe_from_event(self):
+        # From /Triggers/post/Triggers_UnsubscribeFromEvents
         try:
             self.cmd('az datafactory trigger unsubscribe-from-event '
                      '--factory-name "myFactory" '
@@ -280,8 +280,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_ListByFactory
     def test_integration_runtime_list(self):
+        # From /IntegrationRuntimes/get/IntegrationRuntimes_ListByFactory
         try:
             self.cmd('az datafactory integration-runtime list '
                      '--factory-name "myFactory" '
@@ -292,8 +292,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/get/IntegrationRuntimes_Get
     def test_integration_runtime_show(self):
+        # From /IntegrationRuntimes/get/IntegrationRuntimes_Get
         try:
             self.cmd('az datafactory integration-runtime show '
                      '--factory-name "myFactory" '
@@ -305,8 +305,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/put/IntegrationRuntimes_Create
     def test_integration_runtime_self_hosted_create(self):
+        # From /IntegrationRuntimes/put/IntegrationRuntimes_Create
         try:
             self.cmd('az datafactory integration-runtime self-hosted create '
                      '--factory-name "myFactory" '
@@ -319,8 +319,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/patch/IntegrationRuntimes_Update
     def test_integration_runtime_update(self):
+        # From /IntegrationRuntimes/patch/IntegrationRuntimes_Update
         try:
             self.cmd('az datafactory integration-runtime update '
                      '--factory-name "myFactory" '
@@ -334,8 +334,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
     def test_integration_runtime_delete(self):
+        # From /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
         try:
             self.cmd('az datafactory integration-runtime delete -y '
                      '--factory-name "myFactory" '
@@ -347,8 +347,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_GetConnectionInfo
     def test_integration_runtime_get_connection_info(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_GetConnectionInfo
         try:
             self.cmd('az datafactory integration-runtime get-connection-info '
                      '--factory-name "myFactory" '
@@ -360,8 +360,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_GetMonitoringData
     def test_integration_runtime_get_monitoring_data(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_GetMonitoringData
         try:
             self.cmd('az datafactory integration-runtime get-monitoring-data '
                      '--factory-name "myFactory" '
@@ -373,8 +373,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_GetStatus
     def test_integration_runtime_get_status(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_GetStatus
         try:
             self.cmd('az datafactory integration-runtime get-status '
                      '--factory-name "myFactory" '
@@ -386,8 +386,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_ListAuthKeys
     def test_integration_runtime_list_auth_key(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_ListAuthKeys
         try:
             self.cmd('az datafactory integration-runtime list-auth-key '
                      '--factory-name "myFactory" '
@@ -399,8 +399,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_RegenerateAuthKey
     def test_integration_runtime_regenerate_auth_key(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_RegenerateAuthKey
         try:
             self.cmd('az datafactory integration-runtime regenerate-auth-key '
                      '--factory-name "myFactory" '
@@ -413,8 +413,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_RemoveLinks
     def test_integration_runtime_remove_link(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_RemoveLinks
         try:
             self.cmd('az datafactory integration-runtime remove-link '
                      '--factory-name "myFactory" '
@@ -427,8 +427,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Start
     def test_integration_runtime_start(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_Start
         try:
             self.cmd('az datafactory integration-runtime start '
                      '--factory-name "myFactory" '
@@ -440,8 +440,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Stop
     def test_integration_runtime_stop(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_Stop
         try:
             self.cmd('az datafactory integration-runtime stop '
                      '--factory-name "myFactory" '
@@ -453,8 +453,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_SyncCredentials
     def test_integration_runtime_sync_credentials(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_SyncCredentials
         try:
             self.cmd('az datafactory integration-runtime sync-credentials '
                      '--factory-name "myFactory" '
@@ -466,8 +466,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
     def test_integration_runtime_upgrade(self):
+        # From /IntegrationRuntimes/post/IntegrationRuntimes_Upgrade
         try:
             self.cmd('az datafactory integration-runtime upgrade '
                      '--factory-name "myFactory" '
@@ -479,8 +479,8 @@ class NegativeTest(ScenarioTest):
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
 
-    # EXAMPLE: /datafactory linked-integration-runtime/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
     def test_linked_integration_runtime_create(self):
+        # From /datafactory linked-integration-runtime/post/IntegrationRuntimes_CreateLinkedIntegrationRuntime
         try:
             self.cmd('az datafactory linked-integration-runtime create '
                      '--name "myDatafactoryLinkedIntegrationRuntime" '

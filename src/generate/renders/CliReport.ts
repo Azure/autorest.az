@@ -72,7 +72,7 @@ export class CliReport extends TemplateBase {
                     converter,
                 ),
             ],
-            ['azExample', new RenderInput(['commandStringItems'], {})],
+            ['azExample', new RenderInput(['commandStringItems'], {}, [['isGenerated', true]])],
         ]);
 
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
@@ -188,7 +188,7 @@ export class CliReport extends TemplateBase {
             do {
                 if (model.SelectFirstMethod()) {
                     do {
-                        if (model.GetExamples().length > 0) {
+                        if (model.GetExamples(false).length > 0) {
                             mo.push(
                                 '|[az ' +
                                     model.CommandGroup_Name +
@@ -259,7 +259,7 @@ export class CliReport extends TemplateBase {
                                 '`</a>',
                         );
                         mo.push('');
-                        for (const example of model.GetExamples()) {
+                        for (const example of model.GetExamples(false)) {
                             mo.push(
                                 '##### <a name="' +
                                     'Examples' +

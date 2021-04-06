@@ -18,16 +18,18 @@ class {{testData.className}}(ScenarioTest):
 
     def __init__(self, *args, **kwargs):
         super({{testData.className}}, self).__init__(*args, **kwargs)
-{% for cmd in testData.cmds %}
-    # EXAMPLE: {{cmd.id}}
-    def test_{{cmd.name}}(self):
+{% for testCase in testData.testCases %}
+    def test_{{testCase.functionName}}(self):
+{%- for exampleInfo in testCase.exampleInfos %}
+        # From {{exampleInfo.id}}
         try:
-            self.cmd({% for line in cmd.lines %}'{{line}}'
+            self.cmd({% for line in exampleInfo.lines %}'{{line}}'
                      {% endfor -%}
-                     '{{cmd.lastLine}}')
+                     '{{exampleInfo.lastLine}}')
             raise Exception("Error Expected!")
         except ResourceNotFoundError as e:
             assert e.message.startswith("(500)")
         except SystemExit as e:
             assert e.__context__.message.startswith("(500)")
+{% endfor -%}
 {% endfor -%}

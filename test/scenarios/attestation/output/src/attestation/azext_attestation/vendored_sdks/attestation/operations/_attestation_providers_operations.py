@@ -47,6 +47,7 @@ class AttestationProvidersOperations(object):
     def get(
         self,
         resource_group_name,  # type: str
+        offer_type,  # type: Union[str, "models.OfferType"]
         provider_name,  # type: str
         **kwargs  # type: Any
     ):
@@ -55,6 +56,8 @@ class AttestationProvidersOperations(object):
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
+        :param offer_type: Offer Type, currently only virtualmachine type is supported.
+        :type offer_type: str or ~attestation_management_client.models.OfferType
         :param provider_name: Name of the attestation service instance.
         :type provider_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -75,6 +78,7 @@ class AttestationProvidersOperations(object):
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'offerType': self._serialize.url("offer_type", offer_type, 'str'),
             'providerName': self._serialize.url("provider_name", provider_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -101,11 +105,12 @@ class AttestationProvidersOperations(object):
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}'}  # type: ignore
 
     def create(
         self,
         resource_group_name,  # type: str
+        offer_type,  # type: Union[str, "models.OfferType"]
         provider_name,  # type: str
         creation_params,  # type: "models.AttestationServiceCreationParams"
         **kwargs  # type: Any
@@ -115,6 +120,8 @@ class AttestationProvidersOperations(object):
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
+        :param offer_type: Offer Type, currently only virtualmachine type is supported.
+        :type offer_type: str or ~attestation_management_client.models.OfferType
         :param provider_name: Name of the attestation service.
         :type provider_name: str
         :param creation_params: Client supplied parameters.
@@ -138,6 +145,7 @@ class AttestationProvidersOperations(object):
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'offerType': self._serialize.url("offer_type", offer_type, 'str'),
             'providerName': self._serialize.url("provider_name", provider_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -172,11 +180,12 @@ class AttestationProvidersOperations(object):
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
+    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}'}  # type: ignore
 
     def update(
         self,
         resource_group_name,  # type: str
+        offer_type,  # type: Union[str, "models.OfferType"]
         provider_name,  # type: str
         update_params,  # type: "models.AttestationServicePatchParams"
         **kwargs  # type: Any
@@ -186,6 +195,8 @@ class AttestationProvidersOperations(object):
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
+        :param offer_type: Offer Type, currently only virtualmachine type is supported.
+        :type offer_type: str or ~attestation_management_client.models.OfferType
         :param provider_name: Name of the attestation service.
         :type provider_name: str
         :param update_params: Client supplied parameters.
@@ -209,6 +220,7 @@ class AttestationProvidersOperations(object):
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'offerType': self._serialize.url("offer_type", offer_type, 'str'),
             'providerName': self._serialize.url("provider_name", provider_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -239,11 +251,12 @@ class AttestationProvidersOperations(object):
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}'}  # type: ignore
 
     def delete(
         self,
         resource_group_name,  # type: str
+        offer_type,  # type: Union[str, "models.OfferType"]
         provider_name,  # type: str
         **kwargs  # type: Any
     ):
@@ -252,6 +265,8 @@ class AttestationProvidersOperations(object):
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
+        :param offer_type: Offer Type, currently only virtualmachine type is supported.
+        :type offer_type: str or ~attestation_management_client.models.OfferType
         :param provider_name: Name of the attestation service.
         :type provider_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -272,6 +287,7 @@ class AttestationProvidersOperations(object):
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'offerType': self._serialize.url("offer_type", offer_type, 'str'),
             'providerName': self._serialize.url("provider_name", provider_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -295,7 +311,7 @@ class AttestationProvidersOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}'}  # type: ignore
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}'}  # type: ignore
 
     def list(
         self,

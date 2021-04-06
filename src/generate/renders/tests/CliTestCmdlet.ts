@@ -3,12 +3,21 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { CodeModelAz } from '../../CodeModelAz';
 import { CliTestStep } from './CliTestStep';
-import { deepCopy } from '../../../utils/helper';
+import { deepCopy, isGeneratedExampleId, isNullOrUndefined } from '../../../utils/helper';
 import { TemplateBase } from '../TemplateBase';
 import { CodeModelTypes, PathConstants, RenderInput } from '../../../utils/models';
 
+class ExampleInfo {
+    id: string;
+    lines: string[];
+    lastLine: string;
+}
+class CmdletTestCase {
+    functionName: string;
+    exampleInfos: ExampleInfo[] = [];
+}
 export class CliCmdletTest extends TemplateBase {
     constructor(model: CodeModelAz, isNegativeTest: boolean) {
         super(model);
@@ -43,7 +52,7 @@ export class CliCmdletTest extends TemplateBase {
         const ret = {
             testData: {
                 className: this.className,
-                cmds: [],
+                testCases: [] as CmdletTestCase[],
             },
         };
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
@@ -53,13 +62,15 @@ export class CliCmdletTest extends TemplateBase {
             ['extension', new RenderInput()],
             ['commandGroup', new RenderInput()],
             ['command', new RenderInput()],
-            ['method', new RenderInput(['azExamples'])],
+            ['method', new RenderInput()],
+            ['azExample', new RenderInput(['id', 'httpMethod', 'rawCommandStringItems'])],
         ]);
 
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
             ['extension', 'commandGroup'],
             ['commandGroup', 'command'],
             ['command', 'method'],
+            ['method', 'azExample'],
         ];
 
         for (const extension of this.model.getModelData('extension', inputProperties, dependencies)
@@ -67,32 +78,48 @@ export class CliCmdletTest extends TemplateBase {
             for (const commandGroup of extension.CommandGroups)
                 for (const command of commandGroup.Commands)
                     for (const method of command.Methods)
-                        for (const example of method.azExamples as CommandExample[]) {
-                            let functionName = CliTestStep.ToFunctionName(
-                                { name: example.Id },
-                                example.commandStringItems[0],
-                            );
-                            const redundentPrefix = 'step_';
-                            if (functionName.startsWith(redundentPrefix))
-                                functionName = functionName.slice(redundentPrefix.length);
+                        if (method.hasAzExample) {
+                            (method.AzExamples as any[]).sort((a, b) => {
+                                return a.id > b.id ? 1 : -1;
+                            });
+                            const testCase = new CmdletTestCase();
+                            for (const example of method.AzExamples as any[]) {
+                                const commandLines = deepCopy(
+                                    example.rawCommandStringItems,
+                                ) as string[];
 
-                            const commandLines = deepCopy(example.commandStringItems) as string[];
-                            if (
-                                commandLines[0].indexOf(' delete') > -1 &&
-                                example.HttpMethod.toLowerCase() === 'delete'
-                            ) {
-                                commandLines[0] += ' -y';
-                            }
-                            ret.testData.cmds.push({
-                                id: example.Id,
-                                name: functionName,
-                                lines: commandLines
+                                if (
+                                    !isGeneratedExampleId(example.id) ||
+                                    isNullOrUndefined(testCase.functionName)
+                                ) {
+                                    testCase.functionName = CliTestStep.ToFunctionName(
+                                        { name: example.id },
+                                        example.rawCommandStringItems[0],
+                                    );
+                                    const redundentPrefix = 'step_';
+                                    if (testCase.functionName.startsWith(redundentPrefix))
+                                        testCase.functionName = testCase.functionName.slice(
+                                            redundentPrefix.length,
+                                        );
+                                }
+
+                                if (
+                                    commandLines[0].indexOf(' delete') > -1 &&
+                                    example.httpMethod.toLowerCase() === 'delete'
+                                ) {
+                                    commandLines[0] += ' -y';
+                                }
+                                const exampleInfo = new ExampleInfo();
+                                exampleInfo.id = example.id;
+                                (exampleInfo.lines = commandLines
                                     .slice(0, -1)
                                     .map(
                                         (x) => x.split('{').join('{{').split('}').join('}}') + ' ',
-                                    ),
-                                lastLine: commandLines.last,
-                            });
+                                    )),
+                                    (exampleInfo.lastLine = commandLines.last);
+                                testCase.exampleInfos.push(exampleInfo);
+                            }
+                            ret.testData.testCases.push(testCase);
                         }
         return ret;
     }

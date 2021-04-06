@@ -798,3 +798,8 @@ export function thoughtAsTrue(t: any) {
         !isNullOrUndefined(t) && (t.toString().toLowerCase() === 'true' || typeof t === 'object')
     );
 }
+
+export function isGeneratedExampleId(exampleId: string): boolean {
+    if (isNullOrUndefined(exampleId)) return false;
+    return exampleId.toLowerCase().endsWith('_gen');
+}
