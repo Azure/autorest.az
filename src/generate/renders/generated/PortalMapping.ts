@@ -129,7 +129,10 @@ export class CliPortalMapping extends TemplateBase {
                         'restApiPath',
                     ],
                     {},
-                    [['type', SchemaType.Constant]],
+                    [
+                        ['isFlattened', true],
+                        ['type', SchemaType.Constant],
+                    ],
                     this.methodParameterConverter.bind(this),
                 ),
             ],
