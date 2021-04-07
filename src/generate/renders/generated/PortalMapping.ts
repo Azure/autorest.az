@@ -17,13 +17,23 @@ import { TemplateBase } from '../TemplateBase';
 import { isNullOrUndefined } from '../../../utils/helper';
 
 export class CliPortalMapping extends TemplateBase {
+    resourceMappings: any;
+    parameterMappings: any[];
+    resourceKey: string;
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(PathConstants.portalMappingFile);
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.portalMappingFile,
+        );
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
+            PathConstants.generatedFolder,
             PathConstants.portalMappingFile + '.njx',
         );
+        this.resourceMappings = {};
+        this.parameterMappings = [];
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -34,19 +44,51 @@ export class CliPortalMapping extends TemplateBase {
         return await this.fullGeneration();
     }
 
-    public GetRenderData(model: CodeModelAz): any {
-        let data = {};
+    commandConverter(item: any): any {
+        this.resourceMappings[this.resourceKey].map();
+    }
 
-        const converter = (item) => {
-            let mapsTo = item['mapsTo'];
-            if (isNullOrUndefined(mapsTo)) {
-                return undefined;
-            }
-            if (mapsTo.endsWith('_')) {
-                mapsTo = mapsTo.substr(0, mapsTo.length - 1);
-            }
-            item['mapsTo'] = mapsTo.replace(/_/g, '-');
-            return item;
+    methodConverter(item: any): any {
+        this.resourceKey = item['apiVersion'] + item['resourceProviderType'];
+        if (isNullOrUndefined(this.resourceMappings[this.resourceKey])) {
+            this.resourceMappings[this.resourceKey] = {
+                ResourceType: item['resourceProviderType'],
+                ApiVersion: item['apiVersion'],
+                CommandMappings: [],
+            };
+        }
+        const commandMapItem = {
+            SourceCommand: {
+                HttpMethod: item['httpMethodOri'].toUpperCase(),
+                Name: item['httpURL'],
+                RequiredParameters: [],
+                RequiredParameterValues: [],
+            },
+            TargetCommand: item['nameAz'],
+            ParameterMappings: this.parameterMappings,
+        };
+        this.parameterMappings = [];
+        this.resourceMappings[this.resourceKey]['CommandMappings'].push(commandMapItem);
+        return item;
+    }
+
+    methodParameterConverter(item: any): any {
+        const parameterMappingItem = {
+            SourceParameters: [item['cliKey']],
+            TargetParameters: [(item['nameAz'].length > 1 ? '--' : '-') + item['nameAz']],
+            ConvertFunction: null,
+        };
+        this.parameterMappings.push(parameterMappingItem);
+        return item;
+    }
+
+    public GetRenderData(model: CodeModelAz): any {
+        const ret = {
+            SourceTool: 'REST',
+            TargetTool: 'AzureCLI',
+            SourceToolVersion: 'N/A',
+            TargetToolVersion: '2.10.0',
+            ResourceMappings: [],
         };
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
@@ -68,6 +110,8 @@ export class CliPortalMapping extends TemplateBase {
                         'resourceProviderType',
                     ],
                     { nameAz: SortOrder.ASEC },
+                    [],
+                    this.methodConverter.bind(this),
                 ),
             ],
             [
@@ -84,7 +128,7 @@ export class CliPortalMapping extends TemplateBase {
                     ],
                     {},
                     [],
-                    converter,
+                    this.methodParameterConverter.bind(this),
                 ),
             ],
         ]);
@@ -95,7 +139,9 @@ export class CliPortalMapping extends TemplateBase {
             ['command', 'method'],
             ['method', 'methodParameter'],
         ];
-        data = model.getModelData('extension', inputProperties, dependencies);
-        return data;
+        model.getModelData('extension', inputProperties, dependencies);
+        this.resourceMappings = Object.values(this.resourceMappings);
+        ret.ResourceMappings = this.resourceMappings;
+        return { data: ret };
     }
 }

@@ -11,6 +11,7 @@ az:
 az-output-folder: $(azure-cli-extension-folder)/src/attestation
 python-sdk-output-folder: "$(az-output-folder)/azext_attestation/vendored_sdks/attestation"
 gen-cmdlet-test: true
+portal-mapping: true
 
 directive:
     - where:

@@ -1314,8 +1314,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Command_ResourceProviderType(): string {
-        const regexMatch = parseResourceId(this.Command_HttpURL);
-        return regexMatch.get('namespace') + '/' + regexMatch.get('type');
+        const urls = this.Command_HttpURL.split('/');
+        const startIdx = urls.lastIndexOf('providers');
+        if (urls.length > startIdx + 2) {
+            return urls[startIdx + 1] + '/' + urls[startIdx + 2];
+        }
+        return '';
     }
 
     public get Command_ResourceType(): string | undefined {
@@ -1458,8 +1462,12 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get Method_ResourceProviderType(): string {
-        const regexMatch = parseResourceId(this.Method_HttpURL);
-        return regexMatch.get('namespace') + '/' + regexMatch.get('type');
+        const urls = this.Method_HttpURL.split('/');
+        const startIdx = urls.lastIndexOf('providers');
+        if (urls.length > startIdx + 2) {
+            return urls[startIdx + 1] + '/' + urls[startIdx + 2];
+        }
+        return '';
     }
 
     public get Method_ResourceType(): string | undefined {
