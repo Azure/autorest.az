@@ -16,7 +16,6 @@ import { CliTopHelp } from '../renders/CliTopHelp';
 import { CliTopInit } from '../renders/CliTopInit';
 import { CliMainRequirement } from '../renders/extraMain/CliMainRequirement';
 import { CliMainSetupPy } from '../renders/extraMain/CliMainSetupPy';
-import { GenerateAzureCliActions } from '../renders/generated/CliActions';
 import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
 import { CliCommands } from '../renders/generated/CliCommands';
 import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
@@ -32,6 +31,7 @@ import { CliExtSetupPy } from '../renders/extraExt/CliExtSetupPy';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
 import { CliPortalMapping } from '../renders/generated/PortalMapping';
+import { CliActions } from '../renders/generated/CliActions';
 
 export class AzCoreIncrementalGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -61,9 +61,6 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
             path.join(PathConstants.generatedFolder, PathConstants.validatorsFile)
         ] = GenerateAzureCliValidators(this.model);
         this.files[
-            path.join(PathConstants.generatedFolder, PathConstants.actionFile)
-        ] = GenerateAzureCliActions(this.model);
-        this.files[
             path.join(PathConstants.generatedFolder, PathConstants.initFile)
         ] = GenerateNamespaceInit(this.model);
         this.files[
@@ -82,6 +79,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
             ] = GenerateNamespaceInit(this.model);
         }
 
+        await this.generateIncrementalSingleAndAddtoOutput(new CliActions(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliCommands(this.model));
         // Add Import and run method from generated folder (Init)
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model));
@@ -180,7 +178,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
                         PathConstants.templateRootFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
-                        PathConstants.conftestFile + '.njx',
+                        PathConstants.conftestFile + PathConstants.njxFileExtension,
                     ),
                 ),
             );

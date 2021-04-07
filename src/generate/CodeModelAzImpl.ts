@@ -95,6 +95,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
+    allActions: Map<Parameter, string>;
     private _testScenario: any;
     private _defaultTestScenario: any[];
     private _configuredScenario: boolean;
@@ -476,6 +477,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
+        this.allActions = new Map<Parameter, string>();
         const nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
         const pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
         if (this.SelectFirstCommandGroup()) {
@@ -693,10 +695,15 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     preAction.action.schema,
                                                     preActionUniqueName,
                                                 );
+                                                this.allActions.set(
+                                                    preAction.action,
+                                                    preActionUniqueName,
+                                                );
                                                 this.paramActionNameReference.set(
                                                     param.schema,
                                                     actionUniqueName,
                                                 );
+                                                this.allActions.set(param, actionUniqueName);
                                                 nameActionReference.set(
                                                     preActionUniqueName,
                                                     preAction,
@@ -712,6 +719,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     param.schema,
                                                     actionName,
                                                 );
+                                                this.allActions.set(param, actionName);
                                             }
                                         }
                                     } while (this.SelectNextMethodParameter());
@@ -752,6 +760,87 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
         });
+    }
+
+    public GetActionData() {
+        const actions = [];
+        SchemaType.Array;
+        this.allActions.forEach((actionName: string, param: Parameter) => {
+            if (actionName === 'AddEventGridDataConnection') {
+                param;
+            }
+            const action = {
+                actionName: actionName,
+                actionType: 'KeyValue',
+            };
+            action.actionType = this.Parameter_IsPositional(param)
+                ? 'Positional'
+                : action.actionType;
+            action.actionType = this.Parameter_IsShorthandSyntax(param)
+                ? 'ShortHandSyntax'
+                : action.actionType;
+            action['mapsTo'] = this.Parameter_MapsTo(param);
+            action['type'] = this.Schema_Type(param.schema);
+            action['nameAz'] = this.Parameter_NameAz(param);
+            if (action['type'] === SchemaType.Array) {
+                action['baseClass'] = '_AppendAction';
+            } else {
+                action['baseClass'] = 'Action';
+            }
+            action['subProperties'] = [];
+            action['subPropertiesMapsTo'] = [];
+            action['subPropertiesNamePython'] = [];
+            action['subPropertiesNameAz'] = [];
+            action['constants'] = {};
+            const baseParam = param['polyBaseParam'];
+            const keyToMatch = baseParam?.schema?.discriminator?.property?.language.python?.name;
+            const valueToMatch = param.schema?.['discriminatorValue'];
+            const allSubParameters = [];
+            if (this.EnterSubMethodParameters(param) && this.SelectFirstMethodParameter(true)) {
+                do {
+                    const tmpParam = this.SubMethodParameter;
+                    allSubParameters.push(tmpParam);
+                    const pythonName = this.Parameter_NamePython(tmpParam);
+                    const mapsTo = this.Parameter_MapsTo(tmpParam);
+                    const nameAz = this.Parameter_NameAz(tmpParam);
+                    const subType = this.Parameter_Type(tmpParam);
+                    if (
+                        this.Parameter_Type(tmpParam) === SchemaType.Constant &&
+                        !isNullOrUndefined(tmpParam.schema['value']?.['value'])
+                    ) {
+                        action['constants'][
+                            `'${pythonName}'`
+                        ] = `'${tmpParam.schema['value']['value']}'`;
+                    } else if (tmpParam['readOnly']) {
+                        continue;
+                    } else if (
+                        keyToMatch === pythonName &&
+                        !isNullOrUndefined(keyToMatch) &&
+                        !isNullOrUndefined(valueToMatch) &&
+                        tmpParam['isDiscriminator']
+                    ) {
+                        action['constants'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
+                    } else {
+                        action['subProperties'].push({
+                            namePython: pythonName,
+                            nameAz: nameAz,
+                            type: subType,
+                        });
+                        action['subPropertiesMapsTo'].push(mapsTo);
+                        action['subPropertiesNamePython'].push(pythonName);
+                        action['subPropertiesNameAz'].push(nameAz);
+                    }
+                } while (this.SelectNextMethodParameter(true));
+                if (action['actionType'] === 'Positional') {
+                    const keys = this.Parameter_PositionalKeys(param, allSubParameters);
+                    action['subPropertiesNamePython'] = keys;
+                }
+            }
+            SchemaType.Dictionary;
+            actions.push(action);
+            this.ExitSubMethodParameters();
+        });
+        return actions;
     }
     //= ================================================================================================================
     // Extension level information
@@ -1708,11 +1797,12 @@ export class CodeModelCliImpl implements CodeModelAz {
         param.language['az'].mapsto = newName;
     }
 
-    public Schema_ActionName(schema: Schema = this.MethodParameter.schema) {
+    public get MethodParameter_ActionName() {
+        const schema = this.MethodParameter.schema;
         if (this.paramActionNameReference.has(schema)) {
             return this.paramActionNameReference.get(schema);
         }
-        return null;
+        return undefined;
     }
 
     public get MethodParameter_Name(): string {
@@ -1819,13 +1909,13 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_IsShorthandSyntax(this.MethodParameter);
     }
 
-    public isComplexSchema(type: string): boolean {
+    public isComplexSchema(type: string, param: any): boolean {
         if (
             type === SchemaType.Array ||
             type === SchemaType.Object ||
             type === SchemaType.Dictionary ||
             type === SchemaType.Any ||
-            this.MethodParameter.language['cli'].json === true
+            param?.language?.['cli']?.json === true
         ) {
             return true;
         } else {
@@ -1918,22 +2008,22 @@ export class CodeModelCliImpl implements CodeModelAz {
                     ) {
                         return false;
                     } else if (p['schema'].type === SchemaType.Array) {
-                        if (this.isComplexSchema(p['schema']?.elementType?.type)) {
+                        if (this.isComplexSchema(p['schema']?.elementType?.type, p['schema'])) {
                             return false;
                         }
                         for (const mp of values(p['schema']?.elementType?.properties)) {
-                            if (this.isComplexSchema(mp['schema'].type)) {
+                            if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                                 return false;
                             }
                         }
                         for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                             for (const pp of values(parent['properties'])) {
-                                if (this.isComplexSchema(pp['schema'].type)) {
+                                if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                     return false;
                                 }
                             }
                         }
-                    } else if (this.isComplexSchema(p['schema'].type)) {
+                    } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
                         return false;
                     }
                 }
@@ -1958,18 +2048,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 } else if (p['schema'].type === SchemaType.Array) {
                     for (const mp of values(p['schema']?.elementType?.properties)) {
-                        if (this.isComplexSchema(mp['schema'].type)) {
+                        if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                             return false;
                         }
                     }
                     for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                         for (const pp of values(parent['properties'])) {
-                            if (this.isComplexSchema(pp['schema'].type)) {
+                            if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                 return false;
                             }
                         }
                     }
-                } else if (this.isComplexSchema(p['schema'].type)) {
+                } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
                     // objects.objects
                     return false;
                 }
@@ -1991,7 +2081,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if (mp['readOnly']) {
                         continue;
                     }
-                    if (this.isComplexSchema(mp['schema'].type)) {
+                    if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                         return false;
                     }
                 }
@@ -2000,12 +2090,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                         if (pp['readOnly']) {
                             continue;
                         }
-                        if (this.isComplexSchema(pp['schema'].type)) {
+                        if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                             return false;
                         }
                     }
                 }
-            } else if (this.isComplexSchema(p.type)) {
+            } else if (this.isComplexSchema(p.type, p)) {
                 // dicts.objects or dicts.dictionaries
                 return false;
             }
@@ -2062,7 +2152,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private Parameter_IsSimpleArray(param: Parameter): boolean {
         if (this.Parameter_Type(param) === SchemaType.Array) {
             const elementType = param.schema['elementType'].type;
-            if (!this.isComplexSchema(elementType)) {
+            if (!this.isComplexSchema(elementType, param.schema)) {
                 return true;
             }
         }
@@ -2074,7 +2164,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        if (this.isComplexSchema(this.Parameter_Type(param))) {
+        if (this.isComplexSchema(this.Parameter_Type(param), param)) {
             return true;
         }
         return false;
@@ -2166,7 +2256,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (schema.language['cli'].json === true) {
             return true;
         }
-        if (this.isComplexSchema(this.Schema_Type(schema))) {
+        if (this.isComplexSchema(this.Schema_Type(schema), schema)) {
             return true;
         }
         return false;

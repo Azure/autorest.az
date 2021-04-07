@@ -13,7 +13,6 @@ import { CliTopInit } from '../renders/CliTopInit';
 import { CliMainDocSourceJsonMap } from '../renders/extraMain/CliMainDocSourceJsonMap';
 import { CliMainRequirement } from '../renders/extraMain/CliMainRequirement';
 import { CliMainSetupPy } from '../renders/extraMain/CliMainSetupPy';
-import { GenerateAzureCliActions } from '../renders/generated/CliActions';
 import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
 import { CliCommands } from '../renders/generated/CliCommands';
 import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
@@ -27,6 +26,7 @@ import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
+import { CliActions } from '../renders/generated/CliActions';
 
 export class AzCoreFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -55,9 +55,6 @@ export class AzCoreFullGenerator extends GeneratorBase {
                     path.join(model.azOutputFolder, 'generated/_validators.py')
                 ] = GenerateAzureCliValidators(model);
                 files[
-                    path.join(model.azOutputFolder, 'generated/action.py')
-                ] = GenerateAzureCliActions(model);
-                files[
                     path.join(model.azOutputFolder, 'generated/__init__.py')
                 ] = GenerateNamespaceInit(model);
                 files[path.join(model.azOutputFolder, 'generated/_help.py')] = GenerateAzureCliHelp(
@@ -75,6 +72,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 files[
                     path.join(model.azOutputFolder, 'manual/__init__.py')
                 ] = GenerateNamespaceInit(model);
+                await this.generateFullSingleAndAddtoOutput(new CliActions(model));
                 await this.generateFullSingleAndAddtoOutput(new CliCommands(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopAction(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTopCustom(model));
@@ -155,7 +153,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                                 PathConstants.templateRootFolder,
                                 PathConstants.testFolder,
                                 PathConstants.cmdletFolder,
-                                PathConstants.conftestFile + '.njx',
+                                PathConstants.conftestFile + PathConstants.njxFileExtension,
                             ),
                         ),
                     );

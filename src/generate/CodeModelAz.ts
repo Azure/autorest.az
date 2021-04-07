@@ -111,7 +111,7 @@ export interface CodeModelAz {
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
     ResourceType: string | undefined;
-    isComplexSchema(type: string): boolean;
+    isComplexSchema(type: string, param: any): boolean;
 
     SelectFirstCommandGroup(needRefer?: boolean): boolean;
     SelectNextCommandGroup(needRefer?: boolean): boolean;
@@ -234,7 +234,7 @@ export interface CodeModelAz {
     Parameter_IsList(Parameter): boolean;
     Parameter_IsListOfSimple(Parameter): boolean;
     Parameter_IsPolyOfSimple(Parameter): boolean;
-    Schema_ActionName(Schema): string;
+    MethodParameter_ActionName: string;
     Parameter_SetAzNameMapsTo(string, Parameter): void;
     Parameter_InGlobal(Parameter): boolean;
     Parameter_IsHidden(Parameter): boolean;
@@ -299,5 +299,6 @@ export interface CodeModelAz {
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
     );
+    GetActionData(): any[];
     GetTestUniqueResource: boolean;
 }

@@ -16,7 +16,7 @@ import { CliReport } from '../renders/CliReport';
 import { CliTopInit } from '../renders/CliTopInit';
 import { CliTopMetadata } from '../renders/extraExt/CliExtMetadata';
 import { CliExtSetupPy } from '../renders/extraExt/CliExtSetupPy';
-import { GenerateAzureCliActions } from '../renders/generated/CliActions';
+import { CliActions } from '../renders/generated/CliActions';
 import { GenerateAzureCliClientFactory } from '../renders/generated/CliClientFactory';
 import { CliCommands } from '../renders/generated/CliCommands';
 import { GenerateAzureCliCustom } from '../renders/generated/CliCustom';
@@ -56,9 +56,6 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
             path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.validatorsFile)
         ] = GenerateAzureCliValidators(this.model);
         this.files[
-            path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.actionFile)
-        ] = GenerateAzureCliActions(this.model);
-        this.files[
             path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.initFile)
         ] = GenerateNamespaceInit(this.model);
         this.files[
@@ -79,6 +76,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
             ] = GenerateNamespaceInit(this.model);
         }
 
+        await this.generateIncrementalSingleAndAddtoOutput(new CliActions(this.model));
         // Add Import and run method from generated folder (Init)
         await this.generateIncrementalSingleAndAddtoOutput(new CliTopInit(this.model));
 
@@ -163,7 +161,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                         PathConstants.templateRootFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
-                        PathConstants.conftestFile + '.njx',
+                        PathConstants.conftestFile + PathConstants.njxFileExtension,
                     ),
                 ),
             );

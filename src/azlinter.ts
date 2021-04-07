@@ -15,13 +15,21 @@ export async function processRequest(host: Host): Promise<void> {
     try {
         const folder = AzConfiguration.getValue(CodeGenConstants.azOutputFolder);
         const azextFolder = AzConfiguration.getValue(CodeGenConstants.azextFolder);
-        const fileName = path.join(
+        const azLinter = new AzLinter();
+        let fileName = path.join(
             folder,
             azextFolder,
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
-        const azLinter = new AzLinter();
+        await azLinter.process(fileName);
+
+        fileName = path.join(
+            folder,
+            azextFolder,
+            PathConstants.generatedFolder,
+            PathConstants.actionFile,
+        );
         await azLinter.process(fileName);
 
         if (NeedPreparers().size > 0) {

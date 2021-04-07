@@ -98,6 +98,7 @@ export class PathConstants {
     }
 
     public static readonly portalMappingFile: string = 'portal_mapping.json';
+    public static readonly njxFileExtension = '.njx';
 }
 
 export enum CodeGenConstants {

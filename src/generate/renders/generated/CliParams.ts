@@ -303,9 +303,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                         model.MethodParameter_IsList &&
                         model.MethodParameter_IsListOfSimple
                     ) {
-                        const actionName: string = model.Schema_ActionName(
-                            model.MethodParameter.schema,
-                        );
+                        const actionName: string = model.MethodParameter_ActionName;
                         argument += ', action=' + actionName;
                         hasActions = true;
 
@@ -343,11 +341,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                             }
                             if (model.MethodParameter_IsListOfSimple) {
                                 let options = [];
-                                if (
-                                    !isNullOrUndefined(
-                                        model.Schema_ActionName(model.MethodParameter.schema),
-                                    )
-                                ) {
+                                if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
                                     if (
                                         baseParam &&
                                         model.MethodParameter['polyBaseParam'] === baseParam
