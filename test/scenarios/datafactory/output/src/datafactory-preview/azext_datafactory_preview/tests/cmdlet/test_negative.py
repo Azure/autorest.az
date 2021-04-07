@@ -82,7 +82,7 @@ class NegativeTest(ScenarioTest):
     def test_delete(self):
         # From /Factories/delete/Factories_Delete
         try:
-            self.cmd('az datafactory delete '
+            self.cmd('az datafactory delete -y '
                      '--name "myFactory" '
                      '--resource-group "myResourceGroup"')
             raise Exception("Error Expected!")
@@ -192,7 +192,7 @@ class NegativeTest(ScenarioTest):
     def test_trigger_delete(self):
         # From /Triggers/delete/Triggers_Delete
         try:
-            self.cmd('az datafactory trigger delete '
+            self.cmd('az datafactory trigger delete -y '
                      '--factory-name "myFactory" '
                      '--resource-group "myResourceGroup" '
                      '--name "myTrigger"')
@@ -337,7 +337,7 @@ class NegativeTest(ScenarioTest):
     def test_integration_runtime_delete(self):
         # From /IntegrationRuntimes/delete/IntegrationRuntimes_Delete
         try:
-            self.cmd('az datafactory integration-runtime delete '
+            self.cmd('az datafactory integration-runtime delete -y '
                      '--factory-name "myFactory" '
                      '--name "myIntegrationRuntime" '
                      '--resource-group "myResourceGroup"')

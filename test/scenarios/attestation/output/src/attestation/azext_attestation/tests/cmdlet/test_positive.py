@@ -61,6 +61,6 @@ class PositiveTest(ScenarioTest):
 
     def test_attestation_provider_delete(self):
         # From /AttestationProviders/delete/AttestationProviders_Delete
-        self.cmd('az attestation attestation-provider delete '
+        self.cmd('az attestation attestation-provider delete -y '
                  '--provider-name "myattestationprovider" '
                  '--resource-group "sample-resource-group"')
