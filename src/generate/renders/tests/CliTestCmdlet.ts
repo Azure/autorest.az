@@ -61,7 +61,7 @@ export class CliCmdletTest extends TemplateBase {
         >([
             ['extension', new RenderInput()],
             ['commandGroup', new RenderInput()],
-            ['command', new RenderInput()],
+            ['command', new RenderInput(['methodName'])],
             ['method', new RenderInput()],
             ['azExample', new RenderInput(['id', 'httpMethod', 'rawCommandStringItems'])],
         ]);
@@ -103,10 +103,7 @@ export class CliCmdletTest extends TemplateBase {
                                         );
                                 }
 
-                                if (
-                                    commandLines[0].indexOf(' delete') > -1 &&
-                                    example.httpMethod.toLowerCase() === 'delete'
-                                ) {
+                                if (command.methodName === 'delete') {
                                     commandLines[0] += ' -y';
                                 }
                                 const exampleInfo = new ExampleInfo();
