@@ -32,7 +32,11 @@ export class CliCommands extends TemplateBase {
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
-        this.tmplPath = path.join(PathConstants.templateRootFolder, 'generated/commands.py.njx');
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.generatedFolder,
+            PathConstants.commandsFile + PathConstants.njxFileExtension,
+        );
     }
 
     pythonString(str: string): string {

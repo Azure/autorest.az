@@ -279,7 +279,10 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                             );
                         } else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
                             if (
-                                model.isComplexSchema(model.MethodParameter_Type) &&
+                                model.isComplexSchema(
+                                    model.MethodParameter_Type,
+                                    model.MethodParameter,
+                                ) &&
                                 defaultValue !== '{}'
                             ) {
                                 defaultValue = 'json.loads(' + defaultValue + ')';

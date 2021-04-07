@@ -34,7 +34,7 @@ export class CliCmdletTest extends TemplateBase {
             PathConstants.templateRootFolder,
             PathConstants.testFolder,
             PathConstants.cmdletFolder,
-            `${testFileName}.njx`,
+            testFileName + PathConstants.njxFileExtension,
         );
         this.className = isNegativeTest ? 'NegativeTest' : 'PositiveTest';
     }
