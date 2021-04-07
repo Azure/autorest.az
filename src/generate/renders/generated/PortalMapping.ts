@@ -19,6 +19,7 @@ import { isNullOrUndefined } from '../../../utils/helper';
 export class CliPortalMapping extends TemplateBase {
     resourceMappings: any;
     parameterMappings: any[];
+    commandMappingItem: any;
     resourceKey: string;
     constructor(model: CodeModelAz) {
         super(model);
@@ -45,7 +46,8 @@ export class CliPortalMapping extends TemplateBase {
     }
 
     commandConverter(item: any): any {
-        this.resourceMappings[this.resourceKey].map();
+        this.commandMappingItem['TargetCommand'] = 'az ' + item['name'];
+        return item;
     }
 
     methodConverter(item: any): any {
@@ -57,7 +59,7 @@ export class CliPortalMapping extends TemplateBase {
                 CommandMappings: [],
             };
         }
-        const commandMapItem = {
+        this.commandMappingItem = {
             SourceCommand: {
                 HttpMethod: item['httpMethodOri'].toUpperCase(),
                 Name: item['httpURL'],
@@ -68,7 +70,7 @@ export class CliPortalMapping extends TemplateBase {
             ParameterMappings: this.parameterMappings,
         };
         this.parameterMappings = [];
-        this.resourceMappings[this.resourceKey]['CommandMappings'].push(commandMapItem);
+        this.resourceMappings[this.resourceKey]['CommandMappings'].push(this.commandMappingItem);
         return item;
     }
 
@@ -97,7 +99,7 @@ export class CliPortalMapping extends TemplateBase {
         >([
             ['extension', new RenderInput(['name'], { name: SortOrder.ASEC })],
             ['commandGroup', new RenderInput(['name', 'cliKey'], { name: SortOrder.ASEC })],
-            ['command', new RenderInput(['name'])],
+            ['command', new RenderInput(['name'], {}, [], this.commandConverter.bind(this))],
             [
                 'method',
                 new RenderInput(
@@ -127,7 +129,7 @@ export class CliPortalMapping extends TemplateBase {
                         'restApiPath',
                     ],
                     {},
-                    [],
+                    [['type', SchemaType.Constant]],
                     this.methodParameterConverter.bind(this),
                 ),
             ],

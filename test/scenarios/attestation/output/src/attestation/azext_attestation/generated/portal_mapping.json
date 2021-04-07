@@ -1,0 +1,245 @@
+{
+  "SourceTool": "REST",
+  "TargetTool": "AzureCLI",
+  "SourceToolVersion": "N/A",
+  "TargetToolVersion": "2.10.0",
+  "ResourceMappings": [
+    {
+      "ResourceType": "Microsoft.Attestation/offerType",
+      "ApiVersion": "2018-09-01-preview",
+      "CommandMappings": [
+        {
+          "SourceCommand": {
+            "HttpMethod": "PUT",
+            "Name": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "az attestation create-provider",
+          "ParameterMappings": [
+            {
+              "SourceParameters": [
+                "resourceGroupName"
+              ],
+              "TargetParameters": [
+                "--resource-group-name"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "providerName"
+              ],
+              "TargetParameters": [
+                "--provider-name"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "creationParams"
+              ],
+              "TargetParameters": [
+                "--creation_params"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "location"
+              ],
+              "TargetParameters": [
+                "--location"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "tags"
+              ],
+              "TargetParameters": [
+                "--tags"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "attestationPolicy"
+              ],
+              "TargetParameters": [
+                "--attestation-policy"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "keys"
+              ],
+              "TargetParameters": [
+                "--keys"
+              ],
+              "ConvertFunction": null
+            }
+          ]
+        },
+        {
+          "SourceCommand": {
+            "HttpMethod": "GET",
+            "Name": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "az attestation attestation-provider show",
+          "ParameterMappings": [
+            {
+              "SourceParameters": [
+                "resourceGroupName"
+              ],
+              "TargetParameters": [
+                "--resource-group-name"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "providerName"
+              ],
+              "TargetParameters": [
+                "--provider-name"
+              ],
+              "ConvertFunction": null
+            }
+          ]
+        },
+        {
+          "SourceCommand": {
+            "HttpMethod": "PATCH",
+            "Name": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "az attestation attestation-provider update",
+          "ParameterMappings": [
+            {
+              "SourceParameters": [
+                "resourceGroupName"
+              ],
+              "TargetParameters": [
+                "--resource-group-name"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "providerName"
+              ],
+              "TargetParameters": [
+                "--provider-name"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "updateParams"
+              ],
+              "TargetParameters": [
+                "--update_params"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "tags"
+              ],
+              "TargetParameters": [
+                "--tags"
+              ],
+              "ConvertFunction": null
+            }
+          ]
+        },
+        {
+          "SourceCommand": {
+            "HttpMethod": "DELETE",
+            "Name": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/offerType/{offerType}/attestationProviders/{providerName}",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "az attestation attestation-provider delete",
+          "ParameterMappings": [
+            {
+              "SourceParameters": [
+                "resourceGroupName"
+              ],
+              "TargetParameters": [
+                "--resource-group-name"
+              ],
+              "ConvertFunction": null
+            },
+            {
+              "SourceParameters": [
+                "providerName"
+              ],
+              "TargetParameters": [
+                "--provider-name"
+              ],
+              "ConvertFunction": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ResourceType": "Microsoft.Attestation/operations",
+      "ApiVersion": "2018-09-01-preview",
+      "CommandMappings": [
+        {
+          "SourceCommand": {
+            "HttpMethod": "GET",
+            "Name": "/providers/Microsoft.Attestation/operations",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "az attestation list-operation",
+          "ParameterMappings": []
+        }
+      ]
+    },
+    {
+      "ResourceType": "Microsoft.Attestation/attestationProviders",
+      "ApiVersion": "2018-09-01-preview",
+      "CommandMappings": [
+        {
+          "SourceCommand": {
+            "HttpMethod": "GET",
+            "Name": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "provider list",
+          "ParameterMappings": [
+            {
+              "SourceParameters": [
+                "resourceGroupName"
+              ],
+              "TargetParameters": [
+                "--resource-group-name"
+              ],
+              "ConvertFunction": null
+            }
+          ]
+        },
+        {
+          "SourceCommand": {
+            "HttpMethod": "GET",
+            "Name": "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/attestationProviders",
+            "RequiredParameters": [],
+            "RequiredParameterValues": []
+          },
+          "TargetCommand": "az attestation attestation-provider provider list",
+          "ParameterMappings": []
+        }
+      ]
+    }
+  ]
+}
