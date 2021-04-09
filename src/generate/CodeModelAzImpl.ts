@@ -3461,9 +3461,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                                 param.methodParam.value.language?.['default']?.cliKey
                         );
                     })
-                    // paramKey === 'resourceGroupName' ||
-                    // this.resourcePool.isResource(paramKey, param.rawValue) ===
-                    //     example.ResourceClassName
                 ) {
                     let paramValue = param.value;
                     let replacedValue = this.resourcePool.addParamResource(
