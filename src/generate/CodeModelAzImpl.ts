@@ -1144,6 +1144,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return customName;
     }
 
+    public get CommandGroup_ShowExample(): CommandExample {
+        return this.CommandGroup?.['az-show-example'];
+    }
+
+    public set CommandGroup_ShowExample(example: CommandExample) {
+        if (this.CommandGroup) this.CommandGroup['az-show-example'] = example;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Commands
     //
@@ -3228,7 +3236,12 @@ export class CodeModelCliImpl implements CodeModelAz {
             Object.entries(this.Examples).forEach(([id, exampleObj]) => {
                 if (includeGenerated || !isGeneratedExampleId(id)) {
                     const example = this.CreateCommandExample(id, exampleObj);
-                    if (!isNullOrUndefined(example)) examples.push(example);
+                    if (!isNullOrUndefined(example)) {
+                        examples.push(example);
+                        if (this.Command_MethodName === 'show') {
+                            this.CommandGroup_ShowExample = example;
+                        }
+                    }
                 }
             });
         }
@@ -3263,6 +3276,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         const example = new CommandExample();
         example.Method = this.Command_MethodName;
+        example.Command = this.Command_Name;
         example.Id = `/${this.CommandGroup_Key}/${this.Method_HttpMethod}/${id}`;
         example.Title = exampleObj.title || id;
         example.Path = this.Method_Path;
@@ -3291,7 +3305,6 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             example.commandStringItems = this.GetExampleItems(example, false, undefined);
             example.CommandString = example.commandStringItems.join(' ');
-            example.WaitCommandString = this.GetExampleWait(example).join(' ');
             return example;
         }
         return undefined;
@@ -3420,6 +3433,41 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
+    // private FindShowExample(siblingExample: CommandExample): CommandExample {
+    //     const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+    //         CodeModelTypes,
+    //         RenderInput
+    //     >([
+    //         ['extension', new RenderInput()],
+    //         ['commandGroup', new RenderInput(['name'])],
+    //         ['command', new RenderInput(['methodName', 'name'])],
+    //         ['method', new RenderInput(['azExamples'])],
+    //     ]);
+
+    //     const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+    //         ['extension', 'commandGroup'],
+    //         ['commandGroup', 'command'],
+    //         ['command', 'method'],
+    //     ];
+
+    //     for (const extension of (this.getModelData(
+    //         'extension',
+    //         inputProperties,
+    //         dependencies,
+    //     ) as any).Extensions)
+    //         for (const commandGroup of extension.CommandGroups)
+    //             for (const command of commandGroup.Commands) {
+    //                 if (command.name == siblingExample.Command && command.methodName === 'show') {
+    //                     for (const method of command.Methods) {
+    //                         for (const azExample of method.azExamples) {
+    //                             if (!azExample.isGenerated) return azExample;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //     return undefined;
+    // }
+
     public GetExampleWait(example: CommandExample): string[] {
         const parameters: string[] = [];
         let foundResource = false;
@@ -3431,16 +3479,26 @@ export class CodeModelCliImpl implements CodeModelAz {
                 return property?.language?.['cli']?.cliKey === 'provisioningState';
             })
         ) {
-            let words = this.Command_Name.split(' ');
+            const showExample = this.CommandGroup_ShowExample;
+            if (isNullOrUndefined(showExample)) return [];
+            let words = showExample.Command.split(' ');
             words = words.slice(0, words.length - 1);
             words.push('wait');
             parameters.push(`az ${words.join(' ')} --created`);
             for (const param of example.Parameters) {
                 const paramKey = param.methodParam.value.language?.['cli']?.cliKey;
                 if (
-                    paramKey === 'resourceGroupName' ||
-                    this.resourcePool.isResource(paramKey, param.rawValue) ===
-                        example.ResourceClassName
+                    showExample.Parameters.some((showParam) => {
+                        return (
+                            showParam.methodParam.value.language?.['cli']?.cliKey ==
+                                param.methodParam.value.language?.['cli']?.cliKey &&
+                            showParam.methodParam.value.language?.['default']?.cliKey ==
+                                param.methodParam.value.language?.['default']?.cliKey
+                        );
+                    })
+                    // paramKey === 'resourceGroupName' ||
+                    // this.resourcePool.isResource(paramKey, param.rawValue) ===
+                    //     example.ResourceClassName
                 ) {
                     let paramValue = param.value;
                     let replacedValue = this.resourcePool.addParamResource(
