@@ -3433,41 +3433,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return parameters;
     }
 
-    // private FindShowExample(siblingExample: CommandExample): CommandExample {
-    //     const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
-    //         CodeModelTypes,
-    //         RenderInput
-    //     >([
-    //         ['extension', new RenderInput()],
-    //         ['commandGroup', new RenderInput(['name'])],
-    //         ['command', new RenderInput(['methodName', 'name'])],
-    //         ['method', new RenderInput(['azExamples'])],
-    //     ]);
-
-    //     const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
-    //         ['extension', 'commandGroup'],
-    //         ['commandGroup', 'command'],
-    //         ['command', 'method'],
-    //     ];
-
-    //     for (const extension of (this.getModelData(
-    //         'extension',
-    //         inputProperties,
-    //         dependencies,
-    //     ) as any).Extensions)
-    //         for (const commandGroup of extension.CommandGroups)
-    //             for (const command of commandGroup.Commands) {
-    //                 if (command.name == siblingExample.Command && command.methodName === 'show') {
-    //                     for (const method of command.Methods) {
-    //                         for (const azExample of method.azExamples) {
-    //                             if (!azExample.isGenerated) return azExample;
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //     return undefined;
-    // }
-
     public GetExampleWait(example: CommandExample): string[] {
         const parameters: string[] = [];
         let foundResource = false;
