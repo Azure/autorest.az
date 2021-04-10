@@ -11,6 +11,7 @@ az:
   disable-checks: true 
 az-output-folder: $(azure-cli-extension-folder)/src/datafactory-preview
 python-sdk-output-folder: "$(az-output-folder)/azext_datafactory_preview/vendored_sdks/azure_mgmt_datafactory"
+gen-cmdlet-test: true
 
 directive:
     - where:
@@ -18,9 +19,9 @@ directive:
       set:
           group: datafactory
     - where:
-          command: datafactory integration-runtime create-linked-integration-runtime
+          command: datafactory create-linked-integration-runtime
       set:
-          command: datafactory integration-runtime linked-integration-runtime create
+          command: datafactory linked-integration-runtime create
 
 cli:
     cli-directive:

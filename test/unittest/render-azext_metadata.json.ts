@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as nunjucks from 'nunjucks';
 import * as path from 'path';
@@ -11,19 +10,18 @@ import * as sourceMapSupport from 'source-map-support';
 import { readFile } from '@azure-tools/async-io';
 sourceMapSupport.install();
 
-@suite
-export class Process {
-    @test(slow(600000), timeout(1500000)) async renderHistoryRSTTest1() {
+describe('renderHistoryRST', () => {
+    it('renderHistoryRSTCase1', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../../src/templates/azext/azext_metadata.json.njx',
+            '../../src/templates/azext/azext_metadata.json.njx',
         );
         const result = nunjucks.render(tmplPath, {
             model: { Extension_Mode: 'experimental', minCliCoreVersion: '2.15.0' },
         });
         const expectedFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/azext/azext_metadata1.json',
+            '../../test/unittest/expected/azext/azext_metadata1.json',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(
@@ -31,20 +29,19 @@ export class Process {
             expected,
             'render logic 1 in azext_metadata.json is incorrect',
         );
+    });
 
-        //
-    }
-    @test(slow(600000), timeout(1500000)) async renderHistoryRSTTest2() {
+    it('renderHistoryRSTCase2', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../../src/templates/azext/azext_metadata.json.njx',
+            '../../src/templates/azext/azext_metadata.json.njx',
         );
         const result = nunjucks.render(tmplPath, {
             model: { Extension_Mode: 'preview', minCliCoreVersion: '2.15.1' },
         });
         const expectedFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/azext/azext_metadata2.json',
+            '../../test/unittest/expected/azext/azext_metadata2.json',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(
@@ -52,12 +49,12 @@ export class Process {
             expected,
             'render logic 2 in azext_metadata.json is incorrect',
         );
-    }
+    });
 
-    @test(slow(600000), timeout(1500000)) async renderHistoryRSTTest3() {
+    it('renderHistoryRSTCase3', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../../src/templates/azext/azext_metadata.json.njx',
+            '../../src/templates/azext/azext_metadata.json.njx',
         );
 
         const result = nunjucks.render(tmplPath, {
@@ -65,7 +62,7 @@ export class Process {
         });
         const expectedFile = path.join(
             `${__dirname}`,
-            '../../../test/unittest/expected/azext/azext_metadata3.json',
+            '../../test/unittest/expected/azext/azext_metadata3.json',
         );
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(
@@ -73,5 +70,5 @@ export class Process {
             expected,
             'render logic 3 in azext_metadata.json is incorrect',
         );
-    }
-}
+    });
+});

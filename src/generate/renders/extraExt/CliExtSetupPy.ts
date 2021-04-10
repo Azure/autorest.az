@@ -16,7 +16,10 @@ export class CliExtSetupPy extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = PathConstants.setupPyFile;
-        this.tmplPath = path.join(PathConstants.templateRootFolder, 'setup.py.njx');
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.setupPyFile + PathConstants.njxFileExtension,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -104,7 +107,7 @@ export class CliExtSetupPy extends TemplateBase {
             model: {
                 AzextFolder: model.AzextFolder,
                 Extension_Name: model.Extension_Name,
-                azRelativeOutputFolder: azRelativeOutputFolder,
+                azRelativeOutputFolder: azRelativeOutputFolder.replace(/\\/g, '/'),
                 Extension_NameClass: model.Extension_NameClass,
                 Extension_NameUnderscored: model.Extension_NameUnderscored,
                 dependencies: dependencies,

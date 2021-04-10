@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /ManagedNetworks/put/ManagedNetworksPut
 @try_manual
-def step_mn_create(test, rg, checks=None):
+def step_mn_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn create '
@@ -25,22 +25,21 @@ def step_mn_create(test, rg, checks=None):
              '":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn'
              '}\\"}},{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/vir'
              'tualNetworks/{vn_2}\\"}}],\\"subnets\\":[{{\\"id\\":\\"/subscriptions/{subscription_id}/resourceGroups/{r'
-             'g}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/default\\"}},{{\\"id\\":\\"/subscriptions/{'
-             'subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/default\\'
-             '"}}]}}" '
+             'g}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/{subnets}\\"}},{{\\"id\\":\\"/subscriptions'
+             '/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vn_3}/subnets/{subnet'
+             's_2}\\"}}]}}" '
              '--name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_create_min(test, rg, checks=None):
-    return step_mn_create(test, rg, checks)
+def step_mn_create_min(test, checks=None):
+    return step_mn_create(test, checks)
 
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksGet
 @try_manual
-def step_mn_show_modify(test, rg, checks=None):
+def step_mn_show_modify(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn show-modify '
@@ -48,45 +47,42 @@ def step_mn_show_modify(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_show_modify_min(test, rg, checks=None):
-    return step_mn_show_modify(test, rg, checks)
+def step_mn_show_modify_min(test, checks=None):
+    return step_mn_show_modify(test, checks)
 
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksListByResourceGroup
 @try_manual
-def step_mn_list(test, rg, checks=None):
+def step_mn_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn list '
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_list_min(test, rg, checks=None):
-    return step_mn_list(test, rg, checks)
+def step_mn_list_min(test, checks=None):
+    return step_mn_list(test, checks)
 
 
 # EXAMPLE: /ManagedNetworks/get/ManagedNetworksListBySubscription
 @try_manual
-def step_mn_list2(test, rg, checks=None):
+def step_mn_list2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn list '
              '-g ""',
              checks=checks)
 
-
 @try_manual
-def step_mn_list2_min(test, rg, checks=None):
-    return step_mn_list2(test, rg, checks)
+def step_mn_list2_min(test, checks=None):
+    return step_mn_list2(test, checks)
 
 
 # EXAMPLE: /ManagedNetworks/patch/ManagedNetworksPatch
 @try_manual
-def step_mn_update(test, rg, checks=None):
+def step_mn_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn update '
@@ -94,22 +90,21 @@ def step_mn_update(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_update_min(test, rg, checks=None):
-    return step_mn_update(test, rg, checks)
+def step_mn_update_min(test, checks=None):
+    return step_mn_update(test, checks)
 
 
 # EXAMPLE: /ManagedNetworkGroups/put/ManagementNetworkGroupsPut
 @try_manual
-def step_mn_group_create(test, rg, checks=None):
+def step_mn_group_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group create '
              '--management-groups "[]" '
              '--subnets id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNet'
-             'works/{vn}/subnets/default" id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.'
-             'Network/virtualNetworks/{vn_2}/subnets/default" '
+             'works/{vn}/subnets/{subnets}" id="/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsof'
+             't.Network/virtualNetworks/{vn_2}/subnets/{subnets_2}" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
              'etworks/VnetA" '
              '--virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualN'
@@ -123,9 +118,8 @@ def step_mn_group_create(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_group_create_min(test, rg, checks=None):
+def step_mn_group_create_min(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group create '
@@ -141,7 +135,7 @@ def step_mn_group_create_min(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkGroups/get/ManagedNetworksGroupsListByManagedNetwork
 @try_manual
-def step_mn_group_list(test, rg, checks=None):
+def step_mn_group_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group list '
@@ -149,15 +143,14 @@ def step_mn_group_list(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_group_list_min(test, rg, checks=None):
-    return step_mn_group_list(test, rg, checks)
+def step_mn_group_list_min(test, checks=None):
+    return step_mn_group_list(test, checks)
 
 
 # EXAMPLE: /ManagedNetworkGroups/get/ManagementNetworkGroupsGet
 @try_manual
-def step_mn_group_show(test, rg, checks=None):
+def step_mn_group_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group show '
@@ -166,15 +159,14 @@ def step_mn_group_show(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_group_show_min(test, rg, checks=None):
-    return step_mn_group_show(test, rg, checks)
+def step_mn_group_show_min(test, checks=None):
+    return step_mn_group_show(test, checks)
 
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/put/ManagedNetworkPeeringPoliciesPut
 @try_manual
-def step_managed_network_peering(test, rg, checks=None):
+def step_managed_network_peering(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
@@ -188,9 +180,8 @@ def step_managed_network_peering(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_managed_network_peering_min(test, rg, checks=None):
+def step_managed_network_peering_min(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy hub-and-spoke-topology create '
@@ -202,7 +193,7 @@ def step_managed_network_peering_min(test, rg, checks=None):
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/get/ManagedNetworkPeeringPoliciesGet
 @try_manual
-def step_managed_network_peering_policy_show(test, rg, checks=None):
+def step_managed_network_peering_policy_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy show '
@@ -211,15 +202,14 @@ def step_managed_network_peering_policy_show(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_managed_network_peering_policy_show_min(test, rg, checks=None):
-    return step_managed_network_peering_policy_show(test, rg, checks)
+def step_managed_network_peering_policy_show_min(test, checks=None):
+    return step_managed_network_peering_policy_show(test, checks)
 
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/get/ManagedNetworkPeeringPoliciesListByManagedNetwork
 @try_manual
-def step_managed_network_peering_policy_list(test, rg, checks=None):
+def step_managed_network_peering_policy_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy list '
@@ -227,15 +217,14 @@ def step_managed_network_peering_policy_list(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_managed_network_peering_policy_list_min(test, rg, checks=None):
-    return step_managed_network_peering_policy_list(test, rg, checks)
+def step_managed_network_peering_policy_list_min(test, checks=None):
+    return step_managed_network_peering_policy_list(test, checks)
 
 
 # EXAMPLE: /ManagedNetworkPeeringPolicies/delete/ManagedNetworkPeeringPoliciesDelete
 @try_manual
-def step_managed_network_peering_policy_delete(test, rg, checks=None):
+def step_managed_network_peering_policy_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network managed-network-peering-policy delete -y '
@@ -244,15 +233,14 @@ def step_managed_network_peering_policy_delete(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_managed_network_peering_policy_delete_min(test, rg, checks=None):
-    return step_managed_network_peering_policy_delete(test, rg, checks)
+def step_managed_network_peering_policy_delete_min(test, checks=None):
+    return step_managed_network_peering_policy_delete(test, checks)
 
 
 # EXAMPLE: /ManagedNetworkGroups/delete/ManagementNetworkGroupsDelete
 @try_manual
-def step_mn_group_delete(test, rg, checks=None):
+def step_mn_group_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn group delete -y '
@@ -261,15 +249,14 @@ def step_mn_group_delete(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_group_delete_min(test, rg, checks=None):
-    return step_mn_group_delete(test, rg, checks)
+def step_mn_group_delete_min(test, checks=None):
+    return step_mn_group_delete(test, checks)
 
 
 # EXAMPLE: /ScopeAssignments/put/ScopeAssignmentsPut
 @try_manual
-def step_mn_scope_assignment_create(test, rg, checks=None):
+def step_mn_scope_assignment_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment create '
@@ -279,9 +266,8 @@ def step_mn_scope_assignment_create(test, rg, checks=None):
              '--name "{myScopeAssignment}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_scope_assignment_create_min(test, rg, checks=None):
+def step_mn_scope_assignment_create_min(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment create '
@@ -292,7 +278,7 @@ def step_mn_scope_assignment_create_min(test, rg, checks=None):
 
 # EXAMPLE: /ScopeAssignments/get/ScopeAssignmentsGet
 @try_manual
-def step_mn_scope_assignment_show(test, rg, checks=None):
+def step_mn_scope_assignment_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment show '
@@ -300,30 +286,28 @@ def step_mn_scope_assignment_show(test, rg, checks=None):
              '--name "{myScopeAssignment}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_scope_assignment_show_min(test, rg, checks=None):
-    return step_mn_scope_assignment_show(test, rg, checks)
+def step_mn_scope_assignment_show_min(test, checks=None):
+    return step_mn_scope_assignment_show(test, checks)
 
 
 # EXAMPLE: /ScopeAssignments/get/ScopeAssignmentsList
 @try_manual
-def step_mn_scope_assignment_list(test, rg, checks=None):
+def step_mn_scope_assignment_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment list '
              '--scope "subscriptions/subscriptionC"',
              checks=checks)
 
-
 @try_manual
-def step_mn_scope_assignment_list_min(test, rg, checks=None):
-    return step_mn_scope_assignment_list(test, rg, checks)
+def step_mn_scope_assignment_list_min(test, checks=None):
+    return step_mn_scope_assignment_list(test, checks)
 
 
 # EXAMPLE: /ScopeAssignments/delete/ScopeAssignmentsDelete
 @try_manual
-def step_mn_scope_assignment_delete(test, rg, checks=None):
+def step_mn_scope_assignment_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn scope-assignment delete -y '
@@ -331,15 +315,14 @@ def step_mn_scope_assignment_delete(test, rg, checks=None):
              '--name "{myScopeAssignment}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_scope_assignment_delete_min(test, rg, checks=None):
-    return step_mn_scope_assignment_delete(test, rg, checks)
+def step_mn_scope_assignment_delete_min(test, checks=None):
+    return step_mn_scope_assignment_delete(test, checks)
 
 
 # EXAMPLE: /ManagedNetworks/delete/ManagedNetworksDelete
 @try_manual
-def step_mn_delete(test, rg, checks=None):
+def step_mn_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az managed-network mn delete -y '
@@ -347,8 +330,6 @@ def step_mn_delete(test, rg, checks=None):
              '--resource-group "{rg}"',
              checks=checks)
 
-
 @try_manual
-def step_mn_delete_min(test, rg, checks=None):
-    return step_mn_delete(test, rg, checks)
-
+def step_mn_delete_min(test, checks=None):
+    return step_mn_delete(test, checks)

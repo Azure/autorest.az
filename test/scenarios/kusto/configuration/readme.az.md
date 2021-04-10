@@ -38,6 +38,11 @@ cli:
             param: 'clusterName'
         set:
             extensionMode: 'experimental'
+      - where:
+          group: '*'
+          op: '*'
+          param: 'sku'
+        cli-flatten: true
 
 ```
 

@@ -10,7 +10,7 @@ Create readme.az.md in the same folder of readme.md and copy following content w
 
     These settings apply only when `--az` is specified on the command line.
 
-    ``` yaml $(az) && $(target-mode) != core
+    ``` yaml $(az) && $(target-mode) != 'core'
     az:
         extensions: {svcName}
         namespace: azure.mgmt.{svcName}
@@ -20,7 +20,7 @@ Create readme.az.md in the same folder of readme.md and copy following content w
     # add additinal configuration here specific for Azure CLI
     # refer to the faq.md for more details
     ```
-    ``` yaml $(az) && $(target-mode) == core
+    ``` yaml $(az) && $(target-mode) == 'core'
     az:
         extensions: {svcName}
         namespace: azure.mgmt.{svcName}

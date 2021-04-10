@@ -33,7 +33,10 @@ stages:
         inputs:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js'
-
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.7'
+        inputs:
+          versionSpec: 3.7
       - task: Npm@1
         displayName: 'npm install'
         inputs:
@@ -75,7 +78,7 @@ stages:
           versionSpec: '$(NodeVersion)'
         displayName: 'Install Node.js'
       - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
+        displayName: 'Use Python 3.7'
         inputs:
           versionSpec: 3.7
       - script: |
@@ -123,6 +126,8 @@ stages:
           echo -e "\e[32m[$(date -u)] LOG: Start test script"
           pytest -s ../s/.scripts/e2e/testcases.py --all --az ../s --azpack $(VAR_BUILD_ARTIFACT_STAGING_DIRECTORY)/$(VAR_ARIFACT_NAME)/autorest-az-$CURRENT_VERSION.tgz --swagger ../azure-rest-api-specs --cliext ../azure-cli-extensions --testserver ../autorest.testserver --junitxml=../s/.scripts/e2e/test-results.xml
         displayName: 'Pytest'
+        env:
+          NODE_OPTIONS: --max_old_space_size=65536
       - script: |
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           echo -e "\e[32m[$(date -u)] LOG: CURRENT VERSION: $CURRENT_VERSION"

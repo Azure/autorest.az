@@ -1,7 +1,6 @@
 # configuration for az common
  
 ``` yaml $(az)
-extension-mode: experimental
 
 # customize library used in extension. azure.cli.core by default
 # cli-core-lib: azure.cli.core
@@ -32,6 +31,43 @@ cli:
         cli-flatten-payload: true
         cli-flatten-schema: false
         cli-flatten-all-overwrite-swagger: false
+
+az:
+  preparers:
+    virtualNetworks:
+      abbr:  vn
+      alias:
+        - virtualnetwork
+      create:
+        - az network vnet create --resource-group {resourceGroups} --name {name}
+      delete:
+        - az network vnet delete --resource-group {resourceGroups} --name {name}
+
+    subnets:
+      alias:
+        - subnet
+      create: |-
+        az network vnet subnet create -n {name} --vnet-name {virtualNetworks} -g {resourceGroups} --address-prefixes "10.0.0.0/21"
+      delete:  |-
+        az network vnet subnet delete --name {name} --resource-group {resourceGroups} --vnet-name {virtualNetworks}
+
+    serviceEndpointPolicies:
+      abbr: sep
+      alias:
+        - serviceendpointpolicy
+      create: |-
+        az network service-endpoint policy create --name {name} --resource-group {resourceGroups}
+      delete:  |-
+        az network service-endpoint policy delete --name {name} -g {resourceGroups}
+
+    networkInterfaces:
+      abbr: nic
+      alias:
+        - virtualinterface
+      create:
+        - az network nic create --resource-group {resourceGroups} --name {name} --vnet-name {virtualNetworks} --subnet {subnets}
+      delete:
+        - az network nic delete --resource-group {resourceGroups} --name {name}
 ```
  
 ``` yaml $(python) && ($(generate-sdk) == 'yes' || ($(target-mode) != 'core' && !$(generate-sdk)))

@@ -37,6 +37,7 @@ except (SyntaxError, ImportError):
 
 from ._attestation_management_client_enums import (
     AttestationServiceStatus,
+    OfferType,
 )
 
 __all__ = [
@@ -54,4 +55,5 @@ __all__ = [
     'Resource',
     'TrackedResource',
     'AttestationServiceStatus',
+    'OfferType',
 ]

@@ -1,9 +1,9 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { Channel, Session } from '@azure-tools/autorest-extension-base';
+import { Channel, Session } from '@autorest/extension-base';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import {
     CodeModel,
@@ -31,6 +31,7 @@ import {
     ToSentence,
     isNullOrUndefined,
     ToMultiLine,
+    isGeneratedExampleId,
 } from '../utils/helper';
 import {
     CodeGenConstants,
@@ -41,6 +42,8 @@ import {
     RenderInput,
     DataGraph,
     SortOrder,
+    CliCommandType,
+    ExtensionMode,
 } from '../utils/models';
 import {
     CodeModelAz,
@@ -57,9 +60,11 @@ import {
     ResourcePool,
     ObjectStatus,
     GroupTestScenario,
+    LoadPreparesConfig,
 } from './renders/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
-
+import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
+import * as process from 'process';
 class ActionParam {
     public constructor(
         public groupOpActionName: string,
@@ -90,6 +95,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     substack: Array<[Parameter[], number]>;
     currentSubOptionIndex: number;
     paramActionNameReference: Map<Schema, string>;
+    allActions: Map<Parameter, string>;
     private _testScenario: any;
     private _defaultTestScenario: any[];
     private _configuredScenario: boolean;
@@ -100,8 +106,6 @@ export class CodeModelCliImpl implements CodeModelAz {
     private _outputPath: string;
     private _parentOptions: any;
     private _useOptions: string[];
-
-    private _cliCoreLib: string;
 
     init(): void {
         this.options = AzConfiguration.getValue(CodeGenConstants.az);
@@ -127,6 +131,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this._clientAuthenticationPolicy = this.options[
             CodeGenConstants.clientAuthenticationPolicy
         ];
+        LoadPreparesConfig(this.options[CodeGenConstants.preparers]);
         // this.sortOperationByAzCommand();
     }
 
@@ -139,8 +144,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
         this.dealingParameterAlias();
-        this.GenerateTestInit();
-        this.GetAllExamples();
     }
 
     private sortOperationByAzCommand() {
@@ -208,6 +211,12 @@ export class CodeModelCliImpl implements CodeModelAz {
         return true;
     }
 
+    public get GetTestUniqueResource(): boolean {
+        const ret = this.options?.[CodeGenConstants.testUniqueResource];
+        if (ret) return true;
+        return false;
+    }
+
     public get GenMinTest(): boolean {
         const genMinTest = this.options?.['gen-min-test'];
         if (genMinTest) return true;
@@ -229,7 +238,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     v.indexOf('specification') > 0
                 ) {
                     const p = v.indexOf('specification');
-                    return v.slice('file:///'.length, p - 1);
+                    if (process.platform.toLowerCase().startsWith('win')) {
+                        return v.slice('file:///'.length, p - 1);
+                    }
+                    return v.slice('file:///'.length - 1, p - 1);
                 }
             }
             return undefined;
@@ -465,6 +477,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private setParamAzUniqueNames() {
         this.paramActionNameReference = new Map<Schema, string>();
+        this.allActions = new Map<Parameter, string>();
         const nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
         const pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
         if (this.SelectFirstCommandGroup()) {
@@ -535,8 +548,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         }
                                         if (
                                             nameParamReference.has(paramFlattenedName) &&
-                                            nameParamReference.get(paramFlattenedName).schema !==
-                                                param.schema
+                                            nameParamReference.get(paramFlattenedName)[
+                                                'targetProperty'
+                                            ] !== param['targetPropert']
                                         ) {
                                             let tmpName = paramFlattenedName;
                                             const preParam = nameParamReference.get(
@@ -681,10 +695,15 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     preAction.action.schema,
                                                     preActionUniqueName,
                                                 );
+                                                this.allActions.set(
+                                                    preAction.action,
+                                                    preActionUniqueName,
+                                                );
                                                 this.paramActionNameReference.set(
                                                     param.schema,
                                                     actionUniqueName,
                                                 );
+                                                this.allActions.set(param, actionUniqueName);
                                                 nameActionReference.set(
                                                     preActionUniqueName,
                                                     preAction,
@@ -700,6 +719,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     param.schema,
                                                     actionName,
                                                 );
+                                                this.allActions.set(param, actionName);
                                             }
                                         }
                                     } while (this.SelectNextMethodParameter());
@@ -741,6 +761,87 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
         });
     }
+
+    public GetActionData() {
+        const actions = [];
+        SchemaType.Array;
+        this.allActions.forEach((actionName: string, param: Parameter) => {
+            if (actionName === 'AddEventGridDataConnection') {
+                param;
+            }
+            const action = {
+                actionName: actionName,
+                actionType: 'KeyValue',
+            };
+            action.actionType = this.Parameter_IsPositional(param)
+                ? 'Positional'
+                : action.actionType;
+            action.actionType = this.Parameter_IsShorthandSyntax(param)
+                ? 'ShortHandSyntax'
+                : action.actionType;
+            action['mapsTo'] = this.Parameter_MapsTo(param);
+            action['type'] = this.Schema_Type(param.schema);
+            action['nameAz'] = this.Parameter_NameAz(param);
+            if (action['type'] === SchemaType.Array) {
+                action['baseClass'] = '_AppendAction';
+            } else {
+                action['baseClass'] = 'Action';
+            }
+            action['subProperties'] = [];
+            action['subPropertiesMapsTo'] = [];
+            action['subPropertiesNamePython'] = [];
+            action['subPropertiesNameAz'] = [];
+            action['constants'] = {};
+            const baseParam = param['polyBaseParam'];
+            const keyToMatch = baseParam?.schema?.discriminator?.property?.language.python?.name;
+            const valueToMatch = param.schema?.['discriminatorValue'];
+            const allSubParameters = [];
+            if (this.EnterSubMethodParameters(param) && this.SelectFirstMethodParameter(true)) {
+                do {
+                    const tmpParam = this.SubMethodParameter;
+                    allSubParameters.push(tmpParam);
+                    const pythonName = this.Parameter_NamePython(tmpParam);
+                    const mapsTo = this.Parameter_MapsTo(tmpParam);
+                    const nameAz = this.Parameter_NameAz(tmpParam);
+                    const subType = this.Parameter_Type(tmpParam);
+                    if (
+                        this.Parameter_Type(tmpParam) === SchemaType.Constant &&
+                        !isNullOrUndefined(tmpParam.schema['value']?.['value'])
+                    ) {
+                        action['constants'][
+                            `'${pythonName}'`
+                        ] = `'${tmpParam.schema['value']['value']}'`;
+                    } else if (tmpParam['readOnly']) {
+                        continue;
+                    } else if (
+                        keyToMatch === pythonName &&
+                        !isNullOrUndefined(keyToMatch) &&
+                        !isNullOrUndefined(valueToMatch) &&
+                        tmpParam['isDiscriminator']
+                    ) {
+                        action['constants'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
+                    } else {
+                        action['subProperties'].push({
+                            namePython: pythonName,
+                            nameAz: nameAz,
+                            type: subType,
+                        });
+                        action['subPropertiesMapsTo'].push(mapsTo);
+                        action['subPropertiesNamePython'].push(pythonName);
+                        action['subPropertiesNameAz'].push(nameAz);
+                    }
+                } while (this.SelectNextMethodParameter(true));
+                if (action['actionType'] === 'Positional') {
+                    const keys = this.Parameter_PositionalKeys(param, allSubParameters);
+                    action['subPropertiesNamePython'] = keys;
+                }
+            }
+            SchemaType.Dictionary;
+            actions.push(action);
+            this.ExitSubMethodParameters();
+        });
+        return actions;
+    }
     //= ================================================================================================================
     // Extension level information
     // autorest.az will have support for multiple extensions from single swagger file.
@@ -773,15 +874,13 @@ export class CodeModelCliImpl implements CodeModelAz {
     //= ================================================================================================================
 
     public GenerateTestInit(): void {
-        if (this.codeModel['test-scenario']) {
-            // if ('examples' in this.codeModel['test-scenario']) {
-            //     //new style of example configuration
-            //     this._testScenario = this.codeModel['test-scenario']['examples'];
-            // }
-            // else {
-            //     //old style of example configuration
-            //     this._testScenario = this.codeModel['test-scenario']
-            // }
+        if (this.GetResourcePool().hasTestResourceScenario) {
+            this._testScenario = GroupTestScenario(
+                this.GetResourcePool().generateTestScenario(),
+                this.Extension_NameUnderscored,
+            );
+            this._configuredScenario = true;
+        } else if (this.codeModel['test-scenario']) {
             this._testScenario = GroupTestScenario(
                 this.codeModel['test-scenario'],
                 this.Extension_NameUnderscored,
@@ -792,6 +891,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = false;
         }
         this.GatherInternalResource();
+        this.GetAllExamples();
     }
 
     public get ConfiguredScenario(): boolean {
@@ -816,8 +916,27 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.parentExtension;
     }
 
+    public get Extension_Description(): string {
+        if (!isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.extensionDescription))) {
+            return 'Manage ' + AzConfiguration.getValue(CodeGenConstants.extensionDescription);
+        }
+        return (
+            'Manage ' +
+            ToSentence(this.Extension_NameClass.replace(/ManagementClient|Client/gi, ''))
+        );
+    }
+
     public get Extension_Mode(): string {
-        return AzConfiguration.getValue(CodeGenConstants.extensionMode);
+        let extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode);
+        this.codeModel.operationGroups.forEach((operationGroup) => {
+            if (
+                operationGroup.language['az'].command === this.Extension_Name &&
+                !isNullOrUndefined(operationGroup.language?.['cli']?.extensionMode)
+            ) {
+                extensionMode = operationGroup.language?.['cli']?.extensionMode;
+            }
+        });
+        return extensionMode;
     }
 
     public get Extension_NameUnderscored(): string {
@@ -861,7 +980,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     // Specification will be updated accordingly.
     //= ================================================================================================================
 
-    public SelectFirstCommandGroup(): boolean {
+    public SelectFirstCommandGroup(needRefer = false): boolean {
         // just enumerate through command groups in code-model-v4
         if (this.codeModel.operationGroups.length > 0) {
             this.currentOperationGroupIndex = 0;
@@ -869,14 +988,22 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this.CommandGroup.language['cli'].hidden ||
                 this.CommandGroup.language['cli'].removed
             ) {
-                if (this.SelectNextCommandGroup()) {
-                    if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+                if (needRefer && this.CommandGroup_Referenced) {
+                    return true;
+                } else if (this.SelectNextCommandGroup()) {
+                    if (!this.SelectFirstCommand()) {
+                        return this.SelectNextCommandGroup();
+                    }
                     return true;
                 } else {
                     return false;
                 }
             }
-            if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+            if (needRefer && this.CommandGroup_Referenced) {
+                return true;
+            } else if (!this.SelectFirstCommand()) {
+                return this.SelectNextCommandGroup();
+            }
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -884,21 +1011,29 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public SelectNextCommandGroup(): boolean {
+    public SelectNextCommandGroup(needRefer = false): boolean {
         if (this.currentOperationGroupIndex < this.codeModel.operationGroups.length - 1) {
             this.currentOperationGroupIndex++;
             if (
                 this.CommandGroup.language['cli'].hidden ||
                 this.CommandGroup.language['cli'].removed
             ) {
-                if (this.SelectNextCommandGroup()) {
-                    if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+                if (needRefer && this.CommandGroup_Referenced) {
+                    return true;
+                } else if (this.SelectNextCommandGroup()) {
+                    if (!this.SelectFirstCommand()) {
+                        return this.SelectNextCommandGroup();
+                    }
                     return true;
                 } else {
                     return false;
                 }
             }
-            if (!this.SelectFirstCommand()) return this.SelectNextCommandGroup();
+            if (needRefer && this.CommandGroup_Referenced) {
+                return true;
+            } else if (!this.SelectFirstCommand()) {
+                return this.SelectNextCommandGroup();
+            }
             return true;
         } else {
             this.currentOperationGroupIndex = -1;
@@ -926,6 +1061,9 @@ export class CodeModelCliImpl implements CodeModelAz {
             /-/g,
             ' ',
         );
+        if (groupPart === '') {
+            return '';
+        }
         if (extensionPart !== groupPart) {
             return 'Manage ' + groupPart + ' with ' + extensionPart;
         } else {
@@ -939,6 +1077,14 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CommandGroup_HasShowCommand(): boolean {
         return this.CommandGroup.language['az'].hasShowCommand;
+    }
+
+    public get CommandGroup_HasCommand(): boolean {
+        return this.SelectFirstCommand();
+    }
+
+    public get CommandGroup_Referenced(): boolean {
+        return this.CommandGroup.language['az']['referenced'];
     }
 
     public get CommandGroup_DefaultName(): string {
@@ -964,9 +1110,38 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get CommandGroup_Mode(): string {
         if (isNullOrUndefined(this.CommandGroup?.language?.['cli']?.extensionMode)) {
+            if (this.IsCliCore && this.Extension_Mode === ExtensionMode.Stable) {
+                return ExtensionMode.Experimental;
+            }
             return this.Extension_Mode;
         }
         return this.CommandGroup?.language?.['cli']?.extensionMode;
+    }
+
+    public CommandGroup_ClientFactoryName(group: OperationGroup = this.CommandGroup): string {
+        const cfName: string =
+            'cf_' +
+            (this.GetModuleOperationName(group) !== ''
+                ? this.GetModuleOperationName(group)
+                : this.Extension_NameUnderscored + '_cl');
+        return cfName;
+    }
+
+    public get CommandGroup_OperationTmplName(): string {
+        const operationTmpl =
+            this.GetPythonNamespace() +
+            '.operations._' +
+            this.GetModuleOperationNamePython() +
+            '_operations#' +
+            this.GetModuleOperationNamePythonUpper() +
+            '.{}';
+        return operationTmpl;
+    }
+
+    public CommandGroup_CustomCommandTypeName(group: OperationGroup = this.CommandGroup): string {
+        const customName =
+            this.Extension_NameUnderscored + '_' + this.GetModuleOperationName(group);
+        return customName;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -1127,16 +1302,33 @@ export class CodeModelCliImpl implements CodeModelAz {
         const polyOriginal = this.Command.extensions?.['cli-poly-as-resource-original-operation'];
         if (
             !isNullOrUndefined(polyOriginal) &&
-            !isNullOrUndefined(polyOriginal.extensions['cli-split-operation-original-operation'])
+            !isNullOrUndefined(polyOriginal.extensions?.['cli-split-operation-original-operation'])
         ) {
-            const splitOriginal = polyOriginal.extensions['cli-split-operation-original-operation'];
+            const splitOriginal =
+                polyOriginal.extensions?.['cli-split-operation-original-operation'];
             return splitOriginal;
         }
-        const splittedOriginal = this.Command.extensions['cli-split-operation-original-operation'];
+        const splittedOriginal = this.Command.extensions?.[
+            'cli-split-operation-original-operation'
+        ];
         if (!isNullOrUndefined(splittedOriginal)) {
             return splittedOriginal;
         }
         return polyOriginal;
+    }
+
+    public get Command_OriginalCommandGroup(): OperationGroup {
+        if (!isNullOrUndefined(this.Command.language?.['az']?.['originalOperationGroup'])) {
+            return this.Command.language?.['az']?.['originalOperationGroup'];
+        }
+        return undefined;
+    }
+
+    public get Command_ClientFactoryName(): string {
+        if (!isNullOrUndefined(this.Command_OriginalCommandGroup)) {
+            return this.CommandGroup_ClientFactoryName(this.Command_OriginalCommandGroup);
+        }
+        return undefined;
     }
 
     public get Command_NeedGeneric(): boolean {
@@ -1166,6 +1358,25 @@ export class CodeModelCliImpl implements CodeModelAz {
             return this.CommandGroup_Mode;
         }
         return this.Command?.language?.['cli']?.extensionMode;
+    }
+
+    public get Command_Type(): string {
+        if (this.Command_MethodName === 'show') {
+            return CliCommandType.CUSTOM_SHOW_COMMAND;
+        } else if (this.Command_NeedGeneric) {
+            if (!isNullOrUndefined(this.Command_GenericSetterArgName)) {
+                return CliCommandType.GENERIC_UPDATE_COMMAND;
+            }
+        }
+        return CliCommandType.CUSTOM_COMMAND;
+    }
+
+    public get Command_GenericSetterArgName(): string {
+        const genericParam = this.Command_GenericSetterParameter(this.Command_GetOriginalOperation);
+        if (isNullOrUndefined(genericParam)) {
+            return undefined;
+        }
+        return this.Parameter_NamePython(genericParam);
     }
 
     public get Command_MaxApi(): string {
@@ -1391,7 +1602,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.currentSubOptionIndex = 0;
             const parameter = this.submethodparameters[this.currentSubOptionIndex];
             if (this.Parameter_IsHidden(parameter) && !containHidden) {
-                if (!this.SelectNextMethodParameter()) {
+                if (!this.SelectNextMethodParameter(containHidden)) {
                     return false;
                 }
             }
@@ -1403,7 +1614,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 (this.MethodParameter_IsHidden && !containHidden) ||
                 this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1
             ) {
-                if (this.SelectNextMethodParameter()) {
+                if (this.SelectNextMethodParameter(containHidden)) {
                     return true;
                 } else {
                     return false;
@@ -1424,7 +1635,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             const parameter = this.submethodparameters[this.currentSubOptionIndex];
             if (this.Parameter_IsHidden(parameter) && !containHidden) {
-                if (!this.SelectNextMethodParameter()) {
+                if (!this.SelectNextMethodParameter(containHidden)) {
                     return false;
                 }
             }
@@ -1436,7 +1647,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 (this.MethodParameter_IsHidden && !containHidden) ||
                 this.codeModel.globalParameters.indexOf(this.MethodParameter) > -1
             ) {
-                if (this.SelectNextMethodParameter()) {
+                if (this.SelectNextMethodParameter(containHidden)) {
                     return true;
                 } else {
                     return false;
@@ -1538,11 +1749,12 @@ export class CodeModelCliImpl implements CodeModelAz {
         param.language['az'].mapsto = newName;
     }
 
-    public Schema_ActionName(schema: Schema = this.MethodParameter.schema) {
+    public get MethodParameter_ActionName() {
+        const schema = this.MethodParameter.schema;
         if (this.paramActionNameReference.has(schema)) {
             return this.paramActionNameReference.get(schema);
         }
-        return null;
+        return undefined;
     }
 
     public get MethodParameter_Name(): string {
@@ -1641,13 +1853,13 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.Parameter_IsShorthandSyntax(this.MethodParameter);
     }
 
-    public isComplexSchema(type: string): boolean {
+    public isComplexSchema(type: string, param: any): boolean {
         if (
             type === SchemaType.Array ||
             type === SchemaType.Object ||
             type === SchemaType.Dictionary ||
             type === SchemaType.Any ||
-            this.MethodParameter.language['cli'].json === true
+            param?.language?.['cli']?.json === true
         ) {
             return true;
         } else {
@@ -1740,19 +1952,22 @@ export class CodeModelCliImpl implements CodeModelAz {
                     ) {
                         return false;
                     } else if (p['schema'].type === SchemaType.Array) {
+                        if (this.isComplexSchema(p['schema']?.elementType?.type, p['schema'])) {
+                            return false;
+                        }
                         for (const mp of values(p['schema']?.elementType?.properties)) {
-                            if (this.isComplexSchema(mp['schema'].type)) {
+                            if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                                 return false;
                             }
                         }
                         for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                             for (const pp of values(parent['properties'])) {
-                                if (this.isComplexSchema(pp['schema'].type)) {
+                                if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                     return false;
                                 }
                             }
                         }
-                    } else if (this.isComplexSchema(p['schema'].type)) {
+                    } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
                         return false;
                     }
                 }
@@ -1777,18 +1992,18 @@ export class CodeModelCliImpl implements CodeModelAz {
                     return false;
                 } else if (p['schema'].type === SchemaType.Array) {
                     for (const mp of values(p['schema']?.elementType?.properties)) {
-                        if (this.isComplexSchema(mp['schema'].type)) {
+                        if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                             return false;
                         }
                     }
                     for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                         for (const pp of values(parent['properties'])) {
-                            if (this.isComplexSchema(pp['schema'].type)) {
+                            if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                 return false;
                             }
                         }
                     }
-                } else if (this.isComplexSchema(p['schema'].type)) {
+                } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
                     // objects.objects
                     return false;
                 }
@@ -1810,7 +2025,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                     if (mp['readOnly']) {
                         continue;
                     }
-                    if (this.isComplexSchema(mp['schema'].type)) {
+                    if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
                         return false;
                     }
                 }
@@ -1819,12 +2034,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                         if (pp['readOnly']) {
                             continue;
                         }
-                        if (this.isComplexSchema(pp['schema'].type)) {
+                        if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
                             return false;
                         }
                     }
                 }
-            } else if (this.isComplexSchema(p.type)) {
+            } else if (this.isComplexSchema(p.type, p)) {
                 // dicts.objects or dicts.dictionaries
                 return false;
             }
@@ -1881,7 +2096,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     private Parameter_IsSimpleArray(param: Parameter): boolean {
         if (this.Parameter_Type(param) === SchemaType.Array) {
             const elementType = param.schema['elementType'].type;
-            if (!this.isComplexSchema(elementType)) {
+            if (!this.isComplexSchema(elementType, param.schema)) {
                 return true;
             }
         }
@@ -1893,7 +2108,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        if (this.isComplexSchema(this.Parameter_Type(param))) {
+        if (this.isComplexSchema(this.Parameter_Type(param), param)) {
             return true;
         }
         return false;
@@ -1985,7 +2200,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         if (schema.language['cli'].json === true) {
             return true;
         }
-        if (this.isComplexSchema(this.Schema_Type(schema))) {
+        if (this.isComplexSchema(this.Schema_Type(schema), schema)) {
             return true;
         }
         return false;
@@ -2262,11 +2477,14 @@ export class CodeModelCliImpl implements CodeModelAz {
     // Detailed descriptions below.
     //= ================================================================================================================
 
-    public GetModuleOperationName(): string {
-        return ToSnakeCase(this.CommandGroup.language.default.name);
+    public GetModuleOperationName(group: OperationGroup = this.CommandGroup): string {
+        return ToSnakeCase(group.language.default.name);
     }
 
     public GetModuleOperationNamePython(): string {
+        if (this.CommandGroup_CliKey === '') {
+            return this.codeModel.info['python_title'];
+        }
         if (
             this.SDK_IsTrack1 &&
             !isNullOrUndefined(this.CommandGroup.language['cli']?.track1_name)
@@ -2380,6 +2598,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return this.AzExample.CommandString;
     }
 
+    public get AzExample_Id(): string {
+        return this.AzExample.Id;
+    }
+
+    public get AzExample_HttpMethod(): string {
+        return this.AzExample.HttpMethod;
+    }
+
     public get AzExample_CommandStringItems(): string[] {
         const items = [];
         ToMultiLine(
@@ -2390,6 +2616,15 @@ export class CodeModelCliImpl implements CodeModelAz {
         );
         return items;
     }
+
+    public get AzExample_RawCommandStringItems(): string[] {
+        return this.AzExample.commandStringItems;
+    }
+
+    public get AzExample_IsGenerated(): boolean {
+        return isGeneratedExampleId(this.AzExample?.Id);
+    }
+
     /**
      * Gets method parameters dict
      * @returns method parameters dict : key is parameter name, value is the parameter schema
@@ -2897,7 +3132,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
-    public ConvertToCliParameters(exampleParams: ExampleParam[]): ExampleParam[] {
+    public ConvertToCliParameters(
+        exampleParams: ExampleParam[],
+        commandGroup: string,
+    ): ExampleParam[] {
         const ret: ExampleParam[] = [];
         for (const param of exampleParams) {
             // Object.entries(exampleParams).forEach(() => {
@@ -2906,9 +3144,6 @@ export class CodeModelCliImpl implements CodeModelAz {
                 if (paramName === 'resource_group_name') {
                     paramName = 'resource_group';
                 }
-                // else {
-                //     paramName = "name";
-                // }
             }
             paramName = paramName.split('_').join('-');
             ret.push(
@@ -2980,10 +3215,42 @@ export class CodeModelCliImpl implements CodeModelAz {
         return true;
     }
 
-    public GetExamples(): CommandExample[] {
-        if (!isNullOrUndefined(this.Method_AzExamples) && this.Method_AzExamples.length > 0) {
+    public GetExamples(includeGenerated: boolean): CommandExample[] {
+        if (
+            !isNullOrUndefined(this.Method_AzExamples) &&
+            this.Method_AzExamples.length > 0 &&
+            includeGenerated
+        ) {
             return this.Method_AzExamples;
         }
+        const examples: CommandExample[] = [];
+        if (this.Examples) {
+            Object.entries(this.Examples).forEach(([id, exampleObj]) => {
+                if (includeGenerated || !isGeneratedExampleId(id)) {
+                    const example = this.CreateCommandExample(id, exampleObj);
+                    if (!isNullOrUndefined(example)) examples.push(example);
+                }
+            });
+        }
+        if (includeGenerated) this.Method_AzExamples = examples;
+        return examples;
+    }
+
+    public GetExampleById(id: string, exampleObj: any): CommandExample {
+        let ret: CommandExample = undefined;
+        if (this.Examples) {
+            Object.entries(this.Examples).forEach(([_id, _exampleObj]) => {
+                if (!isNullOrUndefined(ret)) return;
+                if (!isNullOrUndefined(id) && id.toLowerCase() !== _id.toLowerCase()) return;
+                if (!isNullOrUndefined(exampleObj)) _exampleObj = exampleObj;
+                const example = this.CreateCommandExample(_id, _exampleObj);
+                if (!isNullOrUndefined(example)) ret = example;
+            });
+        }
+        return ret;
+    }
+
+    public CreateCommandExample(id: string, exampleObj: any): CommandExample {
         function forUpdate(model: CodeModelCliImpl, exampleName: string): boolean {
             const lowercase: string = exampleName.toLowerCase();
             return (
@@ -2994,61 +3261,51 @@ export class CodeModelCliImpl implements CodeModelAz {
             );
         }
 
-        const examples: CommandExample[] = [];
-        if (this.Examples) {
-            Object.entries(this.Examples).forEach(([id, exampleObj]) => {
-                const example = new CommandExample();
-                example.Method = this.Command_MethodName;
-                example.Id = `/${this.CommandGroup_Key}/${this.Method_HttpMethod}/${id}`;
-                example.Title = exampleObj.title || id;
-                example.Path = this.Method_Path;
-                example.HttpMethod = this.Method_HttpMethod;
-                example.ResourceClassName = this.CommandGroup_Key;
-                const params = this.GetExampleParameters(exampleObj);
-                example.Parameters = this.ConvertToCliParameters(params);
-                example.MethodResponses = this.Method.responses || [];
-                example.Method_IsLongRun = !!this.Method.extensions?.[
-                    'x-ms-long-running-operation'
-                ];
-                example.ExampleObj = exampleObj;
-                if (this.Method_GetSplitOriginalOperation) {
-                    // filter example by name for generic createorupdate
-                    if (
-                        this.Command_MethodName.toLowerCase() === 'update' &&
-                        !forUpdate(this, id)
-                    ) {
-                        return;
-                    }
-                    if (this.Command_MethodName.toLowerCase() !== 'update' && forUpdate(this, id)) {
-                        return;
-                    }
-                }
-                if (this.filterExampleByPoly(exampleObj, example)) {
-                    for (let i = 0; i < example.Parameters.length; i++) {
-                        if (this.isDiscriminator(example.Parameters[i].methodParam.value)) {
-                            example.Parameters.splice(i, 1);
-                            i--;
-                        }
-                    }
-                    examples.push(example);
-                }
-                example.commandStringItems = this.GetExampleItems(example, false, undefined);
-                example.CommandString = example.commandStringItems.join(' ');
-                example.WaitCommandString = this.GetExampleWait(example).join(' ');
-            });
+        const example = new CommandExample();
+        example.Method = this.Command_MethodName;
+        example.Id = `/${this.CommandGroup_Key}/${this.Method_HttpMethod}/${id}`;
+        example.Title = exampleObj.title || id;
+        example.Path = this.Method_Path;
+        example.HttpMethod = this.Method_HttpMethod;
+        example.ResourceClassName = this.CommandGroup_Key;
+        const params = this.GetExampleParameters(exampleObj);
+        example.Parameters = this.ConvertToCliParameters(params, this.CommandGroup_Key);
+        example.MethodResponses = this.Method.responses || [];
+        example.Method_IsLongRun = !!this.Method.extensions?.['x-ms-long-running-operation'];
+        example.ExampleObj = exampleObj;
+        if (this.Method_GetSplitOriginalOperation) {
+            // filter example by name for generic createorupdate
+            if (this.Command_MethodName.toLowerCase() === 'update' && !forUpdate(this, id)) {
+                return;
+            }
+            if (this.Command_MethodName.toLowerCase() !== 'update' && forUpdate(this, id)) {
+                return;
+            }
         }
-        this.Method_AzExamples = examples;
-        return examples;
+        if (this.filterExampleByPoly(exampleObj, example)) {
+            for (let i = 0; i < example.Parameters.length; i++) {
+                if (this.isDiscriminator(example.Parameters[i].methodParam.value)) {
+                    example.Parameters.splice(i, 1);
+                    i--;
+                }
+            }
+            example.commandStringItems = this.GetExampleItems(example, false, undefined);
+            example.CommandString = example.commandStringItems.join(' ');
+            example.WaitCommandString = this.GetExampleWait(example).join(' ');
+            return example;
+        }
+        return undefined;
     }
 
     public GetExampleChecks(example: CommandExample): string[] {
         const ret: string[] = [];
         if (!this.GenChecks) return ret;
-        let resourceObjectName;
+        let resourceObjectName = undefined;
         for (const param of example.Parameters) {
             if (
                 example.ResourceClassName &&
-                this.resourcePool.isResource(param.defaultName) === example.ResourceClassName
+                this.resourcePool.isResource(param.defaultName, param.rawValue) ===
+                    example.ResourceClassName
             ) {
                 resourceObjectName = param.value;
             }
@@ -3082,21 +3339,21 @@ export class CodeModelCliImpl implements CodeModelAz {
                 continue;
             let paramValue = param.value;
             if (isTest || this.FormalizeNames) {
-                let replacedValue = this.resourcePool.addEndpointResource(
+                let replacedValue = this.resourcePool.addParamResource(
+                    param.defaultName,
                     paramValue,
                     param.isJson,
                     param.keyValue,
-                    [],
-                    [],
-                    param,
                     isTest,
                 );
                 if (replacedValue === paramValue) {
-                    replacedValue = this.resourcePool.addParamResource(
-                        param.defaultName,
+                    replacedValue = this.resourcePool.addEndpointResource(
                         paramValue,
                         param.isJson,
                         param.keyValue,
+                        [],
+                        [],
+                        param,
                         isTest,
                     );
                 }
@@ -3115,7 +3372,8 @@ export class CodeModelCliImpl implements CodeModelAz {
 
             if (
                 example.ResourceClassName &&
-                this.resourcePool.isResource(param.defaultName) === example.ResourceClassName
+                this.resourcePool.isResource(param.defaultName, param.rawValue) ===
+                    example.ResourceClassName
             ) {
                 resourceObjectName = param.value;
             }
@@ -3181,23 +3439,24 @@ export class CodeModelCliImpl implements CodeModelAz {
                 const paramKey = param.methodParam.value.language?.['cli']?.cliKey;
                 if (
                     paramKey === 'resourceGroupName' ||
-                    this.resourcePool.isResource(paramKey) === example.ResourceClassName
+                    this.resourcePool.isResource(paramKey, param.rawValue) ===
+                        example.ResourceClassName
                 ) {
                     let paramValue = param.value;
-                    let replacedValue = this.resourcePool.addEndpointResource(
+                    let replacedValue = this.resourcePool.addParamResource(
+                        param.defaultName,
                         paramValue,
                         param.isJson,
                         param.keyValue,
-                        [],
-                        [],
-                        param,
                     );
                     if (replacedValue === paramValue) {
-                        replacedValue = this.resourcePool.addParamResource(
-                            param.defaultName,
+                        replacedValue = this.resourcePool.addEndpointResource(
                             paramValue,
                             param.isJson,
                             param.keyValue,
+                            [],
+                            [],
+                            param,
                         );
                     }
                     paramValue = replacedValue;
@@ -3207,7 +3466,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                     }
                     parameters.push(param.name + ' ' + slp);
                 }
-                if (this.resourcePool.isResource(paramKey) === example.ResourceClassName)
+                if (
+                    this.resourcePool.isResource(paramKey, param.rawValue) ===
+                    example.ResourceClassName
+                )
                     foundResource = true;
             }
         }
@@ -3231,21 +3493,33 @@ export class CodeModelCliImpl implements CodeModelAz {
         commandParams: any,
         examples: CommandExample[],
         minimum = false,
+        step: TestStepExampleFileRestCall = undefined,
     ): string[][] {
         const ret: string[][] = [];
-        this.GetAllExamples(id, (example) => {
-            examples.push(example);
-            ret.push(this.GetExampleItems(example, true, commandParams, minimum));
-        });
+        this.GetAllExamples(
+            id,
+            (example) => {
+                examples.push(example);
+                ret.push(this.GetExampleItems(example, true, commandParams, minimum));
+            },
+            step?.exampleTemplate,
+        );
         return ret;
     }
 
-    public FindExampleWaitById(id: string): string[][] {
+    public FindExampleWaitById(
+        id: string,
+        step: TestStepExampleFileRestCall = undefined,
+    ): string[][] {
         const ret: string[][] = [];
-        this.GetAllExamples(id, (example) => {
-            const waitCmd = this.GetExampleWait(example);
-            if (waitCmd.length > 0) ret.push(waitCmd);
-        });
+        this.GetAllExamples(
+            id,
+            (example) => {
+                const waitCmd = this.GetExampleWait(example);
+                if (waitCmd.length > 0) ret.push(waitCmd);
+            },
+            step?.exampleTemplate,
+        );
         return ret;
     }
 
@@ -3269,7 +3543,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             const dependResources = [];
             const dependParameters = [];
 
-            const examples = this.GetExamples();
+            const examples = this.GetExamples(false);
             // recognize depends by endpoint in examples
             for (const example of examples) {
                 for (const param of example.Parameters) {
@@ -3311,7 +3585,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                         this.MethodParameter?.schema?.type !== 'constant'
                     ) {
                         const paramName = this.MethodParameter.language['cli'].cliKey;
-                        const onResource = this.resourcePool.isResource(paramName);
+                        const onResource = this.resourcePool.isResource(paramName, undefined);
                         for (const example of examples) {
                             for (const param of example.Parameters) {
                                 if (
@@ -3351,9 +3625,10 @@ export class CodeModelCliImpl implements CodeModelAz {
         });
 
         if (isNullOrUndefined(this._defaultTestScenario)) {
-            this._defaultTestScenario = GenerateDefaultTestScenario(this.GetAllExamples());
+            const allExamples = this.GetAllExamples();
+            this._defaultTestScenario = GenerateDefaultTestScenario(allExamples);
             this._defaultTestScenario = GenerateDefaultTestScenarioByDependency(
-                this.GetAllExamples(),
+                allExamples,
                 this.resourcePool,
                 this._defaultTestScenario,
             );
@@ -3495,12 +3770,24 @@ export class CodeModelCliImpl implements CodeModelAz {
         );
     }
 
-    public GetAllExamples(id?: string, callback?: (example) => void): CommandExample[] {
+    public GetAllExamples(
+        id?: string,
+        callback?: (example) => void,
+        exampleTemplate?: any,
+    ): CommandExample[] {
         const ret: CommandExample[] = [];
         let found = false;
         this.GetAllMethods(null, () => {
             if (found) return;
-            for (const example of this.GetExamples()) {
+            let examples: CommandExample[];
+            if (!isNullOrUndefined(exampleTemplate)) {
+                const example = this.GetExampleById(id, exampleTemplate);
+                if (isNullOrUndefined(example)) return;
+                examples = [example];
+            } else {
+                examples = this.GetExamples(true);
+            }
+            for (const example of examples) {
                 if (id && !this.matchExample(example, id)) continue;
                 if (callback) {
                     callback(example);
@@ -3517,15 +3804,11 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret;
     }
 
-    public set CliCoreLib(lib: string) {
-        this._cliCoreLib = lib;
-    }
-
     public get CliCoreLib(): string {
-        if (isNullOrUndefined(this._cliCoreLib)) {
+        if (isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.cliCoreLib))) {
             return CodeGenConstants.DEFAULT_CLI_CORE_LIB;
         }
-        return this._cliCoreLib;
+        return AzConfiguration.getValue(CodeGenConstants.cliCoreLib);
     }
 
     public get AzureCliFolder(): string {
@@ -3666,20 +3949,22 @@ export class CodeModelCliImpl implements CodeModelAz {
         const props = renderInput.properties;
         const conditions = renderInput.conditions;
         const converter = renderInput.converter;
+        const selector = renderInput.selector;
         const data = {};
         data['has' + Type] = false;
         data[Type + 's'] = [];
         const items = [];
-        if (this['SelectFirst' + Type]()) {
+        if (this['SelectFirst' + Type](...selector)) {
             data['has' + Type] = true;
             do {
                 let item = {};
                 let hasFiltered = false;
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
                     for (const prop of props) {
-                        item[prop] = this[Type + '_' + Capitalize(prop)];
-                        if (!isNullOrUndefined(converter.get(prop))) {
-                            item[prop] = converter.get(prop)(item[prop]);
+                        if (typeof this[Type + '_' + Capitalize(prop)] === 'function') {
+                            item[prop] = this[Type + '_' + Capitalize(prop)]();
+                        } else {
+                            item[prop] = this[Type + '_' + Capitalize(prop)];
                         }
                     }
                     for (const condition of conditions) {
@@ -3706,8 +3991,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                         });
                     // const d = dependencies.shift();
                 }
+                if (!isNullOrUndefined(converter)) {
+                    item = converter(item);
+                }
                 items.push(item);
-            } while (this['SelectNext' + Type]());
+            } while (this['SelectNext' + Type](...selector));
             if (items.length > 0 && sortBy.length > 0) {
                 items.sort(function (a, b) {
                     for (const sortKey in sortBy) {

@@ -12,14 +12,15 @@
 &nbsp;  &nbsp;  [b. Live Tests](#Live-Tests)  
 [4. Advanced Features](#Advanced-Features)  
 &nbsp;  [4.1. Folder Customization](#Folder-Customization)  
-&nbsp;  [4.2. CLI User Interface Customization](#CLI-User-Interface-Customization)  
+&nbsp;  [4.2. CLI User Interface Customization](#CLI-User-Interface-Customization)   
 &nbsp;  &nbsp;  [a. Add Parent Extension](#Add-Parent-Extension)  
-&nbsp;  &nbsp;  [b. Set Extension/Command Groups/Commands/Parameters Mode](#Set-Extension/Command-Groups/Commands/Parameters-Mode)   
-&nbsp;  &nbsp;  [c. Set min-api/max-api in Command Groups/Commands/Parameters](#Set-min-api/max-api-in-Command-Groups/Commands/Parameters)  
-&nbsp;  &nbsp;  [d. Move Command Groups/Command Layer](#Move-Command-Groups/Command-Layer)  
-&nbsp;  &nbsp;  [e. Rename/Hide Command Groups/Commands/Parameters](#Rename/Hide-Command-Groups/Commands/Parameters)   
-&nbsp;  &nbsp;  [f. Client Factory Customization](#Client-Factory-Customization)  
-&nbsp;  &nbsp;  [g. Parameter Specific Customization](#Parameter-Specific-Customization)  
+&nbsp;  &nbsp;  [b. Customize Extension Description](#Customize-Extension-Description) 
+&nbsp;  &nbsp;  [c. Set Extension/Command Groups/Commands/Parameters Mode](#Set-Extension/Command-Groups/Commands/Parameters-Mode)   
+&nbsp;  &nbsp;  [d. Set min-api/max-api in Command Groups/Commands/Parameters](#Set-min-api/max-api-in-Command-Groups/Commands/Parameters)  
+&nbsp;  &nbsp;  [e. Move Command Groups/Command Layer](#Move-Command-Groups/Command-Layer)  
+&nbsp;  &nbsp;  [f. Rename/Hide Command Groups/Commands/Parameters](#Rename/Hide-Command-Groups/Commands/Parameters)   
+&nbsp;  &nbsp;  [g. Client Factory Customization](#Client-Factory-Customization)  
+&nbsp;  &nbsp;  [h. Parameter Specific Customization](#Parameter-Specific-Customization)  
 &nbsp;  &nbsp;  &nbsp;  [i. flatten a parameter](#flatten-a-parameter)  
 &nbsp;  &nbsp;  &nbsp;  [ii. set a parameter as required](#set-a-parameter-as-required)  
 &nbsp;  &nbsp;  &nbsp;  [iii. set default value for a parameter](#set-default-value-for-a-parameter)  
@@ -75,6 +76,8 @@ This *--sdk-flatten* option is still in private releases. It will only take effe
 This *--generate-sdk* has two available value "yes" or "no". By default the value is "yes" for Azure CLI extensions generation, and "no" for Azure CLI main repo modules.
 1. --compatible-level  
 This *--generate-sdk* has two available value "track1" or "track2". By default the value is "track2" for Azure CLI extensions generation, and "track1" for Azure CLI main repo modules.
+1. --extension-mode  
+This *--extension-mode* option is to set the global extension mode for the generated modules. it has three available value 'experimental' or 'preview' or 'stable'. By default the value is 'experimental' for Azure CLI extensions generation. And 'stable' for Azure CLI main repo modules but the command groups mode will still be 'experimental' if not specified.
 1. --target-mode  
 This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. By default Autorest.az will generate code targeting azure-cli-extensions repo. Setting `--target-mode=core` if you want to generate azure-cli repo command modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track1`.
 
@@ -134,7 +137,7 @@ If you want to do a simple try, please go to the az-output-folder that you speci
 ```
 cd <az-output-folder>  
 python setup.py sdist bdist_wheel 
-az extension add <path-to-the-wheel-file>
+az extension add --source=<path-to-the-wheel-file>
 ``` 
 
 If it's for Azure CLI extensions development, you need to setup the azdev development environment and add the extension.
@@ -227,6 +230,12 @@ az:
   extensions: app-insight
   parent-extension: monitor
 ```
+
+### **Customize Extension Description**
+Customers can customize what can be show when run `az -h` after their extension or module has been on-boarded to Azure CLI. By default, we will simply show RP name info in it.  
+```
+extension-description: RP description.
+``` 
 
 ### **Set Extension/Command Groups/Commands/Parameters Mode**   
 In Azure CLI, we allow user to set different mode like is_preview or is_experimental for different kinds of layers including extension/command groups/commands/parameters. We can configure it in readme.az.md so the generated code can work in different mode.  
@@ -451,13 +460,16 @@ debug-output-folder: $(az-output-folder)/_az_debug
 
 use-extension:
   "@autorest/python": "5.4.0"
-  "@autorest/clicommon": "0.6.0"
+  "@autorest/clicommon": "0.6.1"
   #"@autorest/python": "latest"
 
 require:
   - ./readme.python.md
   - ./readme.cli.md
   - $(this-folder)/readme.az.common.md
+
+try-require:
+  - ./readme.test.md
 
 pipeline-model: v3
 
@@ -531,6 +543,9 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
+    az/azlinter:
+        input:
+            - az/emitter
 ```
 
 ``` yaml !$(sdk-flatten) || $(sdk-no-flatten)
@@ -580,4 +595,7 @@ pipeline:
             #- az/modifiers
             - az/azgenerator
         scope: scope-az
+    az/azlinter:
+        input:
+            - az/emitter
 ```

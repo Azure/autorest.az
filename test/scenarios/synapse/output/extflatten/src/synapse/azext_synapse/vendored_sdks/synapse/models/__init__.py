@@ -57,7 +57,9 @@ try:
     from ._models_py3 import LinkedIntegrationRuntimeKeyAuthorization
     from ._models_py3 import LinkedIntegrationRuntimeRbacAuthorization
     from ._models_py3 import LinkedIntegrationRuntimeType
+    from ._models_py3 import ManagedIdentity
     from ._models_py3 import ManagedIdentitySQLControlSettingsModel
+    from ._models_py3 import ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentity
     from ._models_py3 import ManagedIntegrationRuntime
     from ._models_py3 import ManagedIntegrationRuntimeError
     from ._models_py3 import ManagedIntegrationRuntimeNode
@@ -137,6 +139,7 @@ try:
     from ._models_py3 import TransparentDataEncryption
     from ._models_py3 import UpdateIntegrationRuntimeNodeRequest
     from ._models_py3 import UpdateIntegrationRuntimeRequest
+    from ._models_py3 import VirtualNetworkProfile
     from ._models_py3 import VulnerabilityAssessmentRecurringScansProperties
     from ._models_py3 import VulnerabilityAssessmentScanError
     from ._models_py3 import VulnerabilityAssessmentScanRecord
@@ -196,7 +199,9 @@ except (SyntaxError, ImportError):
     from ._models import LinkedIntegrationRuntimeKeyAuthorization  # type: ignore
     from ._models import LinkedIntegrationRuntimeRbacAuthorization  # type: ignore
     from ._models import LinkedIntegrationRuntimeType  # type: ignore
+    from ._models import ManagedIdentity  # type: ignore
     from ._models import ManagedIdentitySQLControlSettingsModel  # type: ignore
+    from ._models import ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentity  # type: ignore
     from ._models import ManagedIntegrationRuntime  # type: ignore
     from ._models import ManagedIntegrationRuntimeError  # type: ignore
     from ._models import ManagedIntegrationRuntimeNode  # type: ignore
@@ -276,6 +281,7 @@ except (SyntaxError, ImportError):
     from ._models import TransparentDataEncryption  # type: ignore
     from ._models import UpdateIntegrationRuntimeNodeRequest  # type: ignore
     from ._models import UpdateIntegrationRuntimeRequest  # type: ignore
+    from ._models import VirtualNetworkProfile  # type: ignore
     from ._models import VulnerabilityAssessmentRecurringScansProperties  # type: ignore
     from ._models import VulnerabilityAssessmentScanError  # type: ignore
     from ._models import VulnerabilityAssessmentScanRecord  # type: ignore
@@ -384,7 +390,9 @@ __all__ = [
     'LinkedIntegrationRuntimeKeyAuthorization',
     'LinkedIntegrationRuntimeRbacAuthorization',
     'LinkedIntegrationRuntimeType',
+    'ManagedIdentity',
     'ManagedIdentitySQLControlSettingsModel',
+    'ManagedIdentitySQLControlSettingsModelPropertiesGrantSQLControlToManagedIdentity',
     'ManagedIntegrationRuntime',
     'ManagedIntegrationRuntimeError',
     'ManagedIntegrationRuntimeNode',
@@ -464,6 +472,7 @@ __all__ = [
     'TransparentDataEncryption',
     'UpdateIntegrationRuntimeNodeRequest',
     'UpdateIntegrationRuntimeRequest',
+    'VirtualNetworkProfile',
     'VulnerabilityAssessmentRecurringScansProperties',
     'VulnerabilityAssessmentScanError',
     'VulnerabilityAssessmentScanRecord',

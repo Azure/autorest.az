@@ -1,8 +1,9 @@
+coverage/
 node_modules/
 dist/
 .vs/
 __pycache__/
-src/test/scenarios/testserver/input/
+test/scenarios/testserver/input/
 package-lock.json
 tmpoutput
 .history
@@ -12,3 +13,5 @@ test-results.xml
 *.orig
 gen.zip
 .nyc_output
+venv/
+junit.xml

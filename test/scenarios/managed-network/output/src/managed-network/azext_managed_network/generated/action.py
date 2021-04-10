@@ -7,7 +7,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+
+
 # pylint: disable=protected-access
+
+# pylint: disable=no-self-use
+
 
 import argparse
 from collections import defaultdict
@@ -19,7 +24,7 @@ class AddSubscriptions(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSubscriptions, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -29,13 +34,20 @@ class AddSubscriptions(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
+
             if kl == 'id':
+
                 d['id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter subscriptions. All possible keys are: id'.
-                format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter subscriptions. All possible keys are: id'.format(k)
+                )
+
         return d
 
 
@@ -44,7 +56,7 @@ class AddVirtualNetworks(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddVirtualNetworks, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -54,23 +66,31 @@ class AddVirtualNetworks(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
+
             if kl == 'id':
+
                 d['id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter virtual_networks. All possible keys are: '
-                               'id'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter virtual-networks. All possible keys are: id'.format(k)
+                )
+
         return d
 
 
 class AddSubnets(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
+
         for item in action:
             super(AddSubnets, self).__call__(parser, namespace, item, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         ret = []
         for item in values:
             properties = defaultdict(list)
@@ -82,13 +102,20 @@ class AddSubnets(argparse._AppendAction):
                 raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
             d = {}
             for k in properties:
+
                 kl = k.lower()
+
                 v = properties[k]
+
                 if kl == 'id':
+
                     d['id'] = v[0]
+
                 else:
-                    raise CLIError('Unsupported Key {} is provided for parameter subnets. All possible keys are: id'.
-                    format(k))
+                    raise CLIError(
+                        'Unsupported Key {} is provided for parameter subnets. All possible keys are: id'.format(k)
+                    )
+
             ret.append(d)
         return ret
 
@@ -98,7 +125,7 @@ class AddHub(argparse.Action):
         action = self.get_action(values, option_string)
         namespace.hub = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -108,12 +135,21 @@ class AddHub(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
+
             if kl == 'id':
+
                 d['id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter hub. All possible keys are: id'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter hub-and-spoke-topology_hub. All possible keys are: id'
+                    .format(k)
+                )
+
         return d
 
 
@@ -122,7 +158,7 @@ class AddSpokes(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddSpokes, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -132,12 +168,21 @@ class AddSpokes(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
+
             if kl == 'id':
+
                 d['id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter spokes. All possible keys are: id'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter hub-and-spoke-topology_spokes. All possible keys'
+                    ' are: id'.format(k)
+                )
+
         return d
 
 
@@ -146,7 +191,7 @@ class AddMesh(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddMesh, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -156,10 +201,19 @@ class AddMesh(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
+
             kl = k.lower()
+
             v = properties[k]
+
             if kl == 'id':
+
                 d['id'] = v[0]
+
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter mesh. All possible keys are: id'.format(k))
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter hub-and-spoke-topology_mesh. All possible keys'
+                    ' are: id'.format(k)
+                )
+
         return d

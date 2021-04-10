@@ -1677,7 +1677,7 @@
           "tags": [
             "integrationRuntimes"
           ],
-          "operationId": "IntegrationRuntimes_CreateLinkedIntegrationRuntime",
+          "operationId": "CreateLinkedIntegrationRuntime",
           "x-ms-examples": {
             "IntegrationRuntimes_CreateLinkedIntegrationRuntime": {
               "$ref": "./examples/IntegrationRuntimes_CreateLinkedIntegrationRuntime.json"

@@ -15,6 +15,7 @@ import { CodeGenConstants } from '../../../utils/models';
 import { CodeModelAz } from '../../CodeModelAz';
 import { HeaderGenerator } from '../Header';
 
+let allParams = [];
 export function GenerateAzureCliCustom(model: CodeModelAz): string[] {
     const header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
@@ -148,17 +149,19 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
                 }
-                // if (!addGenericSchema && needGeneric && !isNullOrUndefined(model.CommandGroup.language['az']['genericTargetSchema']) && model.Method.extensions?.['cli-split-operation-original-operation']?.['genericSetterParam'] !== model.MethodParameter) {
-                //     originalParameterStack.push(
-                //         new Parameter(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name'],
-                //         model.CommandGroup.language['az']['genericTargetSchema'].language['python']['description'],
-                //         model.CommandGroup.language['az']['genericTargetSchema']
-                //     ));
-                //     originalParameterNameStack.push(model.CommandGroup.language['az']['genericTargetSchema'].language['python']['name']);
-                //     addGenericSchema = true;
-                // }
-                originalParameterStack.push(model.MethodParameter);
-                originalParameterNameStack.push(model.MethodParameter_Name);
+                if (
+                    originalParameterStack.length === 0 &&
+                    allParams.indexOf(model.MethodParameter.schema) === -1
+                ) {
+                    allParams.push(model.MethodParameter.schema);
+                    originalParameterStack.push(model.MethodParameter);
+                    originalParameterNameStack.push(model.MethodParameter_Name);
+                } else if (originalParameterStack.length > 0) {
+                    originalParameterStack.push(model.MethodParameter);
+                    originalParameterNameStack.push(model.MethodParameter_Name);
+                } else {
+                    continue;
+                }
                 if (!needGeneric) {
                     outputBody = outputBody.concat(
                         ConstructValuation(
@@ -209,7 +212,8 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                         if (
                             originalParameterStack.last?.language?.['cli']?.[
                                 'moved-from-python'
-                            ] !== true
+                            ] !== true &&
+                            originalParameterStack.last.schema !== flattenedFrom
                         ) {
                             const newParam = new Parameter(
                                 flattenedFrom.language.python.name,
@@ -275,7 +279,10 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                             );
                         } else if (!isNullOrUndefined(model.MethodParameter_DefaultValue)) {
                             if (
-                                model.isComplexSchema(model.MethodParameter_Type) &&
+                                model.isComplexSchema(
+                                    model.MethodParameter_Type,
+                                    model.MethodParameter,
+                                ) &&
                                 defaultValue !== '{}'
                             ) {
                                 defaultValue = 'json.loads(' + defaultValue + ')';
@@ -312,6 +319,14 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                 } else {
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
+                    // if this parameter was popped out because of last flattened parameter has just finished construction,
+                    // then we need to run construction logic for this parameter one more time.
+                    if (
+                        originalParameterStack.length > 0 &&
+                        model.MethodParameter['originalParameter'] === originalParameterStack.last
+                    ) {
+                        skip = true;
+                    }
                 }
             }
         } while (skip || model.SelectNextMethodParameter(true));
@@ -507,6 +522,7 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
     let output: string[] = [];
     let outputBody: string[] = [];
     let outputMethodCall: string[] = [];
+    allParams = [];
     if (model.SelectFirstMethod()) {
         // create body transformation for methods that support it
 

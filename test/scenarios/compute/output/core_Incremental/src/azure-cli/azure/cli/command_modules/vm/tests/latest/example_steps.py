@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /VirtualMachines/post/Assess patch state of a virtual machine.
 @try_manual
-def step_virtual_machine_assess_patch(test, rg, checks=None):
+def step_virtual_machine_assess_patch(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az vm virtual-machine assess-patch '
@@ -22,3 +22,46 @@ def step_virtual_machine_assess_patch(test, rg, checks=None):
              '--vm-name "myVMName"',
              checks=checks)
 
+
+# EXAMPLE: /VirtualMachineScaleSetVMExtensions/put/Create VirtualMachineScaleSet VM extension.
+@try_manual
+def step_virtual_machine_scale_set_vm_extension_create(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az vm virtual-machine-scale-set-vm-extension create '
+             '--location "westus" '
+             '--type-properties-type "extType" '
+             '--auto-upgrade-minor-version true '
+             '--publisher "extPublisher" '
+             '--settings "{{\\"UserName\\":\\"xyz@microsoft.com\\"}}" '
+             '--type-handler-version "1.2" '
+             '--instance-id "0" '
+             '--resource-group "{rg_2}" '
+             '--vm-extension-name "myVMExtension" '
+             '--vm-scale-set-name "myvmScaleSet"',
+             checks=checks)
+
+
+# EXAMPLE: /VirtualMachineScaleSetVMExtensions/get/Get VirtualMachineScaleSet VM extension.
+@try_manual
+def step_virtual_machine_scale_set_vm_extension_show(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az vm virtual-machine-scale-set-vm-extension show '
+             '--instance-id "0" '
+             '--resource-group "{rg_2}" '
+             '--vm-extension-name "myVMExtension" '
+             '--vm-scale-set-name "myvmScaleSet"',
+             checks=checks)
+
+
+# EXAMPLE: /VirtualMachineScaleSetVMExtensions/get/List extensions in Vmss instance.
+@try_manual
+def step_virtual_machine_scale_set_vm_extension_list(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az vm virtual-machine-scale-set-vm-extension list '
+             '--instance-id "0" '
+             '--resource-group "{rg_2}" '
+             '--vm-scale-set-name "myvmScaleSet"',
+             checks=checks)

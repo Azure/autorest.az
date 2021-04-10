@@ -1,5 +1,11 @@
-import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
+import {
+    CodeModel,
+    codeModelSchema,
+    getAllProperties,
+    ObjectSchema,
+    SchemaType,
+} from '@azure-tools/codemodel';
+import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize, deserialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined, findNodeInCodeModel } from './utils/helper';
@@ -183,6 +189,7 @@ export class CodeModelMerger {
         if (isNullOrUndefined(cliM4Path)) {
             return;
         }
+        // try to find the counter node in cli codemodel.
         const cliNode = findNodeInCodeModel(cliM4Path, this.cliCodeModel, false, param);
         let foundNode = false;
         if (
@@ -190,6 +197,7 @@ export class CodeModelMerger {
             !isNullOrUndefined(cliNode.language) &&
             isNullOrUndefined(cliNode.language.python)
         ) {
+            // if found that node, and no language.python has been set
             if (
                 (!isNullOrUndefined(cliNode.language.cli.cliM4Path) &&
                     cliNode.language.cli.cliM4Path === cliM4Path) ||
@@ -197,6 +205,8 @@ export class CodeModelMerger {
             ) {
                 foundNode = true;
                 cliNode.language.python = param.language.python;
+                // in the case of python code model is flattener than cli code model, we need to expand cli code model when calling python SDK.
+                // and we record cli-m4-flattened and m4FlattenedFrom for future reference.
                 if (param.flattened && param.language.cli?.['cli-m4-flattened']) {
                     cliNode.language.cli['cli-m4-flattened'] = true;
                     if (!isNullOrUndefined(m4FlattenedFrom)) {
@@ -206,36 +216,83 @@ export class CodeModelMerger {
             }
         }
         if (!foundNode) {
+            // if we don't found the counter node in cli codemodel to that python codemodel node. it's probably it's has been flattened in cli codemodel.
+            // we need to find those flattenedNodes in cli codemodel.
             const flattenedNodes = findNodeInCodeModel(cliM4Path, this.cliCodeModel, true, param);
             if (!isNullOrUndefined(flattenedNodes) && flattenedNodes.length > 0) {
+                // for each flattenNodes, we need to find out what's the targetProperty in the python codemodel.
                 for (const fnode of flattenedNodes) {
                     if (!isNullOrUndefined(fnode) && !isNullOrUndefined(fnode.language)) {
-                        for (const prop of values(param.schema.properties)) {
-                            if (
-                                !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
-                                fnode.language?.cli?.cliKey === prop['language']?.cli?.cliKey
-                            ) {
-                                fnode.language.python = prop['language'].python;
-                                fnode.language.cli.pythonFlattenedFrom = param;
-                                break;
-                            } else if (!isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)) {
-                                for (const trace of values(fnode.language.cli.cliFlattenTrace)) {
-                                    if (
-                                        !isNullOrUndefined(prop['language']?.cli?.cliPath) &&
-                                        trace === prop['language'].cli.cliPath
-                                    ) {
-                                        for (const p of prop['schema']?.properties) {
-                                            if (
-                                                !isNullOrUndefined(p.language?.cli?.cliKey) &&
-                                                fnode.language?.cli?.cliKey ===
-                                                    p.language?.cli?.cliKey
-                                            ) {
-                                                fnode.language.python = p.language.python;
-                                                fnode.language.cli.pythonFlattenedFrom = prop;
-                                                break;
+                        let foundProp = false;
+                        // here we use a level traversal algorithm to traverse all the subnodes of the param node in python codemodel.
+                        const OutLayerProp = [];
+                        const cliFlattenTrace = param.language['cli'].cliM4Path;
+                        // OutLayerProp is the queue in level traversal algorithm.
+                        // each node of OutLayerProp is a pair, and the first element is the target traversal node, the second element is current cli flatten trace from the top to that node.
+                        OutLayerProp.push([param.schema, cliFlattenTrace]);
+                        while (!foundProp && OutLayerProp.length > 0) {
+                            const layerPair = OutLayerProp.shift();
+                            const outProp = layerPair[0];
+                            const preFlattenTrace = layerPair[1];
+                            if (isNullOrUndefined(outProp)) {
+                                continue;
+                            }
+                            for (const prop of getAllProperties(outProp)) {
+                                if (foundProp) {
+                                    break;
+                                }
+                                const curFlattenTrace =
+                                    preFlattenTrace + ';' + prop.language['cli'].cliM4Path;
+                                // adding next Layer to the queue.
+                                if (
+                                    !isNullOrUndefined(prop.schema) &&
+                                    prop.schema.type === SchemaType.Object
+                                ) {
+                                    OutLayerProp.push([prop.schema, curFlattenTrace]);
+                                }
+                                // because flatten will delete the original schema if no other places have refer to that schema.
+                                // in the case of flattened schema is not being deleted, and we can find the targeting node. we simply need to record language.python and pythonFlattenedFrom for future parameter construction when calling python SDK.
+                                if (
+                                    !isNullOrUndefined(fnode.language?.cli?.cliKey) &&
+                                    fnode.language?.cli?.cliKey ===
+                                        prop.language?.['cli']?.cliKey &&
+                                    (isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace) ||
+                                        curFlattenTrace ===
+                                            fnode.language['cli'].cliFlattenTrace.join(';'))
+                                ) {
+                                    fnode.language.python = prop['language'].python;
+                                    fnode.language.cli.pythonFlattenedFrom = param;
+                                    foundProp = true;
+                                    break;
+                                } else if (
+                                    !isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)
+                                ) {
+                                    // in the case of flattened schema has been deleted, we need to use cli flatten trace to identify the flattened schema.
+                                    for (const trace of values(
+                                        fnode.language.cli.cliFlattenTrace,
+                                    )) {
+                                        if (
+                                            !isNullOrUndefined(prop.language?.['cli']?.cliPath) &&
+                                            trace === prop.language?.['cli'].cliPath
+                                        ) {
+                                            for (const p of getAllProperties(
+                                                <ObjectSchema>prop.schema,
+                                            )) {
+                                                if (
+                                                    !isNullOrUndefined(
+                                                        p.language?.['cli']?.cliKey,
+                                                    ) &&
+                                                    fnode.language?.['cli']?.cliKey ===
+                                                        p.language?.['cli']?.cliKey
+                                                ) {
+                                                    fnode.language.python = p.language.python;
+                                                    fnode.language.cli.pythonFlattenedFrom = prop;
+                                                    foundProp = true;
+                                                    break;
+                                                }
                                             }
+                                            break;
                                         }
-                                        break;
                                     }
                                 }
                             }
@@ -257,7 +314,7 @@ export class CodeModelMerger {
 
         for (const obj of values(schemas.objects)) {
             this.setPythonName(obj);
-            for (const property of values(obj.properties)) {
+            for (const property of getAllProperties(obj)) {
                 this.setPythonName(property);
             }
         }
@@ -346,6 +403,8 @@ export class CodeModelMerger {
                                         const cliNode = findNodeInCodeModel(
                                             cliPath,
                                             this.cliCodeModel,
+                                            false,
+                                            tmpParam,
                                         );
                                         if (isNullOrUndefined(cliNode)) {
                                             m4FlattenedFrom.push(tmpParam);
@@ -681,10 +740,10 @@ export async function processRequest(host: Host) {
         const plugin = new Merger(session);
         const result = await plugin.process();
         host.WriteFile('azmerger-cli-temp-output-after.yaml', serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

@@ -77,7 +77,7 @@ We have pre-prepared docker image for you to use autorest.az easily. (Please mak
     ```
 
 2. Generate the code:
-    * Make sure the readme files are ready in the swagger repo. We can help to prepare the init readme files for you as mentioned in [onboarding-guide](onboarding-guide.md), or you can also find example [here](../src/test/scenarios/attestation/configuration).
+    * Make sure the readme files are ready in the swagger repo. We can help to prepare the init readme files for you as mentioned in [onboarding-guide](onboarding-guide.md), or you can also find example [here](../test/scenarios/attestation/configuration).
     * Generate the code:  
         if it's for Azure CLI Extensions:  
         ``` bash

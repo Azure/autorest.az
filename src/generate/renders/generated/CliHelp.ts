@@ -6,7 +6,7 @@
 import { CodeModelAz } from '../../CodeModelAz';
 import { SchemaType, Parameter } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
-import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
+import { ToMultiLine, isNullOrUndefined, ToSentence } from '../../../utils/helper';
 import { CodeGenConstants } from '../../../utils/models';
 
 let showExampleStr: string;
@@ -24,7 +24,12 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     let output: string[] = [];
     output.push('');
 
+    output.push('');
     model.GatherInternalResource();
+    output.push("helps['" + model.Extension_Name + "'] = '''");
+    output.push('    type: group');
+    output.push('    short-summary: ' + model.Extension_Description);
+    output.push("'''");
     if (model.SelectFirstCommandGroup()) {
         do {
             // if there's no operation in this command group
@@ -117,6 +122,9 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', 
     if (subCommandGroupName !== '') {
         output.push("helps['" + subCommandGroupName + '\'] = """');
     } else {
+        if (model.CommandGroup_Help.trim() === '') {
+            return [];
+        }
         output.push("helps['" + model.CommandGroup_Name + '\'] = """');
     }
     output.push('    type: group');
@@ -264,7 +272,7 @@ function getShorthandSyntaxAction(
     }
 
     let options: Parameter[] = [];
-    if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+    if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
         if (baseParam && model.MethodParameter['polyBaseParam'] === baseParam) {
             const keyToMatch = baseParam.schema?.['discriminator']?.property?.language.python?.name;
             const valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
@@ -367,7 +375,7 @@ function getPositionalActionHelp(
 
     const positionalKeys = model.MethodParameter_PositionalKeys;
     let options: Parameter[] = [];
-    if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+    if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
         if (baseParam && model.MethodParameter['polyBaseParam'] === baseParam) {
             const keyToMatch = baseParam.schema?.['discriminator']?.property?.language.python?.name;
             const valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
@@ -464,7 +472,7 @@ function getKeyValueActionHelp(
     }
 
     let options: Parameter[] = [];
-    if (!isNullOrUndefined(model.Schema_ActionName(model.MethodParameter.schema))) {
+    if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
         if (baseParam && model.MethodParameter['polyBaseParam'] === baseParam) {
             const keyToMatch = baseParam.schema?.['discriminator']?.property?.language.python?.name;
             const valueToMatch = model.MethodParameter.schema?.['discriminatorValue'];
@@ -614,7 +622,7 @@ function generateCommandHelp(model: CodeModelAz, debug = false) {
 
     if (model.SelectFirstMethod()) {
         do {
-            for (const example of model.GetExamples()) {
+            for (const example of model.GetExamples(false)) {
                 if (!examplesStarted) {
                     output.push('    examples:');
                     examplesStarted = true;

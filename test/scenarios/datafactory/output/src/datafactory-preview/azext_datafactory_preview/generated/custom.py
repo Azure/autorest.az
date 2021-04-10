@@ -286,25 +286,6 @@ def datafactory_integration_runtime_show(client,
                       if_none_match=if_none_match)
 
 
-def datafactory_integration_runtime_linked_integration_runtime_create(client,
-                                                                      resource_group_name,
-                                                                      factory_name,
-                                                                      integration_runtime_name,
-                                                                      name=None,
-                                                                      subscription_id=None,
-                                                                      data_factory_name=None,
-                                                                      data_factory_location=None):
-    create_linked_integration_runtime_request = {}
-    create_linked_integration_runtime_request['name'] = name
-    create_linked_integration_runtime_request['subscription_id'] = subscription_id
-    create_linked_integration_runtime_request['data_factory_name'] = data_factory_name
-    create_linked_integration_runtime_request['data_factory_location'] = data_factory_location
-    return client.create_linked_integration_runtime(resource_group_name=resource_group_name,
-                                                    factory_name=factory_name,
-                                                    integration_runtime_name=integration_runtime_name,
-                                                    create_linked_integration_runtime_request=create_linked_integration_runtime_request)
-
-
 def datafactory_integration_runtime_managed_create(client,
                                                    resource_group_name,
                                                    factory_name,
@@ -487,6 +468,25 @@ def datafactory_integration_runtime_upgrade(client,
     return client.upgrade(resource_group_name=resource_group_name,
                           factory_name=factory_name,
                           integration_runtime_name=integration_runtime_name)
+
+
+def datafactory_linked_integration_runtime_create(client,
+                                                  resource_group_name,
+                                                  factory_name,
+                                                  integration_runtime_name,
+                                                  name=None,
+                                                  subscription_id=None,
+                                                  data_factory_name=None,
+                                                  data_factory_location=None):
+    create_linked_integration_runtime_request = {}
+    create_linked_integration_runtime_request['name'] = name
+    create_linked_integration_runtime_request['subscription_id'] = subscription_id
+    create_linked_integration_runtime_request['data_factory_name'] = data_factory_name
+    create_linked_integration_runtime_request['data_factory_location'] = data_factory_location
+    return client.create_linked_integration_runtime(resource_group_name=resource_group_name,
+                                                    factory_name=factory_name,
+                                                    integration_runtime_name=integration_runtime_name,
+                                                    create_linked_integration_runtime_request=create_linked_integration_runtime_request)
 
 
 def datafactory_domain_service_create(client,

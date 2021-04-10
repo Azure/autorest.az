@@ -1,20 +1,13 @@
 {
     "compilerOptions": {
-        "lib": [
-            "es2016",
-            "dom"
-        ],
+        "lib": ["es2016", "dom"],
         "outDir": "dist",
         "module": "commonjs",
         "sourceMap": true,
-        "types": [
-            "node"
-        ],
+        "types": ["node", "jest"],
         "target": "es2016",
         "experimentalDecorators": true
     },
-    "include": [
-        "src",
-        "test",
-    ]
+    "include": ["src", "test", "jest.unittest.config.js"],
+    "exclude": ["**/*.spec.ts"]
 }

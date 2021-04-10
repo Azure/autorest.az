@@ -149,11 +149,11 @@ def repoColletor(debug=False, enable_batch=False, run_codegen=False, is_live=Fal
     if run_codegen:
         for rp in os.listdir(AWAGGER_PREFIX + '/specification/'):
             if rp == 'testserver':
-                swagger_arg_str = AZ_PREFIX + '/src/test/scenarios/testserver/configuration/readme.md'
+                swagger_arg_str = AZ_PREFIX + '/test/scenarios/testserver/configuration/readme.md'
             else:
                 swagger_arg_str = AWAGGER_PREFIX + '/specification/'+ rp + '/resource-manager/readme.md'
 
-            cmd_codegen = ['autorest', '--version=3.0.6271', '--az', use_az, use_az_cli_folder, swagger_arg_str]
+            cmd_codegen = ['autorest', '--version=3.0.6370', '--az', use_az, use_az_cli_folder, swagger_arg_str]
             print(" ".join(cmd_codegen))
             try:
                 runTask(cmd_codegen)
