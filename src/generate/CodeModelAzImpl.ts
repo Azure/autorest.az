@@ -1827,7 +1827,23 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public get MethodParameter_RestApiPath(): string[] {
         const restApiPath = [];
-        if (!this.MethodParameter_IsFlattened) {
+        const flattenTrace = this.MethodParameter.language['cli']?.['cliFlattenTrace'];
+        if (
+            !isNullOrUndefined(flattenTrace) &&
+            Array.isArray(flattenTrace) &&
+            flattenTrace.length > 0
+        ) {
+            for (const trace of flattenTrace) {
+                const tmpArray = trace.split('$$');
+                if (tmpArray[0].startsWith('schemas')) {
+                    const preIdx = tmpArray.last.indexOf('[');
+                    const endIdx = tmpArray.last.indexOf(']');
+                    if (preIdx + 2 < endIdx - 1) {
+                        restApiPath.push(tmpArray.last.substring(preIdx + 2, endIdx - 1));
+                    }
+                }
+            }
+        } else {
             restApiPath.push(this.MethodParameter_CliKey);
         }
         return restApiPath;

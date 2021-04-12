@@ -37,15 +37,6 @@
             },
             {
               "SourceParameters": [
-                "creationParams"
-              ],
-              "TargetParameters": [
-                "--creation_params"
-              ],
-              "ConvertFunction": null
-            },
-            {
-              "SourceParameters": [
                 "location"
               ],
               "TargetParameters": [
@@ -64,6 +55,7 @@
             },
             {
               "SourceParameters": [
+                "properties",
                 "attestationPolicy"
               ],
               "TargetParameters": [
@@ -73,6 +65,8 @@
             },
             {
               "SourceParameters": [
+                "properties",
+                "policySigningCertificates",
                 "keys"
               ],
               "TargetParameters": [
@@ -135,15 +129,6 @@
               ],
               "TargetParameters": [
                 "--provider-name"
-              ],
-              "ConvertFunction": null
-            },
-            {
-              "SourceParameters": [
-                "updateParams"
-              ],
-              "TargetParameters": [
-                "--update_params"
               ],
               "ConvertFunction": null
             },

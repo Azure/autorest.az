@@ -76,7 +76,7 @@ export class CliPortalMapping extends TemplateBase {
 
     methodParameterConverter(item: any): any {
         const parameterMappingItem = {
-            SourceParameters: [item['cliKey']],
+            SourceParameters: item['restApiPath'],
             TargetParameters: [(item['nameAz'].length > 1 ? '--' : '-') + item['nameAz']],
             ConvertFunction: null,
         };
