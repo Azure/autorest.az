@@ -1,5 +1,29 @@
 # CLI Code-Gen Command Interface Use Cases
 
+Cli Code Generator use directive for customization:   
+1. the autorest directive. For example:
+    ``` 
+    directive:
+      - where:
+          command: datafactory factory create
+        set:
+          command: datafactory create
+    ```
+    * Note: the name conventions in autorest directive of both **where clause** and **set clause** are azure cli command line name without the az prefixes.  
+
+1. the cli directive. For example:
+    ```
+    cli:
+      cli-directive:
+        - where:
+            group: Factories
+            param: factoryName
+          alias:
+            - name
+            - n
+    ```
+    * Note: the name conventions in cli directive of **where clause** are always using swagger name format. The name conventions in **set clause** should use snake case. Please refer to [this document](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#how-to-find-swagger-name-used-by-directive) for more details if you have trouble finding the name in **where clause**  
+
 
 ## 1. Command Group
 
