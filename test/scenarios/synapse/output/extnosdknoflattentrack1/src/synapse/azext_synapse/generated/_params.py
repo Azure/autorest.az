@@ -135,7 +135,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace', id_part='name')
         c.argument('ip_firewall_rules', type=validate_file_or_dict, help='IP firewall rule properties Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('synapse ip-firewall-rule wait') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -681,7 +681,7 @@ def load_arguments(self, _):
         c.argument('managed_virtual_network', type=str, help='Setting this to \'default\' will ensure that all compute '
                    'for this workspace is in a virtual network managed on behalf of the user.')
         c.argument('private_endpoint_connections', type=validate_file_or_dict, help='Private endpoint connections to '
-                   'the workspace Expected value: json-string/@json-file.')
+                   'the workspace Expected value: json-string/json-file/@json-file.')
         c.argument('compute_subnet_id', type=str, help='Subnet ID used for computes in workspace', arg_group='Virtual '
                    'Network Profile')
         c.argument('type_', options_list=['--type'], arg_type=get_enum_type(['None', 'SystemAssigned']), help='The '
@@ -773,7 +773,7 @@ def load_arguments(self, _):
         c.argument('if_match', type=str, help='ETag of the integration runtime entity. Should only be specified for '
                    'update, for which it should match existing entity or can be * for unconditional update.')
         c.argument('properties', type=validate_file_or_dict, help='Integration runtime properties. Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('synapse integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)

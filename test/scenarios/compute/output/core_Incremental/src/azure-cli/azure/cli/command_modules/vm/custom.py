@@ -13,6 +13,7 @@
 # pylint: disable=no-self-use,too-many-lines
 from __future__ import print_function
 
+# pylint: disable=unused-wildcard-import,wildcard-import
 from .generated.custom import *  # noqa: F403
 try:
     from .manual.custom import *  # noqa: F403
