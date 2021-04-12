@@ -362,7 +362,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                                     argument += ' Expect value: KEY1=VALUE1 KEY2=VALUE2 ...';
                                 }
                             } else {
-                                argument += ' Expected value: json-string/@json-file.';
+                                argument += ' Expected value: json-string/json-file/@json-file.';
                             }
                         }
                         if (debug) {

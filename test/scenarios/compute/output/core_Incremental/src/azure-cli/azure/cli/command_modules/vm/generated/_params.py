@@ -68,10 +68,10 @@ def load_arguments(self, _):
                    'should be automatically upgraded by the platform if there is a newer version of the extension '
                    'available.')
         c.argument('settings', type=validate_file_or_dict, help='Json formatted public settings for the extension. '
-                   'Expected value: json-string/@json-file.')
+                   'Expected value: json-string/json-file/@json-file.')
         c.argument('protected_settings', type=validate_file_or_dict, help='The extension can contain either '
                    'protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. Expected '
-                   'value: json-string/@json-file.')
+                   'value: json-string/json-file/@json-file.')
         c.argument('name', type=str, help='The virtual machine extension name.', arg_group='Instance View')
         c.argument('type_', options_list=['--type'], type=str, help='Specifies the type of the extension; an example '
                    'is "CustomScriptExtension".', arg_group='Instance View')

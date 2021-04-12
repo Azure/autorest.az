@@ -83,7 +83,7 @@ def load_arguments(self, _):
                    'associated with the Kusto cluster. The user identity dictionary key references will be ARM '
                    'resource ids in the form: \'/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/prov'
                    'iders/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}\'. Expected value: '
-                   'json-string/@json-file.', arg_group='Identity')
+                   'json-string/json-file/@json-file.', arg_group='Identity')
 
     with self.argument_context('kusto cluster update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -124,7 +124,7 @@ def load_arguments(self, _):
                    'associated with the Kusto cluster. The user identity dictionary key references will be ARM '
                    'resource ids in the form: \'/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/prov'
                    'iders/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}\'. Expected value: '
-                   'json-string/@json-file.', arg_group='Identity')
+                   'json-string/json-file/@json-file.', arg_group='Identity')
 
     with self.argument_context('kusto cluster delete') as c:
         c.argument('resource_group_name', resource_group_name_type)

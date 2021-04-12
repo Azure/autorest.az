@@ -38,8 +38,7 @@ export class CliTopCustom extends TemplateBase {
             headerGenerator.disableUnusedWildcardImport = true;
             headerGenerator.generationMode = GenerationMode.Incremental;
             let output: string[] = headerGenerator.getLines();
-            output = output.concat(this.loadGeneratedCustom(0));
-
+            output = output.concat(this.loadGeneratedCustom(0, true));
             return output;
         } else {
             const existingMode: GenerationMode = HeaderGenerator.GetCliGenerationMode(base);
@@ -73,7 +72,7 @@ export class CliTopCustom extends TemplateBase {
 
                 // Add loading code block
                 if (!hasLoadLogic) {
-                    output = output.concat(this.loadGeneratedCustom(0));
+                    output = output.concat(this.loadGeneratedCustom(0, true));
                 }
 
                 const appendLineStartIdx = skipLineIdx < keepLineIdx ? keepLineIdx : skipLineIdx;
@@ -85,11 +84,14 @@ export class CliTopCustom extends TemplateBase {
         }
     }
 
-    private loadGeneratedCustom(indent: number): string[] {
+    private loadGeneratedCustom(indent: number, incremental = false): string[] {
         const output: string[] = [];
         const indentStr: string = getIndentString(indent);
 
         output.push('');
+        if (incremental) {
+            output.push(indentStr + '# pylint: disable=unused-wildcard-import,wildcard-import');
+        }
         output.push(indentStr + 'from .generated.custom import *  # noqa: F403');
         output.push(indentStr + 'try:');
         output.push(indentStr + '    from .manual.custom import *  # noqa: F403');

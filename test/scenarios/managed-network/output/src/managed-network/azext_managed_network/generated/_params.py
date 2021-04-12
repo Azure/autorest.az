@@ -44,7 +44,7 @@ def load_arguments(self, _):
         c.argument('managed_network_name', options_list=['--name', '-n', '--managed-network-name'], type=str,
                    help='The name of the Managed Network.')
         c.argument('managed_network', type=validate_file_or_dict, help='Parameters supplied to the create/update a '
-                   'Managed Network Resource Expected value: json-string/@json-file.')
+                   'Managed Network Resource Expected value: json-string/json-file/@json-file.')
 
     with self.argument_context('managed-network mn update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -120,7 +120,7 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
-                   'by the Managed Network Expected value: json-string/@json-file.')
+                   'by the Managed Network Expected value: json-string/json-file/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered '
                    'by the Managed Network')
         c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets '
@@ -135,7 +135,7 @@ def load_arguments(self, _):
         c.argument('location', arg_type=get_location_type(self.cli_ctx), required=False,
                    validator=get_default_location_from_resource_group)
         c.argument('management_groups', type=validate_file_or_dict, help='The collection of management groups covered '
-                   'by the Managed Network Expected value: json-string/@json-file.')
+                   'by the Managed Network Expected value: json-string/json-file/@json-file.')
         c.argument('subscriptions', action=AddSubscriptions, nargs='+', help='The collection of subscriptions covered '
                    'by the Managed Network')
         c.argument('virtual_networks', action=AddVirtualNetworks, nargs='+', help='The collection of virtual nets '
