@@ -1,4 +1,4 @@
-import { Operation } from '@azure-tools/codemodel';
+import { Operation, Parameter } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CommandExample } from './CodeModelAz';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
@@ -18,10 +18,13 @@ export interface MethodModel {
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
     Method_GetOriginalOperation: any;
+    Method_GetSplitOriginalOperation: any;
     Method_GenericSetterParameter(Operation): Parameter;
     Method_NeedGeneric: boolean;
     Method_Mode: string;
     Method_AzExamples: CommandExample[];
+    Method_HttpMethod: string;
+    Method_Path: string;
     // Method_Features: [string, string];
     // Method_Imports: [string, string[]];
 }
@@ -30,11 +33,11 @@ export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
     public get Method(): Operation {
         if (
             this.currentMethodIndex < 0 ||
-            this.currentMethodIndex >= this.CommandGroup.operations.length
+            this.currentMethodIndex >= this.commandGroupHandler.CommandGroup.operations.length
         ) {
             return undefined;
         }
-        return this.CommandGroup.operations[this.currentMethodIndex];
+        return this.commandGroupHandler.CommandGroup.operations[this.currentMethodIndex];
     }
 
     public get Method_IsFirst(): boolean {
@@ -52,7 +55,11 @@ export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
             let curIndex = this.currentMethodIndex + 1;
             let hasNext = false;
             while (curIndex <= this.currentOperationIndex) {
-                if (!this.Operation_IsHidden(this.CommandGroup.operations[curIndex])) {
+                if (
+                    !this.Operation_IsHidden(
+                        this.commandGroupHandler.CommandGroup.operations[curIndex],
+                    )
+                ) {
                     hasNext = true;
                     break;
                 }
@@ -121,7 +128,7 @@ export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
     public get Method_NeedGeneric(): boolean {
         if (
             this.Method.language['az'].isSplitUpdate &&
-            this.CommandGroup_HasShowCommand &&
+            this.commandGroupHandler.CommandGroup_HasShowCommand &&
             !isNullOrUndefined(this.Method_GenericSetterParameter(this.Method_GetOriginalOperation))
         ) {
             return true;
@@ -156,7 +163,7 @@ export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
 
     public get Method_Mode(): string {
         if (isNullOrUndefined(this.Method?.language?.['cli']?.extensionMode)) {
-            return this.Command_Mode;
+            return this.commandHandler.Command_Mode;
         }
         return this.Method?.language?.['cli']?.extensionMode;
     }

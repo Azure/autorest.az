@@ -1,5 +1,7 @@
-import { CommandExample } from "./CodeModelAz";
-import { CodeModelCliImpl } from "./CodeModelAzImpl";
+import { isGeneratedExampleId, ToMultiLine } from '../../utils/helper';
+import { CodeGenConstants } from '../../utils/models';
+import { CommandExample } from './CodeModelAz';
+import { CodeModelCliImpl } from './CodeModelAzImpl';
 
 export interface AzExample {
     AzExample: CommandExample;
@@ -11,11 +13,11 @@ export class AzExampleImpl extends CodeModelCliImpl implements AzExample {
     public get AzExample(): CommandExample {
         if (
             this.currentAzExampleIndex < 0 ||
-            this.currentAzExampleIndex >= this.Method_AzExamples.length
+            this.currentAzExampleIndex >= this.methodHandler.Method_AzExamples.length
         ) {
             return undefined;
         }
-        return this.Method_AzExamples[this.currentAzExampleIndex];
+        return this.methodHandler.Method_AzExamples[this.currentAzExampleIndex];
     }
 
     public get AzExample_CommandString(): string {

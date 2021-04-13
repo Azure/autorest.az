@@ -8,6 +8,7 @@ import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { TemplateBase } from '../renders/TemplateBase';
 import { inplaceGen } from '../../utils/inplace';
 import { AzConfiguration, CodeGenConstants, TemplateRender } from '../../utils/models';
+import { CodeModelCliImpl } from '../codemodel/CodeModelAzImpl';
 
 export abstract class GeneratorBase {
     model: CodeModelAz;
@@ -15,11 +16,13 @@ export abstract class GeneratorBase {
     azDirectory: string;
     isDebugMode: boolean;
     templates: TemplateRender[];
+    azOutputFolder: string;
 
-    constructor(model: CodeModelAz) {
+    constructor(model: CodeModelCliImpl) {
         this.model = model;
         this.azDirectory = '';
         this.isDebugMode = AzConfiguration.getValue(CodeGenConstants.debug);
+        this.azOutputFolder = this.
     }
 
     public abstract generateAll(): Promise<void>;

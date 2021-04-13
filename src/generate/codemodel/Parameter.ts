@@ -1,12 +1,14 @@
+import { Channel } from '@autorest/extension-base';
 import { Parameter, SchemaType } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
+import { EXCLUDED_PARAMS } from '../../utils/models';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 
 export interface ParameterModel {
     Parameter_Type(Parameter): string;
     Parameter_IsList(Parameter): boolean;
     Parameter_IsListOfSimple(Parameter): boolean;
-    Parameter_IsPolyOfSimple(Parameter): boolean;
+    Parameter_IsPolyOfSimple(Parameter?): boolean;
     Parameter_SetAzNameMapsTo(string, Parameter): void;
     Parameter_InGlobal(Parameter): boolean;
     Parameter_IsHidden(Parameter): boolean;
@@ -14,7 +16,7 @@ export interface ParameterModel {
     Parameter_IsCliFlattened(Parameter): boolean;
     Parameter_MapsTo(Parameter): string;
     Parameter_SubMapsTo(subMethodName, Parameter): string;
-    Parameter_Name(): string;
+    Parameter_Name(Parameter?): string;
     Parameter_NameAz(Parameter): string;
     Parameter_CliKey(Parameter): string;
     Parameter_NamePython(Parameter): string;
@@ -24,10 +26,12 @@ export interface ParameterModel {
     Parameter_IsPositional(Parameter): boolean;
     Parameter_IsShorthandSyntax(Parameter): boolean;
     Parameter_PositionalKeys(param: Parameter, subMethodParams: Parameter[]): string[];
+    Parameter_IsSimpleArray(param: Parameter): boolean;
+    Parameter_IsRequired(param: Parameter): boolean;
+    Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean;
 }
 
 export class ParameterModelImpl extends CodeModelCliImpl implements ParameterModel {
-
     public Parameter_IsHidden(parameter: Parameter): boolean {
         if (!Object.prototype.hasOwnProperty.call(parameter.language['az'], 'hidden')) {
             // Handle complex
@@ -59,7 +63,10 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
                         }
                     } while (this.SelectNextMethodParameter());
                 }
-                if (shouldHidden === true && (hasDefault || this.Schema_IsRequired(parameter))) {
+                if (
+                    shouldHidden === true &&
+                    (hasDefault || this.schemaHandler.Schema_IsRequired(parameter))
+                ) {
                     defaultValue = defaultValue + '}';
                 } else {
                     defaultValue = undefined;
@@ -78,9 +85,9 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
                         Channel: Channel.Warning,
                         Text:
                             'OperationGroup ' +
-                            this.CommandGroup.language['az'].name +
+                            this.commandGroupHandler.CommandGroup.language['az'].name +
                             ' operation ' +
-                            this.Method_Name +
+                            this.methodHandler.Method_Name +
                             ' parameter ' +
                             parameter.language['az'].name +
                             ' should not be hidden while it is required without default value',
@@ -137,7 +144,9 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
         return parameter.language['az']['default-config-key'];
     }
 
-    public Parameter_Description(param: Parameter = this.MethodParameter): string {
+    public Parameter_Description(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): string {
         return param.language['az'].description?.replace(/\r?\n|\r/g, ' ');
     }
 
@@ -148,77 +157,101 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
         return false;
     }
 
-    public Parameter_Name(param: Parameter = this.MethodParameter): string {
+    public Parameter_Name(param: Parameter = this.methodParameterHandler.MethodParameter): string {
         return param.language['az'].name.replace(/-/g, '_');
     }
 
-    public Parameter_NameAz(param: Parameter = this.MethodParameter): string {
+    public Parameter_NameAz(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): string {
         return param.language['az'].name;
     }
 
-    public Parameter_CliKey(param: Parameter = this.MethodParameter): string {
+    public Parameter_CliKey(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): string {
         return param.language['cli']?.cliKey;
     }
 
-    public Parameter_NamePython(param: Parameter = this.MethodParameter): string {
-        if (this.SDK_IsTrack1 && !isNullOrUndefined(param.language['cli']?.track1_name)) {
+    public Parameter_NamePython(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): string {
+        if (
+            this.configHandler.SDK_IsTrack1 &&
+            !isNullOrUndefined(param.language['cli']?.track1_name)
+        ) {
             return param.language['cli']?.track1_name;
         }
         return param.language?.python?.name;
     }
 
-    public Parameter_IsPositional(param: Parameter = this.MethodParameter): boolean {
-        if (param?.schema && this.Schema_IsPositional(param.schema)) {
+    public Parameter_IsPositional(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
+        if (param?.schema && this.schemaHandler.Schema_IsPositional(param.schema)) {
             return true;
         }
         return !!param?.language?.['cli']?.positional;
     }
 
-    private Parameter_IsRequired(param: Parameter): boolean {
+    public Parameter_IsRequired(param: Parameter): boolean {
         return param?.required;
     }
 
-    private Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean {
+    public Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean {
         return this.Parameter_IsRequired(param) || param?.language?.['cli']?.required;
     }
 
     public Parameter_SetAzNameMapsTo(
         newName: string,
-        param: Parameter = this.MethodParameter,
+        param: Parameter = this.methodParameterHandler.MethodParameter,
     ): void {
         if (!isNullOrUndefined(param['nameBaseParam'])) {
-            param['nameBaseParam'].subParams[this.Method.language['cli'].name] = newName;
+            param['nameBaseParam'].subParams[
+                this.methodHandler.Method.language['cli'].name
+            ] = newName;
         }
         param.language['az'].mapsto = newName;
     }
 
-    public Parameter_MapsTo(param: Parameter = this.MethodParameter): string {
+    public Parameter_MapsTo(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): string {
         if (EXCLUDED_PARAMS.indexOf(param.language['az'].mapsto) > -1) {
             param.language['az'].mapsto = 'gen_' + param.language['az'].mapsto;
         }
         return param.language['az'].mapsto;
     }
 
-    public Parameter_SubMapsTo(subMethodName: string, param: Parameter = this.MethodParameter) {
+    public Parameter_SubMapsTo(
+        subMethodName: string,
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ) {
         if (!isNullOrUndefined(param?.['subParams']?.[subMethodName])) {
             return param['subParams'][subMethodName];
         }
         return this.Parameter_MapsTo(param);
     }
 
-    public Parameter_Type(param: Parameter = this.MethodParameter): string {
-        return this.Schema_Type(param?.schema);
+    public Parameter_Type(param: Parameter = this.methodParameterHandler.MethodParameter): string {
+        return this.schemaHandler.Schema_Type(param?.schema);
     }
 
-    public Parameter_IsFlattened(param: Parameter = this.MethodParameter): boolean {
+    public Parameter_IsFlattened(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
         return !!param.flattened;
     }
 
-    public Parameter_IsShorthandSyntax(param: Parameter = this.MethodParameter): boolean {
+    public Parameter_IsShorthandSyntax(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
         return !!param.language['cli']?.shorthandSyntax;
     }
 
-    public Parameter_IsCliFlattened(param: Parameter = this.MethodParameter): boolean {
+    public Parameter_IsCliFlattened(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
         if (
             param?.language?.['cli']?.['cli-flattened'] &&
             !param.language['cli']['cli-m4-flattened']
@@ -231,7 +264,9 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
         return false;
     }
 
-    public Parameter_IsListOfSimple(param: Parameter = this.MethodParameter): boolean {
+    public Parameter_IsListOfSimple(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties
         // 2. or objects with arrays as properties but has simple element type
@@ -248,10 +283,12 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
         if (param.language['cli'].json === true) {
             return false;
         }
-        return this.Schema_IsListOfSimple(param.schema);
+        return this.schemaHandler.Schema_IsListOfSimple(param.schema);
     }
 
-    public Parameter_IsList(param: Parameter = this.MethodParameter): boolean {
+    public Parameter_IsList(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
         if (this.Parameter_IsFlattened(param)) {
             return false;
         }
@@ -331,7 +368,9 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
         return allPossibleKeys;
     }
 
-    public Parameter_IsPolyOfSimple(param: Parameter = this.MethodParameter): boolean {
+    public Parameter_IsPolyOfSimple(
+        param: Parameter = this.methodParameterHandler.MethodParameter,
+    ): boolean {
         if (!isNullOrUndefined(param['isPolyOfSimple'])) {
             return param['isPolyOfSimple'];
         }
@@ -342,7 +381,10 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
         ) {
             let isSimplePoly = true;
             for (const child of param.schema['children'].all) {
-                if (this.Schema_IsList(child) && this.Schema_IsListOfSimple(child)) {
+                if (
+                    this.schemaHandler.Schema_IsList(child) &&
+                    this.schemaHandler.Schema_IsListOfSimple(child)
+                ) {
                     continue;
                 }
                 isSimplePoly = false;
@@ -354,6 +396,16 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
                 param['isPolyOfSimple'] = false;
             }
             return isSimplePoly;
+        }
+        return false;
+    }
+
+    public Parameter_IsSimpleArray(param: Parameter): boolean {
+        if (this.Parameter_Type(param) === SchemaType.Array) {
+            const elementType = param.schema['elementType'].type;
+            if (!this.isComplexSchema(elementType, param.schema)) {
+                return true;
+            }
         }
         return false;
     }

@@ -4,13 +4,11 @@
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
 import { Channel, Session } from '@autorest/extension-base';
-import { EnglishPluralizationService } from '@azure-tools/codegen';
 import {
     CodeModel,
     Operation,
     OperationGroup,
     Parameter,
-    ParameterLocation,
     Property,
     Request,
     Schema,
@@ -1513,7 +1511,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return false;
         }
 
-        const example = this.methodHandler.Method_CliKeyMethod.extensions['x-ms-examples'];
+        const example = this.methodHandler.Method.extensions['x-ms-examples'];
         if (example && example.length > 0) {
             this.currentExampleIndex = 0;
             return true;
@@ -1598,7 +1596,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                             this.methodParameterHandler.MethodParameter_IsListOfSimple ||
                                 this.methodParameterHandler.MethodParameter_IsSimpleArray,
                             submethodparameters,
-                            this.currentParameterIndex >= this.methodHandler.Method.parameters.length,
+                            this.currentParameterIndex >=
+                                this.methodHandler.Method.parameters.length,
                         ),
                     );
                 }
@@ -1617,7 +1616,8 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private isDiscriminator(param: any): boolean {
-        return this.commandHandler.Command_GetOriginalOperation && param?.targetProperty?.isDiscriminator
+        return this.commandHandler.Command_GetOriginalOperation &&
+            param?.targetProperty?.isDiscriminator
             ? true
             : false;
     }
@@ -2558,7 +2558,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                         !this.methodParameterHandler.MethodParameter_IsFlattened &&
                         this.methodParameterHandler.MethodParameter?.schema?.type !== 'constant'
                     ) {
-                        const paramName = this.methodParameterHandler.MethodParameter.language['cli'].cliKey;
+                        const paramName = this.methodParameterHandler.MethodParameter.language[
+                            'cli'
+                        ].cliKey;
                         const onResource = this.resourcePool.isResource(paramName, undefined);
                         for (const example of examples) {
                             for (const param of example.Parameters) {
@@ -2619,7 +2621,8 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         const commandParams = {};
         this.GetAllMethods(null, () => {
-            if (!commandParams[this.commandHandler.Command_Name]) commandParams[this.commandHandler.Command_Name] = new Set();
+            if (!commandParams[this.commandHandler.Command_Name])
+                commandParams[this.commandHandler.Command_Name] = new Set();
             if (this.SelectFirstMethodParameter()) {
                 do {
                     if (

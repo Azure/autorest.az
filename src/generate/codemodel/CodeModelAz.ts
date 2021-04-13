@@ -139,7 +139,6 @@ export interface CodeModelAz {
     RandomizeNames: boolean;
 
     // readme config
-    CliCoreLib: string;
     GenMinTest: boolean;
     GetMetaData(): { [key: string]: any };
     getModelData(

@@ -1,6 +1,7 @@
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import { OperationGroup } from '@azure-tools/codemodel';
 import { changeCamelToDash, isNullOrUndefined } from '../../utils/helper';
+import { ExtensionMode } from '../../utils/models';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 
 export interface CommandGroupModel {
@@ -44,7 +45,7 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
         if (!isNullOrUndefined(groupDescription) && groupDescription !== '') {
             return groupDescription;
         }
-        const extensionPart = this.Extension_Name.replace(/-/g, ' ');
+        const extensionPart = this.extensionHandler.Extension_Name.replace(/-/g, ' ');
         const groupPart = changeCamelToDash(this.CommandGroup.language['az']?.name)?.replace(
             /-/g,
             ' ',
@@ -98,10 +99,13 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
 
     public get CommandGroup_Mode(): string {
         if (isNullOrUndefined(this.CommandGroup?.language?.['cli']?.extensionMode)) {
-            if (this.IsCliCore && this.Extension_Mode === ExtensionMode.Stable) {
+            if (
+                this.configHandler.IsCliCore &&
+                this.extensionHandler.Extension_Mode === ExtensionMode.Stable
+            ) {
                 return ExtensionMode.Experimental;
             }
-            return this.Extension_Mode;
+            return this.extensionHandler.Extension_Mode;
         }
         return this.CommandGroup?.language?.['cli']?.extensionMode;
     }
@@ -111,13 +115,13 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
             'cf_' +
             (this.GetModuleOperationName(group) !== ''
                 ? this.GetModuleOperationName(group)
-                : this.Extension_NameUnderscored + '_cl');
+                : this.extensionHandler.Extension_NameUnderscored + '_cl');
         return cfName;
     }
 
     public get CommandGroup_OperationTmplName(): string {
         const operationTmpl =
-            this.GetPythonNamespace() +
+            this.configHandler.GetPythonNamespace() +
             '.operations._' +
             this.GetModuleOperationNamePython() +
             '_operations#' +
@@ -128,7 +132,9 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
 
     public CommandGroup_CustomCommandTypeName(group: OperationGroup = this.CommandGroup): string {
         const customName =
-            this.Extension_NameUnderscored + '_' + this.GetModuleOperationName(group);
+            this.extensionHandler.Extension_NameUnderscored +
+            '_' +
+            this.GetModuleOperationName(group);
         return customName;
     }
 }

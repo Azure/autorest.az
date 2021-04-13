@@ -31,11 +31,11 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
     public get Command(): Operation {
         if (
             this.currentOperationIndex < 0 ||
-            this.currentOperationIndex >= this.CommandGroup.operations.length
+            this.currentOperationIndex >= this.commandGroupHandler.CommandGroup.operations.length
         ) {
             return undefined;
         }
-        return this.CommandGroup.operations[this.currentOperationIndex];
+        return this.commandGroupHandler.CommandGroup.operations[this.currentOperationIndex];
     }
 
     public get Command_FunctionName(): string {
@@ -89,7 +89,9 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
 
     public get Command_ClientFactoryName(): string {
         if (!isNullOrUndefined(this.Command_OriginalCommandGroup)) {
-            return this.CommandGroup_ClientFactoryName(this.Command_OriginalCommandGroup);
+            return this.commandGroupHandler.CommandGroup_ClientFactoryName(
+                this.commandHandler.Command_OriginalCommandGroup,
+            );
         }
         return undefined;
     }
@@ -97,7 +99,7 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
     public get Command_NeedGeneric(): boolean {
         if (
             this.Command.language['az'].isSplitUpdate &&
-            this.CommandGroup_HasShowCommand &&
+            this.commandGroupHandler.CommandGroup_HasShowCommand &&
             !isNullOrUndefined(
                 this.Command_GenericSetterParameter(this.Command_GetOriginalOperation),
             )
@@ -118,7 +120,7 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
 
     public get Command_Mode(): string {
         if (isNullOrUndefined(this.Command?.language?.['cli']?.extensionMode)) {
-            return this.CommandGroup_Mode;
+            return this.commandGroupHandler.CommandGroup_Mode;
         }
         return this.Command?.language?.['cli']?.extensionMode;
     }
@@ -139,7 +141,7 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
         if (isNullOrUndefined(genericParam)) {
             return undefined;
         }
-        return this.Parameter_NamePython(genericParam);
+        return this.parameterHandler.Parameter_NamePython(genericParam);
     }
 
     public get Command_MaxApi(): string {

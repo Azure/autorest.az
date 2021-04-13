@@ -1,4 +1,6 @@
-import { Parameter, ParameterLocation } from '@azure-tools/codemodel';
+import { Channel } from '@autorest/extension-base';
+import { Parameter, ParameterLocation, SchemaType } from '@azure-tools/codemodel';
+import { isNullOrUndefined } from '../../utils/helper';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 
 export interface MethodParameterModel {
@@ -55,15 +57,15 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get MethodParameter_Name(): string {
-        return this.Parameter_Name(this.MethodParameter);
+        return this.parameterHandler.Parameter_Name(this.MethodParameter);
     }
 
     public get MethodParameter_NameAz(): string {
-        return this.Parameter_NameAz(this.MethodParameter);
+        return this.parameterHandler.Parameter_NameAz(this.MethodParameter);
     }
 
     public get MethodParameter_CliKey(): string {
-        return this.Parameter_CliKey(this.MethodParameter);
+        return this.parameterHandler.Parameter_CliKey(this.MethodParameter);
     }
 
     public get MethodParameter_MaxApi(): string {
@@ -94,22 +96,22 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get MethodParameter_NamePython(): string {
-        return this.Parameter_NamePython(this.MethodParameter);
+        return this.parameterHandler.Parameter_NamePython(this.MethodParameter);
     }
 
     public get MethodParameter_MapsTo(): string {
-        return this.Parameter_MapsTo(this.MethodParameter);
+        return this.parameterHandler.Parameter_MapsTo(this.MethodParameter);
     }
     public get MethodParameter_Description(): string {
-        return this.Parameter_Description(this.MethodParameter);
+        return this.parameterHandler.Parameter_Description(this.MethodParameter);
     }
 
     public get MethodParameter_Type(): string {
-        return this.Parameter_Type(this.MethodParameter);
+        return this.parameterHandler.Parameter_Type(this.MethodParameter);
     }
 
     public get MethodParameter_IsList(): boolean {
-        return this.Parameter_IsList(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsList(this.MethodParameter);
     }
 
     public get MethodParameter_ArgGroup(): string {
@@ -118,30 +120,30 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
 
     public get MethodParameter_Mode() {
         if (isNullOrUndefined(this.MethodParameter?.language?.['cli']?.extensionMode)) {
-            return this.Method_Mode;
+            return this.methodHandler.Method_Mode;
         }
         return this.MethodParameter?.language?.['cli']?.extensionMode;
     }
 
     public get MethodParameter_IsPositional(): boolean {
-        return this.Parameter_IsPositional(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsPositional(this.MethodParameter);
     }
 
     public get MethodParameter_IsShorthandSyntax(): boolean {
-        return this.Parameter_IsShorthandSyntax(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsShorthandSyntax(this.MethodParameter);
     }
 
     public get MethodParameter_IsListOfSimple(): boolean {
-        return this.Parameter_IsListOfSimple(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsListOfSimple(this.MethodParameter);
     }
 
     public get MethodParameter_IsPolyOfSimple(): boolean {
-        return this.Parameter_IsPolyOfSimple(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsPolyOfSimple(this.MethodParameter);
     }
 
     public get MethodParameter_IsDiscriminator(): boolean {
         return (
-            this.Method_GetOriginalOperation &&
+            this.methodHandler.Method_GetOriginalOperation &&
             this.MethodParameter['targetProperty'] &&
             this.MethodParameter['targetProperty']['isDiscriminator']
         );
@@ -193,26 +195,33 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
                 if (this.SelectFirstMethodParameter()) {
                     do {
                         if (
-                            this.Parameter_Type(this.SubMethodParameter) !== SchemaType.Constant &&
+                            this.parameterHandler.Parameter_Type(this.SubMethodParameter) !==
+                                SchemaType.Constant &&
                             this.SubMethodParameter['readOnly'] !== true
                         ) {
                             shouldHidden = false;
                             break;
                         } else if (
-                            this.Parameter_Type(this.SubMethodParameter) === SchemaType.Constant
+                            this.parameterHandler.Parameter_Type(this.SubMethodParameter) ===
+                            SchemaType.Constant
                         ) {
                             defaultValue =
                                 defaultValue +
                                 '"' +
-                                this.Parameter_NameAz(this.SubMethodParameter) +
+                                this.parameterHandler.Parameter_NameAz(this.SubMethodParameter) +
                                 '": "' +
-                                this.Parameter_DefaultValue(this.SubMethodParameter) +
+                                this.parameterHandler.Parameter_DefaultValue(
+                                    this.SubMethodParameter,
+                                ) +
                                 '"';
                             hasDefault = true;
                         }
                     } while (this.SelectNextMethodParameter());
                 }
-                if (shouldHidden === true && (hasDefault || this.Schema_IsRequired(parameter))) {
+                if (
+                    shouldHidden === true &&
+                    (hasDefault || this.schemaHandler.Schema_IsRequired(parameter))
+                ) {
                     defaultValue = defaultValue + '}';
                 } else {
                     defaultValue = undefined;
@@ -223,7 +232,7 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
             // Handle simple parameter
             if (parameter?.language?.['cli']?.removed || parameter?.language?.['cli']?.hidden) {
                 if (
-                    this.Parameter_DefaultValue(parameter) === undefined &&
+                    this.parameterHandler.Parameter_DefaultValue(parameter) === undefined &&
                     parameter.required === true
                 ) {
                     parameter.language['az'].hidden = false;
@@ -231,9 +240,9 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
                         Channel: Channel.Warning,
                         Text:
                             'OperationGroup ' +
-                            this.CommandGroup.language['az'].name +
+                            this.commandGroupHandler.CommandGroup.language['az'].name +
                             ' operation ' +
-                            this.Method_Name +
+                            this.methodHandler.Method_Name +
                             ' parameter ' +
                             parameter.language['az'].name +
                             ' should not be hidden while it is required without default value',
@@ -259,23 +268,23 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get MethodParameter_DefaultValue(): string | undefined {
-        return this.Parameter_DefaultValue(this.MethodParameter);
+        return this.parameterHandler.Parameter_DefaultValue(this.MethodParameter);
     }
 
     public get MethodParameter_DefaultConfigKey(): string | undefined {
-        return this.Parameter_DefaultConfigKey(this.MethodParameter);
+        return this.parameterHandler.Parameter_DefaultConfigKey(this.MethodParameter);
     }
 
     public get MethodParameter_IsRequired(): boolean {
-        return this.Parameter_IsRequired(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsRequired(this.MethodParameter);
     }
 
     public get MethodParameter_IsFlattened(): boolean {
-        return this.Parameter_IsFlattened(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsFlattened(this.MethodParameter);
     }
 
     public get MethodParameter_IsCliFlattened(): boolean {
-        return this.Parameter_IsCliFlattened(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsCliFlattened(this.MethodParameter);
     }
 
     public get MethodParameter_RequiredByMethod(): boolean {
@@ -283,7 +292,7 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get MethodParameter_IsSimpleArray(): boolean {
-        return this.Parameter_IsSimpleArray(this.MethodParameter);
+        return this.parameterHandler.Parameter_IsSimpleArray(this.MethodParameter);
     }
 
     public get MethodParameter_PositionalKeys(): string[] {
@@ -296,6 +305,9 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
             }
             this.ExitSubMethodParameters();
         }
-        return this.Parameter_PositionalKeys(this.MethodParameter, subMethodParams);
+        return this.parameterHandler.Parameter_PositionalKeys(
+            this.methodParameterHandler.MethodParameter,
+            subMethodParams,
+        );
     }
 }
