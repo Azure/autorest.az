@@ -6,7 +6,7 @@
 import * as fs from 'fs';
 import { EOL } from 'os';
 import { getLatestPyPiVersion } from '../../../utils/helper';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliMainRequirement extends TemplateBase {

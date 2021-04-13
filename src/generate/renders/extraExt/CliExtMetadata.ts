@@ -6,7 +6,7 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../../../utils/helper';
 import { AzextMetadata, CodeGenConstants, PathConstants } from '../../../utils/models';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliTopMetadata extends TemplateBase {

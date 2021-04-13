@@ -8,7 +8,7 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { isNullOrUndefined } from '../../../utils/helper';
 import { PathConstants } from '../../../utils/models';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 
 export class CliMainDocSourceJsonMap extends TemplateBase {

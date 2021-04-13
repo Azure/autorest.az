@@ -9,7 +9,7 @@ import { AzCoreIncrementalGenerator } from './CoreIncre';
 import { AzExtensionFullGenerator } from './ExtensionFull';
 import { AzExtensionIncrementalGenerator } from './ExtensionIncre';
 import { GeneratorBase } from './Base';
-import { CodeModelCliImpl } from '../CodeModelAzImpl';
+import { CodeModelCliImpl } from '../codemodel/CodeModelAzImpl';
 
 export class AzGeneratorFactory {
     static createAzGenerator(model: CodeModelCliImpl): GeneratorBase {

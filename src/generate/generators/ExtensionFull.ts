@@ -6,7 +6,7 @@ import * as path from 'path';
 import { PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
 import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
 import { CliTopAction } from '../renders/CliTopAction';
 import { CliTopCustom } from '../renders/CliTopCustom';

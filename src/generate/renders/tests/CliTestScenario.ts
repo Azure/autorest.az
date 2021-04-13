@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { CodeModelAz, CommandExample } from '../../codemodel/CodeModelAz';
 import { CliTestStep } from './CliTestStep';
 import { ToMultiLine, Capitalize } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { CliTestStep } from './CliTestStep';
 import { deepCopy, isGeneratedExampleId, isNullOrUndefined } from '../../../utils/helper';
 import { TemplateBase } from '../TemplateBase';

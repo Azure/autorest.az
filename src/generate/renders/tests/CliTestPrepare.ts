@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 import { PathConstants } from '../../../utils/models';
 import { GenPreparerName, preparerInfos } from './ScenarioTool';

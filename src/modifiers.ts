@@ -35,6 +35,8 @@ interface WhereCommandDirective {
             description: string;
         };
     };
+    features?: any;
+    imports?: any;
 }
 
 function getFilterError(whereObject: any, prohibitedFilters: Array<string>): string {
@@ -67,6 +69,8 @@ function isWhereCommandDirective(it: any): it is WhereCommandDirective {
     const directive = it;
     const where = directive.where;
     const set = directive.set;
+    const features = directive.features;
+    const imports = directive.imports;
     if (where && (where.command || where['parameter-name'] || where.group)) {
         const prohibitedFilters = ['model-name', 'property-name', 'enum-name', 'enum-value-name'];
         let error = getFilterError(where, prohibitedFilters);
@@ -133,6 +137,8 @@ export class Modifiers {
             directive.set !== undefined ? directive.set['parameter-name'] : undefined;
         const paramDescriptionReplacer =
             directive.set !== undefined ? directive.set['parameter-description'] : undefined;
+        const features = directive.features;
+        const imports = directive.imports;
         if (
             !isNullOrUndefined(parameter.language['az'].name) &&
             !isNullOrUndefined(parameterRegex) &&
@@ -146,6 +152,12 @@ export class Modifiers {
             parameter.language['az'].mapsto = parameter.language['az'].name.replace(/-/g, '_');
             parameter.language['az'].description =
                 paramDescriptionReplacer || parameter.language['az'].description;
+            if (!isNullOrUndefined(features)) {
+                parameter.language['az']['features'] = features;
+            }
+            if (!isNullOrUndefined(imports)) {
+                parameter.language['az']['imports'] = imports;
+            }
         }
     }
 
@@ -154,6 +166,8 @@ export class Modifiers {
         const groupReplacer = directive.set !== undefined ? directive.set.group : undefined;
         const groupDescriptionReplacer =
             directive.set !== undefined ? directive.set['group-description'] : undefined;
+        const features = directive.features;
+        const imports = directive.imports;
         if (
             !isNullOrUndefined(operationGroup.language['az']['command']) &&
             !isNullOrUndefined(groupRegex) &&
@@ -177,6 +191,12 @@ export class Modifiers {
             operationGroup.language['az'].description =
                 groupDescriptionReplacer || operationGroup.language['az'].description;
             this.groupChanged = true;
+            if (!isNullOrUndefined(features)) {
+                operationGroup.language['az']['features'] = features;
+            }
+            if (!isNullOrUndefined(imports)) {
+                operationGroup.language['az']['imports'] = imports;
+            }
         }
     }
 
@@ -193,6 +213,8 @@ export class Modifiers {
         const groupReplacer = directive.set !== undefined ? directive.set.group : undefined;
         const commandDescriptionReplacer =
             directive.set !== undefined ? directive.set['command-description'] : undefined;
+        const features = directive.features;
+        const imports = directive.imports;
         if (this.groupChanged) {
             operation.language['az'].command =
                 operationGroup.language['az'].command + ' ' + operation.language['az'].name;
@@ -269,6 +291,12 @@ export class Modifiers {
                 Channel: Channel.Warning,
                 Text: ' newAzName:' + newAzName,
             });
+            if (!isNullOrUndefined(features)) {
+                operation.language['az']['features'] = features;
+            }
+            if (!isNullOrUndefined(imports)) {
+                operation.language['az']['imports'] = imports;
+            }
         }
         if (
             !isNullOrUndefined(operation.language['az'].subCommandGroup) &&
@@ -302,6 +330,12 @@ export class Modifiers {
                         ? operation.language['az'].name.replace(tmpNameRegex, tmpNameReplacer)
                         : tmpNameReplacer
                     : operation.language['az'].name;
+                if (!isNullOrUndefined(features)) {
+                    operation.language['az']['features'] = features;
+                }
+                if (!isNullOrUndefined(imports)) {
+                    operation.language['az']['imports'] = imports;
+                }
             } else {
                 this.session.message({
                     Channel: Channel.Warning,

@@ -14,7 +14,7 @@ import { AzConfiguration, CodeGenConstants, ExtensionMode } from '../../src/util
 import { CliCommands } from '../../src/generate/renders/generated/CliCommands';
 import { AzLinter } from '../../src/azlinter';
 import { Entry } from '../../src/entry';
-import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
+import { CodeModelCliImpl } from '../../src/generate/codemodel/CodeModelAzImpl';
 import { createTestSession } from '../utils/test-helper';
 
 sourceMapSupport.install();

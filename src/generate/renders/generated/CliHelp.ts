@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { SchemaType, Parameter } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
 import { ToMultiLine, isNullOrUndefined, ToSentence } from '../../../utils/helper';

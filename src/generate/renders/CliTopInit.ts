@@ -12,7 +12,7 @@ import {
     isNullOrUndefined,
 } from '../../utils/helper';
 import { GenerationMode, PathConstants } from '../../utils/models';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
 

@@ -12,7 +12,7 @@ import {
     isNullOrUndefined,
 } from '../../../utils/helper';
 import { CodeGenConstants } from '../../../utils/models';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { HeaderGenerator } from '../Header';
 
 let allParams = [];

@@ -5,7 +5,7 @@
 
 import { Parameter, SchemaType } from '@azure-tools/codemodel';
 import { ToPythonString, ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import * as path from 'path';

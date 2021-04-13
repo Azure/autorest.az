@@ -11,7 +11,7 @@ import { CodeModel, SchemaType } from '@azure-tools/codemodel';
 import * as sourceMapSupport from 'source-map-support';
 import { CodeModelTypes, DataGraph, RenderInput, SortOrder } from '../../src/utils/models';
 import { Entry } from '../../src/entry';
-import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
+import { CodeModelCliImpl } from '../../src/generate/codemodel/CodeModelAzImpl';
 import { isNullOrUndefined } from '../../src/utils/helper';
 import { createTestSession } from '../utils/test-helper';
 

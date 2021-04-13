@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { TemplateBase } from '../renders/TemplateBase';
 import { inplaceGen } from '../../utils/inplace';
 import { AzConfiguration, CodeGenConstants, TemplateRender } from '../../utils/models';

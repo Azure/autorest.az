@@ -5,7 +5,7 @@
 import { EOL } from 'os';
 import { getLatestPyPiVersion, isNullOrUndefined } from '../../../utils/helper';
 import { CodeGenConstants, GenerationMode, PathConstants } from '../../../utils/models';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import compareVersions = require('compare-versions');

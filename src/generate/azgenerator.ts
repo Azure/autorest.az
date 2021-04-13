@@ -4,7 +4,7 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../utils/models';
 import { AzGeneratorFactory } from './generators/Factory';
-import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { CodeModelCliImpl } from './codemodel/CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
 
 export async function processRequest(host: Host) {
