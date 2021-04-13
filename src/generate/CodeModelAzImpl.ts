@@ -3052,7 +3052,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             let rawValue = deepCopy(netValue);
             if (methodParam.value['isPolyOfSimple']) {
                 const keyToMatch =
-                    methodParam.value.schema.discriminator?.property?.language?.default?.name;
+                    methodParam.value.schema.discriminator?.property?.language?.cli?.cliKey;
                 if (keyToMatch) {
                     for (const methodParam of methodParamList) {
                         const polySubParamObj = methodParam.value;
