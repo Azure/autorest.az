@@ -20,7 +20,8 @@ export interface ConfigModel {
     GetPythonPackageName(): string;
 }
 
-export class ConfigModelImpl extends CodeModelCliImpl implements ConfigModel {
+export class ConfigModelImpl implements ConfigModel {
+    constructor(public baseHandler: CodeModelCliImpl) {}
     public get CliGenerationMode(): GenerationMode {
         return AzConfiguration.getValue(CodeGenConstants.generationMode);
     }
@@ -70,27 +71,27 @@ export class ConfigModelImpl extends CodeModelCliImpl implements ConfigModel {
 
     public get ConfiguredScenario(): boolean {
         // judge test-scenario whether have value
-        return this._configuredScenario;
+        return this.baseHandler._configuredScenario;
     }
 
     public get ResourceType(): string | undefined {
-        return this.formResourceType(this.options?.['resource-type']);
+        return this.baseHandler.formResourceType(this.baseHandler.options?.['resource-type']);
     }
 
     public get GenChecks(): boolean {
-        const disableChecks = this.options?.['disable-checks'];
+        const disableChecks = this.baseHandler.options?.['disable-checks'];
         if (disableChecks) return false;
         return true;
     }
 
     public get GetTestUniqueResource(): boolean {
-        const ret = this.options?.[CodeGenConstants.testUniqueResource];
+        const ret = this.baseHandler.options?.[CodeGenConstants.testUniqueResource];
         if (ret) return true;
         return false;
     }
 
     public get GenMinTest(): boolean {
-        const genMinTest = this.options?.['gen-min-test'];
+        const genMinTest = this.baseHandler.options?.['gen-min-test'];
         if (genMinTest) return true;
         return false;
     }
@@ -100,6 +101,6 @@ export class ConfigModelImpl extends CodeModelCliImpl implements ConfigModel {
     }
 
     public GetPythonPackageName(): string {
-        return this.options['package-name'];
+        return this.baseHandler.options['package-name'];
     }
 }

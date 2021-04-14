@@ -16,13 +16,14 @@ export interface ExtensionModel {
     Extension_Mode: string;
 }
 
-export class ExtensionModelImpl extends CodeModelCliImpl implements ExtensionModel {
+export class ExtensionModelImpl implements ExtensionModel {
+    constructor(public baseHandler: CodeModelCliImpl) {}
     public get Extension_Name(): string {
-        return this.extensionName;
+        return this.baseHandler.extensionName;
     }
 
     public get Extension_Parent(): string {
-        return this.parentExtension;
+        return this.baseHandler.parentExtension;
     }
 
     public get Extension_Description(): string {
@@ -37,7 +38,7 @@ export class ExtensionModelImpl extends CodeModelCliImpl implements ExtensionMod
 
     public get Extension_Mode(): string {
         let extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode);
-        this.codeModel.operationGroups.forEach((operationGroup) => {
+        this.baseHandler.codeModel.operationGroups.forEach((operationGroup) => {
             if (
                 operationGroup.language['az'].command === this.Extension_Name &&
                 !isNullOrUndefined(operationGroup.language?.['cli']?.extensionMode)
@@ -53,26 +54,26 @@ export class ExtensionModelImpl extends CodeModelCliImpl implements ExtensionMod
     }
 
     public get Extension_NameClass(): string {
-        return this.codeModel.info['pascal_case_title'];
+        return this.baseHandler.codeModel.info['pascal_case_title'];
     }
 
     public get Extension_TestScenario(): any {
-        return this._testScenario;
+        return this.baseHandler._testScenario;
     }
 
     public get Extension_DefaultTestScenario(): any {
-        return this._defaultTestScenario;
+        return this.baseHandler._defaultTestScenario;
     }
 
     public get Extension_ClientSubscriptionBound(): boolean {
-        return this._clientSubscriptionBound;
+        return this.baseHandler._clientSubscriptionBound;
     }
 
     public get Extension_ClientBaseUrlBound(): boolean {
-        return this._clientBaseUrlBound;
+        return this.baseHandler._clientBaseUrlBound;
     }
 
     public get Extension_ClientAuthenticationPolicy(): string {
-        return this._clientAuthenticationPolicy;
+        return this.baseHandler._clientAuthenticationPolicy;
     }
 }

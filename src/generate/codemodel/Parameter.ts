@@ -3,6 +3,11 @@ import { Parameter, SchemaType } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
 import { EXCLUDED_PARAMS } from '../../utils/models';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { CommandGroupModel } from './CommandGroup';
+import { ConfigModel } from './Config';
+import { MethodModel } from './Method';
+import { MethodParameterModel } from './MethodParameter';
+import { SchemaModel } from './Schema';
 
 export interface ParameterModel {
     Parameter_Type(Parameter): string;
@@ -31,37 +36,58 @@ export interface ParameterModel {
     Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean;
 }
 
-export class ParameterModelImpl extends CodeModelCliImpl implements ParameterModel {
+export class ParameterModelImpl implements ParameterModel {
+    private commandGroupHandler: CommandGroupModel;
+    private methodHandler: MethodModel;
+    private methodParameterHandler: MethodParameterModel;
+    private schemaHandler: SchemaModel;
+    private configHandler: ConfigModel;
+    constructor(public baseHandler: CodeModelCliImpl) {
+        const {
+            commandGroupHandler,
+            methodHandler,
+            methodParameterHandler,
+            schemaHandler,
+            configHandler,
+        } = baseHandler.GetHandler();
+        this.commandGroupHandler = commandGroupHandler;
+        this.methodHandler = methodHandler;
+        this.methodParameterHandler = methodParameterHandler;
+        this.schemaHandler = schemaHandler;
+        this.configHandler = configHandler;
+    }
     public Parameter_IsHidden(parameter: Parameter): boolean {
         if (!Object.prototype.hasOwnProperty.call(parameter.language['az'], 'hidden')) {
             // Handle complex
             let shouldHidden;
             let defaultValue;
             let hasDefault = false;
-            if (this.EnterSubMethodParameters(parameter)) {
+            if (this.baseHandler.EnterSubMethodParameters(parameter)) {
                 shouldHidden = true;
                 defaultValue = '{';
-                if (this.SelectFirstMethodParameter()) {
+                if (this.baseHandler.SelectFirstMethodParameter()) {
                     do {
                         if (
-                            this.Parameter_Type(this.SubMethodParameter) !== SchemaType.Constant &&
-                            this.SubMethodParameter['readOnly'] !== true
+                            this.Parameter_Type(this.baseHandler.SubMethodParameter) !==
+                                SchemaType.Constant &&
+                            this.baseHandler.SubMethodParameter['readOnly'] !== true
                         ) {
                             shouldHidden = false;
                             break;
                         } else if (
-                            this.Parameter_Type(this.SubMethodParameter) === SchemaType.Constant
+                            this.Parameter_Type(this.baseHandler.SubMethodParameter) ===
+                            SchemaType.Constant
                         ) {
                             defaultValue =
                                 defaultValue +
                                 '"' +
-                                this.Parameter_NameAz(this.SubMethodParameter) +
+                                this.Parameter_NameAz(this.baseHandler.SubMethodParameter) +
                                 '": "' +
-                                this.Parameter_DefaultValue(this.SubMethodParameter) +
+                                this.Parameter_DefaultValue(this.baseHandler.SubMethodParameter) +
                                 '"';
                             hasDefault = true;
                         }
-                    } while (this.SelectNextMethodParameter());
+                    } while (this.baseHandler.SelectNextMethodParameter());
                 }
                 if (
                     shouldHidden === true &&
@@ -71,7 +97,7 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
                 } else {
                     defaultValue = undefined;
                 }
-                this.ExitSubMethodParameters();
+                this.baseHandler.ExitSubMethodParameters();
             }
 
             // Handle simple parameter
@@ -81,7 +107,7 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
                     parameter.required === true
                 ) {
                     parameter.language['az'].hidden = false;
-                    this.session.message({
+                    this.baseHandler.session.message({
                         Channel: Channel.Warning,
                         Text:
                             'OperationGroup ' +
@@ -151,7 +177,7 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
     }
 
     public Parameter_InGlobal(parameter: Parameter): boolean {
-        if (this.codeModel.globalParameters.indexOf(parameter) > -1) {
+        if (this.baseHandler.codeModel.globalParameters.indexOf(parameter) > -1) {
             return true;
         }
         return false;
@@ -293,7 +319,7 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
             return false;
         }
 
-        if (this.isComplexSchema(this.Parameter_Type(param), param)) {
+        if (this.baseHandler.isComplexSchema(this.Parameter_Type(param), param)) {
             return true;
         }
         return false;
@@ -360,7 +386,7 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
                         requiredKeys.join(', ') +
                         ' \n';
                 }
-                this.session.message({ Channel: Channel.Fatal, Text: text });
+                this.baseHandler.session.message({ Channel: Channel.Fatal, Text: text });
                 return null;
             }
         }
@@ -403,7 +429,7 @@ export class ParameterModelImpl extends CodeModelCliImpl implements ParameterMod
     public Parameter_IsSimpleArray(param: Parameter): boolean {
         if (this.Parameter_Type(param) === SchemaType.Array) {
             const elementType = param.schema['elementType'].type;
-            if (!this.isComplexSchema(elementType, param.schema)) {
+            if (!this.baseHandler.isComplexSchema(elementType, param.schema)) {
                 return true;
             }
         }

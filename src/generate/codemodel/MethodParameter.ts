@@ -2,6 +2,10 @@ import { Channel } from '@autorest/extension-base';
 import { Parameter, ParameterLocation, SchemaType } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { CommandGroupModel } from './CommandGroup';
+import { MethodModel } from './Method';
+import { ParameterModel } from './Parameter';
+import { SchemaModel } from './Schema';
 
 export interface MethodParameterModel {
     MethodParameter_Name: string;
@@ -43,15 +47,25 @@ export interface MethodParameterModel {
     MethodParameter_PositionalKeys: string[];
 }
 
-export class MethodParameterModelImpl extends CodeModelCliImpl implements MethodParameterModel {
+export class MethodParameterModelImpl implements MethodParameterModel {
+    private commandGroupHandler: CommandGroupModel;
+    private methodHandler: MethodModel;
+    private parameterHandler: ParameterModel;
+    private schemaHandler: SchemaModel;
+    constructor(public baseHandler: CodeModelCliImpl) {
+        const { commandGroupHandler, methodHandler, parameterHandler } = baseHandler.GetHandler();
+        this.commandGroupHandler = commandGroupHandler;
+        this.methodHandler = methodHandler;
+        this.parameterHandler = parameterHandler;
+    }
     public get MethodParameter(): Parameter {
-        return this.MethodParameters[this.currentParameterIndex];
+        return this.baseHandler.MethodParameters[this.baseHandler.currentParameterIndex];
     }
 
     public get MethodParameter_ActionName() {
         const schema = this.MethodParameter.schema;
-        if (this.paramActionNameReference.has(schema)) {
-            return this.paramActionNameReference.get(schema);
+        if (this.baseHandler.paramActionNameReference.has(schema)) {
+            return this.baseHandler.paramActionNameReference.get(schema);
         }
         return undefined;
     }
@@ -77,7 +91,9 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get MethodParameter_ResourceType(): string | undefined {
-        return this.formResourceType(this.MethodParameter.language['cli']?.['resource-type']);
+        return this.baseHandler.formResourceType(
+            this.MethodParameter.language['cli']?.['resource-type'],
+        );
     }
 
     public get MethodParameter_IdPart(): string {
@@ -85,10 +101,10 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get MethodParameter_IsArray(): boolean {
-        if (!isNullOrUndefined(this.submethodparameters)) {
+        if (!isNullOrUndefined(this.baseHandler.submethodparameters)) {
             return (
-                this.submethodparameters[this.currentSubOptionIndex].schema?.type ===
-                SchemaType.Array
+                this.baseHandler.submethodparameters[this.baseHandler.currentSubOptionIndex].schema
+                    ?.type === SchemaType.Array
             );
         } else {
             return this.MethodParameter.schema?.type === SchemaType.Array;
@@ -150,8 +166,8 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
     }
 
     public get SubMethodParameter(): Parameter {
-        if (!isNullOrUndefined(this.submethodparameters)) {
-            return this.submethodparameters[this.currentSubOptionIndex];
+        if (!isNullOrUndefined(this.baseHandler.submethodparameters)) {
+            return this.baseHandler.submethodparameters[this.baseHandler.currentSubOptionIndex];
         }
         return null;
     }
@@ -189,10 +205,10 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
             let shouldHidden;
             let defaultValue;
             let hasDefault = false;
-            if (this.EnterSubMethodParameters(parameter)) {
+            if (this.baseHandler.EnterSubMethodParameters(parameter)) {
                 shouldHidden = true;
                 defaultValue = '{';
-                if (this.SelectFirstMethodParameter()) {
+                if (this.baseHandler.SelectFirstMethodParameter()) {
                     do {
                         if (
                             this.parameterHandler.Parameter_Type(this.SubMethodParameter) !==
@@ -216,7 +232,7 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
                                 '"';
                             hasDefault = true;
                         }
-                    } while (this.SelectNextMethodParameter());
+                    } while (this.baseHandler.SelectNextMethodParameter());
                 }
                 if (
                     shouldHidden === true &&
@@ -226,7 +242,7 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
                 } else {
                     defaultValue = undefined;
                 }
-                this.ExitSubMethodParameters();
+                this.baseHandler.ExitSubMethodParameters();
             }
 
             // Handle simple parameter
@@ -236,7 +252,7 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
                     parameter.required === true
                 ) {
                     parameter.language['az'].hidden = false;
-                    this.session.message({
+                    this.baseHandler.session.message({
                         Channel: Channel.Warning,
                         Text:
                             'OperationGroup ' +
@@ -297,16 +313,16 @@ export class MethodParameterModelImpl extends CodeModelCliImpl implements Method
 
     public get MethodParameter_PositionalKeys(): string[] {
         const subMethodParams: Parameter[] = [];
-        if (this.EnterSubMethodParameters()) {
-            if (this.SelectFirstMethodParameter(true)) {
+        if (this.baseHandler.EnterSubMethodParameters()) {
+            if (this.baseHandler.SelectFirstMethodParameter(true)) {
                 do {
                     subMethodParams.push(this.SubMethodParameter);
-                } while (this.SelectNextMethodParameter(true));
+                } while (this.baseHandler.SelectNextMethodParameter(true));
             }
-            this.ExitSubMethodParameters();
+            this.baseHandler.ExitSubMethodParameters();
         }
         return this.parameterHandler.Parameter_PositionalKeys(
-            this.methodParameterHandler.MethodParameter,
+            this.baseHandler.methodParameterHandler.MethodParameter,
             subMethodParams,
         );
     }

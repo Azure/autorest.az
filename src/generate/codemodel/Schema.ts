@@ -2,6 +2,7 @@ import { SchemaType, Schema, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { MethodParameterModel } from './MethodParameter';
 
 export interface SchemaModel {
     Schema_MapsTo(Schema);
@@ -14,7 +15,12 @@ export interface SchemaModel {
     Schema_IsList(schema: Schema): boolean;
 }
 
-export class SchemaModelImpl extends CodeModelCliImpl implements SchemaModel {
+export class SchemaModelImpl implements SchemaModel {
+    private methodParameterHandler: MethodParameterModel;
+    constructor(public baseHandler: CodeModelCliImpl) {
+        const { methodParameterHandler } = baseHandler.GetHandler();
+        this.methodParameterHandler = methodParameterHandler;
+    }
     public Schema_IsListOfSimple(
         schema: Schema = this.methodParameterHandler.MethodParameter.schema,
     ): boolean {
@@ -46,22 +52,32 @@ export class SchemaModelImpl extends CodeModelCliImpl implements SchemaModel {
                     ) {
                         return false;
                     } else if (p['schema'].type === SchemaType.Array) {
-                        if (this.isComplexSchema(p['schema']?.elementType?.type, p['schema'])) {
+                        if (
+                            this.baseHandler.isComplexSchema(
+                                p['schema']?.elementType?.type,
+                                p['schema'],
+                            )
+                        ) {
                             return false;
                         }
                         for (const mp of values(p['schema']?.elementType?.properties)) {
-                            if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
+                            if (this.baseHandler.isComplexSchema(mp['schema'].type, mp['schema'])) {
                                 return false;
                             }
                         }
                         for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                             for (const pp of values(parent['properties'])) {
-                                if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
+                                if (
+                                    this.baseHandler.isComplexSchema(
+                                        pp['schema'].type,
+                                        pp['schema'],
+                                    )
+                                ) {
                                     return false;
                                 }
                             }
                         }
-                    } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
+                    } else if (this.baseHandler.isComplexSchema(p['schema'].type, p['schema'])) {
                         return false;
                     }
                 }
@@ -86,18 +102,18 @@ export class SchemaModelImpl extends CodeModelCliImpl implements SchemaModel {
                     return false;
                 } else if (p['schema'].type === SchemaType.Array) {
                     for (const mp of values(p['schema']?.elementType?.properties)) {
-                        if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
+                        if (this.baseHandler.isComplexSchema(mp['schema'].type, mp['schema'])) {
                             return false;
                         }
                     }
                     for (const parent of values(p['schema']?.elementType?.parents?.all)) {
                         for (const pp of values(parent['properties'])) {
-                            if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
+                            if (this.baseHandler.isComplexSchema(pp['schema'].type, pp['schema'])) {
                                 return false;
                             }
                         }
                     }
-                } else if (this.isComplexSchema(p['schema'].type, p['schema'])) {
+                } else if (this.baseHandler.isComplexSchema(p['schema'].type, p['schema'])) {
                     // objects.objects
                     return false;
                 }
@@ -119,7 +135,7 @@ export class SchemaModelImpl extends CodeModelCliImpl implements SchemaModel {
                     if (mp['readOnly']) {
                         continue;
                     }
-                    if (this.isComplexSchema(mp['schema'].type, mp['schema'])) {
+                    if (this.baseHandler.isComplexSchema(mp['schema'].type, mp['schema'])) {
                         return false;
                     }
                 }
@@ -128,12 +144,12 @@ export class SchemaModelImpl extends CodeModelCliImpl implements SchemaModel {
                         if (pp['readOnly']) {
                             continue;
                         }
-                        if (this.isComplexSchema(pp['schema'].type, pp['schema'])) {
+                        if (this.baseHandler.isComplexSchema(pp['schema'].type, pp['schema'])) {
                             return false;
                         }
                     }
                 }
-            } else if (this.isComplexSchema(p.type, p)) {
+            } else if (this.baseHandler.isComplexSchema(p.type, p)) {
                 // dicts.objects or dicts.dictionaries
                 return false;
             }
@@ -150,7 +166,7 @@ export class SchemaModelImpl extends CodeModelCliImpl implements SchemaModel {
         if (schema.language['cli'].json === true) {
             return true;
         }
-        if (this.isComplexSchema(this.Schema_Type(schema), schema)) {
+        if (this.baseHandler.isComplexSchema(this.Schema_Type(schema), schema)) {
             return true;
         }
         return false;

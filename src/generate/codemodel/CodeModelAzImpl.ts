@@ -79,33 +79,33 @@ class ActionParam {
 }
 
 export class CodeModelCliImpl implements CodeModelAz {
-    protected codeModel: CodeModel;
-    protected options: any;
-    protected extensionName: string;
-    protected parentExtension: string;
-    protected currentOperationGroupIndex: number;
-    protected currentSubOperationGroupIndex: number;
-    protected currentOperationIndex: number;
-    protected currentParameterIndex: number;
-    protected currentExampleIndex: number;
-    protected currentAzExampleIndex: number;
-    protected preMethodIndex: number;
-    protected currentMethodIndex: number;
+    codeModel: CodeModel;
+    options: any;
+    extensionName: string;
+    parentExtension: string;
+    currentOperationGroupIndex: number;
+    currentSubOperationGroupIndex: number;
+    currentOperationIndex: number;
+    currentParameterIndex: number;
+    currentExampleIndex: number;
+    currentAzExampleIndex: number;
+    preMethodIndex: number;
+    currentMethodIndex: number;
     protected resourcePool: ResourcePool;
 
-    protected suboptions: Property[];
+    suboptions: Property[];
     protected subOperationGroups: Operation[];
-    protected submethodparameters: Parameter[];
+    submethodparameters: Parameter[];
     protected substack: Array<[Parameter[], number]>;
-    protected currentSubOptionIndex: number;
-    protected paramActionNameReference: Map<Schema, string>;
+    currentSubOptionIndex: number;
+    paramActionNameReference: Map<Schema, string>;
     protected allActions: Map<Parameter, string>;
-    protected _testScenario: any;
-    protected _defaultTestScenario: any[];
-    protected _configuredScenario: boolean;
-    protected _clientSubscriptionBound: boolean;
-    protected _clientBaseUrlBound: boolean;
-    protected _clientAuthenticationPolicy: string;
+    _testScenario: any;
+    _defaultTestScenario: any[];
+    _configuredScenario: boolean;
+    _clientSubscriptionBound: boolean;
+    _clientBaseUrlBound: boolean;
+    _clientAuthenticationPolicy: string;
     protected _generationMode: GenerationMode = GenerationMode.Full;
     protected _outputPath: string;
     protected _parentOptions: any;
@@ -148,7 +148,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         // this.sortOperationByAzCommand();
     }
 
-    public constructor(protected session: Session<CodeModel>) {
+    public constructor(public session: Session<CodeModel>) {
         this.init();
         this.codeModel = session.model;
         this.resourcePool = new ResourcePool();
@@ -161,15 +161,15 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     private initHandler(session: Session<CodeModel>) {
-        this.configHandler = new ConfigModelImpl(session);
-        this.extensionHandler = new ExtensionModelImpl(session);
-        this.commandGroupHandler = new CommandGroupModelImpl(session);
-        this.commandHandler = new CommandModelImpl(session);
-        this.methodHandler = new MethodModelImpl(session);
-        this.methodParameterHandler = new MethodParameterModelImpl(session);
-        this.parameterHandler = new ParameterModelImpl(session);
-        this.schemaHandler = new SchemaModelImpl(session);
-        this.azExampleHandler = new AzExampleModelImpl(session);
+        this.configHandler = new ConfigModelImpl(this);
+        this.extensionHandler = new ExtensionModelImpl(this);
+        this.commandGroupHandler = new CommandGroupModelImpl(this);
+        this.commandHandler = new CommandModelImpl(this);
+        this.methodHandler = new MethodModelImpl(this);
+        this.methodParameterHandler = new MethodParameterModelImpl(this);
+        this.parameterHandler = new ParameterModelImpl(this);
+        this.schemaHandler = new SchemaModelImpl(this);
+        this.azExampleHandler = new AzExampleModelImpl(this);
     }
 
     private sortOperationByAzCommand() {

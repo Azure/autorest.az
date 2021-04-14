@@ -2,6 +2,7 @@ import { isGeneratedExampleId, ToMultiLine } from '../../utils/helper';
 import { CodeGenConstants } from '../../utils/models';
 import { CommandExample } from './CodeModelAz';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { MethodModel } from './Method';
 
 export interface AzExampleModel {
     AzExample: CommandExample;
@@ -9,15 +10,20 @@ export interface AzExampleModel {
     AzExample_CommandStringItems: string[];
 }
 
-export class AzExampleModelImpl extends CodeModelCliImpl implements AzExampleModel {
+export class AzExampleModelImpl implements AzExampleModel {
+    private methodHandler: MethodModel;
+    constructor(public baseHandler: CodeModelCliImpl) {
+        const { methodHandler } = baseHandler.GetHandler();
+        this.methodHandler = methodHandler;
+    }
     public get AzExample(): CommandExample {
         if (
-            this.currentAzExampleIndex < 0 ||
-            this.currentAzExampleIndex >= this.methodHandler.Method_AzExamples.length
+            this.baseHandler.currentAzExampleIndex < 0 ||
+            this.baseHandler.currentAzExampleIndex >= this.methodHandler.Method_AzExamples.length
         ) {
             return undefined;
         }
-        return this.methodHandler.Method_AzExamples[this.currentAzExampleIndex];
+        return this.methodHandler.Method_AzExamples[this.baseHandler.currentAzExampleIndex];
     }
 
     public get AzExample_CommandString(): string {

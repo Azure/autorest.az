@@ -3,6 +3,8 @@ import { OperationGroup } from '@azure-tools/codemodel';
 import { changeCamelToDash, isNullOrUndefined } from '../../utils/helper';
 import { ExtensionMode } from '../../utils/models';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { ConfigModel } from './Config';
+import { ExtensionModel } from './Extension';
 
 export interface CommandGroupModel {
     CommandGroup: OperationGroup;
@@ -25,15 +27,25 @@ export interface CommandGroupModel {
     // CommandGroup_Imports: [string, string[]];
 }
 
-export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGroupModel {
+export class CommandGroupModelImpl implements CommandGroupModel {
+    private extensionHandler: ExtensionModel;
+    private configHandler: ConfigModel;
+    constructor(public baseHandler: CodeModelCliImpl) {
+        const { extensionHandler, configHandler } = baseHandler.GetHandler();
+        this.extensionHandler = extensionHandler;
+        this.configHandler = configHandler;
+    }
     public get CommandGroup(): OperationGroup {
         if (
-            this.currentOperationGroupIndex < 0 ||
-            this.currentOperationGroupIndex >= this.codeModel.operationGroups.length
+            this.baseHandler.currentOperationGroupIndex < 0 ||
+            this.baseHandler.currentOperationGroupIndex >=
+                this.baseHandler.codeModel.operationGroups.length
         ) {
             return undefined;
         }
-        return this.codeModel.operationGroups[this.currentOperationGroupIndex];
+        return this.baseHandler.codeModel.operationGroups[
+            this.baseHandler.currentOperationGroupIndex
+        ];
     }
 
     public get CommandGroup_Name(): string {
@@ -69,7 +81,7 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
     }
 
     public get CommandGroup_HasCommand(): boolean {
-        return this.SelectFirstCommand();
+        return this.baseHandler.SelectFirstCommand();
     }
 
     public get CommandGroup_Referenced(): boolean {
@@ -90,7 +102,9 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
     }
 
     public get CommandGroup_ResourceType(): string | undefined {
-        return this.formResourceType(this.CommandGroup.language['cli']?.['resource-type']);
+        return this.baseHandler.formResourceType(
+            this.CommandGroup.language['cli']?.['resource-type'],
+        );
     }
 
     public get CommandGroup_CliKey(): string {
@@ -113,8 +127,8 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
     public CommandGroup_ClientFactoryName(group: OperationGroup = this.CommandGroup): string {
         const cfName: string =
             'cf_' +
-            (this.GetModuleOperationName(group) !== ''
-                ? this.GetModuleOperationName(group)
+            (this.baseHandler.GetModuleOperationName(group) !== ''
+                ? this.baseHandler.GetModuleOperationName(group)
                 : this.extensionHandler.Extension_NameUnderscored + '_cl');
         return cfName;
     }
@@ -123,9 +137,9 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
         const operationTmpl =
             this.configHandler.GetPythonNamespace() +
             '.operations._' +
-            this.GetModuleOperationNamePython() +
+            this.baseHandler.GetModuleOperationNamePython() +
             '_operations#' +
-            this.GetModuleOperationNamePythonUpper() +
+            this.baseHandler.GetModuleOperationNamePythonUpper() +
             '.{}';
         return operationTmpl;
     }
@@ -134,7 +148,7 @@ export class CommandGroupModelImpl extends CodeModelCliImpl implements CommandGr
         const customName =
             this.extensionHandler.Extension_NameUnderscored +
             '_' +
-            this.GetModuleOperationName(group);
+            this.baseHandler.GetModuleOperationName(group);
         return customName;
     }
 }

@@ -2,6 +2,8 @@ import { Operation, OperationGroup, Parameter } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CliCommandType } from '../../utils/models';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { CommandGroupModel } from './CommandGroup';
+import { ParameterModel } from './Parameter';
 
 export interface CommandModel {
     Command: Operation;
@@ -27,15 +29,27 @@ export interface CommandModel {
     // Command_Imports: [string, string[]];
 }
 
-export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
+export class CommandModelImpl implements CommandModel {
+    private commandGroupHandler: CommandGroupModel;
+    private parameterHandler: ParameterModel;
+
+    constructor(public baseModel: CodeModelCliImpl) {
+        const { commandGroupHandler, parameterHandler } = baseModel.GetHandler();
+        this.commandGroupHandler = commandGroupHandler;
+        this.parameterHandler = parameterHandler;
+    }
+
     public get Command(): Operation {
         if (
-            this.currentOperationIndex < 0 ||
-            this.currentOperationIndex >= this.commandGroupHandler.CommandGroup.operations.length
+            this.baseModel.currentOperationIndex < 0 ||
+            this.baseModel.currentOperationIndex >=
+                this.commandGroupHandler.CommandGroup.operations.length
         ) {
             return undefined;
         }
-        return this.commandGroupHandler.CommandGroup.operations[this.currentOperationIndex];
+        return this.commandGroupHandler.CommandGroup.operations[
+            this.baseModel.currentOperationIndex
+        ];
     }
 
     public get Command_FunctionName(): string {
@@ -90,7 +104,7 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
     public get Command_ClientFactoryName(): string {
         if (!isNullOrUndefined(this.Command_OriginalCommandGroup)) {
             return this.commandGroupHandler.CommandGroup_ClientFactoryName(
-                this.commandHandler.Command_OriginalCommandGroup,
+                this.Command_OriginalCommandGroup,
             );
         }
         return undefined;
@@ -153,6 +167,6 @@ export class CommandModelImpl extends CodeModelCliImpl implements CommandModel {
     }
 
     public get Command_ResourceType(): string | undefined {
-        return this.formResourceType(this.Command.language['cli']?.['resource-type']);
+        return this.baseModel.formResourceType(this.Command.language['cli']?.['resource-type']);
     }
 }

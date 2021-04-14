@@ -2,6 +2,8 @@ import { Operation, Parameter } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CommandExample } from './CodeModelAz';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { CommandModel } from './Command';
+import { CommandGroupModel } from './CommandGroup';
 
 export interface MethodModel {
     Method: Operation;
@@ -29,19 +31,30 @@ export interface MethodModel {
     // Method_Imports: [string, string[]];
 }
 
-export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
+export class MethodModelImpl implements MethodModel {
+    private commandGroupHandler: CommandGroupModel;
+    private commandHandler: CommandModel;
+    constructor(public baseHandler: CodeModelCliImpl) {
+        const { commandGroupHandler, commandHandler } = baseHandler.GetHandler();
+        this.commandGroupHandler = commandGroupHandler;
+        this.commandHandler = commandHandler;
+    }
+
     public get Method(): Operation {
         if (
-            this.currentMethodIndex < 0 ||
-            this.currentMethodIndex >= this.commandGroupHandler.CommandGroup.operations.length
+            this.baseHandler.currentMethodIndex < 0 ||
+            this.baseHandler.currentMethodIndex >=
+                this.commandGroupHandler.CommandGroup.operations.length
         ) {
             return undefined;
         }
-        return this.commandGroupHandler.CommandGroup.operations[this.currentMethodIndex];
+        return this.commandGroupHandler.CommandGroup.operations[
+            this.baseHandler.currentMethodIndex
+        ];
     }
 
     public get Method_IsFirst(): boolean {
-        if (this.currentMethodIndex === this.preMethodIndex) {
+        if (this.baseHandler.currentMethodIndex === this.baseHandler.preMethodIndex) {
             return true;
         } else {
             return false;
@@ -49,14 +62,14 @@ export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
     }
 
     public get Method_IsLast(): boolean {
-        if (this.currentMethodIndex === this.currentOperationIndex) {
+        if (this.baseHandler.currentMethodIndex === this.baseHandler.currentOperationIndex) {
             return true;
         } else {
-            let curIndex = this.currentMethodIndex + 1;
+            let curIndex = this.baseHandler.currentMethodIndex + 1;
             let hasNext = false;
-            while (curIndex <= this.currentOperationIndex) {
+            while (curIndex <= this.baseHandler.currentOperationIndex) {
                 if (
-                    !this.Operation_IsHidden(
+                    !this.baseHandler.Operation_IsHidden(
                         this.commandGroupHandler.CommandGroup.operations[curIndex],
                     )
                 ) {
@@ -98,7 +111,7 @@ export class MethodModelImpl extends CodeModelCliImpl implements MethodModel {
     }
 
     public get Method_ResourceType(): string | undefined {
-        return this.formResourceType(this.Method.language['cli']?.['resource-type']);
+        return this.baseHandler.formResourceType(this.Method.language['cli']?.['resource-type']);
     }
 
     public get Method_BodyParameterName(): string {
