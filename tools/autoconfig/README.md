@@ -23,7 +23,7 @@ use-extension:
 
 pipeline:
     autoconfig:
-        input: openapi-document/multi-api/identity  
+        input: swagger-document/loader-swagger
         output-artifact: source-file
     autoconfig/emitter:
         input: autoconfig

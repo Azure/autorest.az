@@ -14,7 +14,6 @@ import {
 } from '../helper';
 import * as fs from 'fs';
 import { CodeModel } from '@azure-tools/codemodel';
-import { isNullishCoalesce } from 'typescript';
 
 function usePathVariable(p: string, extensionName: string | undefined): string {
     const cliFolder = AzConfiguration.getValue(CodeGenConstants.azureCliFolder);
@@ -150,15 +149,7 @@ export function GenerateReadmeAz(
     }
 
     const alreadyExists = !genBasicInfo(output, extensionName);
-    let missingOps;
-    if (alreadyExists) {
-        missingOps = getHiddenOperations(model, generateTargets);
-    } else {
-        missingOps = [];
-        for (const resourceInfo of generateTargets.resources) {
-            missingOps.push(...resourceInfo.operations);
-        }
-    }
+    const missingOps = getHiddenOperations(model, generateTargets);
 
     if (missingOps.length > 0) {
         let area = findGenArea(output, startTagLine, endTagLine);

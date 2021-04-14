@@ -149,7 +149,14 @@ export class AzConfiguration {
 export function getExtensionName(): string {
     for (const k in AzConfiguration.origin) {
         const c = 'package-';
-        if (k.startsWith(c)) return k.substr(c.length);
+        if (k.startsWith(c)) {
+            const v = AzConfiguration.origin[k];
+            if (v && Object.keys(v).length === 0 && v.constructor === Object) {
+                return k.substr(c.length);
+            }
+        }
+    }
+    if (AzConfiguration.origin['target-mode'] != 'core') {
     }
     return undefined; // in core mode
 }
