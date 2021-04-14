@@ -16,6 +16,7 @@ import {
 import { SchemaType } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
 import { CodeGenConstants } from '../../../utils/models';
+import { CliTopAction } from '../CliTopAction';
 
 let hasActions: boolean,
     hasBoolean: boolean,
@@ -108,7 +109,8 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
 
     if (hasActions) {
         if (model.IsCliCore) {
-            header.addFromImport('..action', actions);
+            const topAction = new CliTopAction(model);
+            header.addFromImport('..' + topAction.relativePath.replace(/\.py$/, ''), actions);
         } else {
             header.addFromImport(model.AzextFolder + '.action', actions);
         }
@@ -301,9 +303,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                         model.MethodParameter_IsList &&
                         model.MethodParameter_IsListOfSimple
                     ) {
-                        const actionName: string = model.Schema_ActionName(
-                            model.MethodParameter.schema,
-                        );
+                        const actionName: string = model.MethodParameter_ActionName;
                         argument += ', action=' + actionName;
                         hasActions = true;
 
@@ -341,11 +341,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                             }
                             if (model.MethodParameter_IsListOfSimple) {
                                 let options = [];
-                                if (
-                                    !isNullOrUndefined(
-                                        model.Schema_ActionName(model.MethodParameter.schema),
-                                    )
-                                ) {
+                                if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
                                     if (
                                         baseParam &&
                                         model.MethodParameter['polyBaseParam'] === baseParam
@@ -366,7 +362,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                                     argument += ' Expect value: KEY1=VALUE1 KEY2=VALUE2 ...';
                                 }
                             } else {
-                                argument += ' Expected value: json-string/@json-file.';
+                                argument += ' Expected value: json-string/json-file/@json-file.';
                             }
                         }
                         if (debug) {
@@ -389,8 +385,9 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                             argument += ", arg_group='" + model.MethodParameter_ArgGroup + "'";
                         }
                     }
+                    const lastItem = model.Method_NameAz.split(' ').last;
                     if (
-                        !model.Method_NameAz.startsWith('list') &&
+                        !lastItem.startsWith('list') &&
                         !model.Method_NameAz.split(' ').last.startsWith('create')
                     ) {
                         if (!isNullOrUndefined(model.MethodParameter_IdPart)) {

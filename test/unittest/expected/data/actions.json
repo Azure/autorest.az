@@ -1,0 +1,219 @@
+{
+  "data": {
+    "imports": [],
+    "pylints": [
+      "# pylint: disable=protected-access",
+      "# pylint: disable=no-self-use"
+    ],
+    "actions": [
+      {
+        "actionName": "AddFactoryVstsConfiguration",
+        "actionType": "Positional",
+        "mapsTo": "factory_vsts_configuration",
+        "type": "object",
+        "nameAz": "factory-vsts-configuration",
+        "baseClass": "Action",
+        "subProperties": [
+          {
+            "namePython": "project_name",
+            "nameAz": "project-name",
+            "type": "string"
+          },
+          {
+            "namePython": "tenant_id",
+            "nameAz": "tenant-id",
+            "type": "string"
+          },
+          {
+            "namePython": "account_name",
+            "nameAz": "account-name",
+            "type": "string"
+          },
+          {
+            "namePython": "repository_name",
+            "nameAz": "repository-name",
+            "type": "string"
+          },
+          {
+            "namePython": "collaboration_branch",
+            "nameAz": "collaboration-branch",
+            "type": "string"
+          },
+          {
+            "namePython": "root_folder",
+            "nameAz": "root-folder",
+            "type": "string"
+          },
+          {
+            "namePython": "last_commit_id",
+            "nameAz": "last-commit-id",
+            "type": "string"
+          }
+        ],
+        "subPropertiesMapsTo": [
+          "project_name",
+          "tenant_id",
+          "account_name",
+          "repository_name",
+          "collaboration_branch",
+          "root_folder",
+          "last_commit_id"
+        ],
+        "subPropertiesNamePython": [
+          "type",
+          "project_name",
+          "tenant_id",
+          "account_name",
+          "repository_name",
+          "root_folder",
+          "collaboration_branch"
+        ],
+        "subPropertiesNameAz": [
+          "project-name",
+          "tenant-id",
+          "account-name",
+          "repository-name",
+          "collaboration-branch",
+          "root-folder",
+          "last-commit-id"
+        ],
+        "constants": {
+          "'type'": "'FactoryVSTSConfiguration'"
+        }
+      },
+      {
+        "actionName": "AddFactoryGitHubConfiguration",
+        "actionType": "KeyValue",
+        "mapsTo": "factory_git_hub_configuration",
+        "type": "object",
+        "nameAz": "factory-git-hub-configuration",
+        "baseClass": "Action",
+        "subProperties": [
+          {
+            "namePython": "host_name",
+            "nameAz": "host-name",
+            "type": "string"
+          },
+          {
+            "namePython": "account_name",
+            "nameAz": "account-name",
+            "type": "string"
+          },
+          {
+            "namePython": "repository_name",
+            "nameAz": "repository-name",
+            "type": "string"
+          },
+          {
+            "namePython": "collaboration_branch",
+            "nameAz": "collaboration-branch",
+            "type": "string"
+          },
+          {
+            "namePython": "root_folder",
+            "nameAz": "root-folder",
+            "type": "string"
+          },
+          {
+            "namePython": "last_commit_id",
+            "nameAz": "last-commit-id",
+            "type": "string"
+          }
+        ],
+        "subPropertiesMapsTo": [
+          "host_name",
+          "account_name",
+          "repository_name",
+          "collaboration_branch",
+          "root_folder",
+          "last_commit_id"
+        ],
+        "subPropertiesNamePython": [
+          "host_name",
+          "account_name",
+          "repository_name",
+          "collaboration_branch",
+          "root_folder",
+          "last_commit_id"
+        ],
+        "subPropertiesNameAz": [
+          "host-name",
+          "account-name",
+          "repository-name",
+          "collaboration-branch",
+          "root-folder",
+          "last-commit-id"
+        ],
+        "constants": {
+          "'type'": "'FactoryGitHubConfiguration'"
+        }
+      },
+      {
+        "actionName": "AddFakeIdentity",
+        "actionType": "Positional",
+        "mapsTo": "fake_identity",
+        "type": "object",
+        "nameAz": "fake-identity",
+        "baseClass": "Action",
+        "subProperties": [
+          {
+            "namePython": "name",
+            "nameAz": "name",
+            "type": "string"
+          },
+          {
+            "namePython": "zones_inside",
+            "nameAz": "zones-inside",
+            "type": "array"
+          }
+        ],
+        "subPropertiesMapsTo": [
+          "name",
+          "zones_inside"
+        ],
+        "subPropertiesNamePython": [
+          "name",
+          "zones_inside"
+        ],
+        "subPropertiesNameAz": [
+          "name",
+          "zones-inside"
+        ],
+        "constants": {}
+      },
+      {
+        "actionName": "AddReplicaSets",
+        "actionType": "KeyValue",
+        "mapsTo": "replica_sets",
+        "type": "array",
+        "nameAz": "replica-sets",
+        "baseClass": "_AppendAction",
+        "subProperties": [
+          {
+            "namePython": "location",
+            "nameAz": "location",
+            "type": "string"
+          },
+          {
+            "namePython": "subnet_id",
+            "nameAz": "subnet-id",
+            "type": "string"
+          }
+        ],
+        "subPropertiesMapsTo": [
+          "location",
+          "subnet_id"
+        ],
+        "subPropertiesNamePython": [
+          "location",
+          "subnet_id"
+        ],
+        "subPropertiesNameAz": [
+          "location",
+          "subnet-id"
+        ],
+        "constants": {}
+      }
+    ]
+  }
+}

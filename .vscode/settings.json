@@ -15,4 +15,5 @@
     "prettier.requireConfig": true,
     "prettier.tabWidth": 4,
     "prettier.configPath": ".prettierrc",
+    "typescript.tsdk": "node_modules\\typescript\\lib",
 }

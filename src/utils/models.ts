@@ -74,14 +74,20 @@ export class PathConstants {
     public static readonly setupPyFile: string = 'setup.py';
     public static readonly setupCfgFile: string = 'setup.cfg';
     public static readonly historyRstFile: string = 'HISTORY.rst';
-    public static readonly docSourceJsonFile: string = '/doc/sphinx/azhelpgen/doc_source_map.json';
-    public static readonly mainSetupPyFile: string = 'src/azure-cli/setup.py';
+    public static readonly docSourceJsonFile: string = path.join(
+        '/doc/sphinx/azhelpgen/doc_source_map.json',
+    );
+    public static readonly mainSetupPyFile: string = path.join('src/azure-cli/setup.py');
     public static readonly readmeFile: string = 'README.md';
     public static readonly recordingFolder: string = 'recordings';
     public static readonly templateRootFolder: string = path.join(
         `${__dirname}`,
         '../../../dist/src/templates',
     );
+    public static readonly cmdletFolder: string = 'cmdlet';
+    public static readonly positiveTestFile: string = 'test_positive.py';
+    public static readonly negativeTestFile: string = 'test_negative.py';
+    public static readonly conftestFile: string = 'conftest.py';
 
     public static fullTestSceanrioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario.py';
@@ -90,6 +96,8 @@ export class PathConstants {
     public static incTestScenarioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario_incrementalGenerated.py';
     }
+
+    public static readonly njxFileExtension = '.njx';
 }
 
 export enum CodeGenConstants {
@@ -105,7 +113,7 @@ export enum CodeGenConstants {
     debug = 'debug',
     use = 'use',
     directive = 'directive',
-    parents = '_parents',
+    parents = '__parents',
     azOutputFolder = 'az-output-folder',
     generationMode = 'generation-mode',
     clearOutputFolder = 'clear-output-folder',
@@ -119,6 +127,11 @@ export enum CodeGenConstants {
     azureCliExtFolder = 'azure-cli-extension-folder',
     pythonSdkOutputFolder = 'python-sdk-output-folder',
     cliCoreLib = 'cli-core-lib',
+    inputFile = 'input-file',
+    testResources = 'test-resources',
+    preparers = 'preparers',
+    genCmdletTest = 'gen-cmdlet-test',
+    extensionDescription = 'extension-description',
 
     // some configuration keys under az section
     namespace = 'namespace',
@@ -127,6 +140,8 @@ export enum CodeGenConstants {
     clientBaseUrlBound = 'client-base-url-bound',
     clientSubscriptionBound = 'client-subscription-bound',
     clientAuthenticationPolicy = 'client-authentication-policy',
+    testUniqueResource = 'test-unique-resource',
+    useTestStepParam = 'use-test-step-param',
 
     // default constant values
     minCliCoreVersion = '2.15.0',
@@ -135,6 +150,11 @@ export enum CodeGenConstants {
     DEFAULT_CLI_CORE_LIB = 'azure.cli.core',
     AZ_ENTRY_CODE_MODEL_NAME = 'az-entry-code-model.yaml',
     PYLINT_MAX_CODE_LENGTH = 119,
+    PYLINT_MAX_OPERATION_TEMPLATE_LENGTH = 96,
+
+    //configuration keys under test-resources section
+    test = 'test',
+    scenarioTestOnly = 'scenario-test-only',
 }
 
 export interface AzextMetadata {
@@ -154,8 +174,8 @@ export class AzConfiguration {
         }
     }
 
-    public static getValue(key: CodeGenConstants) {
-        return AzConfiguration.dict[key];
+    public static getValue(key: CodeGenConstants, defaultValue: any = undefined) {
+        return AzConfiguration.dict[key] || defaultValue;
     }
 
     public static setValue(key: CodeGenConstants, value: unknown): void {
@@ -193,8 +213,16 @@ export class RenderInput {
         public properties: string[] = [],
         public sortBy: Record<string, SortOrder> = {},
         public conditions: [string, unknown][] = [],
-        public converter: Map<string, (item) => unknown> = new Map<string, (item) => unknown>(),
+        public converter: (item) => unknown = undefined,
+        public selector: any[] = [],
     ) {}
 }
 
 export type TemplateRender = [string, TemplateBase];
+
+export enum CliCommandType {
+    CUSTOM_SHOW_COMMAND = 'custom_show_command',
+    CUSTOM_COMMAND = 'custom_command',
+    CUSTOM_WAIT_COMMAND = 'custom_wait_command',
+    GENERIC_UPDATE_COMMAND = 'generic_update_command',
+}

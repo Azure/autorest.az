@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as path from 'path';
 import { readFile, readdir, writeFile } from '@azure-tools/async-io';
@@ -16,11 +15,10 @@ import { Entry } from '../src/entry';
 
 sourceMapSupport.install();
 
-const resources = path.join(`${__dirname}`, '/../../test/resources');
+const resources = path.join(`${__dirname}`, '/../test/resources');
 
-@suite
-export class Process {
-    @test(slow(600000), timeout(1500000)) async simpleModifierTest() {
+describe('simpleModifierTest', () => {
+    it('simpleModifierTestCase1', async () => {
         const folders = await readdir(resources);
         for (const each of folders) {
             const cfg = {
@@ -53,7 +51,7 @@ export class Process {
 
             const fileName = path.join(
                 `${__dirname}`,
-                '/../../test/resources/' + each + '/' + each + '-az-modifier.yaml',
+                '/../test/resources/' + each + '/' + each + '-az-modifier.yaml',
             );
 
             // uncomment this line to overwrite existing file
@@ -64,5 +62,5 @@ export class Process {
             const codeModelSupposed = deserialize<CodeModel>(supposeFile, fileName);
             assert.deepEqual(codeModel, codeModelSupposed, 'modifier has failed the unit test');
         }
-    }
-}
+    });
+});

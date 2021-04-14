@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /AttachedDatabaseConfigurations/put/AttachedDatabaseConfigurationsCreateOrUpdate
 @try_manual
-def step_attached_database_configuration_create(test, rg, checks=None):
+def step_attached_database_configuration_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto attached-database-configuration create '
@@ -35,7 +35,7 @@ def step_attached_database_configuration_create(test, rg, checks=None):
 
 # EXAMPLE: /AttachedDatabaseConfigurations/get/AttachedDatabaseConfigurationsGet
 @try_manual
-def step_attached_database_configuration_show(test, rg, checks=None):
+def step_attached_database_configuration_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto attached-database-configuration show '
@@ -47,7 +47,7 @@ def step_attached_database_configuration_show(test, rg, checks=None):
 
 # EXAMPLE: /AttachedDatabaseConfigurations/get/KustoAttachedDatabaseConfigurationsListByCluster
 @try_manual
-def step_attached_database_configuration_list(test, rg, checks=None):
+def step_attached_database_configuration_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto attached-database-configuration list '
@@ -58,28 +58,30 @@ def step_attached_database_configuration_list(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/put/KustoClustersCreateOrUpdate
 @try_manual
-def step_cluster_create(test, rg, checks=None):
+def step_cluster_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster create '
-             '--name "{myCluster}" '
+             '--cluster-name "{myCluster}" '
              '--type "SystemAssigned" '
              '--location "westus" '
              '--enable-double-encryption false '
              '--enable-purge true '
              '--enable-streaming-ingest true '
-             '--sku name="Standard_L8s" capacity=2 tier="Standard" '
+             '--name "Standard_L8s" '
+             '--capacity 2 '
+             '--tier "Standard" '
              '--resource-group "{rg}"',
              checks=[])
     test.cmd('az kusto cluster wait --created '
-             '--name "{myCluster}" '
+             '--cluster-name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=checks)
 
 
 # EXAMPLE: /Clusters/get/KustoClustersGet
 @try_manual
-def step_cluster_show(test, rg, checks=None):
+def step_cluster_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster show '
@@ -90,7 +92,7 @@ def step_cluster_show(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/get/KustoClustersList
 @try_manual
-def step_cluster_list(test, rg, checks=None):
+def step_cluster_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list '
@@ -100,7 +102,7 @@ def step_cluster_list(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/get/KustoClustersListByResourceGroup
 @try_manual
-def step_cluster_list2(test, rg, checks=None):
+def step_cluster_list2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list '
@@ -110,7 +112,7 @@ def step_cluster_list2(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/get/KustoClustersListResourceSkus
 @try_manual
-def step_cluster_list_sku(test, rg, checks=None):
+def step_cluster_list_sku(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list-sku '
@@ -121,7 +123,7 @@ def step_cluster_list_sku(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/get/KustoClustersListSkus
 @try_manual
-def step_cluster_list_sku2(test, rg, checks=None):
+def step_cluster_list_sku2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list-sku '
@@ -131,11 +133,11 @@ def step_cluster_list_sku2(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/patch/KustoClustersUpdate
 @try_manual
-def step_cluster_update(test, rg, checks=None):
+def step_cluster_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster update '
-             '--name "{myCluster}" '
+             '--cluster-name "{myCluster}" '
              '--type "SystemAssigned" '
              '--location "westus" '
              '--enable-purge true '
@@ -148,7 +150,7 @@ def step_cluster_update(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClusterAddLanguageExtensions
 @try_manual
-def step_cluster_add_language_extension(test, rg, checks=None):
+def step_cluster_add_language_extension(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster add-language-extension '
@@ -161,7 +163,7 @@ def step_cluster_add_language_extension(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClusterDetachFollowerDatabases
 @try_manual
-def step_cluster_detach_follower_database(test, rg, checks=None):
+def step_cluster_detach_follower_database(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster detach-follower-database '
@@ -175,7 +177,7 @@ def step_cluster_detach_follower_database(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClusterDiagnoseVirtualNetwork
 @try_manual
-def step_cluster_diagnose_virtual_network(test, rg, checks=None):
+def step_cluster_diagnose_virtual_network(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster diagnose-virtual-network '
@@ -186,7 +188,7 @@ def step_cluster_diagnose_virtual_network(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClusterListFollowerDatabases
 @try_manual
-def step_cluster_list_follower_database(test, rg, checks=None):
+def step_cluster_list_follower_database(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list-follower-database '
@@ -197,7 +199,7 @@ def step_cluster_list_follower_database(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClusterListLanguageExtensions
 @try_manual
-def step_cluster_list_language_extension(test, rg, checks=None):
+def step_cluster_list_language_extension(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster list-language-extension '
@@ -208,7 +210,7 @@ def step_cluster_list_language_extension(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClusterRemoveLanguageExtensions
 @try_manual
-def step_cluster_remove_language_extension(test, rg, checks=None):
+def step_cluster_remove_language_extension(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster remove-language-extension '
@@ -221,7 +223,7 @@ def step_cluster_remove_language_extension(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClustersStart
 @try_manual
-def step_cluster_start(test, rg, checks=None):
+def step_cluster_start(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster start '
@@ -232,7 +234,7 @@ def step_cluster_start(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/post/KustoClustersStop
 @try_manual
-def step_cluster_stop(test, rg, checks=None):
+def step_cluster_stop(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster stop '
@@ -243,7 +245,7 @@ def step_cluster_stop(test, rg, checks=None):
 
 # EXAMPLE: /ClusterPrincipalAssignments/put/KustoClusterPrincipalAssignmentsCreateOrUpdate
 @try_manual
-def step_cluster_principal_assignment_create(test, rg, checks=None):
+def step_cluster_principal_assignment_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster-principal-assignment create '
@@ -259,7 +261,7 @@ def step_cluster_principal_assignment_create(test, rg, checks=None):
 
 # EXAMPLE: /ClusterPrincipalAssignments/get/KustoClusterPrincipalAssignmentsGet
 @try_manual
-def step_cluster_principal_assignment_show(test, rg, checks=None):
+def step_cluster_principal_assignment_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster-principal-assignment show '
@@ -271,7 +273,7 @@ def step_cluster_principal_assignment_show(test, rg, checks=None):
 
 # EXAMPLE: /ClusterPrincipalAssignments/get/KustoPrincipalAssignmentsList
 @try_manual
-def step_cluster_principal_assignment_list(test, rg, checks=None):
+def step_cluster_principal_assignment_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster-principal-assignment list '
@@ -282,7 +284,7 @@ def step_cluster_principal_assignment_list(test, rg, checks=None):
 
 # EXAMPLE: /DatabasePrincipalAssignments/put/KustoDatabasePrincipalAssignmentsCreateOrUpdate
 @try_manual
-def step_database_principal_assignment_create(test, rg, checks=None):
+def step_database_principal_assignment_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database-principal-assignment create '
@@ -299,7 +301,7 @@ def step_database_principal_assignment_create(test, rg, checks=None):
 
 # EXAMPLE: /DatabasePrincipalAssignments/get/KustoDatabasePrincipalAssignmentsGet
 @try_manual
-def step_database_principal_assignment_show(test, rg, checks=None):
+def step_database_principal_assignment_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database-principal-assignment show '
@@ -312,7 +314,7 @@ def step_database_principal_assignment_show(test, rg, checks=None):
 
 # EXAMPLE: /DatabasePrincipalAssignments/get/KustoPrincipalAssignmentsList
 @try_manual
-def step_database_principal_assignment_list(test, rg, checks=None):
+def step_database_principal_assignment_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database-principal-assignment list '
@@ -324,7 +326,7 @@ def step_database_principal_assignment_list(test, rg, checks=None):
 
 # EXAMPLE: /DatabasePrincipalAssignments/delete/KustoDatabasePrincipalAssignmentsDelete
 @try_manual
-def step_database_principal_assignment_delete(test, rg, checks=None):
+def step_database_principal_assignment_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database-principal-assignment delete -y '
@@ -337,7 +339,7 @@ def step_database_principal_assignment_delete(test, rg, checks=None):
 
 # EXAMPLE: /Databases/put/KustoDatabasesCreateOrUpdate
 @try_manual
-def step_database_create(test, rg, checks=None):
+def step_database_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database create '
@@ -350,7 +352,7 @@ def step_database_create(test, rg, checks=None):
 
 # EXAMPLE: /Databases/get/KustoDatabasesGet
 @try_manual
-def step_database_show(test, rg, checks=None):
+def step_database_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database show '
@@ -362,7 +364,7 @@ def step_database_show(test, rg, checks=None):
 
 # EXAMPLE: /Databases/get/KustoDatabasesListByCluster
 @try_manual
-def step_database_list(test, rg, checks=None):
+def step_database_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database list '
@@ -373,7 +375,7 @@ def step_database_list(test, rg, checks=None):
 
 # EXAMPLE: /Databases/patch/KustoDatabasesUpdate
 @try_manual
-def step_database_update(test, rg, checks=None):
+def step_database_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database update '
@@ -386,7 +388,7 @@ def step_database_update(test, rg, checks=None):
 
 # EXAMPLE: /Databases/post/KustoDatabaseAddPrincipals
 @try_manual
-def step_database_add_principal(test, rg, checks=None):
+def step_database_add_principal(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database add-principal '
@@ -401,7 +403,7 @@ def step_database_add_principal(test, rg, checks=None):
 
 # EXAMPLE: /Databases/post/KustoDatabaseListPrincipals
 @try_manual
-def step_database_list_principal(test, rg, checks=None):
+def step_database_list_principal(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database list-principal '
@@ -413,7 +415,7 @@ def step_database_list_principal(test, rg, checks=None):
 
 # EXAMPLE: /Databases/post/KustoDatabaseRemovePrincipals
 @try_manual
-def step_database_remove_principal(test, rg, checks=None):
+def step_database_remove_principal(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database remove-principal '
@@ -428,7 +430,7 @@ def step_database_remove_principal(test, rg, checks=None):
 
 # EXAMPLE: /Databases/delete/KustoDatabasesDelete
 @try_manual
-def step_database_delete(test, rg, checks=None):
+def step_database_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto database delete -y '
@@ -440,7 +442,7 @@ def step_database_delete(test, rg, checks=None):
 
 # EXAMPLE: /DataConnections/put/KustoDataConnectionsCreateOrUpdate
 @try_manual
-def step_data_connection_event_hub_create(test, rg, checks=None):
+def step_data_connection_event_hub_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto data-connection event-hub create '
@@ -457,7 +459,7 @@ def step_data_connection_event_hub_create(test, rg, checks=None):
 
 # EXAMPLE: /DataConnections/get/KustoDatabasesListByCluster
 @try_manual
-def step_data_connection_list(test, rg, checks=None):
+def step_data_connection_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto data-connection list '
@@ -469,7 +471,7 @@ def step_data_connection_list(test, rg, checks=None):
 
 # EXAMPLE: /DataConnections/get/KustoDataConnectionsGet
 @try_manual
-def step_data_connection_show(test, rg, checks=None):
+def step_data_connection_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto data-connection show '
@@ -482,7 +484,7 @@ def step_data_connection_show(test, rg, checks=None):
 
 # EXAMPLE: /DataConnections/patch/KustoDataConnectionsUpdate
 @try_manual
-def step_data_connection_event_hub_update(test, rg, checks=None):
+def step_data_connection_event_hub_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto data-connection event-hub update '
@@ -499,7 +501,7 @@ def step_data_connection_event_hub_update(test, rg, checks=None):
 
 # EXAMPLE: /DataConnections/post/KustoDataConnectionValidation
 @try_manual
-def step_data_connection_event(test, rg, checks=None):
+def step_data_connection_event(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto data-connection event-hub data-connection-validation '
@@ -515,7 +517,7 @@ def step_data_connection_event(test, rg, checks=None):
 
 # EXAMPLE: /DataConnections/delete/KustoDataConnectionsDelete
 @try_manual
-def step_data_connection_delete(test, rg, checks=None):
+def step_data_connection_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto data-connection delete -y '
@@ -528,7 +530,7 @@ def step_data_connection_delete(test, rg, checks=None):
 
 # EXAMPLE: /Clusters/delete/KustoClustersDelete
 @try_manual
-def step_cluster_delete(test, rg, checks=None):
+def step_cluster_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster delete -y '
@@ -539,7 +541,7 @@ def step_cluster_delete(test, rg, checks=None):
 
 # EXAMPLE: /AttachedDatabaseConfigurations/delete/AttachedDatabaseConfigurationsDelete
 @try_manual
-def step_attached_database_configuration_delete(test, rg, checks=None):
+def step_attached_database_configuration_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto attached-database-configuration delete -y '
@@ -551,7 +553,7 @@ def step_attached_database_configuration_delete(test, rg, checks=None):
 
 # EXAMPLE: /ClusterPrincipalAssignments/delete/KustoClusterPrincipalAssignmentsDelete
 @try_manual
-def step_cluster_principal_assignment_delete(test, rg, checks=None):
+def step_cluster_principal_assignment_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az kusto cluster-principal-assignment delete -y '
@@ -559,4 +561,3 @@ def step_cluster_principal_assignment_delete(test, rg, checks=None):
              '--principal-assignment-name "kustoprincipal1" '
              '--resource-group "{rg}"',
              checks=checks)
-

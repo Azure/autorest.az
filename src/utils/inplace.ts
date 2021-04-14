@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { isNullOrUndefined, distancePercentage } from './helper';
 import { join, dirname } from 'path';
@@ -71,7 +72,18 @@ export class BaseSegment {
             this.name = this.constructor.name + '_' + name;
         } else {
             const content = target.content.substr(startAt, endAt - startAt);
-            this.name = this.constructor.name + '_' + content.split('\n')[0];
+            if (content.trim().startsWith('def ') || content.trim().startsWith('def ')) {
+                // omit parameter list for 'def' and 'class' sentence
+                const firstLine = content.split('\n')[0].trim();
+                const t = firstLine.indexOf('(');
+                if (t > -1) {
+                    this.name = firstLine.slice(0, t);
+                } else {
+                    this.name = firstLine;
+                }
+            } else {
+                this.name = this.constructor.name + '_' + content.split('\n')[0];
+            }
         }
         this.status = SegmentStatus.Origin;
         this.target = target;
@@ -369,8 +381,9 @@ function nextStepAt(content: string): number {
     const nextExample = content.search(/\n# EXAMPLE/);
     const nextCase = content.search(/\n# Testcase/);
     const nextClass = content.search(/\n# Test class/);
+    const nextCustomized = content.search(/\n# Customized/);
 
-    const candidates = [nextEnv, nextExample, nextCase, nextClass];
+    const candidates = [nextEnv, nextExample, nextCase, nextClass, nextCustomized];
     candidates.sort((a, b) => a - b);
     for (const ret of candidates) {
         if (ret >= 0) {
@@ -530,7 +543,14 @@ export function openInplaceGen(): void {
     zipBuffer = [];
 }
 
-export function inplaceGen(outputFolder: string, filename: string, genContent: string[]): string[] {
+export function inplaceGen(
+    outputFolder: string,
+    filename: string,
+    genContent: string[] | string,
+): string[] {
+    if (typeof genContent === 'string') {
+        genContent = genContent.split(EOL);
+    }
     const zipGenFile = join(outputFolder, 'gen.zip');
     const originA = createTarget(loadFromZip(zipGenFile, filename));
     const customizedA = createTarget(join(outputFolder, filename));

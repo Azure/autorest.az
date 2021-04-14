@@ -20,7 +20,10 @@ export class CliReport extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = path.join(PathConstants.reportFile);
-        this.tmplPath = path.join(PathConstants.templateRootFolder, 'report.md.njx');
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.reportFile + PathConstants.njxFileExtension,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -35,18 +38,17 @@ export class CliReport extends TemplateBase {
     public GetRenderData(model: CodeModelAz): any {
         let data = {};
 
-        const converter = new Map<string, (item) => unknown>([
-            [
-                'mapsTo',
-                function (item: string) {
-                    if (item.endsWith('_')) {
-                        item = item.substr(0, item.length - 1);
-                    }
-                    item = item.replace(/_/g, '-');
-                    return item;
-                },
-            ],
-        ]);
+        const converter = (item) => {
+            let mapsTo = item['mapsTo'];
+            if (isNullOrUndefined(mapsTo)) {
+                return undefined;
+            }
+            if (mapsTo.endsWith('_')) {
+                mapsTo = mapsTo.substr(0, mapsTo.length - 1);
+            }
+            item['mapsTo'] = mapsTo.replace(/_/g, '-');
+            return item;
+        };
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -70,7 +72,7 @@ export class CliReport extends TemplateBase {
                     converter,
                 ),
             ],
-            ['azExample', new RenderInput(['commandStringItems'], {})],
+            ['azExample', new RenderInput(['commandStringItems'], {}, [['isGenerated', true]])],
         ]);
 
         const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
@@ -186,7 +188,7 @@ export class CliReport extends TemplateBase {
             do {
                 if (model.SelectFirstMethod()) {
                     do {
-                        if (model.GetExamples().length > 0) {
+                        if (model.GetExamples(false).length > 0) {
                             mo.push(
                                 '|[az ' +
                                     model.CommandGroup_Name +
@@ -257,7 +259,7 @@ export class CliReport extends TemplateBase {
                                 '`</a>',
                         );
                         mo.push('');
-                        for (const example of model.GetExamples()) {
+                        for (const example of model.GetExamples(false)) {
                             mo.push(
                                 '##### <a name="' +
                                     'Examples' +

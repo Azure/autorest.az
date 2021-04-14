@@ -12,7 +12,10 @@ export class CliExtSetupCfg extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = PathConstants.setupCfgFile;
-        this.tmplPath = path.join(PathConstants.templateRootFolder, 'setup.cfg.njx');
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.setupCfgFile + PathConstants.njxFileExtension,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {

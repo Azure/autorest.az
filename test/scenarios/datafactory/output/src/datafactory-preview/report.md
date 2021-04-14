@@ -12,6 +12,7 @@
 |az datafactory|Factories|[commands](#CommandsInFactories)|
 |az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 |az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az datafactory linked-integration-runtime||[commands](#CommandsIn)|
 |az datafactory domain-service|DomainServices|[commands](#CommandsInDomainServices)|
 |az datafactory group|Groups|[commands](#CommandsInGroups)|
 
@@ -45,7 +46,6 @@
 |---------|------------|--------|-----------|
 |[az datafactory integration-runtime list](#IntegrationRuntimesListByFactory)|ListByFactory|[Parameters](#ParametersIntegrationRuntimesListByFactory)|[Example](#ExamplesIntegrationRuntimesListByFactory)|
 |[az datafactory integration-runtime show](#IntegrationRuntimesGet)|Get|[Parameters](#ParametersIntegrationRuntimesGet)|[Example](#ExamplesIntegrationRuntimesGet)|
-|[az datafactory integration-runtime linked-integration-runtime create](#IntegrationRuntimesCreateLinkedIntegrationRuntime)|CreateLinkedIntegrationRuntime|[Parameters](#ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime)|[Example](#ExamplesIntegrationRuntimesCreateLinkedIntegrationRuntime)|
 |[az datafactory integration-runtime managed create](#IntegrationRuntimesCreateOrUpdate#Create#Managed)|CreateOrUpdate#Create#Managed|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdate#Create#Managed)|Not Found|
 |[az datafactory integration-runtime self-hosted create](#IntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|CreateOrUpdate#Create#SelfHosted|[Parameters](#ParametersIntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|[Example](#ExamplesIntegrationRuntimesCreateOrUpdate#Create#SelfHosted)|
 |[az datafactory integration-runtime update](#IntegrationRuntimesUpdate)|Update|[Parameters](#ParametersIntegrationRuntimesUpdate)|[Example](#ExamplesIntegrationRuntimesUpdate)|
@@ -60,6 +60,11 @@
 |[az datafactory integration-runtime stop](#IntegrationRuntimesStop)|Stop|[Parameters](#ParametersIntegrationRuntimesStop)|[Example](#ExamplesIntegrationRuntimesStop)|
 |[az datafactory integration-runtime sync-credentials](#IntegrationRuntimesSyncCredentials)|SyncCredentials|[Parameters](#ParametersIntegrationRuntimesSyncCredentials)|[Example](#ExamplesIntegrationRuntimesSyncCredentials)|
 |[az datafactory integration-runtime upgrade](#IntegrationRuntimesUpgrade)|Upgrade|[Parameters](#ParametersIntegrationRuntimesUpgrade)|[Example](#ExamplesIntegrationRuntimesUpgrade)|
+
+### <a name="CommandsIn">Commands in `az datafactory linked-integration-runtime` group</a>
+|CLI Command|Operation Swagger name|Parameters|Examples|
+|---------|------------|--------|-----------|
+|[az datafactory linked-integration-runtime create](#CreateLinkedIntegrationRuntime)|CreateLinkedIntegrationRuntime|[Parameters](#ParametersCreateLinkedIntegrationRuntime)|[Example](#ExamplesCreateLinkedIntegrationRuntime)|
 
 ### <a name="CommandsInTriggers">Commands in `az datafactory trigger` group</a>
 |CLI Command|Operation Swagger name|Parameters|Examples|
@@ -282,26 +287,6 @@ az datafactory integration-runtime show --factory-name "myFactory" --name "myInt
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
 |**--if-none-match**|string|ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|If-None-Match|
 
-#### <a name="IntegrationRuntimesCreateLinkedIntegrationRuntime">Command `az datafactory integration-runtime linked-integration-runtime create`</a>
-
-##### <a name="ExamplesIntegrationRuntimesCreateLinkedIntegrationRuntime">Example</a>
-```
-az datafactory integration-runtime linked-integration-runtime create --name "bfa92911-9fb6-4fbe-8f23-beae87bc1c83" \
---data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id \
-"061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" \
---resource-group "myResourceGroup"
-```
-##### <a name="ParametersIntegrationRuntimesCreateLinkedIntegrationRuntime">Parameters</a> 
-|Option|Type|Description|Path (SDK)|Swagger name|
-|------|----|-----------|----------|------------|
-|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
-|**--factory-name**|string|The factory name.|factory_name|factoryName|
-|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
-|**--name**|string|The name of the linked integration runtime.|name|name|
-|**--subscription-id**|string|The ID of the subscription that the linked integration runtime belongs to.|subscription_id|subscriptionId|
-|**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|dataFactoryName|
-|**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|dataFactoryLocation|
-
 #### <a name="IntegrationRuntimesCreateOrUpdate#Create#Managed">Command `az datafactory integration-runtime managed create`</a>
 
 ##### <a name="ParametersIntegrationRuntimesCreateOrUpdate#Create#Managed">Parameters</a> 
@@ -507,6 +492,27 @@ az datafactory integration-runtime upgrade --factory-name "myFactory" --name "my
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
+
+### group `az datafactory linked-integration-runtime`
+#### <a name="CreateLinkedIntegrationRuntime">Command `az datafactory linked-integration-runtime create`</a>
+
+##### <a name="ExamplesCreateLinkedIntegrationRuntime">Example</a>
+```
+az datafactory linked-integration-runtime create --name "myDatafactoryLinkedIntegrationRuntime" \
+--data-factory-location "West US" --data-factory-name "e9955d6d-56ea-4be3-841c-52a12c1a9981" --subscription-id \
+"061774c7-4b5a-4159-a55b-365581830283" --factory-name "myFactory" --integration-runtime-name "myIntegrationRuntime" \
+--resource-group "myResourceGroup"
+```
+##### <a name="ParametersCreateLinkedIntegrationRuntime">Parameters</a> 
+|Option|Type|Description|Path (SDK)|Swagger name|
+|------|----|-----------|----------|------------|
+|**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
+|**--factory-name**|string|The factory name.|factory_name|factoryName|
+|**--integration-runtime-name**|string|The integration runtime name.|integration_runtime_name|integrationRuntimeName|
+|**--name**|string|The name of the linked integration runtime.|name|name|
+|**--subscription-id**|string|The ID of the subscription that the linked integration runtime belongs to.|subscription_id|subscriptionId|
+|**--data-factory-name**|string|The name of the data factory that the linked integration runtime belongs to.|data_factory_name|dataFactoryName|
+|**--data-factory-location**|string|The location of the data factory that the linked integration runtime belongs to.|data_factory_location|dataFactoryLocation|
 
 ### group `az datafactory trigger`
 #### <a name="TriggersListByFactory">Command `az datafactory trigger list`</a>

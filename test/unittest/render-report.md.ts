@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { suite, test, slow, timeout } from 'mocha-typescript';
 import * as assert from 'assert';
 import * as nunjucks from 'nunjucks';
 import * as path from 'path';
@@ -11,10 +10,9 @@ import * as sourceMapSupport from 'source-map-support';
 import { readFile } from '@azure-tools/async-io';
 sourceMapSupport.install();
 
-@suite
-export class Process {
-    @test(slow(600000), timeout(1500000)) async renderReportMDTest() {
-        const tmplPath = path.join(`${__dirname}`, '../../../src/templates/report.md.njx');
+describe('renderSetupCFG', () => {
+    it('renderSetupCFGTest', async () => {
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/report.md.njx');
         nunjucks.configure({ autoescape: false });
         const result = nunjucks.render(tmplPath, {
             hasExtension: true,
@@ -320,8 +318,8 @@ export class Process {
                 },
             ],
         });
-        const expectedFile = path.join(`${__dirname}`, '../../../test/unittest/expected/report.md');
+        const expectedFile = path.join(`${__dirname}`, '../../test/unittest/expected/report.md');
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 1 in setup.py is incorrect');
-    }
-}
+    });
+});

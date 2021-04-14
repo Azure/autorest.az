@@ -1,0 +1,15 @@
+scope: ResourceGroup
+
+prepareSteps:
+  - armTemplateDeployment: depSto.json
+
+testScenarios:
+  - description: FakedTestScenario
+    steps:
+      - exampleFile: ../examples/Create_AttestationProvider.json
+      - exampleFile: ../examples/Update_AttestationProvider.json
+        replace:
+          - pathInBody: tags.Property1
+            to: $(storageAccountId)
+
+

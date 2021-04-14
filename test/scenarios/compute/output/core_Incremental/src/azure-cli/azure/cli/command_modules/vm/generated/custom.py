@@ -7,6 +7,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 
 from azure.cli.core.util import sdk_no_wait
@@ -20,3 +21,74 @@ def vm_virtual_machine_assess_patch(client,
                        client.assess_patches,
                        resource_group_name=resource_group_name,
                        vm_name=vm_name)
+
+
+def vm_virtual_machine_scale_set_vm_extension_list(client,
+                                                   resource_group_name,
+                                                   vm_scale_set_name,
+                                                   instance_id,
+                                                   expand=None):
+    return client.list(resource_group_name=resource_group_name,
+                       vm_scale_set_name=vm_scale_set_name,
+                       instance_id=instance_id,
+                       expand=expand)
+
+
+def vm_virtual_machine_scale_set_vm_extension_show(client,
+                                                   resource_group_name,
+                                                   vm_scale_set_name,
+                                                   instance_id,
+                                                   vm_extension_name,
+                                                   expand=None):
+    return client.get(resource_group_name=resource_group_name,
+                      vm_scale_set_name=vm_scale_set_name,
+                      instance_id=instance_id,
+                      vm_extension_name=vm_extension_name,
+                      expand=expand)
+
+
+def vm_virtual_machine_scale_set_vm_extension_create(client,
+                                                     resource_group_name,
+                                                     vm_scale_set_name,
+                                                     instance_id,
+                                                     vm_extension_name,
+                                                     location,
+                                                     tags=None,
+                                                     force_update_tag=None,
+                                                     publisher=None,
+                                                     type_properties_type=None,
+                                                     type_handler_version=None,
+                                                     auto_upgrade_minor_version=None,
+                                                     enable_automatic_upgrade=None,
+                                                     settings=None,
+                                                     protected_settings=None,
+                                                     name=None,
+                                                     type_=None,
+                                                     virtual_machine_extension_instance_view_type_handler_version_type_handler_version=None,
+                                                     substatuses=None,
+                                                     statuses=None,
+                                                     no_wait=False):
+    extension_parameters = {}
+    extension_parameters['location'] = location
+    extension_parameters['tags'] = tags
+    extension_parameters['force_update_tag'] = force_update_tag
+    extension_parameters['publisher'] = publisher
+    extension_parameters['type_properties_type'] = type_properties_type
+    extension_parameters['type_handler_version'] = type_handler_version
+    extension_parameters['auto_upgrade_minor_version'] = auto_upgrade_minor_version
+    extension_parameters['enable_automatic_upgrade'] = enable_automatic_upgrade
+    extension_parameters['settings'] = settings
+    extension_parameters['protected_settings'] = protected_settings
+    extension_parameters['instance_view'] = {}
+    extension_parameters['instance_view']['name'] = name
+    extension_parameters['instance_view']['type'] = type_
+    extension_parameters['instance_view']['type_handler_version'] = virtual_machine_extension_instance_view_type_handler_version_type_handler_version
+    extension_parameters['instance_view']['substatuses'] = substatuses
+    extension_parameters['instance_view']['statuses'] = statuses
+    return sdk_no_wait(no_wait,
+                       client.create_or_update,
+                       resource_group_name=resource_group_name,
+                       vm_scale_set_name=vm_scale_set_name,
+                       instance_id=instance_id,
+                       vm_extension_name=vm_extension_name,
+                       extension_parameters=extension_parameters)

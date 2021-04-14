@@ -1,15 +1,8 @@
-import { Channel, Host, startSession } from '@azure-tools/autorest-extension-base';
+import { Host, startSession } from '@autorest/extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { EOL } from 'os';
 import * as path from 'path';
-import { isNullOrUndefined } from '../utils/helper';
-import {
-    CodeGenConstants,
-    PathConstants,
-    AzConfiguration,
-    TargetMode,
-    GenerationMode,
-} from '../utils/models';
+import { CodeGenConstants, PathConstants, AzConfiguration } from '../utils/models';
 import { AzGeneratorFactory } from './generators/Factory';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
@@ -38,6 +31,8 @@ export async function processRequest(host: Host) {
         }
 
         openInplaceGen();
+        await model.resourcePool.loadTestResources();
+        model.GenerateTestInit();
         const generator = AzGeneratorFactory.createAzGenerator(model);
         await generator.generateAll();
         const files = generator.files;
@@ -52,31 +47,17 @@ export async function processRequest(host: Host) {
         }
 
         for (const f in files) {
-            if (!isNullOrUndefined(files[f])) {
-                if (
-                    (AzConfiguration.getValue(CodeGenConstants.generationMode) !==
-                        GenerationMode.Incremental &&
-                        (f.endsWith('azext_metadata.json') ||
-                            (f.endsWith('setup.py') &&
-                                AzConfiguration.getValue(CodeGenConstants.targetMode) !==
-                                    TargetMode.Core))) ||
-                    f.endsWith('HISTORY.rst') ||
-                    f.endsWith('setup.cfg') ||
-                    // f.endsWith('report.md') ||
-                    f.endsWith('tests/__init__.py') ||
-                    f.endsWith('preparers.py')
-                ) {
-                    host.WriteFile(f, files[f]);
-                } else {
-                    host.WriteFile(f, files[f].join(EOL));
-                }
+            if (typeof files[f] === 'string') {
+                host.WriteFile(f, files[f]);
+            } else {
+                host.WriteFile(f, files[f].join(EOL));
             }
         }
         closeInplaceGen();
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

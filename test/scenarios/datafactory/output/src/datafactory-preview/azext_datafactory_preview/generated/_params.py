@@ -51,7 +51,7 @@ def load_arguments(self, _):
                    validator=get_default_location_from_resource_group)
         c.argument('tags', tags_type)
         c.argument('test_inherit', type=validate_file_or_dict, help='Test Job Base Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
         c.argument('factory_vsts_configuration', action=AddFactoryVstsConfiguration, nargs='+', help='Factory\'s VSTS '
                    'repo information.', arg_group='RepoConfiguration')
         c.argument('factory_git_hub_configuration', action=AddFactoryGitHubConfiguration, nargs='+', help='Factory\'s '
@@ -121,7 +121,7 @@ def load_arguments(self, _):
         c.argument('if_match', type=str, help='ETag of the trigger entity.  Should only be specified for update, for '
                    'which it should match existing entity or can be * for unconditional update.')
         c.argument('properties', type=validate_file_or_dict, help='Properties of the trigger. Expected value: '
-                   'json-string/@json-file.')
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('datafactory trigger update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -132,7 +132,7 @@ def load_arguments(self, _):
                    'which it should match existing entity or can be * for unconditional update.')
         c.argument('description', type=str, help='Trigger description.')
         c.argument('annotations', type=validate_file_or_dict, help='List of tags that can be used for describing the '
-                   'trigger. Expected value: json-string/@json-file.')
+                   'trigger. Expected value: json-string/json-file/@json-file.')
         c.ignore('trigger')
 
     with self.argument_context('datafactory trigger delete') as c:
@@ -200,18 +200,6 @@ def load_arguments(self, _):
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
 
-    with self.argument_context('datafactory integration-runtime linked-integration-runtime create') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
-        c.argument('integration_runtime_name', type=str, help='The integration runtime name.')
-        c.argument('name', type=str, help='The name of the linked integration runtime.')
-        c.argument('subscription_id', type=str, help='The ID of the subscription that the linked integration runtime '
-                   'belongs to.')
-        c.argument('data_factory_name', type=str, help='The name of the data factory that the linked integration '
-                   'runtime belongs to.')
-        c.argument('data_factory_location', type=str, help='The location of the data factory that the linked '
-                   'integration runtime belongs to.')
-
     with self.argument_context('datafactory integration-runtime managed create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
@@ -227,9 +215,10 @@ def load_arguments(self, _):
         c.argument('fake_identity', action=AddFakeIdentity, nargs='+', help='This is only for az test.')
         c.argument('zones', nargs='+', help='This is only for az test.')
         c.argument('compute_properties', type=validate_file_or_dict, help='The compute resource for managed '
-                   'integration runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
+                   'integration runtime. Expected value: json-string/json-file/@json-file.', arg_group='Type '
+                   'Properties')
         c.argument('ssis_properties', type=validate_file_or_dict, help='SSIS properties for managed integration '
-                   'runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
+                   'runtime. Expected value: json-string/json-file/@json-file.', arg_group='Type Properties')
 
     with self.argument_context('datafactory integration-runtime self-hosted create') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -240,7 +229,7 @@ def load_arguments(self, _):
                    'update, for which it should match existing entity or can be * for unconditional update.')
         c.argument('description', type=str, help='Integration runtime description.')
         c.argument('linked_info', type=validate_file_or_dict, help='The base definition of a linked integration '
-                   'runtime. Expected value: json-string/@json-file.', arg_group='Type Properties')
+                   'runtime. Expected value: json-string/json-file/@json-file.', arg_group='Type Properties')
 
     with self.argument_context('datafactory integration-runtime update') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -331,6 +320,18 @@ def load_arguments(self, _):
         c.argument('if_none_match', type=str, help='ETag of the integration runtime entity. Should only be specified '
                    'for get. If the ETag matches the existing entity tag, or if * was provided, then no content will '
                    'be returned.')
+
+    with self.argument_context('datafactory linked-integration-runtime create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('factory_name', type=str, help='The factory name.', configured_default='factory')
+        c.argument('integration_runtime_name', type=str, help='The integration runtime name.')
+        c.argument('name', type=str, help='The name of the linked integration runtime.')
+        c.argument('subscription_id', type=str, help='The ID of the subscription that the linked integration runtime '
+                   'belongs to.')
+        c.argument('data_factory_name', type=str, help='The name of the data factory that the linked integration '
+                   'runtime belongs to.')
+        c.argument('data_factory_location', type=str, help='The location of the data factory that the linked '
+                   'integration runtime belongs to.')
 
     with self.argument_context('datafactory domain-service create') as c:
         c.argument('resource_group_name', resource_group_name_type)

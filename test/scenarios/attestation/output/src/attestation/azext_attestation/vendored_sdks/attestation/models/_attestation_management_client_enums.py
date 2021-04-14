@@ -33,3 +33,7 @@ class AttestationServiceStatus(with_metaclass(_CaseInsensitiveEnumMeta, str, Enu
     READY = "Ready"
     NOT_READY = "NotReady"
     ERROR = "Error"
+
+class OfferType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    VIRTUALMACHINE = "virtualmachine"

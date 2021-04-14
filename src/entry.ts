@@ -11,7 +11,7 @@ import {
     AzConfiguration,
 } from './utils/models';
 import { HeaderGenerator } from './generate/renders/Header';
-import { Host, Channel, startSession, Session } from '@azure-tools/autorest-extension-base';
+import { Host, Channel, startSession, Session } from '@autorest/extension-base';
 import { CodeModel, codeModelSchema } from '@azure-tools/codemodel';
 import { serialize } from '@azure-tools/codegen';
 
@@ -49,20 +49,15 @@ export async function processRequest(host: Host) {
         const plugin = new Entry(session);
         const result = await plugin.process();
         host.WriteFile(CodeGenConstants.AZ_ENTRY_CODE_MODEL_NAME, serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }
 
 function processSimpleOption() {
-    // handling extension-mode by default it's experimental.
-    let extensionMode = ExtensionMode.Experimental;
-    extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode) || extensionMode;
-    AzConfiguration.setValue(CodeGenConstants.extensionMode, extensionMode);
-
     // handling default debug
     if (isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.debug))) {
         AzConfiguration.setValue(CodeGenConstants.debug, false);
@@ -129,11 +124,22 @@ function processGenerationOption(session: Session<CodeModel>) {
     let isSdkNeeded = !cliCore;
     const generateSdk = AzConfiguration.getValue(CodeGenConstants.generateSDK);
     isSdkNeeded = isNullOrUndefined(generateSdk) ? isSdkNeeded : generateSdk === GenerateSdk.Yes;
-    const compatibleLevel =
-        AzConfiguration.getValue(CodeGenConstants.compatibleLevel) || cliCore
-            ? CompatibleLevel.Track1
-            : CompatibleLevel.Track2;
+    let compatibleLevel = cliCore ? CompatibleLevel.Track1 : CompatibleLevel.Track2;
+    compatibleLevel = !isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.compatibleLevel))
+        ? AzConfiguration.getValue(CodeGenConstants.compatibleLevel)
+        : compatibleLevel;
     const isTrack1 = compatibleLevel === CompatibleLevel.Track1;
+    session.message({
+        Channel: Channel.Information,
+        Text: 'NOTE: You are currently generating based on ' + compatibleLevel + ' SDK ',
+    });
+    // handling extension mode, if it's extension the default extension mode is experimental. if it's core, the default module mode is stable.
+    let extensionMode = ExtensionMode.Experimental;
+    if (cliCore) {
+        extensionMode = ExtensionMode.Stable;
+    }
+    extensionMode = AzConfiguration.getValue(CodeGenConstants.extensionMode) || extensionMode;
+    AzConfiguration.setValue(CodeGenConstants.extensionMode, extensionMode);
     AzConfiguration.setValue(CodeGenConstants.isCliCore, cliCore);
     AzConfiguration.setValue(CodeGenConstants.sdkNeeded, isSdkNeeded);
     AzConfiguration.setValue(CodeGenConstants.sdkTrack1, isTrack1);
@@ -147,6 +153,14 @@ function processFolderPath() {
     const pythonSdkOutputFolder: string = AzConfiguration.getValue(
         CodeGenConstants.pythonSdkOutputFolder,
     );
+
+    if (isNullOrUndefined(extensionName)) {
+        throw new Error('--az.extensions should not be null!');
+    }
+    if (isNullOrUndefined(pythonSdkOutputFolder)) {
+        throw new Error('--python-sdk-output-folder should not be null!');
+    }
+
     let sdkFolder = pythonSdkOutputFolder.replace(azOutputFolder, '');
     if (sdkFolder.startsWith('/')) {
         sdkFolder = sdkFolder.substring(1, sdkFolder.length);
@@ -159,6 +173,9 @@ function processFolderPath() {
             CodeGenConstants.azextFolder,
             'azext_' + extensionName.replace(/-/g, '_'),
         );
+    }
+    if (AzConfiguration.getValue(CodeGenConstants.isCliCore)) {
+        AzConfiguration.setValue(CodeGenConstants.azextFolder, '.');
     }
     if (
         !AzConfiguration.getValue(CodeGenConstants.sdkNeeded) &&

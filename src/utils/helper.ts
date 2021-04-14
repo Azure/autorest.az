@@ -7,7 +7,7 @@ import { values } from '@azure-tools/linq';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as request from 'request-promise-native';
-import { CodeGenConstants, ExtensionMode } from './models';
+import { AzConfiguration, CodeGenConstants, ExtensionMode } from './models';
 import * as child_process from 'child_process';
 
 export function changeCamelToDash(str: string): string {
@@ -370,8 +370,8 @@ export function ToMultiLine(
             while (
                 firstCharIdx < ret[0].length &&
                 ret[0][firstCharIdx] === ' ' &&
-                firstCharIdx < newLine.length &&
-                newLine[firstCharIdx] === ' '
+                ((firstCharIdx < newLine.length && newLine[firstCharIdx] === ' ') ||
+                    firstCharIdx >= newLine.length)
             )
                 firstCharIdx++;
             if (
@@ -489,9 +489,39 @@ export function findNodeInCodeModel(
                 let found = false;
                 for (const node of values(curNode)) {
                     if (node?.['language']?.cli?.cliKey === nextStep) {
-                        curNode = node;
-                        found = true;
-                        break;
+                        // if we have entered the last part of cliM4Path, we need to find out whether that node is what we want to find out.
+                        // In the case of object A and its property p1 has the same property, let's say, named type, modelerfour flattened p1
+                        // because both A.type and A.p1.type will becomes A's property directly, and modelerfour will rename A.p1.type
+                        // but cliM4Path is recording based on their cliKey, which is recorded prior to modelerfour flattener.
+                        // causing both A.type and A.p1.type will have the same cliM4Path.
+                        // In such case, we will use flattenedNames to make sure we are finding the right node.
+                        if (np === nodePaths.last) {
+                            const curNodeFlattenedNames = isNullOrUndefined(node['flattenedNames'])
+                                ? undefined
+                                : node['flattenedNames'].join(';');
+                            const nodeTobeFoundFlattendNames = isNullOrUndefined(
+                                nodeTobeFound?.flattenedNames,
+                            )
+                                ? undefined
+                                : nodeTobeFound.flattenedNames.join(';');
+                            if (
+                                curNodeFlattenedNames === nodeTobeFoundFlattendNames ||
+                                (!isNullOrUndefined(curNodeFlattenedNames) &&
+                                    !isNullOrUndefined(nodeTobeFoundFlattendNames) &&
+                                    (curNodeFlattenedNames.startsWith(nodeTobeFoundFlattendNames) ||
+                                        nodeTobeFoundFlattendNames.startsWith(
+                                            curNodeFlattenedNames,
+                                        )))
+                            ) {
+                                curNode = node;
+                                found = true;
+                                break;
+                            }
+                        } else {
+                            curNode = node;
+                            found = true;
+                            break;
+                        }
                     }
                 }
                 if (!found) {
@@ -565,7 +595,10 @@ export async function getLatestPyPiVersion(packageName: string) {
     const res = JSON.parse(response);
     const latest = res.urls[1];
     const filename = latest.filename;
-    const version = filename.replace(packageName + '-', '').replace('.zip', '');
+    let version = filename.replace(packageName + '-', '').replace('.zip', '');
+    if (AzConfiguration.getValue(CodeGenConstants.scenarioTestOnly) === true) {
+        version = '1.0.0';
+    }
     return version;
 }
 
@@ -725,4 +758,51 @@ export function getGitStatus(folder: string) {
 
 export function isNullOrUndefined(obj: any) {
     return obj === null || obj === undefined;
+}
+
+export function setPathValue(obj, path, value) {
+    if (Object(obj) !== obj) return obj; // When obj is not an object
+    // If not yet an array, get the keys from the string-path
+    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
+    path.slice(0, -1).reduce(
+        (
+            a,
+            c,
+            i, // Iterate all of them except the last one
+        ) =>
+            Object(a[c]) === a[c] // Does the key exist and is its value an object?
+                ? // Yes: then follow that path
+                  a[c]
+                : // No: create the key. Is the next key a potential array-index?
+                  (a[c] =
+                      Math.abs(path[i + 1]) >> 0 === +path[i + 1]
+                          ? [] // Yes: assign a new array object
+                          : {}), // No: assign a new plain object
+        obj,
+    )[path[path.length - 1]] = value; // Finally assign the value to the last key
+    return obj; // Return the top-level object to allow chaining
+}
+
+export function checkNested(obj, path: string) {
+    if (Object(obj) !== obj) return false; // When obj is not an object
+    const args = path.split('.');
+
+    for (let i = 0; i < args.length; i++) {
+        if (!obj || !(args[i] in obj)) {
+            return false;
+        }
+        obj = obj[args[i]];
+    }
+    return true;
+}
+
+export function thoughtAsTrue(t: any) {
+    return (
+        !isNullOrUndefined(t) && (t.toString().toLowerCase() === 'true' || typeof t === 'object')
+    );
+}
+
+export function isGeneratedExampleId(exampleId: string): boolean {
+    if (isNullOrUndefined(exampleId)) return false;
+    return exampleId.toLowerCase().endsWith('_gen');
 }

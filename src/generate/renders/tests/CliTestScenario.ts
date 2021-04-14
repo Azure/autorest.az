@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
@@ -11,31 +11,23 @@ import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants } from '../../../utils/models';
 
 export class CliTestScenario extends TemplateBase {
-    constructor(model: CodeModelAz, testFilename: string, configValue: any, groupName: string) {
-        super(model);
-        if (this.model.IsCliCore) {
-            this.relativePath = path.join(
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                testFilename,
-            );
-        } else {
-            this.relativePath = path.join(
-                model.AzextFolder,
-                PathConstants.testFolder,
-                PathConstants.latestFolder,
-                testFilename,
-            );
-        }
-        this.configValue = configValue;
-        this.groupName = groupName;
-    }
-
     public configValue: any;
     private groupName: string;
-
     private header: HeaderGenerator = new HeaderGenerator();
     private scenarios: string[] = [];
+
+    constructor(model: CodeModelAz, testFilename: string, configValue: any, groupName: string) {
+        super(model);
+        this.relativePath = path.join(
+            model.AzextFolder,
+            PathConstants.testFolder,
+            PathConstants.latestFolder,
+            testFilename,
+        );
+        this.configValue = configValue;
+        this.groupName = groupName;
+        this.skip = true;
+    }
 
     public async fullGeneration(): Promise<string[]> {
         this.StartGenerateAzureCliTestScenario();
@@ -77,7 +69,6 @@ export class CliTestScenario extends TemplateBase {
         classInfo.push('@try_manual');
         const testClassName = Capitalize(this.groupName) + scenarioName + 'Test';
         classInfo.push('class ' + testClassName + '(ScenarioTest):');
-        classInfo.push('');
 
         const subscriptionId = model.GetSubscriptionKey();
         if (subscriptionId) {
@@ -109,7 +100,7 @@ export class CliTestScenario extends TemplateBase {
             ),
         );
 
-        function buildSenario(header: HeaderGenerator, outputFunc: string[], minimum: boolean) {
+        function buildSenario(template: CliTestScenario, outputFunc: string[], minimum: boolean) {
             model.GetResourcePool().clearExampleParams();
 
             // go through the examples to generate steps
@@ -127,6 +118,7 @@ export class CliTestScenario extends TemplateBase {
                         commandParams,
                         examples,
                         minimum,
+                        config[ci].step,
                     )) {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
@@ -152,7 +144,7 @@ export class CliTestScenario extends TemplateBase {
                                         !disabled &&
                                         check.indexOf('json.loads') >= 0
                                     ) {
-                                        header.addImport('json');
+                                        template.header.addImport('json');
                                         jsonAdded = true;
                                     }
                                 }
@@ -169,7 +161,8 @@ export class CliTestScenario extends TemplateBase {
                         }
                     }
                     if (found) {
-                        header.addFromImport('.example_steps', [functionName]);
+                        template.header.addFromImport('.example_steps', [functionName]);
+                        template.skip = false;
                     } else {
                         outputFunc.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
                     }
@@ -184,7 +177,14 @@ export class CliTestScenario extends TemplateBase {
                                 )}):`,
                             ),
                         );
-                        steps.push('    pass');
+                        if (
+                            functionName.startsWith('setup_') &&
+                            model.GetResourcePool().hasTestResourceScenario
+                        ) {
+                            steps.push(...model.GetResourcePool().setupWithArmTemplate());
+                        } else {
+                            steps.push('    pass');
+                        }
                         steps.push('');
                         steps.push('');
                     }
@@ -198,7 +198,7 @@ export class CliTestScenario extends TemplateBase {
             outputFunc.push('');
             outputFunc.push('');
         }
-        buildSenario(this.header, funcScenario, false);
+        buildSenario(this, funcScenario, false);
         if (model.GenMinTest) {
             funcMinScenario.push('@try_manual');
             funcMinScenario.push(
@@ -208,12 +208,11 @@ export class CliTestScenario extends TemplateBase {
                     )}):`,
                 ),
             );
-            buildSenario(this.header, funcMinScenario, true);
+            buildSenario(this, funcMinScenario, true);
         }
         classInfo.push('    def __init__(self, *args, **kwargs):');
         classInfo.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);
         classInfo.push(...initiates);
-        classInfo.push('');
         classInfo.push('');
 
         function buildTestcase(testcaseName: string, minimum: boolean) {
@@ -234,7 +233,6 @@ export class CliTestScenario extends TemplateBase {
             );
             ret.push('        calc_coverage(__file__)');
             ret.push('        raise_if()');
-            ret.push('');
             ret.push('');
             return ret;
         }

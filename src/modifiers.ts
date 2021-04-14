@@ -5,7 +5,7 @@ import {
     OperationGroup,
     Parameter,
 } from '@azure-tools/codemodel';
-import { Session, startSession, Host, Channel } from '@azure-tools/autorest-extension-base';
+import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from './utils/helper';
@@ -93,7 +93,7 @@ function isWhereCommandDirective(it: any): it is WhereCommandDirective {
 }
 
 function hasSpecialChars(str: string): boolean {
-    return !/^[a-zA-Z0-9]+$/.test(str);
+    return !/^[a-zA-Z0-9- ]+$/.test(str);
 }
 
 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
@@ -106,7 +106,7 @@ const getPatternToMatch = (selector: string | undefined): RegExp | undefined => 
 
 export class Modifiers {
     codeModel: CodeModel;
-    allCommandGroups: Record<string, number>;
+    allCommandGroups: Record<string, number[]>;
     groupChanged: boolean;
 
     constructor(protected session: Session<CodeModel>) {
@@ -119,7 +119,10 @@ export class Modifiers {
         this.allCommandGroups = {};
         let groupIdx = 0;
         this.codeModel.operationGroups.forEach((operationGroup) => {
-            this.allCommandGroups[operationGroup.language['az'].command] = groupIdx;
+            if (isNullOrUndefined(this.allCommandGroups[operationGroup.language['az'].command])) {
+                this.allCommandGroups[operationGroup.language['az'].command] = [];
+            }
+            this.allCommandGroups[operationGroup.language['az'].command].push(groupIdx);
             groupIdx++;
         });
     }
@@ -156,6 +159,7 @@ export class Modifiers {
             !isNullOrUndefined(groupRegex) &&
             operationGroup.language['az'].command.match(groupRegex)
         ) {
+            const preIndexs = this.allCommandGroups[operationGroup.language['az'].command];
             if (
                 Object.prototype.hasOwnProperty.call(
                     this.allCommandGroups,
@@ -169,7 +173,7 @@ export class Modifiers {
                     ? operationGroup.language['az'].command.replace(groupRegex, groupReplacer)
                     : groupReplacer
                 : operationGroup.language['az'].command;
-            this.allCommandGroups[operationGroup.language['az'].command] = groupIdx;
+            this.allCommandGroups[operationGroup.language['az'].command] = preIndexs;
             operationGroup.language['az'].description =
                 groupDescriptionReplacer || operationGroup.language['az'].description;
             this.groupChanged = true;
@@ -184,7 +188,9 @@ export class Modifiers {
         groupIdx: number,
     ): void {
         const commandRegex = getPatternToMatch(directive.where.command);
+        const groupRegex = getPatternToMatch(directive.where.group);
         const commandReplacer = directive.set !== undefined ? directive.set.command : undefined;
+        const groupReplacer = directive.set !== undefined ? directive.set.group : undefined;
         const commandDescriptionReplacer =
             directive.set !== undefined ? directive.set['command-description'] : undefined;
         if (this.groupChanged) {
@@ -216,22 +222,29 @@ export class Modifiers {
             let newAzName = newCommandArr.last;
             while (commonIdx >= 0) {
                 const groupName = newCommandArr.slice(0, commonIdx + 1).join(' ');
-                const newIndex = this.allCommandGroups[groupName];
-                if (!isNullOrUndefined(newIndex)) {
+                const newIndexes = this.allCommandGroups[groupName];
+                if (!isNullOrUndefined(newIndexes) && newIndexes.length > 0) {
                     newAzName = newCommandArr.slice(commonIdx + 1, newCommandArr.length).join(' ');
                     newGroup = newCommandArr.slice(0, commonIdx + 1).join(' ');
-                    if (groupIdx !== newIndex) {
+                    if (newIndexes.indexOf(groupIdx) === -1) {
                         this.codeModel.operationGroups[groupIdx].operations.splice(opIndex, 1);
-                        this.codeModel.operationGroups[newIndex].operations.push(operation);
+                        operation.language['az'][
+                            'originalOperationGroup'
+                        ] = this.codeModel.operationGroups[groupIdx];
+                        this.codeModel.operationGroups[groupIdx].language['az'][
+                            'referenced'
+                        ] = true;
+                        // all the operation groups in the newIndexes have the same commandGroupName. therefore it doesn't matter when index we put it into.
+                        this.codeModel.operationGroups[newIndexes[0]].operations.push(operation);
                     }
                     break;
                 } else if (operationGroup.operations.length === 1) {
                     operationGroup.language['az'].command = newGroup;
-                    const oldIndex = this.allCommandGroups[oldGroup];
-                    if (!isNullOrUndefined(oldIndex)) {
+                    const oldIndexes = this.allCommandGroups[oldGroup];
+                    if (!isNullOrUndefined(oldIndexes) && oldIndexes.length === 1) {
                         delete this.allCommandGroups[oldGroup];
                     }
-                    this.allCommandGroups[newGroup] = groupIdx;
+                    this.allCommandGroups[newGroup] = [groupIdx];
                     break;
                 }
                 commonIdx--;
@@ -246,13 +259,55 @@ export class Modifiers {
             }
             operation.language['az'].name = newAzName;
             operation.language['az'].command = newCommand;
-            if (newGroup != subCommandGroup) {
+            if (
+                (newGroup.indexOf(oldGroup, 0) > -1 && newGroup != oldGroup) ||
+                newAzName.indexOf(' ') > -1
+            ) {
                 operation.language['az'].subCommandGroup = subCommandGroup;
             }
             this.session.message({
                 Channel: Channel.Warning,
                 Text: ' newAzName:' + newAzName,
             });
+        }
+        if (
+            !isNullOrUndefined(operation.language['az'].subCommandGroup) &&
+            !isNullOrUndefined(groupRegex) &&
+            operation.language['az'].subCommandGroup.match(groupRegex)
+        ) {
+            operation.language['az'].subCommandGroup = groupReplacer
+                ? groupRegex
+                    ? operation.language['az'].subCommandGroup.replace(groupRegex, groupReplacer)
+                    : groupReplacer
+                : operation.language['az'].subCommandGroup;
+            if (groupReplacer.match(operationGroup.language['az'].command)) {
+                const tmpCmdRegex = new RegExp(groupRegex.source.replace('$', ''), 'g');
+                const tmpNameRegex = new RegExp(
+                    groupRegex.source
+                        .replace(operationGroup.language['az'].command + ' ', '')
+                        .replace('$', ''),
+                    'g',
+                );
+                const tmpNameReplacer = groupReplacer.replace(
+                    operationGroup.language['az'].command + ' ',
+                    '',
+                );
+                operation.language['az'].command = groupReplacer
+                    ? tmpCmdRegex
+                        ? operation.language['az'].command.replace(tmpCmdRegex, groupReplacer)
+                        : groupReplacer
+                    : operation.language['az'].command;
+                operation.language['az'].name = tmpNameReplacer
+                    ? tmpNameRegex
+                        ? operation.language['az'].name.replace(tmpNameRegex, tmpNameReplacer)
+                        : tmpNameReplacer
+                    : operation.language['az'].name;
+            } else {
+                this.session.message({
+                    Channel: Channel.Warning,
+                    Text: ' Can not change the sub command group parent group name',
+                });
+            }
         }
     }
 
@@ -318,10 +373,10 @@ export async function processRequest(host: Host) {
         const plugin = new Modifiers(session);
         const result = await plugin.process();
         host.WriteFile('modifiers-temp-output.yaml', serialize(result));
-    } catch (E) {
+    } catch (error) {
         if (debug) {
-            console.error(`${__filename} - FAILURE  ${JSON.stringify(E)} ${E.stack}`);
+            console.error(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
-        throw E;
+        throw error;
     }
 }

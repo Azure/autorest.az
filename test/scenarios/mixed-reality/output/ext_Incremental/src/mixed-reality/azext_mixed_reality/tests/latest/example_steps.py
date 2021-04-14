@@ -14,7 +14,7 @@ from .. import try_manual
 
 # EXAMPLE: /RemoteRenderingAccounts/put/Create remote rendering account
 @try_manual
-def step_create(test, rg, checks=None):
+def step_create(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account create '
@@ -26,7 +26,7 @@ def step_create(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/get/Get remote rendering account
 @try_manual
-def step_show(test, rg, checks=None):
+def step_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account show '
@@ -37,7 +37,7 @@ def step_show(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by resource group
 @try_manual
-def step_list(test, rg, checks=None):
+def step_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account list '
@@ -47,7 +47,7 @@ def step_list(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by subscription
 @try_manual
-def step_list2(test, rg, checks=None):
+def step_list2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account list '
@@ -57,7 +57,7 @@ def step_list2(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/patch/Update remote rendering account
 @try_manual
-def step_update(test, rg, checks=None):
+def step_update(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account update '
@@ -70,7 +70,7 @@ def step_update(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/post/List remote rendering account key
 @try_manual
-def step_list_key(test, rg, checks=None):
+def step_list_key(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account list-key '
@@ -81,7 +81,7 @@ def step_list_key(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/post/Regenerate remote rendering account keys
 @try_manual
-def step_regenerate_key(test, rg, checks=None):
+def step_regenerate_key(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account regenerate-key '
@@ -93,7 +93,7 @@ def step_regenerate_key(test, rg, checks=None):
 
 # EXAMPLE: /RemoteRenderingAccounts/delete/Delete remote rendering account
 @try_manual
-def step_delete(test, rg, checks=None):
+def step_delete(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account delete -y '
@@ -104,7 +104,7 @@ def step_delete(test, rg, checks=None):
 
 # EXAMPLE: /SpatialAnchorsAccounts/post/Regenerate spatial anchors account keys
 @try_manual
-def step_regenerate_key2(test, rg, checks=None):
+def step_regenerate_key2(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az spatial-anchors-account regenerate-key '
@@ -112,4 +112,3 @@ def step_regenerate_key2(test, rg, checks=None):
              '--serial 1 '
              '--resource-group "{rg}"',
              checks=checks)
-

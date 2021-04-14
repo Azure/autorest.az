@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+helps['kusto'] = '''
+    type: group
+    short-summary: Manage Kusto
+'''
+
 helps['kusto cluster'] = """
     type: group
     short-summary: Manage cluster with kusto
@@ -43,14 +48,6 @@ helps['kusto cluster create'] = """
     type: command
     short-summary: "Create a Kusto cluster."
     parameters:
-      - name: --sku
-        short-summary: "The SKU of the cluster."
-        long-summary: |
-            Usage: --sku name=XX capacity=XX tier=XX
-
-            name: Required. SKU name.
-            capacity: The number of instances of the cluster.
-            tier: Required. SKU tier.
       - name: --trusted-external-tenants
         short-summary: "The cluster's external tenants."
         long-summary: |
@@ -87,23 +84,15 @@ helps['kusto cluster create'] = """
     examples:
       - name: KustoClustersCreateOrUpdate
         text: |-
-               az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
---enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" \
-capacity=2 tier="Standard" --resource-group "kustorptest"
+               az kusto cluster create --cluster-name "kustoclusterrptest4" --type "SystemAssigned" --location \
+"westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --name "Standard_L8s" \
+--capacity 2 --tier "Standard" --resource-group "kustorptest"
 """
 
 helps['kusto cluster update'] = """
     type: command
     short-summary: "Update a Kusto cluster."
     parameters:
-      - name: --sku
-        short-summary: "The SKU of the cluster."
-        long-summary: |
-            Usage: --sku name=XX capacity=XX tier=XX
-
-            name: Required. SKU name.
-            capacity: The number of instances of the cluster.
-            tier: Required. SKU tier.
       - name: --trusted-external-tenants
         short-summary: "The cluster's external tenants."
         long-summary: |
@@ -140,8 +129,8 @@ helps['kusto cluster update'] = """
     examples:
       - name: KustoClustersUpdate
         text: |-
-               az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" \
---enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" \
+               az kusto cluster update --cluster-name "kustoclusterrptest4" --type "SystemAssigned" --location \
+"westus" --enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" \
 key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
 """
 

@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
@@ -6,6 +6,7 @@
 import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
 import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
+import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
 
 export class MethodParam {
     public value: any;
@@ -77,7 +78,7 @@ export class CommandExample {
     public Method_IsLongRun: boolean;
     public MethodParams: MethodParam[];
     public ExampleObj: any;
-    public commandStringItems;
+    public commandStringItems: string[];
     public CommandString: string;
     public WaitCommandString: string;
 }
@@ -99,6 +100,7 @@ export interface CodeModelAz {
     azOutputFolder: string;
     Extension_Name: string;
     Extension_Parent: string;
+    Extension_Description: string;
     Extension_NameUnderscored: string;
     ConfiguredScenario: boolean;
     Extension_NameClass: string;
@@ -109,21 +111,26 @@ export interface CodeModelAz {
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
     ResourceType: string | undefined;
-    isComplexSchema(type: string): boolean;
+    isComplexSchema(type: string, param: any): boolean;
 
-    SelectFirstCommandGroup(): boolean;
-    SelectNextCommandGroup(): boolean;
+    SelectFirstCommandGroup(needRefer?: boolean): boolean;
+    SelectNextCommandGroup(needRefer?: boolean): boolean;
 
     CommandGroup: OperationGroup;
     CommandGroup_Name: string;
     CommandGroup_Help: string;
     CommandGroup_DefaultName: string;
     CommandGroup_HasShowCommand: boolean;
+    CommandGroup_HasCommand: boolean;
     CommandGroup_CliKey: string;
     CommandGroup_MaxApi: string;
     CommandGroup_MinApi: string;
     CommandGroup_ResourceType: string | undefined;
     CommandGroup_Mode: string;
+    CommandGroup_ClientFactoryName(group?: OperationGroup): string;
+    CommandGroup_OperationTmplName: string;
+    CommandGroup_CustomCommandTypeName(group?: OperationGroup): string;
+    CommandGroup_Referenced: boolean;
 
     SelectFirstCommand(): boolean;
     SelectNextCommand(): boolean;
@@ -133,6 +140,8 @@ export interface CodeModelAz {
     Command_MethodName: string;
     Command_FunctionName: string;
     Command_GetOriginalOperation: any;
+    Command_OriginalCommandGroup: OperationGroup;
+    Command_ClientFactoryName: string;
     Command_NeedGeneric: boolean;
     Command_MaxApi: string;
     Command_MinApi: string;
@@ -143,6 +152,8 @@ export interface CodeModelAz {
     Command_IsLongRun: boolean;
     Command_SubGroupName: string;
     Command_Mode: string;
+    Command_Type: string;
+    Command_GenericSetterArgName: string;
 
     SelectFirstMethod(): boolean;
     SelectNextMethod(): boolean;
@@ -214,7 +225,7 @@ export interface CodeModelAz {
     Parameter_IsList(Parameter): boolean;
     Parameter_IsListOfSimple(Parameter): boolean;
     Parameter_IsPolyOfSimple(Parameter): boolean;
-    Schema_ActionName(Schema): string;
+    MethodParameter_ActionName: string;
     Parameter_SetAzNameMapsTo(string, Parameter): void;
     Parameter_InGlobal(Parameter): boolean;
     Parameter_IsHidden(Parameter): boolean;
@@ -236,7 +247,7 @@ export interface CodeModelAz {
     Schema_FlattenedFrom(Schema): Schema;
     Schema_IsPositional(Schema): boolean;
 
-    GetModuleOperationName(): string;
+    GetModuleOperationName(group?: OperationGroup): string;
     GetModuleOperationNamePython(): string;
     GetModuleOperationNamePythonUpper(): string;
     GetPythonNamespace(): string;
@@ -249,17 +260,23 @@ export interface CodeModelAz {
     GenerateTestInit(): void;
     SelectFirstExample(): boolean;
     SelectNextExample(): boolean;
-    FindExampleById(id: string, commandParams: any, examples: any[], minimum: boolean): string[][];
+    FindExampleById(
+        id: string,
+        commandParams: any,
+        examples: any[],
+        minimum: boolean,
+        step?: TestStepExampleFileRestCall,
+    ): string[][];
     SelectFirstAzExample(): boolean;
     SelectNextAzExample(): boolean;
     AzExample: CommandExample;
     AzExample_CommandString: string;
     AzExample_CommandStringItems: string[];
-    GetExamples(): CommandExample[];
+    GetExamples(includeGenerated: boolean): CommandExample[];
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
-    FindExampleWaitById(id: string): string[][];
+    FindExampleWaitById(id: string, step?: TestStepExampleFileRestCall): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
@@ -273,4 +290,6 @@ export interface CodeModelAz {
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
     );
+    GetActionData(): any[];
+    GetTestUniqueResource: boolean;
 }

@@ -12,6 +12,11 @@
 from knack.help_files import helps
 
 
+helps['attestation'] = '''
+    type: group
+    short-summary: Manage Attestation
+'''
+
 helps['attestation'] = """
     type: group
     short-summary: Manage operation with attestation
