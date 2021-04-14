@@ -40,6 +40,9 @@ export enum CodeGenConstants {
     azureCliExtFolder = 'azure-cli-extension-folder',
     pythonSdkOutputFolder = 'python-sdk-output-folder',
     cliCoreLib = 'cli-core-lib',
+    disableChecks = 'disable-checks',
+    randomizeNames = 'randomize-names',
+    testUniqueResource = 'test-unique-resource',
 
     // some configuration keys under az section
     namespace = 'namespace',
@@ -66,30 +69,30 @@ export function isTrack2(pythonPackageName: string): boolean {
     );
 }
 
-export function mapToPythonPackage(swaggerName: string): string {
+export function mapToPythonPackage(defaultName: string): string {
     const map = {};
-    if (Object.prototype.hasOwnProperty.call(map, swaggerName)) {
-        return map[swaggerName];
+    if (Object.prototype.hasOwnProperty.call(map, defaultName)) {
+        return map[defaultName];
     }
-    return swaggerName;
+    return defaultName;
 }
 
-export function mapToPythonNamespace(swaggerName: string): string {
+export function mapToPythonNamespace(defaultName: string): string {
     const map = {};
-    if (Object.prototype.hasOwnProperty.call(map, swaggerName)) {
-        return map[swaggerName];
+    if (Object.prototype.hasOwnProperty.call(map, defaultName)) {
+        return map[defaultName];
     }
-    return swaggerName;
+    return defaultName;
 }
 
-export function mapToCliName(swaggerName: string): string {
+export function mapToCliName(defaultName: string): string {
     const map = {
         compute: 'vm',
     };
-    if (Object.prototype.hasOwnProperty.call(map, swaggerName)) {
-        return map[swaggerName];
+    if (Object.prototype.hasOwnProperty.call(map, defaultName)) {
+        return map[defaultName];
     }
-    return swaggerName;
+    return defaultName;
 }
 
 export function getRPFolder(parentsOptions: { [key: string]: any }): string {
@@ -127,14 +130,11 @@ export function getReadmeFolder(parentsOptions: Record<string, any>): string {
 }
 
 export class AzConfiguration {
-    private static dict: unknown;
+    public static dict: Record<string, any> = {};
+    public static origin: Record<string, any> = {};
 
-    constructor(config: unknown = null) {
-        if (!isNullOrUndefined(config)) {
-            AzConfiguration.dict = config;
-        } else {
-            AzConfiguration.dict = {};
-        }
+    private constructor() {
+        // don't allow to create an instance.
     }
 
     public static getValue(key: CodeGenConstants) {
@@ -146,10 +146,28 @@ export class AzConfiguration {
     }
 }
 
-export async function genDefaultConfiguration(
+export function getExtensionName(): string {
+    for (const k in AzConfiguration.origin) {
+        const c = 'package-';
+        if (k.startsWith(c)) return k.substr(c.length);
+    }
+    return undefined; // in core mode
+}
+
+export function clone(a) {
+    return JSON.parse(JSON.stringify(a));
+}
+
+export async function getAllConfiguration(
     session: Session<CodeModel>,
 ): Promise<Record<string, any>> {
-    const config = await session.getValue('');
+    return await session.getValue('');
+}
+
+export function genDefaultConfiguration(
+    originConfiguration: Record<string, any>,
+): Record<string, any> {
+    const config = clone(originConfiguration);
 
     // set az default values
     const parentsSetting = config[CodeGenConstants.parents] || {};
@@ -157,12 +175,40 @@ export async function genDefaultConfiguration(
         config[CodeGenConstants.az] = {};
     const azSettings = config[CodeGenConstants.az];
     const swaggerName = getRPFolder(parentsSetting);
+    const extensionName = getExtensionName();
+    const defaultName = isNullOrUndefined(extensionName) ? swaggerName : extensionName;
     if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.extensions))
-        azSettings[CodeGenConstants.extensions] = mapToCliName(swaggerName);
-    if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.packageName))
-        azSettings[CodeGenConstants.packageName] = 'azure-mgmt-' + mapToPythonPackage(swaggerName);
-    if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.namespace))
-        azSettings[CodeGenConstants.namespace] = 'azure.mgmt.' + mapToPythonNamespace(swaggerName);
+        azSettings[CodeGenConstants.extensions] = mapToCliName(defaultName);
+    if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.packageName)) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                AzConfiguration.dict,
+                CodeGenConstants.packageName,
+            ) &&
+            AzConfiguration.dict[CodeGenConstants.packageName].startsWith('azure-mgmt-')
+        ) {
+            azSettings[CodeGenConstants.packageName] =
+                AzConfiguration.dict[CodeGenConstants.packageName];
+        } else {
+            azSettings[CodeGenConstants.packageName] =
+                'azure-mgmt-' + mapToPythonPackage(defaultName);
+        }
+    }
+    if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.namespace)) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                AzConfiguration.dict,
+                CodeGenConstants.namespace,
+            ) &&
+            AzConfiguration.dict[CodeGenConstants.namespace].startsWith('azure.mgmt.')
+        ) {
+            azSettings[CodeGenConstants.namespace] =
+                AzConfiguration.dict[CodeGenConstants.namespace];
+        } else {
+            azSettings[CodeGenConstants.namespace] =
+                'azure.mgmt.' + mapToPythonNamespace(defaultName);
+        }
+    }
 
     // set azure-cli default value
     if (isNullOrUndefined(config[CodeGenConstants.azureCliFolder])) {
@@ -176,27 +222,56 @@ export async function genDefaultConfiguration(
         );
     }
 
+    // set azure-cli-extension default value
+    if (isNullOrUndefined(config[CodeGenConstants.azureCliExtFolder])) {
+        config[CodeGenConstants.azureCliExtFolder] = path.join(
+            getReadmeFolder(config[CodeGenConstants.parents]),
+            '..',
+            '..',
+            '..',
+            '..',
+            'azure-cli-extensions',
+        );
+    }
+
     // set az-output-folder default value
     if (isNullOrUndefined(config[CodeGenConstants.azOutputFolder])) {
-        config[CodeGenConstants.azOutputFolder] = path.join(
-            config[CodeGenConstants.azureCliFolder],
-            'src',
-            'azure-cli',
-            'azure',
-            'cli',
-            'command_modules',
-            mapToCliName(getRPFolder(parentsSetting)),
-        );
+        if (isNullOrUndefined(extensionName)) {
+            config[CodeGenConstants.azOutputFolder] = path.join(
+                config[CodeGenConstants.azureCliFolder],
+                'src',
+                'azure-cli',
+                'azure',
+                'cli',
+                'command_modules',
+                mapToCliName(defaultName),
+            );
+        } else {
+            config[CodeGenConstants.azOutputFolder] = path.join(
+                config[CodeGenConstants.azureCliExtFolder],
+                'src',
+                mapToCliName(defaultName),
+            );
+        }
     }
 
     // set python-sdk-output-folder default value
     if (isNullOrUndefined(config[CodeGenConstants.pythonSdkOutputFolder])) {
-        const cliName = mapToCliName(getRPFolder(parentsSetting));
-        config[CodeGenConstants.pythonSdkOutputFolder] = path.join(
-            config[CodeGenConstants.azOutputFolder],
-            'vendored_sdks',
-            cliName,
-        );
+        const cliName = mapToCliName(defaultName);
+        if (isNullOrUndefined(extensionName)) {
+            config[CodeGenConstants.pythonSdkOutputFolder] = path.join(
+                config[CodeGenConstants.azOutputFolder],
+                'vendored_sdks',
+                mapToCliName(defaultName),
+            );
+        } else {
+            config[CodeGenConstants.pythonSdkOutputFolder] = path.join(
+                config[CodeGenConstants.azOutputFolder],
+                `azext_${cliName}`,
+                'vendored_sdks',
+                cliName,
+            );
+        }
     }
     return config;
 }

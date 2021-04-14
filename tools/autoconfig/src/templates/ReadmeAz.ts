@@ -9,69 +9,123 @@ import {
     getHiddenOperations,
     groupOperations,
     RPInfo,
-    isTrack2,
+    isNullOrUndefined,
+    getExtensionName,
 } from '../helper';
 import * as fs from 'fs';
 import { CodeModel } from '@azure-tools/codemodel';
+import { isNullishCoalesce } from 'typescript';
 
-function usePathVariable(p: string): string {
+function usePathVariable(p: string, extensionName: string | undefined): string {
     const cliFolder = AzConfiguration.getValue(CodeGenConstants.azureCliFolder);
     const cliExtensionFolder = AzConfiguration.getValue(CodeGenConstants.azureCliExtFolder);
     const azOutputFolder = AzConfiguration.getValue(CodeGenConstants.azOutputFolder);
-    if (p.startsWith(cliFolder) && p !== cliFolder) {
-        p = `$(azure-cli-folder)${p.slice(cliFolder.length)}`;
-    } else if (p.startsWith(cliExtensionFolder) && p !== cliExtensionFolder) {
-        p = `$(azure-cli-extension-folder)${p.slice(cliExtensionFolder.length)}`;
-    } else if (p.startsWith(azOutputFolder) && p !== azOutputFolder) {
+    if (isNullOrUndefined(extensionName)) {
+        if (p.startsWith(cliFolder) && p !== cliFolder) {
+            p = `$(azure-cli-folder)${p.slice(cliFolder.length)}`;
+        }
+    } else {
+        if (p.startsWith(cliExtensionFolder) && p !== cliExtensionFolder) {
+            p = `$(azure-cli-extension-folder)${p.slice(cliExtensionFolder.length)}`;
+        }
+    }
+    if (p.startsWith(azOutputFolder) && p !== azOutputFolder) {
         p = `$(az-output-folder)${p.slice(azOutputFolder.length)}`;
     }
     p = p.split('\\').join('/');
     return p;
 }
 
-function genBasicInfo(output: string[]) {
-    output.push('');
-    output.push('');
-    output.push('## Azure CLI');
-    output.push('');
-    output.push('These settings apply only when `--az` is specified on the command line.');
-    output.push('');
-    output.push('``` yaml $(az)');
+function genBasicInfo(output: string[], extensionName: string | undefined): boolean {
+    const newConfigs = [];
+    let ret = false;
+
     const azConfig: Record<string, any> = AzConfiguration.getValue(CodeGenConstants.az);
-    output.push('az:');
-    output.push(`  extensions: ${azConfig[CodeGenConstants.extensions]}`);
-    output.push(`  namespace: ${azConfig[CodeGenConstants.namespace]}`);
-    output.push(`  package-name: ${azConfig[CodeGenConstants.packageName]}`);
-    output.push(`  disable-checks: true`);
-    output.push(`  randomize-names: true`);
-    output.push(`  test-unique-resource: true`);
-    output.push(
-        `az-output-folder: ${usePathVariable(
-            AzConfiguration.getValue(CodeGenConstants.azOutputFolder),
-        )}`,
-    );
-    output.push(
-        `python-sdk-output-folder: "${usePathVariable(
-            AzConfiguration.getValue(CodeGenConstants.pythonSdkOutputFolder),
-        )}"`,
-    );
-    output.push(
-        `compatible-level: ${
-            isTrack2(azConfig[CodeGenConstants.packageName]) ? 'track2' : 'track1'
-        }`,
-    );
-    output.push('```');
+    if (
+        isNullOrUndefined(
+            AzConfiguration.origin[CodeGenConstants.az]?.[CodeGenConstants.extensions],
+        )
+    ) {
+        newConfigs.push(`  extensions: ${azConfig[CodeGenConstants.extensions]}`);
+        ret = true;
+    }
+    if (
+        isNullOrUndefined(AzConfiguration.origin[CodeGenConstants.az]?.[CodeGenConstants.namespace])
+    ) {
+        newConfigs.push(`  namespace: ${azConfig[CodeGenConstants.namespace]}`);
+    }
+    if (
+        isNullOrUndefined(
+            AzConfiguration.origin[CodeGenConstants.az]?.[CodeGenConstants.packageName],
+        )
+    ) {
+        newConfigs.push(`  package-name: ${azConfig[CodeGenConstants.packageName]}`);
+    }
+    if (ret) {
+        newConfigs.push(`  disable-checks: true`);
+        newConfigs.push(`  randomize-names: true`);
+        newConfigs.push(`  test-unique-resource: true`);
+    }
+    if (newConfigs.length > 0) {
+        newConfigs.unshift('az:');
+    }
+
+    if (isNullOrUndefined(AzConfiguration.origin[CodeGenConstants.azOutputFolder])) {
+        newConfigs.push(
+            `az-output-folder: ${usePathVariable(
+                AzConfiguration.getValue(CodeGenConstants.azOutputFolder),
+                extensionName,
+            )}`,
+        );
+    }
+
+    if (isNullOrUndefined(AzConfiguration.origin[CodeGenConstants.pythonSdkOutputFolder])) {
+        newConfigs.push(
+            `python-sdk-output-folder: "${usePathVariable(
+                AzConfiguration.getValue(CodeGenConstants.pythonSdkOutputFolder),
+                extensionName,
+            )}"`,
+        );
+    }
+
+    if (isNullOrUndefined(AzConfiguration.origin[CodeGenConstants.compatibleLevel])) {
+        newConfigs.push(`compatible-level: 'track2'`);
+    }
+
+    if (newConfigs.length > 0) {
+        if (isNullOrUndefined(extensionName)) {
+            newConfigs.unshift('``` yaml $(az) && $(target-mode) == "core"');
+        } else {
+            newConfigs.unshift('``` yaml $(az) && $(package-' + extensionName + ')');
+        }
+        newConfigs.unshift('');
+        newConfigs.push('```');
+    }
+    output.push(...newConfigs);
+    return ret;
 }
 
-const startTagLine = '### -----start of auto generated cli-directive----- ###';
-const endTagLine = '### -----end of auto generated cli-directive----- ###';
+function genTagLines(): [string, string] {
+    let extension = getExtensionName();
+    if (!isNullOrUndefined(extension)) {
+        extension = ` for extension ${extension}`;
+    } else {
+        extension = '';
+    }
+    const startTagLine = `### -----start of auto generated cli-directive${extension}----- ###`;
+    const endTagLine = `### -----end of auto generated cli-directive${extension}----- ###`;
+    return [startTagLine, endTagLine];
+}
 
-function findGenArea(output: string[]): [number, number] {
+function findGenArea(output: string[], startTagLine: string, endTagLine: string): [number, number] {
     let start = -1,
         end = -1;
     for (let i = 0; i < output.length; i++) {
         if (start < 0 && output[i].indexOf(startTagLine) >= 0) start = i;
-        if (output[i].indexOf(endTagLine) >= 0) end = i;
+        if (start >= 0 && output[i].indexOf(endTagLine) >= 0) {
+            end = i;
+            break;
+        }
     }
     return [start, end];
 }
@@ -81,15 +135,21 @@ export function GenerateReadmeAz(
     generateTargets: RPInfo,
     fullPath: string,
 ): string[] {
+    const extensionName = getExtensionName();
+    const [startTagLine, endTagLine] = genTagLines();
     const output: string[] = [];
-    let alreadyExists = false;
+
     if (!fs.existsSync(fullPath)) {
-        genBasicInfo(output);
+        output.push('');
+        output.push('');
+        output.push('## Azure CLI');
+        output.push('');
+        output.push('These settings apply only when `--az` is specified on the command line.');
     } else {
         output.push(...fs.readFileSync(fullPath).toString().split('\n'));
-        alreadyExists = true;
     }
 
+    const alreadyExists = !genBasicInfo(output, extensionName);
     let missingOps;
     if (alreadyExists) {
         missingOps = getHiddenOperations(model, generateTargets);
@@ -101,11 +161,16 @@ export function GenerateReadmeAz(
     }
 
     if (missingOps.length > 0) {
-        let area = findGenArea(output);
+        let area = findGenArea(output, startTagLine, endTagLine);
         if (area[1] <= 0) {
             output.push(``);
             output.push(startTagLine);
-            output.push('``` yaml $(az)');
+            if (isNullOrUndefined(extensionName)) {
+                output.push('``` yaml $(az) && $(target-mode) == "core"');
+            } else {
+                output.push('``` yaml $(az) && $(package-' + extensionName + ')');
+            }
+
             output.push(`cli:`);
             output.push(`  cli-directive:`);
             if (!alreadyExists) {
@@ -116,7 +181,7 @@ export function GenerateReadmeAz(
             }
             output.push('```');
             output.push(endTagLine);
-            area = findGenArea(output);
+            area = findGenArea(output, startTagLine, endTagLine);
         }
         const grouped = groupOperations(missingOps);
         const newDirective = [];

@@ -11,6 +11,7 @@ import {
     getReadmeFolder,
     CodeGenConstants,
     RPInfo,
+    getAllConfiguration,
 } from './helper';
 import { GenerateReadmeAz } from './templates/ReadmeAz';
 import { GenerateReadmeCli } from './templates/ReadmeCli';
@@ -20,7 +21,8 @@ import * as path from 'path';
 
 export async function processRequest(host: Host): Promise<void> {
     const session = await startSession<CodeModel>(host, {}, codeModelSchema);
-    new AzConfiguration(await genDefaultConfiguration(session));
+    AzConfiguration.origin = await getAllConfiguration(session);
+    AzConfiguration.dict = genDefaultConfiguration(AzConfiguration.origin);
     const model = session.model;
     const readmeFolder = getReadmeFolder(AzConfiguration.getValue(CodeGenConstants.parents));
     const rawdata = fs
