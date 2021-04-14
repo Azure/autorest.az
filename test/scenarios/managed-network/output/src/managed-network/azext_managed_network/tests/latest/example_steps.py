@@ -115,6 +115,7 @@ def step_mn_group_create(test, checks=None):
              checks=[])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
+             '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=checks)
 
@@ -129,6 +130,7 @@ def step_mn_group_create_min(test, checks=None):
              checks=[])
     test.cmd('az managed-network mn group wait --created '
              '--group-name "{myManagedNetworkGroup}" '
+             '--managed-network-name "{myManagedNetwork}" '
              '--resource-group "{rg}"',
              checks=checks)
 

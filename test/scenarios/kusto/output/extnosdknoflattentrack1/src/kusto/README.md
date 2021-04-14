@@ -177,7 +177,7 @@ az kusto attached-database-configuration create --name "attachedDatabaseConfigur
     --database-name "kustodatabase" --default-principals-modification-kind "Union" --resource-group "kustorptest" 
 
 az kusto attached-database-configuration wait --created --name "{myAttachedDatabaseConfiguration2}" \
-    --resource-group "{rg}" 
+    --cluster-name "{myCluster}" --resource-group "{rg}" 
 ```
 ##### Show #####
 ```

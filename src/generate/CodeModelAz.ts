@@ -67,6 +67,7 @@ export class ExampleParam {
 export class CommandExample {
     // this should be "create", "update", "list", "show", or custom name
     public Method: string;
+    public Command: string;
     public Id: string;
     public Title: string;
     public Parameters: ExampleParam[];
@@ -80,7 +81,6 @@ export class CommandExample {
     public ExampleObj: any;
     public commandStringItems: string[];
     public CommandString: string;
-    public WaitCommandString: string;
 }
 
 export interface CodeModelAz {
@@ -267,6 +267,7 @@ export interface CodeModelAz {
         minimum: boolean,
         step?: TestStepExampleFileRestCall,
     ): string[][];
+    GetExampleWait(example: CommandExample): string[];
     SelectFirstAzExample(): boolean;
     SelectNextAzExample(): boolean;
     AzExample: CommandExample;

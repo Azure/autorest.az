@@ -65,7 +65,7 @@ export class CliTopAction extends TemplateBase {
                 const keepLineIdx = keepHeaderLines(baseSplit);
                 let hasLoadLogic = false;
                 if (skipLineIdx !== -1) {
-                    for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
+                    for (let i: number = skipLineIdx; i < baseSplit.length; ++i) {
                         if (baseSplit[i].indexOf('from .generated.action import *') > -1) {
                             hasLoadLogic = true;
                             break;

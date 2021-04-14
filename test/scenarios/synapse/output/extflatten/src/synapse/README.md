@@ -17,7 +17,8 @@ az synapse big-data-pool create --location "West US 2" --auto-pause delay-in-min
     --node-size-family "MemoryOptimized" --spark-events-folder "/events" --spark-version "2.4" --tags key="value" \
     --name "ExamplePool" --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" 
 
-az synapse big-data-pool wait --created --name "{myBigDataPool}" --resource-group "{rg}"
+az synapse big-data-pool wait --created --name "{myBigDataPool}" --resource-group "{rg}" \
+    --workspace-name "{myWorkspace}" 
 ```
 ##### Show #####
 ```
@@ -82,7 +83,7 @@ az synapse sql-pool create --resource-group "ExampleResourceGroup" --location "W
     --restore-point-in-time "1970-01-01T00:00:00.000Z" --source-database-id "" --sku name="" tier="" \
     --name "ExampleSqlPool" --workspace-name "ExampleWorkspace" 
 
-az synapse sql-pool wait --created --resource-group "{rg}" --name "{mySqlPool2}"
+az synapse sql-pool wait --created --resource-group "{rg}" --name "{mySqlPool2}" --workspace-name "{myWorkspace}"
 ```
 ##### List #####
 ```
@@ -546,7 +547,8 @@ az synapse private-link-resource show --name "sql" --resource-group "ExampleReso
 az synapse private-endpoint-connection create --name "ExamplePrivateEndpointConnection" \
     --resource-group "ExampleResourceGroup" --workspace-name "ExampleWorkspace" 
 
-az synapse private-endpoint-connection wait --created --name "{myPrivateEndpointConnection}" --resource-group "{rg}"
+az synapse private-endpoint-connection wait --created --name "{myPrivateEndpointConnection}" --resource-group "{rg}" \
+    --workspace-name "{myWorkspace}" 
 ```
 ##### Show #####
 ```
