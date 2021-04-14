@@ -62,12 +62,10 @@ export class CliExtReadme extends TemplateBase {
                         const temp = CmdToMultiLines(example.CommandString);
                         exampleCommandList.push(...temp);
                     }
-                    if (
-                        !isNullOrUndefined(example.WaitCommandString) &&
-                        example.WaitCommandString !== ''
-                    ) {
+                    const waitCommandString = this.model.GetExampleWait(example).join(' ');
+                    if (!isNullOrUndefined(waitCommandString) && waitCommandString !== '') {
                         exampleCommandList.push('');
-                        const temp = CmdToMultiLines(example.WaitCommandString);
+                        const temp = CmdToMultiLines(waitCommandString);
                         exampleCommandList.push(...temp);
                     }
                     exampleCommandList.push('```');

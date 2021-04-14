@@ -104,7 +104,8 @@ def step_big_data_pool_create(test, checks=None):
              checks=[])
     test.cmd('az synapse big-data-pool wait --created '
              '--name "{myBigDataPool}" '
-             '--resource-group "{rg}"',
+             '--resource-group "{rg}" '
+             '--workspace-name "{myWorkspace}"',
              checks=checks)
 
 
@@ -504,7 +505,8 @@ def step_private_endpoint_connection_create(test, checks=None):
              checks=[])
     test.cmd('az synapse private-endpoint-connection wait --created '
              '--name "{myPrivateEndpointConnection}" '
-             '--resource-group "{rg}"',
+             '--resource-group "{rg}" '
+             '--workspace-name "{myWorkspace}"',
              checks=checks)
 
 
@@ -642,7 +644,8 @@ def step_sql_pool_create(test, checks=None):
              checks=[])
     test.cmd('az synapse sql-pool wait --created '
              '--resource-group "{rg}" '
-             '--name "{mySqlPool2}"',
+             '--name "{mySqlPool2}" '
+             '--workspace-name "{myWorkspace}"',
              checks=checks)
 
 

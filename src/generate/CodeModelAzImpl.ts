@@ -1148,6 +1148,14 @@ export class CodeModelCliImpl implements CodeModelAz {
         return customName;
     }
 
+    public get CommandGroup_ShowExample(): CommandExample {
+        return this.CommandGroup?.['az-show-example'];
+    }
+
+    public set CommandGroup_ShowExample(example: CommandExample) {
+        if (this.CommandGroup) this.CommandGroup['az-show-example'] = example;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // Commands
     //
@@ -3048,7 +3056,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             let rawValue = deepCopy(netValue);
             if (methodParam.value['isPolyOfSimple']) {
                 const keyToMatch =
-                    methodParam.value.schema.discriminator?.property?.language?.default?.name;
+                    methodParam.value.schema.discriminator?.property?.language?.cli?.cliKey;
                 if (keyToMatch) {
                     for (const methodParam of methodParamList) {
                         const polySubParamObj = methodParam.value;
@@ -3232,7 +3240,12 @@ export class CodeModelCliImpl implements CodeModelAz {
             Object.entries(this.Examples).forEach(([id, exampleObj]) => {
                 if (includeGenerated || !isGeneratedExampleId(id)) {
                     const example = this.CreateCommandExample(id, exampleObj);
-                    if (!isNullOrUndefined(example)) examples.push(example);
+                    if (!isNullOrUndefined(example)) {
+                        examples.push(example);
+                        if (this.Command_MethodName === 'show') {
+                            this.CommandGroup_ShowExample = example;
+                        }
+                    }
                 }
             });
         }
@@ -3267,6 +3280,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
         const example = new CommandExample();
         example.Method = this.Command_MethodName;
+        example.Command = this.Command_Name;
         example.Id = `/${this.CommandGroup_Key}/${this.Method_HttpMethod}/${id}`;
         example.Title = exampleObj.title || id;
         example.Path = this.Method_Path;
@@ -3295,7 +3309,6 @@ export class CodeModelCliImpl implements CodeModelAz {
             }
             example.commandStringItems = this.GetExampleItems(example, false, undefined);
             example.CommandString = example.commandStringItems.join(' ');
-            example.WaitCommandString = this.GetExampleWait(example).join(' ');
             return example;
         }
         return undefined;
@@ -3435,16 +3448,23 @@ export class CodeModelCliImpl implements CodeModelAz {
                 return property?.language?.['cli']?.cliKey === 'provisioningState';
             })
         ) {
-            let words = this.Command_Name.split(' ');
+            const showExample = this.CommandGroup_ShowExample;
+            if (isNullOrUndefined(showExample)) return [];
+            let words = showExample.Command.split(' ');
             words = words.slice(0, words.length - 1);
             words.push('wait');
             parameters.push(`az ${words.join(' ')} --created`);
             for (const param of example.Parameters) {
                 const paramKey = param.methodParam.value.language?.['cli']?.cliKey;
                 if (
-                    paramKey === 'resourceGroupName' ||
-                    this.resourcePool.isResource(paramKey, param.rawValue) ===
-                        example.ResourceClassName
+                    showExample.Parameters.some((showParam) => {
+                        return (
+                            showParam.methodParam.value.language?.['cli']?.cliKey ==
+                                param.methodParam.value.language?.['cli']?.cliKey &&
+                            showParam.methodParam.value.language?.['default']?.cliKey ==
+                                param.methodParam.value.language?.['default']?.cliKey
+                        );
+                    })
                 ) {
                     let paramValue = param.value;
                     let replacedValue = this.resourcePool.addParamResource(
