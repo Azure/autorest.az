@@ -15,22 +15,23 @@ export class CliExtReadme extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
+        const { extensionHandler, commandGroupHandler } = this.model.GetHandler();
         let output: string[] = [];
 
-        output.push('# Azure CLI ' + this.model.Extension_Name + ' Extension #');
-        output.push('This is the extension for ' + this.model.Extension_Name);
+        output.push('# Azure CLI ' + extensionHandler.Extension_Name + ' Extension #');
+        output.push('This is the extension for ' + extensionHandler.Extension_Name);
         output.push('');
         output.push('### How to use ###');
         output.push('Install this extension using the below CLI command');
         output.push('```');
-        output.push('az extension add --name ' + this.model.Extension_Name);
+        output.push('az extension add --name ' + extensionHandler.Extension_Name);
         output.push('```');
         output.push('');
         output.push('### Included Features ###');
 
         if (this.model.SelectFirstCommandGroup()) {
             do {
-                output.push('#### ' + this.model.CommandGroup_Name + ' ####');
+                output.push('#### ' + commandGroupHandler.CommandGroup_Name + ' ####');
 
                 let exampleList: CommandExample[] = [];
                 const exampleCommandList: string[] = [];

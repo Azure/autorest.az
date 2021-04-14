@@ -19,7 +19,8 @@ import { TemplateBase } from './TemplateBase';
 export class CliTopInit extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.initFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.initFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -127,14 +128,15 @@ export class CliTopInit extends TemplateBase {
     }
 
     private GenerateAzureCliInit(model: CodeModelAz): string[] {
+        const { configHandler, extensionHandler } = model.GetHandler();
         const header: HeaderGenerator = new HeaderGenerator();
-        header.addFromImport(model.CliCoreLib, ['AzCommandsLoader']);
-        if (model.ResourceType) {
+        header.addFromImport(configHandler.CliCoreLib, ['AzCommandsLoader']);
+        if (configHandler.ResourceType) {
             header.addFromImport('azure.cli.core.profiles', ['ResourceType']);
         }
         const output: string[] = header.getLines();
-        let importPath = model.AzextFolder;
-        if (!model.IsCliCore) {
+        let importPath = configHandler.AzextFolder;
+        if (!configHandler.IsCliCore) {
             output.push(
                 'from ' +
                     importPath +
@@ -157,33 +159,43 @@ export class CliTopInit extends TemplateBase {
         }
 
         output.push('');
-        output.push('class ' + model.Extension_NameClass + 'CommandsLoader(AzCommandsLoader):');
+        output.push(
+            'class ' + extensionHandler.Extension_NameClass + 'CommandsLoader(AzCommandsLoader):',
+        );
         output.push('');
         output.push('    def __init__(self, cli_ctx=None):');
-        output.push('        from ' + model.CliCoreLib + '.commands import CliCommandType');
+        output.push('        from ' + configHandler.CliCoreLib + '.commands import CliCommandType');
         output.push(
             '        from ' +
                 importPath +
                 '.generated._client_factory import cf_' +
-                model.Extension_NameUnderscored +
+                extensionHandler.Extension_NameUnderscored +
                 '_cl',
         );
-        output.push('        ' + model.Extension_NameUnderscored + '_custom = CliCommandType(');
-        if (model.IsCliCore) {
+        output.push(
+            '        ' + extensionHandler.Extension_NameUnderscored + '_custom = CliCommandType(',
+        );
+        if (configHandler.IsCliCore) {
             output.push(
                 "            operations_tmpl='azure.cli.command_modules." +
-                    model.Extension_NameUnderscored +
+                    extensionHandler.Extension_NameUnderscored +
                     ".custom#{}',",
             );
         } else {
-            output.push("            operations_tmpl='" + model.AzextFolder + ".custom#{}',");
+            output.push(
+                "            operations_tmpl='" + configHandler.AzextFolder + ".custom#{}',",
+            );
         }
-        output.push('            client_factory=cf_' + model.Extension_NameUnderscored + '_cl)');
-        output.push(`        parent = super(${model.Extension_NameClass}CommandsLoader, self)`);
+        output.push(
+            '            client_factory=cf_' + extensionHandler.Extension_NameUnderscored + '_cl)',
+        );
+        output.push(
+            `        parent = super(${extensionHandler.Extension_NameClass}CommandsLoader, self)`,
+        );
         ToMultiLine(
             `        parent.__init__(cli_ctx=cli_ctx, custom_command_type=${
-                model.Extension_NameUnderscored
-            }_custom${composeParamString(undefined, undefined, model.ResourceType)[0]})`,
+                extensionHandler.Extension_NameUnderscored
+            }_custom${composeParamString(undefined, undefined, configHandler.ResourceType)[0]})`,
             output,
         );
         output.push('');
@@ -221,7 +233,9 @@ export class CliTopInit extends TemplateBase {
         output.push('                raise e');
         output.push('');
         output.push('');
-        output.push('COMMAND_LOADER_CLS = ' + model.Extension_NameClass + 'CommandsLoader');
+        output.push(
+            'COMMAND_LOADER_CLS = ' + extensionHandler.Extension_NameClass + 'CommandsLoader',
+        );
         output.push('');
 
         return output;

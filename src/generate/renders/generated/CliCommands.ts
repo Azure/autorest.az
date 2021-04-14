@@ -27,8 +27,9 @@ export class CliCommands extends TemplateBase {
 
     constructor(model: CodeModelAz) {
         super(model);
+        const { configHandler } = this.model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
@@ -131,8 +132,9 @@ export class CliCommands extends TemplateBase {
     }
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
+        const { configHandler } = this.model.GetHandler();
         let data = { imports: [], pylints: [] };
-        data['imports'].push([this.model.CliCoreLib + '.commands', ['CliCommandType']]);
+        data['imports'].push([configHandler.CliCoreLib + '.commands', ['CliCommandType']]);
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -198,7 +200,7 @@ export class CliCommands extends TemplateBase {
         ];
         data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
         if (this.importProfile) {
-            data['imports'].push([this.model.CliCoreLib + '.profiles', ['ResourceType']]);
+            data['imports'].push([configHandler.CliCoreLib + '.profiles', ['ResourceType']]);
         }
         if (
             !isNullOrUndefined(this.importClientFactories) &&
@@ -206,7 +208,7 @@ export class CliCommands extends TemplateBase {
             this.importClientFactories.length > 0
         ) {
             data['imports'].push([
-                this.model.AzextFolder + '.generated._client_factory',
+                configHandler.AzextFolder + '.generated._client_factory',
                 this.importClientFactories,
             ]);
         }
@@ -218,7 +220,7 @@ export class CliCommands extends TemplateBase {
         if (this.lineTooLong) {
             data['pylints'].push('# pylint: disable=line-too-long');
         }
-        data['azextFolder'] = this.model.AzextFolder;
+        data['azextFolder'] = configHandler.AzextFolder;
         const result = { data: { imports: [], pylints: [] } };
         result.data = data;
         return result;

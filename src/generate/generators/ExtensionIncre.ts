@@ -30,14 +30,17 @@ import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
+import { clearConfigCache } from 'prettier';
 
 export class AzExtensionIncrementalGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.azDirectory = model.AzextFolder;
+        const { configHandler } = model.GetHandler();
+        this.azDirectory = configHandler.AzextFolder;
     }
 
     public async generateAll(): Promise<void> {
+        const { extensionHandler, configHandler } = this.model.GetHandler();
         this.files[
             path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.paramsFile)
         ] = GenerateAzureCliParams(this.model, this.isDebugMode);
@@ -65,7 +68,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
             path.join(this.azDirectory, PathConstants.manualFolder, PathConstants.initFile)
         ] = GenerateNamespaceInit(this.model);
 
-        if (this.model.SDK_NeedSDK) {
+        if (configHandler.SDK_NeedSDK) {
             this.files[
                 path.join(
                     this.azDirectory,
@@ -92,11 +95,13 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
         const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
         if (
-            fs.existsSync(path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath))
+            fs.existsSync(
+                path.join(configHandler.azOutputFolder, cliTopActionGenerator.relativePath),
+            )
         ) {
             cliTopActionBase = fs
                 .readFileSync(
-                    path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath),
+                    path.join(configHandler.azOutputFolder, cliTopActionGenerator.relativePath),
                 )
                 .toString();
         }
@@ -111,14 +116,14 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestStep(this.model), true);
-        for (const testGroup of this.model.Extension_TestScenario
-            ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
+        for (const testGroup of extensionHandler.Extension_TestScenario
+            ? Object.getOwnPropertyNames(extensionHandler.Extension_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.incTestScenarioFile(testGroup),
-                    this.model.Extension_TestScenario[testGroup],
+                    extensionHandler.Extension_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -149,7 +154,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                 new SimpleTemplate(
                     this.model,
                     path.join(
-                        this.model.AzextFolder,
+                        configHandler.AzextFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
                         PathConstants.conftestFile,

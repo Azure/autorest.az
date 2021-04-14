@@ -13,14 +13,15 @@ import { CodeModelCliImpl } from '../codemodel/CodeModelAzImpl';
 
 export class AzGeneratorFactory {
     static createAzGenerator(model: CodeModelCliImpl): GeneratorBase {
-        if (model.CliGenerationMode === GenerationMode.Full) {
-            if (model.IsCliCore) {
+        const { configHandler } = model.GetHandler();
+        if (configHandler.CliGenerationMode === GenerationMode.Full) {
+            if (configHandler.IsCliCore) {
                 return new AzCoreFullGenerator(model);
             } else {
                 return new AzExtensionFullGenerator(model);
             }
         } else {
-            if (model.IsCliCore) {
+            if (configHandler.IsCliCore) {
                 return new AzCoreIncrementalGenerator(model);
             } else {
                 return new AzExtensionIncrementalGenerator(model);

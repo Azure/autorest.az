@@ -13,10 +13,14 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
         const model = new CodeModelCliImpl(session);
+        const { configHandler } = model.GetHandler();
 
         if (model.SelectFirstExtension()) {
             do {
-                const azextpath = path.join(model.azOutputFolder, model.AzextFolder);
+                const azextpath = path.join(
+                    configHandler.azOutputFolder,
+                    configHandler.AzextFolder,
+                );
                 session.protectFiles(path.join(azextpath, PathConstants.manualFolder));
                 session.protectFiles(
                     path.join(
@@ -26,12 +30,14 @@ export async function processRequest(host: Host) {
                         PathConstants.recordingFolder,
                     ),
                 );
-                session.protectFiles(path.join(model.azOutputFolder, PathConstants.readmeFile));
+                session.protectFiles(
+                    path.join(configHandler.azOutputFolder, PathConstants.readmeFile),
+                );
             } while (model.SelectNextExtension());
         }
 
         openInplaceGen();
-        await model.resourcePool.loadTestResources();
+        await model.GetResourcePool().loadTestResources();
         model.GenerateTestInit();
         const generator = AzGeneratorFactory.createAzGenerator(model);
         await generator.generateAll();

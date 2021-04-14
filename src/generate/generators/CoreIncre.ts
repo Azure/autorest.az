@@ -46,6 +46,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
     }
 
     public async generateAll(): Promise<void> {
+        const { extensionHandler, configHandler } = this.model.GetHandler();
         // generated and test folder
         this.files[
             path.join(PathConstants.generatedFolder, PathConstants.paramsFile)
@@ -72,7 +73,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         ] = GenerateNamespaceInit(this.model);
 
         // vendor sdk folder
-        if (this.model.SDK_NeedSDK) {
+        if (configHandler.SDK_NeedSDK) {
             this.files[
                 path.join(PathConstants.vendoredskdsFolder, PathConstants.initFile)
             ] = GenerateNamespaceInit(this.model);
@@ -96,11 +97,13 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
         if (
-            fs.existsSync(path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath))
+            fs.existsSync(
+                path.join(configHandler.azOutputFolder, cliTopActionGenerator.relativePath),
+            )
         ) {
             cliTopActionBase = fs
                 .readFileSync(
-                    path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath),
+                    path.join(configHandler.azOutputFolder, cliTopActionGenerator.relativePath),
                 )
                 .toString();
         }
@@ -114,7 +117,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
         const cliRequirement = new CliMainRequirement(this.model);
         for (const sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
             cliRequirement.relativePath = path.join(
-                this.model.AzureCliFolder,
+                configHandler.AzureCliFolder,
                 '/src/azure-cli/requirements.py3.' + sys + '.txt',
             );
             this.files[cliRequirement.relativePath] = await cliRequirement.incrementalGeneration(
@@ -124,14 +127,14 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestStep(this.model), true);
-        for (const testGroup of this.model.Extension_TestScenario
-            ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
+        for (const testGroup of extensionHandler.Extension_TestScenario
+            ? Object.getOwnPropertyNames(extensionHandler.Extension_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.incTestScenarioFile(testGroup),
-                    this.model.Extension_TestScenario[testGroup],
+                    extensionHandler.Extension_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -149,7 +152,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
             .generateArmTemplate(
                 this.files,
                 path.join(
-                    this.model.azOutputFolder,
+                    configHandler.azOutputFolder,
                     PathConstants.testFolder,
                     PathConstants.latestFolder,
                 ),
@@ -166,7 +169,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
                 new SimpleTemplate(
                     this.model,
                     path.join(
-                        this.model.AzextFolder,
+                        configHandler.AzextFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
                         PathConstants.conftestFile,

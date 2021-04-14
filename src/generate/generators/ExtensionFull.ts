@@ -35,10 +35,12 @@ import { SimpleTemplate } from '../renders/TemplateBase';
 export class AzExtensionFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.azDirectory = model.AzextFolder;
+        const { configHandler } = model.GetHandler();
+        this.azDirectory = configHandler.AzextFolder;
     }
 
     public async generateAll(): Promise<void> {
+        const { extensionHandler, configHandler } = this.model.GetHandler();
         this.files[path.join(this.azDirectory, 'generated/_params.py')] = GenerateAzureCliParams(
             this.model,
             this.isDebugMode,
@@ -68,7 +70,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
             this.model,
         );
 
-        if (this.model.SDK_NeedSDK) {
+        if (configHandler.SDK_NeedSDK) {
             this.files[
                 path.join(this.azDirectory, 'vendored_sdks/__init__.py')
             ] = GenerateNamespaceInit(this.model);
@@ -88,14 +90,14 @@ export class AzExtensionFullGenerator extends GeneratorBase {
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
-        for (const testGroup of this.model.Extension_TestScenario
-            ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
+        for (const testGroup of extensionHandler.Extension_TestScenario
+            ? Object.getOwnPropertyNames(extensionHandler.Extension_TestScenario)
             : []) {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.fullTestSceanrioFile(testGroup),
-                    this.model.Extension_TestScenario[testGroup],
+                    extensionHandler.Extension_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -129,7 +131,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
                 new SimpleTemplate(
                     this.model,
                     path.join(
-                        this.model.AzextFolder,
+                        configHandler.AzextFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
                         PathConstants.conftestFile,

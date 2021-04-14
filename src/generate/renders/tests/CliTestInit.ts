@@ -10,8 +10,9 @@ import { PathConstants } from '../../../utils/models';
 export class CliTestInit extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.initFile,
         );

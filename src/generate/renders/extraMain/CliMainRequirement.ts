@@ -23,13 +23,14 @@ export class CliMainRequirement extends TemplateBase {
     }
 
     private async GenerateRequirementTxt(model: CodeModelAz, requirementPath) {
+        const { configHandler } = this.model.GetHandler();
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
-        const latestVersion = await getLatestPyPiVersion(model.GetPythonPackageName());
+        const latestVersion = await getLatestPyPiVersion(configHandler.GetPythonPackageName());
         let found = false;
 
-        const line = model.GetPythonPackageName() + '==' + latestVersion;
+        const line = configHandler.GetPythonPackageName() + '==' + latestVersion;
         for (const dependency of outputFile) {
-            if (dependency.indexOf(model.GetPythonPackageName() + '==') > -1) {
+            if (dependency.indexOf(configHandler.GetPythonPackageName() + '==') > -1) {
                 found = true;
                 break;
             }

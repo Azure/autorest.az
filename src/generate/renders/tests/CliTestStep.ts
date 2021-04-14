@@ -27,8 +27,9 @@ export function NeedPreparers(): Set<string> {
 export class CliTestStep extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
             PathConstants.testStepFile,
@@ -44,6 +45,7 @@ export class CliTestStep extends TemplateBase {
     }
 
     private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
+        const { extensionHandler } = model.GetHandler();
         initVars();
         const steps: string[] = [];
         steps.push('');
@@ -54,12 +56,12 @@ export class CliTestStep extends TemplateBase {
         const commandParams = model.GatherInternalResource();
         let config: any = [];
         if (model.GetResourcePool().hasTestResourceScenario) {
-            for (const g in model.Extension_TestScenario) {
-                for (const s in model.Extension_TestScenario[g])
-                    config.push(...model.Extension_TestScenario[g][s]);
+            for (const g in extensionHandler.Extension_TestScenario) {
+                for (const s in extensionHandler.Extension_TestScenario[g])
+                    config.push(...extensionHandler.Extension_TestScenario[g][s]);
             }
         } else {
-            config = deepCopy(model.Extension_DefaultTestScenario);
+            config = deepCopy(extensionHandler.Extension_DefaultTestScenario);
         }
 
         const header: HeaderGenerator = new HeaderGenerator();
@@ -237,6 +239,7 @@ export class CliTestStep extends TemplateBase {
         decorators: string[],
         initiates: string[],
     ): string[] {
+        const { extensionHandler } = model.GetHandler();
         const decorated = [];
         const internalObjects = [];
         const parameterNames = [];
@@ -256,7 +259,7 @@ export class CliTestStep extends TemplateBase {
 
             // create preparers for outside dependency
             let line = `    @${entity.info.name}(name_prefix='clitest${
-                model.Extension_NameUnderscored
+                extensionHandler.Extension_NameUnderscored
             }_${entity.objectName}'[:7], key='${getResourceKey(
                 entity.info.className,
                 entity.objectName,

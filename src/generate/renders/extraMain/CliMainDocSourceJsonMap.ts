@@ -6,6 +6,7 @@
 import * as fs from 'fs';
 import { EOL } from 'os';
 import * as path from 'path';
+import { clearConfigCache } from 'prettier';
 import { isNullOrUndefined } from '../../../utils/helper';
 import { PathConstants } from '../../../utils/models';
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
@@ -13,8 +14,12 @@ import { TemplateBase } from '../TemplateBase';
 
 export class CliMainDocSourceJsonMap extends TemplateBase {
     constructor(model: CodeModelAz) {
+        const { configHandler } = model.GetHandler();
         super(model);
-        this.relativePath = path.join(model.AzureCliFolder, PathConstants.docSourceJsonFile);
+        this.relativePath = path.join(
+            configHandler.AzureCliFolder,
+            PathConstants.docSourceJsonFile,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -26,14 +31,15 @@ export class CliMainDocSourceJsonMap extends TemplateBase {
     }
 
     private GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPath): string[] {
+        const { extensionHandler } = this.model.GetHandler();
         const outputFile = fs.readFileSync(docSourceJsonMapPath).toString().split(EOL);
         const docSourceJson = JSON.parse(fs.readFileSync(docSourceJsonMapPath).toString());
-        if (isNullOrUndefined(docSourceJson[model.Extension_NameUnderscored])) {
+        if (isNullOrUndefined(docSourceJson[extensionHandler.Extension_NameUnderscored])) {
             const line =
                 '"' +
-                model.Extension_Name +
+                extensionHandler.Extension_Name +
                 '": "src/azure-cli/azure/cli/command_modules/' +
-                model.Extension_Name +
+                extensionHandler.Extension_Name +
                 '/_help.py"';
             let cnt = outputFile.length;
             let foundLastLine = false;

@@ -5,7 +5,7 @@ import { CodeModelCliImpl } from './CodeModelAzImpl';
 export interface ConfigModel {
     CliGenerationMode: GenerationMode;
     AzextFolder: string;
-
+    CliCoreLib: string;
     IsCliCore: boolean;
     minCliCoreVersion: string;
     SDK_NeedSDK: boolean;

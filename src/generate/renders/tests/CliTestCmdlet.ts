@@ -21,11 +21,12 @@ class CmdletTestCase {
 export class CliCmdletTest extends TemplateBase {
     constructor(model: CodeModelAz, isNegativeTest: boolean) {
         super(model);
+        const { configHandler } = model.GetHandler();
         const testFileName = isNegativeTest
             ? PathConstants.negativeTestFile
             : PathConstants.positiveTestFile;
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.cmdletFolder,
             testFileName,
@@ -74,10 +75,10 @@ export class CliCmdletTest extends TemplateBase {
         ];
 
         for (const extension of this.model.getModelData('extension', inputProperties, dependencies)
-            .Extensions)
-            for (const commandGroup of extension.CommandGroups)
-                for (const command of commandGroup.Commands)
-                    for (const method of command.Methods)
+            .Extensions) {
+            for (const commandGroup of extension.CommandGroups) {
+                for (const command of commandGroup.Commands) {
+                    for (const method of command.Methods) {
                         if (method.hasAzExample) {
                             (method.AzExamples as any[]).sort((a, b) => {
                                 return a.id > b.id ? 1 : -1;
@@ -118,6 +119,10 @@ export class CliCmdletTest extends TemplateBase {
                             }
                             ret.testData.testCases.push(testCase);
                         }
+                    }
+                }
+            }
+        }
         return ret;
     }
 }

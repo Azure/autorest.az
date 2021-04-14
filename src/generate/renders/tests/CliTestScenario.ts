@@ -18,8 +18,9 @@ export class CliTestScenario extends TemplateBase {
 
     constructor(model: CodeModelAz, testFilename: string, configValue: any, groupName: string) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
             testFilename,

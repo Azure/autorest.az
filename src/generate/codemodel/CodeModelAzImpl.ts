@@ -45,6 +45,7 @@ import {
     ExampleParam,
     MethodParam,
     KeyValueType,
+    Handler,
 } from './CodeModelAz';
 import {
     azOptions,
@@ -2878,6 +2879,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             return {};
         }
         const type: CodeModelTypes = layer;
+        const handler = type + 'Handler';
         const Type = Capitalize(type);
         const renderInput: RenderInput = inputProperties.get(type);
         const sortBy = renderInput.sortBy;
@@ -2896,14 +2898,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                 let hasFiltered = false;
                 if (!isNullOrUndefined(props) && Array.isArray(props) && props.length > 0) {
                     for (const prop of props) {
-                        if (typeof this[Type + '_' + Capitalize(prop)] === 'function') {
-                            item[prop] = this[Type + '_' + Capitalize(prop)]();
+                        if (typeof this[handler][Type + '_' + Capitalize(prop)] === 'function') {
+                            item[prop] = this[handler][Type + '_' + Capitalize(prop)]();
                         } else {
-                            item[prop] = this[Type + '_' + Capitalize(prop)];
+                            item[prop] = this[handler][Type + '_' + Capitalize(prop)];
                         }
                     }
                     for (const condition of conditions) {
-                        if (this[Type + '_' + Capitalize(condition[0])] === condition[1]) {
+                        if (this[handler][Type + '_' + Capitalize(condition[0])] === condition[1]) {
                             hasFiltered = true;
                             break;
                         }
@@ -3048,5 +3050,18 @@ export class CodeModelCliImpl implements CodeModelAz {
         } else {
             methodParameterCall();
         }
+    }
+
+    public GetHandler(): Handler {
+        return new Handler(
+            this.extensionHandler,
+            this.commandGroupHandler,
+            this.commandHandler,
+            this.methodHandler,
+            this.methodParameterHandler,
+            this.parameterHandler,
+            this.schemaHandler,
+            this.configHandler,
+        );
     }
 }

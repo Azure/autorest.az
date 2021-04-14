@@ -11,8 +11,9 @@ import { TemplateBase } from '../TemplateBase';
 
 export class CliTopMetadata extends TemplateBase {
     constructor(model: CodeModelAz) {
+        const { configHandler } = model.GetHandler();
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.metadataFile);
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.metadataFile);
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
             'azext',
@@ -41,9 +42,10 @@ export class CliTopMetadata extends TemplateBase {
     }
 
     public async GetRenderData(model: CodeModelAz): Promise<any> {
+        const { extensionHandler } = model.GetHandler();
         const data = {
             model: {
-                Extension_Mode: model.Extension_Mode,
+                Extension_Mode: extensionHandler.Extension_Mode,
                 minCliCoreVersion: CodeGenConstants.minCliCoreVersion,
             },
         };

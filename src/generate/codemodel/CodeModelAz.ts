@@ -7,6 +7,14 @@ import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-t
 import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../../utils/models';
 import { ResourcePool } from '../renders/tests/ScenarioTool';
 import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
+import { ExtensionModel } from './Extension';
+import { CommandGroupModel } from './CommandGroup';
+import { CommandModel } from './Command';
+import { MethodModel } from './Method';
+import { MethodParameterModel } from './MethodParameter';
+import { ParameterModel } from './Parameter';
+import { SchemaModel } from './Schema';
+import { ConfigModel } from './Config';
 
 export class MethodParam {
     public value: any;
@@ -83,6 +91,18 @@ export class CommandExample {
     public WaitCommandString: string;
 }
 
+export class Handler {
+    public constructor(
+        public extensionHandler: ExtensionModel,
+        public commandGroupHandler: CommandGroupModel,
+        public commandHandler: CommandModel,
+        public methodHandler: MethodModel,
+        public methodParameterHandler: MethodParameterModel,
+        public parameterHandler: ParameterModel,
+        public schemaHandler: SchemaModel,
+        public configHandler: ConfigModel,
+    ) {}
+}
 export interface CodeModelAz {
     init(): any;
     SelectFirstExtension(): boolean;
@@ -148,4 +168,5 @@ export interface CodeModelAz {
     );
     GetActionData(): any[];
     GetTestUniqueResource: boolean;
+    GetHandler(): Handler;
 }

@@ -26,9 +26,10 @@ export class CliTestPrepare extends TemplateBase {
     resourceNames: string[];
     constructor(model: CodeModelAz, resourceNames: string[]) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.resourceNames = resourceNames;
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
             PathConstants.preparersFile,

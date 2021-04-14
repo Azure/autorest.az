@@ -18,7 +18,8 @@ import { TemplateBase } from './TemplateBase';
 export class CliTopCustom extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.customFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.customFile);
     }
 
     public async fullGeneration(): Promise<string[]> {

@@ -4,6 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import { EOL } from 'os';
 import * as path from 'path';
+import { config } from 'process';
 import {
     getIndentString,
     keepHeaderLines,
@@ -18,7 +19,8 @@ import { TemplateBase } from './TemplateBase';
 export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.helpFile);
     }
 
     public async fullGeneration(): Promise<string[]> {

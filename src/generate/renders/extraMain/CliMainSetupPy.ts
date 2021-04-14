@@ -14,7 +14,8 @@ import { TemplateBase } from '../TemplateBase';
 export class CliMainSetupPy extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzureCliFolder, PathConstants.mainSetupPyFile);
+        const { configHandler } = this.model.GetHandler();
+        this.relativePath = path.join(configHandler.AzureCliFolder, PathConstants.mainSetupPyFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -26,8 +27,9 @@ export class CliMainSetupPy extends TemplateBase {
     }
 
     private async GenerateAzureCliMainSetUp(model: CodeModelAz, requirementPath) {
+        const { configHandler } = this.model.GetHandler();
         const outputFile = fs.readFileSync(requirementPath).toString().split(EOL);
-        const packageName = model.GetPythonPackageName();
+        const packageName = configHandler.GetPythonPackageName();
         const latestVersion = await getLatestPyPiVersion(packageName);
         let found = false;
         let cnt = 0;
