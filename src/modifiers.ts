@@ -93,7 +93,7 @@ function isWhereCommandDirective(it: any): it is WhereCommandDirective {
 }
 
 function hasSpecialChars(str: string): boolean {
-    return !/^[a-zA-Z0-9]+$/.test(str);
+    return !/^[a-zA-Z0-9- ]+$/.test(str);
 }
 
 const getPatternToMatch = (selector: string | undefined): RegExp | undefined => {
@@ -188,7 +188,9 @@ export class Modifiers {
         groupIdx: number,
     ): void {
         const commandRegex = getPatternToMatch(directive.where.command);
+        const groupRegex = getPatternToMatch(directive.where.group);
         const commandReplacer = directive.set !== undefined ? directive.set.command : undefined;
+        const groupReplacer = directive.set !== undefined ? directive.set.group : undefined;
         const commandDescriptionReplacer =
             directive.set !== undefined ? directive.set['command-description'] : undefined;
         if (this.groupChanged) {
@@ -267,6 +269,45 @@ export class Modifiers {
                 Channel: Channel.Warning,
                 Text: ' newAzName:' + newAzName,
             });
+        }
+        if (
+            !isNullOrUndefined(operation.language['az'].subCommandGroup) &&
+            !isNullOrUndefined(groupRegex) &&
+            operation.language['az'].subCommandGroup.match(groupRegex)
+        ) {
+            operation.language['az'].subCommandGroup = groupReplacer
+                ? groupRegex
+                    ? operation.language['az'].subCommandGroup.replace(groupRegex, groupReplacer)
+                    : groupReplacer
+                : operation.language['az'].subCommandGroup;
+            if (groupReplacer.match(operationGroup.language['az'].command)) {
+                const tmpCmdRegex = new RegExp(groupRegex.source.replace('$', ''), 'g');
+                const tmpNameRegex = new RegExp(
+                    groupRegex.source
+                        .replace(operationGroup.language['az'].command + ' ', '')
+                        .replace('$', ''),
+                    'g',
+                );
+                const tmpNameReplacer = groupReplacer.replace(
+                    operationGroup.language['az'].command + ' ',
+                    '',
+                );
+                operation.language['az'].command = groupReplacer
+                    ? tmpCmdRegex
+                        ? operation.language['az'].command.replace(tmpCmdRegex, groupReplacer)
+                        : groupReplacer
+                    : operation.language['az'].command;
+                operation.language['az'].name = tmpNameReplacer
+                    ? tmpNameRegex
+                        ? operation.language['az'].name.replace(tmpNameRegex, tmpNameReplacer)
+                        : tmpNameReplacer
+                    : operation.language['az'].name;
+            } else {
+                this.session.message({
+                    Channel: Channel.Warning,
+                    Text: ' Can not change the sub command group parent group name',
+                });
+            }
         }
     }
 
