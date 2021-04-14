@@ -1002,7 +1002,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (needRefer && this.CommandGroup_Referenced) {
                 return true;
             } else if (!this.SelectFirstCommand()) {
-                return this.SelectNextCommandGroup();
+                return this.SelectNextCommandGroup(needRefer);
             }
             return true;
         } else {
@@ -1032,7 +1032,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             if (needRefer && this.CommandGroup_Referenced) {
                 return true;
             } else if (!this.SelectFirstCommand()) {
-                return this.SelectNextCommandGroup();
+                return this.SelectNextCommandGroup(needRefer);
             }
             return true;
         } else {
@@ -1056,6 +1056,10 @@ export class CodeModelCliImpl implements CodeModelAz {
     }
 
     public get CommandGroup_Help(): string {
+        const groupDescription = this.CommandGroup.language['az']?.['description'];
+        if (!isNullOrUndefined(groupDescription) && groupDescription !== '') {
+            return groupDescription;
+        }
         const extensionPart = this.Extension_Name.replace(/-/g, ' ');
         const groupPart = changeCamelToDash(this.CommandGroup.language['az']?.name)?.replace(
             /-/g,
