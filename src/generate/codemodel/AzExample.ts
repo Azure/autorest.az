@@ -3,13 +3,13 @@ import { CodeGenConstants } from '../../utils/models';
 import { CommandExample } from './CodeModelAz';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 
-export interface AzExample {
+export interface AzExampleModel {
     AzExample: CommandExample;
     AzExample_CommandString: string;
     AzExample_CommandStringItems: string[];
 }
 
-export class AzExampleImpl extends CodeModelCliImpl implements AzExample {
+export class AzExampleModelImpl extends CodeModelCliImpl implements AzExampleModel {
     public get AzExample(): CommandExample {
         if (
             this.currentAzExampleIndex < 0 ||

@@ -60,14 +60,15 @@ import {
 import { readFile } from '@azure-tools/async-io';
 import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
 import * as process from 'process';
-import { ConfigModel } from './Config';
-import { ExtensionModel } from './Extension';
-import { CommandGroupModel } from './CommandGroup';
-import { CommandModel } from './Command';
-import { MethodModel } from './Method';
-import { MethodParameterModel } from './MethodParameter';
-import { ParameterModel } from './Parameter';
-import { SchemaModel } from './Schema';
+import { ConfigModel, ConfigModelImpl } from './Config';
+import { ExtensionModel, ExtensionModelImpl } from './Extension';
+import { CommandGroupModel, CommandGroupModelImpl } from './CommandGroup';
+import { CommandModel, CommandModelImpl } from './Command';
+import { MethodModel, MethodModelImpl } from './Method';
+import { MethodParameterModel, MethodParameterModelImpl } from './MethodParameter';
+import { ParameterModel, ParameterModelImpl } from './Parameter';
+import { SchemaModel, SchemaModelImpl } from './Schema';
+import { AzExampleModel, AzExampleModelImpl } from './AzExample';
 class ActionParam {
     public constructor(
         public groupOpActionName: string,
@@ -117,6 +118,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     methodParameterHandler: MethodParameterModel;
     parameterHandler: ParameterModel;
     schemaHandler: SchemaModel;
+    azExampleHandler: AzExampleModel;
 
     init(): void {
         this.options = AzConfiguration.getValue(CodeGenConstants.az);
@@ -150,11 +152,24 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.init();
         this.codeModel = session.model;
         this.resourcePool = new ResourcePool();
+        this.initHandler(session);
         this.dealingSimplePolymorphism();
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
         this.dealingParameterAlias();
+    }
+
+    private initHandler(session: Session<CodeModel>) {
+        this.configHandler = new ConfigModelImpl(session);
+        this.extensionHandler = new ExtensionModelImpl(session);
+        this.commandGroupHandler = new CommandGroupModelImpl(session);
+        this.commandHandler = new CommandModelImpl(session);
+        this.methodHandler = new MethodModelImpl(session);
+        this.methodParameterHandler = new MethodParameterModelImpl(session);
+        this.parameterHandler = new ParameterModelImpl(session);
+        this.schemaHandler = new SchemaModelImpl(session);
+        this.azExampleHandler = new AzExampleModelImpl(session);
     }
 
     private sortOperationByAzCommand() {
