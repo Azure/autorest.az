@@ -93,6 +93,7 @@ export class ExampleParam {
 export class CommandExample {
     // this should be "create", "update", "list", "show", or custom name
     public Method: string;
+    public Command: string;
     public Id: string;
     public Title: string;
     public Parameters: ExampleParam[];
@@ -106,11 +107,11 @@ export class CommandExample {
     public ExampleObj: any;
     public commandStringItems: string[];
     public CommandString: string;
-    public WaitCommandString: string;
 }
 
 export interface ExampleModel {
     GetExamples(includeGenerated: boolean): CommandExample[];
+    GetExampleWait(example: CommandExample): string[];
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
@@ -683,7 +684,7 @@ export class ExampleModelImpl implements ExampleModel {
             let rawValue = deepCopy(netValue);
             if (methodParam.value['isPolyOfSimple']) {
                 const keyToMatch =
-                    methodParam.value.schema.discriminator?.property?.language?.default?.name;
+                    methodParam.value.schema.discriminator?.property?.language?.cli?.cliKey;
                 if (keyToMatch) {
                     for (const methodParam of methodParamList) {
                         const polySubParamObj = methodParam.value;
@@ -868,7 +869,12 @@ export class ExampleModelImpl implements ExampleModel {
             Object.entries(this.Examples).forEach(([id, exampleObj]) => {
                 if (includeGenerated || !isGeneratedExampleId(id)) {
                     const example = this.CreateCommandExample(id, exampleObj);
-                    if (!isNullOrUndefined(example)) examples.push(example);
+                    if (!isNullOrUndefined(example)) {
+                        examples.push(example);
+                        if (this.commandHandler.Command_MethodName === 'show') {
+                            this.commandGroupHandler.CommandGroup_ShowExample = example;
+                        }
+                    }
                 }
             });
         }
@@ -943,7 +949,6 @@ export class ExampleModelImpl implements ExampleModel {
             }
             example.commandStringItems = this.GetExampleItems(example, false, undefined);
             example.CommandString = example.commandStringItems.join(' ');
-            example.WaitCommandString = this.GetExampleWait(example).join(' ');
             return example;
         }
         return undefined;

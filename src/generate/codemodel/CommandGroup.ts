@@ -4,6 +4,7 @@ import { changeCamelToDash, isNullOrUndefined } from '../../utils/helper';
 import { ExtensionMode } from '../../utils/models';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { ConfigModel } from './Config';
+import { CommandExample } from './Example';
 import { ExtensionModel } from './Extension';
 
 export interface CommandGroupModel {
@@ -23,6 +24,7 @@ export interface CommandGroupModel {
     CommandGroup_OperationTmplName: string;
     CommandGroup_CustomCommandTypeName(group?: OperationGroup): string;
     CommandGroup_Referenced: boolean;
+    CommandGroup_ShowExample: CommandExample;
     // CommandGroup_Features: [string, string];
     // CommandGroup_Imports: [string, string[]];
 }
@@ -70,6 +72,14 @@ export class CommandGroupModelImpl implements CommandGroupModel {
         } else {
             return 'Manage ' + groupPart;
         }
+    }
+
+    public get CommandGroup_ShowExample(): CommandExample {
+        return this.CommandGroup?.['az-show-example'];
+    }
+
+    public set CommandGroup_ShowExample(example: CommandExample) {
+        if (this.CommandGroup) this.CommandGroup['az-show-example'] = example;
     }
 
     public get CommandGroup_Key(): string {
