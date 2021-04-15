@@ -12,6 +12,8 @@ https://github.com/Azure/azure-rest-api-specs
 
 az:
   autoconfig: true
+python: {}
+track2: {}
 
 try-require:
   - ./readme.python.md
