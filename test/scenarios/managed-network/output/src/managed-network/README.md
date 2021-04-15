@@ -59,7 +59,8 @@ az managed-network mn group create --management-groups "[]" \
     --virtual-networks id="/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB" \
     --group-name "myManagedNetworkGroup" --managed-network-name "myManagedNetwork" --resource-group "myResourceGroup" 
 
-az managed-network mn group wait --created --group-name "{myManagedNetworkGroup}" --resource-group "{rg}"
+az managed-network mn group wait --created --group-name "{myManagedNetworkGroup}" \
+    --managed-network-name "{myManagedNetwork}" --resource-group "{rg}" 
 ```
 ##### Show #####
 ```

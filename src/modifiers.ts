@@ -343,6 +343,45 @@ export class Modifiers {
                 });
             }
         }
+        if (
+            !isNullOrUndefined(operation.language['az'].subCommandGroup) &&
+            !isNullOrUndefined(groupRegex) &&
+            operation.language['az'].subCommandGroup.match(groupRegex)
+        ) {
+            operation.language['az'].subCommandGroup = groupReplacer
+                ? groupRegex
+                    ? operation.language['az'].subCommandGroup.replace(groupRegex, groupReplacer)
+                    : groupReplacer
+                : operation.language['az'].subCommandGroup;
+            if (groupReplacer.match(operationGroup.language['az'].command)) {
+                const tmpCmdRegex = new RegExp(groupRegex.source.replace('$', ''), 'g');
+                const tmpNameRegex = new RegExp(
+                    groupRegex.source
+                        .replace(operationGroup.language['az'].command + ' ', '')
+                        .replace('$', ''),
+                    'g',
+                );
+                const tmpNameReplacer = groupReplacer.replace(
+                    operationGroup.language['az'].command + ' ',
+                    '',
+                );
+                operation.language['az'].command = groupReplacer
+                    ? tmpCmdRegex
+                        ? operation.language['az'].command.replace(tmpCmdRegex, groupReplacer)
+                        : groupReplacer
+                    : operation.language['az'].command;
+                operation.language['az'].name = tmpNameReplacer
+                    ? tmpNameRegex
+                        ? operation.language['az'].name.replace(tmpNameRegex, tmpNameReplacer)
+                        : tmpNameReplacer
+                    : operation.language['az'].name;
+            } else {
+                this.session.message({
+                    Channel: Channel.Warning,
+                    Text: ' Can not change the sub command group parent group name',
+                });
+            }
+        }
     }
 
     async process(): Promise<CodeModel> {
