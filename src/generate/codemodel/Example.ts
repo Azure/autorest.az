@@ -910,6 +910,7 @@ export class ExampleModelImpl implements ExampleModel {
 
         const example = new CommandExample();
         example.Method = this.commandHandler.Command_MethodName;
+        example.Command = this.commandHandler.Command_Name;
         example.Id = `/${this.commandGroupHandler.CommandGroup_Key}/${this.methodHandler.Method_HttpMethod}/${id}`;
         example.Title = exampleObj.title || id;
         example.Path = this.methodHandler.Method_Path;
@@ -1093,16 +1094,23 @@ export class ExampleModelImpl implements ExampleModel {
                 return property?.language?.['cli']?.cliKey === 'provisioningState';
             })
         ) {
-            let words = this.commandHandler.Command_Name.split(' ');
+            const showExample = this.commandGroupHandler.CommandGroup_ShowExample;
+            if (isNullOrUndefined(showExample)) return [];
+            let words = showExample.Command.split(' ');
             words = words.slice(0, words.length - 1);
             words.push('wait');
             parameters.push(`az ${words.join(' ')} --created`);
             for (const param of example.Parameters) {
                 const paramKey = param.methodParam.value.language?.['cli']?.cliKey;
                 if (
-                    paramKey === 'resourceGroupName' ||
-                    this.resourcePool.isResource(paramKey, param.rawValue) ===
-                        example.ResourceClassName
+                    showExample.Parameters.some((showParam) => {
+                        return (
+                            showParam.methodParam.value.language?.['cli']?.cliKey ==
+                                param.methodParam.value.language?.['cli']?.cliKey &&
+                            showParam.methodParam.value.language?.['default']?.cliKey ==
+                                param.methodParam.value.language?.['default']?.cliKey
+                        );
+                    })
                 ) {
                     let paramValue = param.value;
                     let replacedValue = this.resourcePool.addParamResource(
