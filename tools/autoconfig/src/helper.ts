@@ -77,14 +77,6 @@ export function mapToPythonPackage(defaultName: string): string {
     return defaultName;
 }
 
-export function mapToPythonNamespace(defaultName: string): string {
-    const map = {};
-    if (Object.prototype.hasOwnProperty.call(map, defaultName)) {
-        return map[defaultName];
-    }
-    return defaultName;
-}
-
 export function mapToCliName(defaultName: string): string {
     const map = {
         compute: 'vm',
@@ -189,13 +181,13 @@ export function genDefaultConfiguration(
     if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.packageName)) {
         if (
             Object.prototype.hasOwnProperty.call(
-                AzConfiguration.dict,
+                AzConfiguration.origin,
                 CodeGenConstants.packageName,
             ) &&
-            AzConfiguration.dict[CodeGenConstants.packageName].startsWith('azure-mgmt-')
+            AzConfiguration.origin[CodeGenConstants.packageName].startsWith('azure-mgmt-')
         ) {
             azSettings[CodeGenConstants.packageName] =
-                AzConfiguration.dict[CodeGenConstants.packageName];
+                AzConfiguration.origin[CodeGenConstants.packageName];
         } else {
             azSettings[CodeGenConstants.packageName] =
                 'azure-mgmt-' + mapToPythonPackage(defaultName);
@@ -204,16 +196,17 @@ export function genDefaultConfiguration(
     if (!Object.prototype.hasOwnProperty.call(azSettings, CodeGenConstants.namespace)) {
         if (
             Object.prototype.hasOwnProperty.call(
-                AzConfiguration.dict,
+                AzConfiguration.origin,
                 CodeGenConstants.namespace,
             ) &&
-            AzConfiguration.dict[CodeGenConstants.namespace].startsWith('azure.mgmt.')
+            AzConfiguration.origin[CodeGenConstants.namespace].startsWith('azure.mgmt.')
         ) {
             azSettings[CodeGenConstants.namespace] =
-                AzConfiguration.dict[CodeGenConstants.namespace];
+                AzConfiguration.origin[CodeGenConstants.namespace];
         } else {
-            azSettings[CodeGenConstants.namespace] =
-                'azure.mgmt.' + mapToPythonNamespace(defaultName);
+            azSettings[CodeGenConstants.namespace] = azSettings[CodeGenConstants.packageName]
+                .split('-')
+                .join('.');
         }
     }
 
