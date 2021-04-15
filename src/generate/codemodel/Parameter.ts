@@ -6,7 +6,6 @@ import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { CommandGroupModel } from './CommandGroup';
 import { ConfigModel } from './Config';
 import { MethodModel } from './Method';
-import { MethodParameterModel } from './MethodParameter';
 import { SchemaModel } from './Schema';
 
 export interface ParameterModel {
@@ -39,20 +38,17 @@ export interface ParameterModel {
 export class ParameterModelImpl implements ParameterModel {
     private commandGroupHandler: CommandGroupModel;
     private methodHandler: MethodModel;
-    private methodParameterHandler: MethodParameterModel;
     private schemaHandler: SchemaModel;
     private configHandler: ConfigModel;
     constructor(public baseHandler: CodeModelCliImpl) {
         const {
             commandGroupHandler,
             methodHandler,
-            methodParameterHandler,
             schemaHandler,
             configHandler,
         } = baseHandler.GetHandler();
         this.commandGroupHandler = commandGroupHandler;
         this.methodHandler = methodHandler;
-        this.methodParameterHandler = methodParameterHandler;
         this.schemaHandler = schemaHandler;
         this.configHandler = configHandler;
     }
@@ -89,10 +85,7 @@ export class ParameterModelImpl implements ParameterModel {
                         }
                     } while (this.baseHandler.SelectNextMethodParameter());
                 }
-                if (
-                    shouldHidden === true &&
-                    (hasDefault || this.schemaHandler.Schema_IsRequired(parameter))
-                ) {
+                if (shouldHidden === true && (hasDefault || this.Parameter_IsRequired(parameter))) {
                     defaultValue = defaultValue + '}';
                 } else {
                     defaultValue = undefined;
@@ -170,9 +163,7 @@ export class ParameterModelImpl implements ParameterModel {
         return parameter.language['az']['default-config-key'];
     }
 
-    public Parameter_Description(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): string {
+    public Parameter_Description(param: Parameter): string {
         return param.language['az'].description?.replace(/\r?\n|\r/g, ' ');
     }
 
@@ -183,25 +174,19 @@ export class ParameterModelImpl implements ParameterModel {
         return false;
     }
 
-    public Parameter_Name(param: Parameter = this.methodParameterHandler.MethodParameter): string {
+    public Parameter_Name(param: Parameter): string {
         return param.language['az'].name.replace(/-/g, '_');
     }
 
-    public Parameter_NameAz(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): string {
+    public Parameter_NameAz(param: Parameter): string {
         return param.language['az'].name;
     }
 
-    public Parameter_CliKey(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): string {
+    public Parameter_CliKey(param: Parameter): string {
         return param.language['cli']?.cliKey;
     }
 
-    public Parameter_NamePython(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): string {
+    public Parameter_NamePython(param: Parameter): string {
         if (
             this.configHandler.SDK_IsTrack1 &&
             !isNullOrUndefined(param.language['cli']?.track1_name)
@@ -211,9 +196,7 @@ export class ParameterModelImpl implements ParameterModel {
         return param.language?.python?.name;
     }
 
-    public Parameter_IsPositional(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsPositional(param: Parameter): boolean {
         if (param?.schema && this.schemaHandler.Schema_IsPositional(param.schema)) {
             return true;
         }
@@ -221,17 +204,14 @@ export class ParameterModelImpl implements ParameterModel {
     }
 
     public Parameter_IsRequired(param: Parameter): boolean {
-        return param?.required;
+        return param?.required || param?.['targetProperty']?.required;
     }
 
     public Parameter_IsRequiredOrCLIRequired(param: Parameter): boolean {
         return this.Parameter_IsRequired(param) || param?.language?.['cli']?.required;
     }
 
-    public Parameter_SetAzNameMapsTo(
-        newName: string,
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): void {
+    public Parameter_SetAzNameMapsTo(newName: string, param: Parameter): void {
         if (!isNullOrUndefined(param['nameBaseParam'])) {
             param['nameBaseParam'].subParams[
                 this.methodHandler.Method.language['cli'].name
@@ -240,44 +220,33 @@ export class ParameterModelImpl implements ParameterModel {
         param.language['az'].mapsto = newName;
     }
 
-    public Parameter_MapsTo(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): string {
+    public Parameter_MapsTo(param: Parameter): string {
         if (EXCLUDED_PARAMS.indexOf(param.language['az'].mapsto) > -1) {
             param.language['az'].mapsto = 'gen_' + param.language['az'].mapsto;
         }
         return param.language['az'].mapsto;
     }
 
-    public Parameter_SubMapsTo(
-        subMethodName: string,
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ) {
+    public Parameter_SubMapsTo(subMethodName: string, param: Parameter) {
         if (!isNullOrUndefined(param?.['subParams']?.[subMethodName])) {
             return param['subParams'][subMethodName];
         }
         return this.Parameter_MapsTo(param);
     }
 
-    public Parameter_Type(param: Parameter = this.methodParameterHandler.MethodParameter): string {
+    public Parameter_Type(param: Parameter): string {
         return this.schemaHandler.Schema_Type(param?.schema);
     }
 
-    public Parameter_IsFlattened(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsFlattened(param: Parameter): boolean {
         return !!param.flattened;
     }
 
-    public Parameter_IsShorthandSyntax(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsShorthandSyntax(param: Parameter): boolean {
         return !!param.language['cli']?.shorthandSyntax;
     }
 
-    public Parameter_IsCliFlattened(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsCliFlattened(param: Parameter): boolean {
         if (
             param?.language?.['cli']?.['cli-flattened'] &&
             !param.language['cli']['cli-m4-flattened']
@@ -290,9 +259,7 @@ export class ParameterModelImpl implements ParameterModel {
         return false;
     }
 
-    public Parameter_IsListOfSimple(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsListOfSimple(param: Parameter): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties
         // 2. or objects with arrays as properties but has simple element type
@@ -312,9 +279,7 @@ export class ParameterModelImpl implements ParameterModel {
         return this.schemaHandler.Schema_IsListOfSimple(param.schema);
     }
 
-    public Parameter_IsList(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsList(param: Parameter): boolean {
         if (this.Parameter_IsFlattened(param)) {
             return false;
         }
@@ -394,9 +359,7 @@ export class ParameterModelImpl implements ParameterModel {
         return allPossibleKeys;
     }
 
-    public Parameter_IsPolyOfSimple(
-        param: Parameter = this.methodParameterHandler.MethodParameter,
-    ): boolean {
+    public Parameter_IsPolyOfSimple(param: Parameter): boolean {
         if (!isNullOrUndefined(param['isPolyOfSimple'])) {
             return param['isPolyOfSimple'];
         }

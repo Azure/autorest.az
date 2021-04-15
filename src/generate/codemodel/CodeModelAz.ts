@@ -156,10 +156,7 @@ export interface CodeModelAz {
     FindExampleWaitById(id: string, step?: TestStepExampleFileRestCall): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
-    RandomizeNames: boolean;
 
-    // readme config
-    GenMinTest: boolean;
     GetMetaData(): { [key: string]: any };
     getModelData(
         layer: CodeModelTypes,
@@ -167,6 +164,5 @@ export interface CodeModelAz {
         dependencies: DataGraph,
     );
     GetActionData(): any[];
-    GetTestUniqueResource: boolean;
     GetHandler(): Handler;
 }

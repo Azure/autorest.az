@@ -9,6 +9,7 @@ import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../utils/helper'
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../../../utils/models';
+import { config } from 'process';
 
 let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: Record<string, any>;
 
@@ -45,7 +46,7 @@ export class CliTestStep extends TemplateBase {
     }
 
     private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
-        const { extensionHandler } = model.GetHandler();
+        const { extensionHandler, configHandler } = model.GetHandler();
         initVars();
         const steps: string[] = [];
         steps.push('');
@@ -192,7 +193,7 @@ export class CliTestStep extends TemplateBase {
                     steps.push('');
                 };
                 createStep();
-                if (model.GenMinTest) createStep(true);
+                if (configHandler.GenMinTest) createStep(true);
             } else if (functionName) {
                 steps.push('');
                 steps.push(`# Env ${functionName}`);
@@ -239,13 +240,13 @@ export class CliTestStep extends TemplateBase {
         decorators: string[],
         initiates: string[],
     ): string[] {
-        const { extensionHandler } = model.GetHandler();
+        const { extensionHandler, configHandler } = model.GetHandler();
         const decorated = [];
         const internalObjects = [];
         const parameterNames = [];
         for (const entity of model.GetPreparerEntities() as PreparerEntity[]) {
             if (!entity.info.name) {
-                const created = model.GetTestUniqueResource
+                const created = configHandler.GetTestUniqueResource
                     ? entity.info.createdObjectNames.length > 0
                     : entity.info.createdObjectNames.indexOf(entity.objectName) >= 0;
                 internalObjects.push([
@@ -289,7 +290,7 @@ export class CliTestStep extends TemplateBase {
         if (internalObjects.length > 0) {
             initiates.push('        self.kwargs.update({');
             for (const [className, kargsKey, hasCreateExample, objectName] of internalObjects) {
-                if (hasCreateExample && model.RandomizeNames) {
+                if (hasCreateExample && configHandler.RandomizeNames) {
                     const RANDOMIZE_MIN_LEN = 4;
                     let prefixLen = Math.floor(objectName.length / 2);
                     if (objectName.length - prefixLen < RANDOMIZE_MIN_LEN)

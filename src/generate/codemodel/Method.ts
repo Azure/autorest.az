@@ -33,11 +33,9 @@ export interface MethodModel {
 
 export class MethodModelImpl implements MethodModel {
     private commandGroupHandler: CommandGroupModel;
-    private commandHandler: CommandModel;
     constructor(public baseHandler: CodeModelCliImpl) {
-        const { commandGroupHandler, commandHandler } = baseHandler.GetHandler();
+        const { commandGroupHandler } = baseHandler.GetHandler();
         this.commandGroupHandler = commandGroupHandler;
-        this.commandHandler = commandHandler;
     }
 
     public get Method(): Operation {
@@ -175,9 +173,6 @@ export class MethodModelImpl implements MethodModel {
     }
 
     public get Method_Mode(): string {
-        if (isNullOrUndefined(this.Method?.language?.['cli']?.extensionMode)) {
-            return this.commandHandler.Command_Mode;
-        }
         return this.Method?.language?.['cli']?.extensionMode;
     }
 

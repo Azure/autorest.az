@@ -18,6 +18,13 @@ export interface ConfigModel {
     ResourceType: string | undefined;
     GetPythonNamespace(): string;
     GetPythonPackageName(): string;
+    RandomizeNames: boolean;
+    FormalizeNames: boolean;
+    GetTestUniqueResource: boolean;
+    GenChecks: boolean;
+
+    // readme config
+    GenMinTest: boolean;
 }
 
 export class ConfigModelImpl implements ConfigModel {
@@ -102,5 +109,17 @@ export class ConfigModelImpl implements ConfigModel {
 
     public GetPythonPackageName(): string {
         return this.baseHandler.options['package-name'];
+    }
+
+    public get RandomizeNames(): boolean {
+        const randomizeNames = this.baseHandler.options?.['randomize-names'];
+        if (randomizeNames) return true;
+        return false;
+    }
+
+    public get FormalizeNames(): boolean {
+        const formalizeNames = this.baseHandler.options?.['formalize-names'];
+        if (formalizeNames) return true;
+        return false;
     }
 }

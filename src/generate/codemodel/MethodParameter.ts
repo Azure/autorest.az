@@ -236,7 +236,7 @@ export class MethodParameterModelImpl implements MethodParameterModel {
                 }
                 if (
                     shouldHidden === true &&
-                    (hasDefault || this.schemaHandler.Schema_IsRequired(parameter))
+                    (hasDefault || this.parameterHandler.Parameter_IsRequired(parameter))
                 ) {
                     defaultValue = defaultValue + '}';
                 } else {

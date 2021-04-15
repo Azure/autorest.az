@@ -2,7 +2,6 @@ import { SchemaType, Schema, Parameter } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
-import { MethodParameterModel } from './MethodParameter';
 
 export interface SchemaModel {
     Schema_MapsTo(Schema);
@@ -10,20 +9,13 @@ export interface SchemaModel {
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
     Schema_IsPositional(Schema): boolean;
-    Schema_IsRequired(param): boolean;
     Schema_IsListOfSimple(schema: Schema): boolean;
     Schema_IsList(schema: Schema): boolean;
 }
 
 export class SchemaModelImpl implements SchemaModel {
-    private methodParameterHandler: MethodParameterModel;
-    constructor(public baseHandler: CodeModelCliImpl) {
-        const { methodParameterHandler } = baseHandler.GetHandler();
-        this.methodParameterHandler = methodParameterHandler;
-    }
-    public Schema_IsListOfSimple(
-        schema: Schema = this.methodParameterHandler.MethodParameter.schema,
-    ): boolean {
+    constructor(public baseHandler: CodeModelCliImpl) {}
+    public Schema_IsListOfSimple(schema: Schema): boolean {
         // objects that is not base class of polymorphic and satisfy one of the four conditions
         // 1. objects with simple properties
         // 2. or objects with arrays as properties but has simple element type
@@ -154,15 +146,11 @@ export class SchemaModelImpl implements SchemaModel {
                 return false;
             }
             return true;
-        } else if (this.methodParameterHandler.MethodParameter_Type === SchemaType.Any) {
-            return false;
         }
         return false;
     }
 
-    public Schema_IsList(
-        schema: Schema = this.methodParameterHandler.MethodParameter.schema,
-    ): boolean {
+    public Schema_IsList(schema: Schema): boolean {
         if (schema.language['cli'].json === true) {
             return true;
         }
@@ -184,17 +172,11 @@ export class SchemaModelImpl implements SchemaModel {
         return schema?.language?.['cli']?.positional;
     }
 
-    public Schema_IsRequired(param: Parameter): boolean {
-        return param?.['targetProperty']?.required;
-    }
-
     public Schema_MapsTo(schema: Schema): string {
         return schema.language['az'].mapsto;
     }
 
-    public Schema_Type(
-        schema: Schema = this.methodParameterHandler.MethodParameter.schema,
-    ): string {
+    public Schema_Type(schema: Schema): string {
         if (isNullOrUndefined(schema)) {
             return undefined;
         }

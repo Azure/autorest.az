@@ -59,6 +59,7 @@ export class CliTestScenario extends TemplateBase {
     }
 
     private GenerateAzureCliTestScenario(model: CodeModelAz, config: any, scenarioName: string) {
+        const { configHandler } = model.GetHandler();
         const commandParams = model.GatherInternalResource();
         config.unshift({ function: `setup_${scenarioName}` });
         config.push({ function: `cleanup_${scenarioName}` });
@@ -200,7 +201,7 @@ export class CliTestScenario extends TemplateBase {
             outputFunc.push('');
         }
         buildSenario(this, funcScenario, false);
-        if (model.GenMinTest) {
+        if (configHandler.GenMinTest) {
             funcMinScenario.push('@try_manual');
             funcMinScenario.push(
                 ...ToMultiLine(
@@ -246,7 +247,7 @@ export class CliTestScenario extends TemplateBase {
                 buildTestcase(testCaseName, false),
             ),
         );
-        if (model.GenMinTest) {
+        if (configHandler.GenMinTest) {
             this.scenarios.push(...buildTestcase(testCaseName, true));
         }
     }

@@ -9,7 +9,7 @@ import { isNullOrUndefined } from '../../../utils/helper';
 
 export function GenerateAzureCliClientFactory(model: CodeModelAz): string[] {
     const header: HeaderGenerator = new HeaderGenerator();
-    const { extensionHandler, configHandler } = this.model.GetHandler();
+    const { extensionHandler, configHandler } = model.GetHandler();
     const output: string[] = header.getLines();
     model.SelectFirstCommandGroup(true);
     output.push('');

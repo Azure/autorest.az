@@ -152,7 +152,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.init();
         this.codeModel = session.model;
         this.resourcePool = new ResourcePool();
-        this.initHandler(session);
+        this.initHandler();
         this.dealingSimplePolymorphism();
         this.setParamAzUniqueNames();
         this.sortOperationByAzCommand();
@@ -160,16 +160,16 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.dealingParameterAlias();
     }
 
-    private initHandler(session: Session<CodeModel>) {
+    private initHandler() {
         this.configHandler = new ConfigModelImpl(this);
         this.extensionHandler = new ExtensionModelImpl(this);
-        this.commandGroupHandler = new CommandGroupModelImpl(this);
-        this.commandHandler = new CommandModelImpl(this);
-        this.methodHandler = new MethodModelImpl(this);
-        this.methodParameterHandler = new MethodParameterModelImpl(this);
-        this.parameterHandler = new ParameterModelImpl(this);
         this.schemaHandler = new SchemaModelImpl(this);
+        this.commandGroupHandler = new CommandGroupModelImpl(this);
+        this.methodHandler = new MethodModelImpl(this);
         this.azExampleHandler = new AzExampleModelImpl(this);
+        this.parameterHandler = new ParameterModelImpl(this);
+        this.commandHandler = new CommandModelImpl(this);
+        this.methodParameterHandler = new MethodParameterModelImpl(this);
     }
 
     private sortOperationByAzCommand() {
@@ -213,40 +213,6 @@ export class CodeModelCliImpl implements CodeModelAz {
             });
             this.codeModel.operationGroups[idx] = operationGroup;
         }
-    }
-
-    public get RandomizeNames(): boolean {
-        const randomizeNames = this.options?.['randomize-names'];
-        if (randomizeNames) return true;
-        return false;
-    }
-
-    public get FormalizeNames(): boolean {
-        const formalizeNames = this.options?.['formalize-names'];
-        if (formalizeNames) return true;
-        return false;
-    }
-
-    public get ResourceType(): string | undefined {
-        return this.formResourceType(this.options?.['resource-type']);
-    }
-
-    public get GenChecks(): boolean {
-        const disableChecks = this.options?.['disable-checks'];
-        if (disableChecks) return false;
-        return true;
-    }
-
-    public get GetTestUniqueResource(): boolean {
-        const ret = this.options?.[CodeGenConstants.testUniqueResource];
-        if (ret) return true;
-        return false;
-    }
-
-    public get GenMinTest(): boolean {
-        const genMinTest = this.options?.['gen-min-test'];
-        if (genMinTest) return true;
-        return false;
     }
 
     public GetResourcePool(): ResourcePool {
@@ -464,9 +430,8 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             continue;
                                         }
                                         if (
-                                            this.parameterHandler.Parameter_IsPolyOfSimple(
-                                                this.methodParameterHandler.MethodParameter,
-                                            )
+                                            this.methodParameterHandler
+                                                .MethodParameter_IsPolyOfSimple
                                         ) {
                                             const polyBaseParam = this.methodParameterHandler
                                                 .MethodParameter;
@@ -712,7 +677,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         ) {
                                             continue;
                                         }
-                                        if (this.parameterHandler.Parameter_IsPolyOfSimple()) {
+                                        if (this.parameterHandler.Parameter_IsPolyOfSimple(param)) {
                                             continue;
                                         }
                                         if (
@@ -2133,7 +2098,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     private filterExampleByPoly(exampleObj: any, example: CommandExample): boolean {
         function getPolyClass(model): string {
-            const cliKey = model.Method.language['cli'].cliKey;
+            const cliKey = model.methodHandler.Method.language['cli'].cliKey;
             if (cliKey) {
                 const names = cliKey.split('#');
                 if (names && names.length > 1) {
@@ -2279,7 +2244,7 @@ export class CodeModelCliImpl implements CodeModelAz {
 
     public GetExampleChecks(example: CommandExample): string[] {
         const ret: string[] = [];
-        if (!this.GenChecks) return ret;
+        if (!this.configHandler.GenChecks) return ret;
         let resourceObjectName = undefined;
         for (const param of example.Parameters) {
             if (
@@ -2321,7 +2286,7 @@ export class CodeModelCliImpl implements CodeModelAz {
             )
                 continue;
             let paramValue = param.value;
-            if (isTest || this.FormalizeNames) {
+            if (isTest || this.configHandler.FormalizeNames) {
                 let replacedValue = this.resourcePool.addParamResource(
                     param.defaultName,
                     paramValue,
