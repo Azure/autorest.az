@@ -149,6 +149,7 @@ export function getExtensionName(): string {
         }
     }
     if (AzConfiguration.origin['target-mode'] != 'core') {
+        throw 'Please use either --target-mode=core or --package-EXTNAME!';
     }
     return undefined; // in core mode
 }

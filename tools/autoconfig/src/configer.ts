@@ -25,9 +25,15 @@ export async function processRequest(host: Host): Promise<void> {
     AzConfiguration.dict = genDefaultConfiguration(AzConfiguration.origin);
     const model = session.model;
     const readmeFolder = getReadmeFolder(AzConfiguration.getValue(CodeGenConstants.parents));
-    const rawdata = fs
-        .readFileSync(AzConfiguration.getValue(CodeGenConstants.resourceFile))
-        .toString();
+    let rawdata = '[]';
+    if (
+        AzConfiguration.getValue(CodeGenConstants.resourceFile) &&
+        fs.existsSync(AzConfiguration.getValue(CodeGenConstants.resourceFile))
+    ) {
+        rawdata = fs
+            .readFileSync(AzConfiguration.getValue(CodeGenConstants.resourceFile))
+            .toString();
+    }
     GenerateReadmeAz(
         model,
         new RPInfo(JSON.parse(rawdata)),
