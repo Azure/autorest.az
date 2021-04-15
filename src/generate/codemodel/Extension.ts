@@ -8,8 +8,6 @@ export interface ExtensionModel {
     Extension_Description: string;
     Extension_NameUnderscored: string;
     Extension_NameClass: string;
-    Extension_TestScenario: any;
-    Extension_DefaultTestScenario: any;
     Extension_ClientSubscriptionBound: boolean;
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
@@ -55,14 +53,6 @@ export class ExtensionModelImpl implements ExtensionModel {
 
     public get Extension_NameClass(): string {
         return this.baseHandler.codeModel.info['pascal_case_title'];
-    }
-
-    public get Extension_TestScenario(): any {
-        return this.baseHandler._testScenario;
-    }
-
-    public get Extension_DefaultTestScenario(): any {
-        return this.baseHandler._defaultTestScenario;
     }
 
     public get Extension_ClientSubscriptionBound(): boolean {

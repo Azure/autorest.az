@@ -40,7 +40,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
     }
 
     public async generateAll(): Promise<void> {
-        const { extensionHandler, configHandler } = this.model.GetHandler();
+        const { extensionHandler, configHandler, exampleHandler } = this.model.GetHandler();
         this.files[path.join(this.azDirectory, 'generated/_params.py')] = GenerateAzureCliParams(
             this.model,
             this.isDebugMode,
@@ -90,14 +90,14 @@ export class AzExtensionFullGenerator extends GeneratorBase {
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
-        for (const testGroup of extensionHandler.Extension_TestScenario
-            ? Object.getOwnPropertyNames(extensionHandler.Extension_TestScenario)
+        for (const testGroup of exampleHandler.Example_TestScenario
+            ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
             : []) {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.fullTestSceanrioFile(testGroup),
-                    extensionHandler.Extension_TestScenario[testGroup],
+                    exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -112,7 +112,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
                 true,
             );
         }
-        this.model
+        exampleHandler
             .GetResourcePool()
             .generateArmTemplate(
                 this.files,

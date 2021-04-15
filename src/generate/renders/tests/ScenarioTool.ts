@@ -1,4 +1,4 @@
-import { CommandExample, ExampleParam, KeyValueType } from '../../codemodel/CodeModelAz';
+import { CommandExample, ExampleParam, KeyValueType } from '../../codemodel/Example';
 import {
     deepCopy,
     isDict,

@@ -180,7 +180,7 @@ export class CliReport extends TemplateBase {
     }
 
     getCommandBody(model: CodeModelAz) {
-        const { commandGroupHandler, methodHandler } = model.GetHandler();
+        const { commandGroupHandler, methodHandler, exampleHandler } = model.GetHandler();
         const mo: string[] = [];
         mo.push(
             '### <a name="CommandsIn' +
@@ -195,7 +195,7 @@ export class CliReport extends TemplateBase {
             do {
                 if (model.SelectFirstMethod()) {
                     do {
-                        if (model.GetExamples(false).length > 0) {
+                        if (exampleHandler.GetExamples(false).length > 0) {
                             mo.push(
                                 '|[az ' +
                                     commandGroupHandler.CommandGroup_Name +
@@ -250,6 +250,7 @@ export class CliReport extends TemplateBase {
             methodHandler,
             methodParameterHandler,
             parameterHandler,
+            exampleHandler,
         } = model.GetHandler();
         let mo: string[] = [];
         mo.push('### group `az ' + commandGroupHandler.CommandGroup_Name + '`');
@@ -272,7 +273,7 @@ export class CliReport extends TemplateBase {
                                 '`</a>',
                         );
                         mo.push('');
-                        for (const example of model.GetExamples(false)) {
+                        for (const example of exampleHandler.GetExamples(false)) {
                             mo.push(
                                 '##### <a name="' +
                                     'Examples' +
@@ -282,7 +283,7 @@ export class CliReport extends TemplateBase {
                             );
                             mo.push('```');
                             let parameters: string[] = [];
-                            parameters = model.GetExampleItems(example, false, undefined);
+                            parameters = exampleHandler.GetExampleItems(example, false, undefined);
                             const line = parameters.join(' ');
                             ToMultiLine(line, mo, CodeGenConstants.PYLINT_MAX_CODE_LENGTH, true);
                             mo.push('```');

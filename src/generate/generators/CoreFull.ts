@@ -39,7 +39,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
 
     public async generateAll() {
         const { model, isDebugMode, files } = this.getParam();
-        const { extensionHandler, configHandler } = model.GetHandler();
+        const { extensionHandler, configHandler, exampleHandler } = model.GetHandler();
         if (model.SelectFirstExtension()) {
             do {
                 files[
@@ -93,14 +93,14 @@ export class AzCoreFullGenerator extends GeneratorBase {
 
                 await this.generateFullSingleAndAddtoOutput(new CliTestInit(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTestStep(model), true, true);
-                for (const testGroup of extensionHandler.Extension_TestScenario
-                    ? Object.getOwnPropertyNames(extensionHandler.Extension_TestScenario)
+                for (const testGroup of exampleHandler.Example_TestScenario
+                    ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
                     : []) {
                     await this.generateFullSingleAndAddtoOutput(
                         new CliTestScenario(
                             model,
                             PathConstants.fullTestSceanrioFile(testGroup),
-                            extensionHandler.Extension_TestScenario[testGroup],
+                            exampleHandler.Example_TestScenario[testGroup],
                             testGroup,
                         ),
                         true,
@@ -115,7 +115,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         true,
                     );
                 }
-                model
+                exampleHandler
                     .GetResourcePool()
                     .generateArmTemplate(
                         files,

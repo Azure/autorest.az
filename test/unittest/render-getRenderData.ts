@@ -40,7 +40,8 @@ describe('RenderSetupPy', () => {
         await entry.init();
 
         const codeModel = new CodeModelCliImpl(session);
-        codeModel.GenerateTestInit();
+        const { exampleHandler } = codeModel.GetHandler();
+        exampleHandler.GenerateTestInit();
 
         model = codeModel;
     }

@@ -17,7 +17,12 @@ function initVars() {
 }
 
 export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string[] {
-    const { extensionHandler, commandGroupHandler, commandHandler } = model.GetHandler();
+    const {
+        extensionHandler,
+        commandGroupHandler,
+        commandHandler,
+        exampleHandler,
+    } = model.GetHandler();
     initVars();
     const header: HeaderGenerator = new HeaderGenerator();
     header.disableTooManyLines = true;
@@ -26,7 +31,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     output.push('');
 
     output.push('');
-    model.GatherInternalResource();
+    exampleHandler.GatherInternalResource();
     output.push("helps['" + extensionHandler.Extension_Name + "'] = '''");
     output.push('    type: group');
     output.push('    short-summary: ' + extensionHandler.Extension_Description);
@@ -637,7 +642,12 @@ function GetKeyValueActionOptions(
 }
 
 function generateCommandHelp(model: CodeModelAz, debug = false) {
-    const { commandGroupHandler, commandHandler, methodHandler } = model.GetHandler();
+    const {
+        commandGroupHandler,
+        commandHandler,
+        methodHandler,
+        exampleHandler,
+    } = model.GetHandler();
     // create, delete, list, show, update
     // let method: string = methods[mi];
     // let ctx = model.SelectCommand(method);
@@ -680,7 +690,7 @@ function generateCommandHelp(model: CodeModelAz, debug = false) {
 
     if (model.SelectFirstMethod()) {
         do {
-            for (const example of model.GetExamples(false)) {
+            for (const example of exampleHandler.GetExamples(false)) {
                 if (!examplesStarted) {
                     output.push('    examples:');
                     examplesStarted = true;
@@ -688,7 +698,7 @@ function generateCommandHelp(model: CodeModelAz, debug = false) {
 
                 // output.push ("# " + example_id);
                 let parameters: string[] = [];
-                parameters = model.GetExampleItems(example, false, undefined);
+                parameters = exampleHandler.GetExampleItems(example, false, undefined);
                 output.push('      - name: ' + example.Title);
                 output.push('        text: |-');
                 const line = '               ' + parameters.join(' ');

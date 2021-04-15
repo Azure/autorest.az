@@ -14,7 +14,6 @@ export interface ConfigModel {
     AzureCliFolder: string;
     AzureCliExtFolder: string;
     azOutputFolder: string;
-    ConfiguredScenario: boolean;
     ResourceType: string | undefined;
     GetPythonNamespace(): string;
     GetPythonPackageName(): string;
@@ -74,11 +73,6 @@ export class ConfigModelImpl implements ConfigModel {
 
     public get SDK_NoFlatten() {
         return AzConfiguration.getValue(CodeGenConstants.sdkNoFlatten);
-    }
-
-    public get ConfiguredScenario(): boolean {
-        // judge test-scenario whether have value
-        return this.baseHandler._configuredScenario;
     }
 
     public get ResourceType(): string | undefined {

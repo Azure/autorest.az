@@ -62,6 +62,7 @@ export class CliTestPrepare extends TemplateBase {
     }
 
     private CreatePreparer(model: CodeModelAz, resourceName: string) {
+        const { exampleHandler } = model.GetHandler();
         const preparerInfo = preparerInfos[resourceName];
         const preparerData = new PreparerData(GenPreparerName(preparerInfo.className));
         for (let i = 0; i < preparerInfo.dependResources.length; i++) {
@@ -100,12 +101,12 @@ export class CliTestPrepare extends TemplateBase {
                             i++
                         ) {
                             if (
-                                model
+                                exampleHandler
                                     .GetResourcePool()
                                     .isResource(
                                         preparerInfos[preparerInfo.className].dependResources[i],
                                         null,
-                                    ) === model.GetResourcePool().isResource(depend, null)
+                                    ) === exampleHandler.GetResourcePool().isResource(depend, null)
                             ) {
                                 variables.push(
                                     `self.test_class_instance.kwargs.get(self.${

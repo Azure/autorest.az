@@ -1,8 +1,7 @@
 import { Operation, Parameter } from '@azure-tools/codemodel';
 import { isNullOrUndefined } from '../../utils/helper';
-import { CommandExample } from './CodeModelAz';
+import { CommandExample } from './Example';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
-import { CommandModel } from './Command';
 import { CommandGroupModel } from './CommandGroup';
 
 export interface MethodModel {

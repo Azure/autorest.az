@@ -5,8 +5,9 @@
 import { HttpMethod } from '@azure-tools/codemodel';
 import { CmdToMultiLines, isNullOrUndefined } from '../../../utils/helper';
 import { PathConstants } from '../../../utils/models';
-import { CodeModelAz, CommandExample } from '../../codemodel/CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
+import { CommandExample } from '../../codemodel/Example';
 
 export class CliExtReadme extends TemplateBase {
     constructor(model: CodeModelAz) {
@@ -15,7 +16,7 @@ export class CliExtReadme extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
-        const { extensionHandler, commandGroupHandler } = this.model.GetHandler();
+        const { extensionHandler, commandGroupHandler, exampleHandler } = this.model.GetHandler();
         let output: string[] = [];
 
         output.push('# Azure CLI ' + extensionHandler.Extension_Name + ' Extension #');
@@ -37,7 +38,7 @@ export class CliExtReadme extends TemplateBase {
                 const exampleCommandList: string[] = [];
                 if (this.model.SelectFirstCommand()) {
                     do {
-                        exampleList = exampleList.concat(this.model.GetExamples(false));
+                        exampleList = exampleList.concat(exampleHandler.GetExamples(false));
                     } while (this.model.SelectNextCommand());
                 }
 

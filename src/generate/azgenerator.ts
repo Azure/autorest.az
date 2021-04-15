@@ -13,7 +13,7 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
         const model = new CodeModelCliImpl(session);
-        const { configHandler } = model.GetHandler();
+        const { configHandler, exampleHandler } = model.GetHandler();
 
         if (model.SelectFirstExtension()) {
             do {
@@ -37,8 +37,8 @@ export async function processRequest(host: Host) {
         }
 
         openInplaceGen();
-        await model.GetResourcePool().loadTestResources();
-        model.GenerateTestInit();
+        await exampleHandler.GetResourcePool().loadTestResources();
+        exampleHandler.GenerateTestInit();
         const generator = AzGeneratorFactory.createAzGenerator(model);
         await generator.generateAll();
         const files = generator.files;

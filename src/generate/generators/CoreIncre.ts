@@ -46,7 +46,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
     }
 
     public async generateAll(): Promise<void> {
-        const { extensionHandler, configHandler } = this.model.GetHandler();
+        const { extensionHandler, configHandler, exampleHandler } = this.model.GetHandler();
         // generated and test folder
         this.files[
             path.join(PathConstants.generatedFolder, PathConstants.paramsFile)
@@ -127,14 +127,14 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestStep(this.model), true);
-        for (const testGroup of extensionHandler.Extension_TestScenario
-            ? Object.getOwnPropertyNames(extensionHandler.Extension_TestScenario)
+        for (const testGroup of exampleHandler.Example_TestScenario
+            ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.incTestScenarioFile(testGroup),
-                    extensionHandler.Extension_TestScenario[testGroup],
+                    exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -147,7 +147,7 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
                 true,
             );
         }
-        this.model
+        exampleHandler
             .GetResourcePool()
             .generateArmTemplate(
                 this.files,

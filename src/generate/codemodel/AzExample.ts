@@ -1,6 +1,6 @@
 import { isGeneratedExampleId, ToMultiLine } from '../../utils/helper';
 import { CodeGenConstants } from '../../utils/models';
-import { CommandExample } from './CodeModelAz';
+import { CommandExample } from './Example';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { MethodModel } from './Method';
 

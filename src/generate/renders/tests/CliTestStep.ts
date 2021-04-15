@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz, CommandExample } from '../../codemodel/CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { PreparerEntity, getResourceKey } from './ScenarioTool';
 import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../../../utils/models';
-import { config } from 'process';
+import { CommandExample } from '../../codemodel/Example';
 
 let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: Record<string, any>;
 
@@ -46,7 +46,7 @@ export class CliTestStep extends TemplateBase {
     }
 
     private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
-        const { extensionHandler, configHandler } = model.GetHandler();
+        const { extensionHandler, configHandler, exampleHandler } = model.GetHandler();
         initVars();
         const steps: string[] = [];
         steps.push('');
@@ -54,15 +54,15 @@ export class CliTestStep extends TemplateBase {
         steps.push('from .. import try_manual');
         steps.push('');
 
-        const commandParams = model.GatherInternalResource();
+        const commandParams = exampleHandler.GatherInternalResource();
         let config: any = [];
-        if (model.GetResourcePool().hasTestResourceScenario) {
-            for (const g in extensionHandler.Extension_TestScenario) {
-                for (const s in extensionHandler.Extension_TestScenario[g])
-                    config.push(...extensionHandler.Extension_TestScenario[g][s]);
+        if (exampleHandler.GetResourcePool().hasTestResourceScenario) {
+            for (const g in exampleHandler.Example_TestScenario) {
+                for (const s in exampleHandler.Example_TestScenario[g])
+                    config.push(...exampleHandler.Example_TestScenario[g][s]);
             }
         } else {
-            config = deepCopy(extensionHandler.Extension_DefaultTestScenario);
+            config = deepCopy(exampleHandler.Example_DefaultTestScenario);
         }
 
         const header: HeaderGenerator = new HeaderGenerator();
@@ -73,7 +73,7 @@ export class CliTestStep extends TemplateBase {
             [],
             [],
         );
-        model.GetResourcePool().clearExampleParams();
+        exampleHandler.GetResourcePool().clearExampleParams();
 
         // go through the examples to generate steps
         for (let ci = 0; ci < config.length; ci++) {
@@ -93,7 +93,7 @@ export class CliTestStep extends TemplateBase {
                     const examples: CommandExample[] = [];
                     let exampleIdx = -1;
                     let waitCmds: string[][];
-                    for (const exampleCmd of model.FindExampleById(
+                    for (const exampleCmd of exampleHandler.FindExampleById(
                         exampleId,
                         commandParams,
                         examples,
@@ -119,7 +119,7 @@ export class CliTestStep extends TemplateBase {
                             }
                             found = true;
                             if (isNullOrUndefined(waitCmds)) {
-                                waitCmds = model.FindExampleWaitById(exampleId);
+                                waitCmds = exampleHandler.FindExampleWaitById(exampleId);
                             }
 
                             const cmdString = exampleCmd.join('\n');
@@ -240,11 +240,11 @@ export class CliTestStep extends TemplateBase {
         decorators: string[],
         initiates: string[],
     ): string[] {
-        const { extensionHandler, configHandler } = model.GetHandler();
+        const { extensionHandler, configHandler, exampleHandler } = model.GetHandler();
         const decorated = [];
         const internalObjects = [];
         const parameterNames = [];
-        for (const entity of model.GetPreparerEntities() as PreparerEntity[]) {
+        for (const entity of exampleHandler.GetPreparerEntities() as PreparerEntity[]) {
             if (!entity.info.name) {
                 const created = configHandler.GetTestUniqueResource
                     ? entity.info.createdObjectNames.length > 0
