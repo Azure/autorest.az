@@ -27,8 +27,6 @@ export interface MethodParameterModel {
     MethodParameter_IsDiscriminator: boolean;
     MethodParameter_IdPart: string;
     MethodParameter_ArgGroup: string;
-    // MethodParameter_Features: [string, string];
-    // MethodParameter_Imports: [string, string[]];
     MethodParameter: Parameter;
     SubMethodParameter: Parameter;
 
@@ -45,6 +43,8 @@ export interface MethodParameterModel {
     MethodParameter_IsPositional: boolean;
     MethodParameter_IsShorthandSyntax: boolean;
     MethodParameter_PositionalKeys: string[];
+    MethodParameter_Features: Record<string, any>;
+    MethodParameter_Imports: Record<string, any>;
 }
 
 export class MethodParameterModelImpl implements MethodParameterModel {
@@ -325,5 +325,13 @@ export class MethodParameterModelImpl implements MethodParameterModel {
             this.baseHandler.methodParameterHandler.MethodParameter,
             subMethodParams,
         );
+    }
+
+    public get MethodParameter_Features(): Record<string, any> {
+        return this.MethodParameter.language['cli']['features'];
+    }
+
+    public get MethodParameter_Imports(): Record<string, any> {
+        return this.MethodParameter.language['cli']['imports'];
     }
 }

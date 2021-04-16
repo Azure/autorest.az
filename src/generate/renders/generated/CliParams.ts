@@ -172,8 +172,9 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                     if (param?.schema?.type === SchemaType.Constant || param.readOnly) {
                         continue;
                     }
-                    if (!isNullOrUndefined(param?.language?.python?.name)) {
-                        allPythonParam.set(param.language.python.name, true);
+                    const pythonParamName = parameterHandler.Parameter_NamePython(param);
+                    if (!isNullOrUndefined(pythonParamName)) {
+                        allPythonParam.set(pythonParamName, true);
                     }
                 }
                 if (!isNullOrUndefined(originalOperation.requests[0].parameters)) {
@@ -190,8 +191,9 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                         if (param?.schema?.type === SchemaType.Constant || param.readOnly) {
                             continue;
                         }
-                        if (!isNullOrUndefined(param?.language?.python?.name)) {
-                            allPythonParam.set(param.language.python.name, true);
+                        const pythonParamName = parameterHandler.Parameter_NamePython(param);
+                        if (!isNullOrUndefined(pythonParamName)) {
+                            allPythonParam.set(pythonParamName, true);
                         }
                     }
                 }

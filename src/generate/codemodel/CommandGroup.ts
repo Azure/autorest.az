@@ -25,8 +25,8 @@ export interface CommandGroupModel {
     CommandGroup_CustomCommandTypeName(group?: OperationGroup): string;
     CommandGroup_Referenced: boolean;
     CommandGroup_ShowExample: CommandExample;
-    // CommandGroup_Features: [string, string];
-    // CommandGroup_Imports: [string, string[]];
+    CommandGroup_Features: Record<string, any>;
+    CommandGroup_Imports: Record<string, any>;
 }
 
 export class CommandGroupModelImpl implements CommandGroupModel {
@@ -160,5 +160,13 @@ export class CommandGroupModelImpl implements CommandGroupModel {
             '_' +
             this.baseHandler.GetModuleOperationName(group);
         return customName;
+    }
+
+    public get CommandGroup_Features(): Record<string, any> {
+        return this.CommandGroup.language['cli']['features'];
+    }
+
+    public get CommandGroup_Imports(): Record<string, any> {
+        return this.CommandGroup.language['cli']['imports'];
     }
 }
