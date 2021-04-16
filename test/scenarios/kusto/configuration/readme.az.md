@@ -53,4 +53,12 @@ az:
   package-name: azure-mgmt-kusto
 az-output-folder: $(azure-cli-folder)/src/azure-cli/azure/cli/command_modules/kusto
 python-sdk-output-folder: "$(az-output-folder)/vendored_sdks/kusto"
+
+directive:
+    - where:
+        command: kusto cluster remove-language-extension
+      features:
+        exception_handler: handle_template_based_exception
+      imports:
+        azure.cli.core.exception: handle_template_based_exception
 ```
