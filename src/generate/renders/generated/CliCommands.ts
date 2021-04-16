@@ -176,7 +176,7 @@ export class CliCommands extends TemplateBase {
     public async GetRenderData(): Promise<Record<string, unknown>> {
         const { configHandler } = this.model.GetHandler();
         let data = { imports: [], pylints: [] };
-        data['imports'].push([configHandler.CliCoreLib + '.commands', ['CliCommandType']]);
+        this.addImport(configHandler.CliCoreLib + '.commands', ['CliCommandType']);
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -267,10 +267,7 @@ export class CliCommands extends TemplateBase {
             data['pylints'].push('# pylint: disable=line-too-long');
         }
         data['azextFolder'] = configHandler.AzextFolder;
-        data.imports = Array.from(this.imports, ([importKey, importValues]) => ({
-            importKey,
-            importValues,
-        }));
+        data.imports = Array.from(this.imports);
         const result = { data: { imports: [], pylints: [] } };
         result.data = data;
         return result;
