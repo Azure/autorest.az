@@ -224,7 +224,7 @@ export class ExampleModelImpl implements ExampleModel {
             ret['swagger git status'] = getGitStatus(swaggerFolder).split('\n');
         }
 
-        const azpkg = path.join(__dirname, '..', '..', '..', 'package.json');
+        const azpkg = path.join(__dirname, '..', '..', '..', '..', 'package.json');
         const pjson = JSON.parse(await readFile(azpkg));
         ret['package info'] = `${pjson.name} ${pjson.version}`;
         return ret;

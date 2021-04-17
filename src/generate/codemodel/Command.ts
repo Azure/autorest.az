@@ -171,10 +171,10 @@ export class CommandModelImpl implements CommandModel {
     }
 
     public get Command_Features(): Record<string, any> {
-        return this.Command.language['cli']['features'];
+        return this.Command.language['az']['features'];
     }
 
     public get Command_Imports(): Record<string, any> {
-        return this.Command.language['cli']['imports'];
+        return this.Command.language['az']['imports'];
     }
 }

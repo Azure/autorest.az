@@ -328,10 +328,10 @@ export class MethodParameterModelImpl implements MethodParameterModel {
     }
 
     public get MethodParameter_Features(): Record<string, any> {
-        return this.MethodParameter.language['cli']['features'];
+        return this.MethodParameter.language['az']['features'];
     }
 
     public get MethodParameter_Imports(): Record<string, any> {
-        return this.MethodParameter.language['cli']['imports'];
+        return this.MethodParameter.language['az']['imports'];
     }
 }

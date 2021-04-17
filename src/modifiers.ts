@@ -226,6 +226,12 @@ export class Modifiers {
         ) {
             operation.language['az'].description =
                 commandDescriptionReplacer || operation.language['az'].description;
+            if (!isNullOrUndefined(features)) {
+                operation.language['az']['features'] = features;
+            }
+            if (!isNullOrUndefined(imports)) {
+                operation.language['az']['imports'] = imports;
+            }
             if (isNullOrUndefined(commandReplacer)) {
                 return;
             }
@@ -291,12 +297,6 @@ export class Modifiers {
                 Channel: Channel.Warning,
                 Text: ' newAzName:' + newAzName,
             });
-            if (!isNullOrUndefined(features)) {
-                operation.language['az']['features'] = features;
-            }
-            if (!isNullOrUndefined(imports)) {
-                operation.language['az']['imports'] = imports;
-            }
         }
         if (
             !isNullOrUndefined(operation.language['az'].subCommandGroup) &&

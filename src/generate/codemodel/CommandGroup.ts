@@ -163,10 +163,10 @@ export class CommandGroupModelImpl implements CommandGroupModel {
     }
 
     public get CommandGroup_Features(): Record<string, any> {
-        return this.CommandGroup.language['cli']['features'];
+        return this.CommandGroup.language['az']['features'];
     }
 
     public get CommandGroup_Imports(): Record<string, any> {
-        return this.CommandGroup.language['cli']['imports'];
+        return this.CommandGroup.language['az']['imports'];
     }
 }
