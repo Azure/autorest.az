@@ -22,12 +22,12 @@ export enum TestMode {
 
 describe('ScenarioTest', () => {
     const testDimensions: Map<string, Array<TestMode>> = new Map([
-        // ['attestation', [TestMode.ExtDefault]],
-        // ['boolean', [TestMode.ExtDefault]],
-        // ['datafactory', [TestMode.ExtDefault]],
-        // ['managed-network', [TestMode.ExtDefault]],
-        // ['msgraphuser', [TestMode.ExtDefault]],
-        // ['mixed-reality', [TestMode.ExtIncremental]],
+        ['attestation', [TestMode.ExtDefault]],
+        ['boolean', [TestMode.ExtDefault]],
+        ['datafactory', [TestMode.ExtDefault]],
+        ['managed-network', [TestMode.ExtDefault]],
+        ['msgraphuser', [TestMode.ExtDefault]],
+        ['mixed-reality', [TestMode.ExtIncremental]],
         [
             'kusto',
             [
@@ -37,16 +37,16 @@ describe('ScenarioTest', () => {
                 TestMode.ExtNoSdkNoFlattenTrack1,
             ],
         ],
-        // [
-        //     'synapse',
-        //     [
-        //         TestMode.CoreDefault,
-        //         TestMode.ExtFlatten,
-        //         TestMode.ExtDefaultFolder,
-        //         TestMode.ExtNoSdkNoFlattenTrack1,
-        //     ],
-        // ],
-        // ['compute', [TestMode.CoreIncremental]],
+        [
+            'synapse',
+            [
+                TestMode.CoreDefault,
+                TestMode.ExtFlatten,
+                TestMode.ExtDefaultFolder,
+                TestMode.ExtNoSdkNoFlattenTrack1,
+            ],
+        ],
+        ['compute', [TestMode.CoreIncremental]],
     ]);
 
     async function runAz(directory: string, extraOption: any) {
