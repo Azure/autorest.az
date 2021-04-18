@@ -124,6 +124,7 @@ export class CliTopInit extends TemplateBase {
         output.push(indentStr + '        pass');
         output.push(indentStr + '    else:');
         output.push(indentStr + '        raise e');
+        output.push('');
         return output;
     }
 
@@ -158,6 +159,7 @@ export class CliTopInit extends TemplateBase {
             importPath = '';
         }
 
+        output.push('');
         output.push('');
         output.push(
             'class ' + extensionHandler.Extension_NameClass + 'CommandsLoader(AzCommandsLoader):',

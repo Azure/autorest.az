@@ -4,7 +4,6 @@
  *-------------------------------------------------------------------------------------------- */
 import { EOL } from 'os';
 import * as path from 'path';
-import { config } from 'process';
 import {
     getIndentString,
     keepHeaderLines,
@@ -27,8 +26,8 @@ export class CliTopHelp extends TemplateBase {
         const headerGenerator: HeaderGenerator = new HeaderGenerator();
         headerGenerator.disableWildcardImport = true;
         headerGenerator.disableUnusedWildcardImport = true;
+        headerGenerator.disableUnusedImport = true;
         let output: string[] = headerGenerator.getLines();
-        output.push('');
         output = output.concat(this.loadGeneratedHelp(0));
         return output;
     }
@@ -95,6 +94,7 @@ export class CliTopHelp extends TemplateBase {
         output.push(indentStr + '        pass');
         output.push(indentStr + '    else:');
         output.push(indentStr + '        raise e');
+        output.push('');
         return output;
     }
 
