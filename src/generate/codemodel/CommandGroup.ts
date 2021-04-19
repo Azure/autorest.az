@@ -25,7 +25,7 @@ export interface CommandGroupModel {
     CommandGroup_CustomCommandTypeName(group?: OperationGroup): string;
     CommandGroup_Referenced: boolean;
     CommandGroup_ShowExample: CommandExample;
-    CommandGroup_Features: Record<string, any>;
+    CommandGroup_Features: Record<string, string | number>;
     CommandGroup_Imports: Record<string, any>;
 }
 
@@ -162,7 +162,7 @@ export class CommandGroupModelImpl implements CommandGroupModel {
         return customName;
     }
 
-    public get CommandGroup_Features(): Record<string, any> {
+    public get CommandGroup_Features(): Record<string, string | number> {
         return this.CommandGroup.language['az']['features'];
     }
 

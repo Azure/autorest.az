@@ -73,4 +73,8 @@ directive:
         exception_handler: handle_template_based_exception
       imports:
         azure.cli.core.exception: handle_template_based_exception
+    - where:
+        command: kusto database list
+      features:
+        option_list: "['--private-cloud', 123, True]"
 ```
