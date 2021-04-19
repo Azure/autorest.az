@@ -51,7 +51,6 @@ export class MethodParameterModelImpl implements MethodParameterModel {
     private commandGroupHandler: CommandGroupModel;
     private methodHandler: MethodModel;
     private parameterHandler: ParameterModel;
-    private schemaHandler: SchemaModel;
     constructor(public baseHandler: CodeModelCliImpl) {
         const { commandGroupHandler, methodHandler, parameterHandler } = baseHandler.GetHandler();
         this.commandGroupHandler = commandGroupHandler;
