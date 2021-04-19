@@ -25,8 +25,8 @@ export interface CommandModel {
     Command_Mode: string;
     Command_Type: string;
     Command_GenericSetterArgName: string;
-    // Command_Features: [string, string];
-    // Command_Imports: [string, string[]];
+    Command_Features: Record<string, string | number>;
+    Command_Imports: Record<string, any>;
 }
 
 export class CommandModelImpl implements CommandModel {
@@ -168,5 +168,13 @@ export class CommandModelImpl implements CommandModel {
 
     public get Command_ResourceType(): string | undefined {
         return this.baseModel.formResourceType(this.Command.language['cli']?.['resource-type']);
+    }
+
+    public get Command_Features(): Record<string, string | number> {
+        return this.Command.language['az']['features'];
+    }
+
+    public get Command_Imports(): Record<string, any> {
+        return this.Command.language['az']['imports'];
     }
 }

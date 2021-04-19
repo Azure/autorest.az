@@ -27,8 +27,6 @@ export interface MethodParameterModel {
     MethodParameter_IsDiscriminator: boolean;
     MethodParameter_IdPart: string;
     MethodParameter_ArgGroup: string;
-    // MethodParameter_Features: [string, string];
-    // MethodParameter_Imports: [string, string[]];
     MethodParameter: Parameter;
     SubMethodParameter: Parameter;
 
@@ -45,13 +43,14 @@ export interface MethodParameterModel {
     MethodParameter_IsPositional: boolean;
     MethodParameter_IsShorthandSyntax: boolean;
     MethodParameter_PositionalKeys: string[];
+    MethodParameter_Features: Record<string, string | number>;
+    MethodParameter_Imports: Record<string, any>;
 }
 
 export class MethodParameterModelImpl implements MethodParameterModel {
     private commandGroupHandler: CommandGroupModel;
     private methodHandler: MethodModel;
     private parameterHandler: ParameterModel;
-    private schemaHandler: SchemaModel;
     constructor(public baseHandler: CodeModelCliImpl) {
         const { commandGroupHandler, methodHandler, parameterHandler } = baseHandler.GetHandler();
         this.commandGroupHandler = commandGroupHandler;
@@ -325,5 +324,13 @@ export class MethodParameterModelImpl implements MethodParameterModel {
             this.baseHandler.methodParameterHandler.MethodParameter,
             subMethodParams,
         );
+    }
+
+    public get MethodParameter_Features(): Record<string, string | number> {
+        return this.MethodParameter.language['az']['features'];
+    }
+
+    public get MethodParameter_Imports(): Record<string, any> {
+        return this.MethodParameter.language['az']['imports'];
     }
 }
