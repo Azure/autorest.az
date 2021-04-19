@@ -12,19 +12,21 @@ import {
     isNullOrUndefined,
 } from '../../utils/helper';
 import { GenerationMode, PathConstants } from '../../utils/models';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
+import { config } from 'process';
 
 export class CliTopAction extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.actionFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.actionFile);
         const relativePathOldVersion = this.relativePath.replace(
             PathConstants.actionFile,
             PathConstants.actionFileOldVersion,
         );
-        if (fs.existsSync(path.join(model.azOutputFolder, relativePathOldVersion))) {
+        if (fs.existsSync(path.join(configHandler.azOutputFolder, relativePathOldVersion))) {
             this.relativePath = relativePathOldVersion;
         }
     }

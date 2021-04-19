@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import {
     EscapeString,
     ToCamelCase,
@@ -43,6 +43,7 @@ function initVars() {
 }
 
 export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): string[] {
+    const { commandGroupHandler, commandHandler, configHandler } = model.GetHandler();
     initVars();
     let outputArgs: string[] = [];
 
@@ -58,12 +59,15 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
             let showOutput = [];
             if (model.SelectFirstCommand()) {
                 do {
-                    if (model.Command_IsLongRun && model.CommandGroup_HasShowCommand) {
+                    if (
+                        commandHandler.Command_IsLongRun &&
+                        commandGroupHandler.CommandGroup_HasShowCommand
+                    ) {
                         needWait = true;
                     }
-                    const needGeneric = model.Command_NeedGeneric;
+                    const needGeneric = commandHandler.Command_NeedGeneric;
                     const commandOutput = getCommandBody(model, needGeneric, debug);
-                    if (model.Command_MethodName === 'show') {
+                    if (commandHandler.Command_MethodName === 'show') {
                         showOutput = commandOutput;
                     }
                     if (commandOutput.length > 0) {
@@ -93,7 +97,7 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
     if (hasResourceGroup) parameterImports.push('resource_group_name_type');
     if (hasLocation) parameterImports.push('get_location_type');
     if (parameterImports.length > 0) {
-        header.addFromImport(model.CliCoreLib + '.commands.parameters', parameterImports);
+        header.addFromImport(configHandler.CliCoreLib + '.commands.parameters', parameterImports);
     }
 
     const validatorImports: string[] = [];
@@ -104,15 +108,15 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
         validatorImports.push('validate_file_or_dict');
     }
     if (validatorImports.length > 0) {
-        header.addFromImport(model.CliCoreLib + '.commands.validators', validatorImports);
+        header.addFromImport(configHandler.CliCoreLib + '.commands.validators', validatorImports);
     }
 
     if (hasActions) {
-        if (model.IsCliCore) {
+        if (configHandler.IsCliCore) {
             const topAction = new CliTopAction(model);
             header.addFromImport('..' + topAction.relativePath.replace(/\.py$/, ''), actions);
         } else {
-            header.addFromImport(model.AzextFolder + '.action', actions);
+            header.addFromImport(configHandler.AzextFolder + '.action', actions);
         }
     }
 
@@ -136,6 +140,12 @@ export function GenerateAzureCliParams(model: CodeModelAz, debug: boolean): stri
 }
 
 function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) {
+    const {
+        commandHandler,
+        methodHandler,
+        methodParameterHandler,
+        parameterHandler,
+    } = model.GetHandler();
     // let method: string = methods[mi];
 
     // let ctx = model.SelectCommand(method);
@@ -143,45 +153,47 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
     //    continue;
     const outputArgs: string[] = [];
     outputArgs.push('');
-    outputArgs.push("    with self.argument_context('" + model.Command_Name + "') as c:");
+    outputArgs.push("    with self.argument_context('" + commandHandler.Command_Name + "') as c:");
 
     let hasParam = false;
     const allParam: Map<string, boolean> = new Map<string, boolean>();
     const allPythonParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-            const originalOperation = model.Method_GetOriginalOperation;
+            const originalOperation = methodHandler.Method_GetOriginalOperation;
             if (!isNullOrUndefined(originalOperation)) {
                 for (const param of originalOperation.parameters) {
-                    if (model.Parameter_InGlobal(param)) {
+                    if (parameterHandler.Parameter_InGlobal(param)) {
                         continue;
                     }
-                    if (model.Parameter_IsFlattened(param) === true) {
+                    if (parameterHandler.Parameter_IsFlattened(param) === true) {
                         continue;
                     }
                     if (param?.schema?.type === SchemaType.Constant || param.readOnly) {
                         continue;
                     }
-                    if (!isNullOrUndefined(param?.language?.python?.name)) {
-                        allPythonParam.set(param.language.python.name, true);
+                    const pythonParamName = parameterHandler.Parameter_NamePython(param);
+                    if (!isNullOrUndefined(pythonParamName)) {
+                        allPythonParam.set(pythonParamName, true);
                     }
                 }
                 if (!isNullOrUndefined(originalOperation.requests[0].parameters)) {
                     for (const param of originalOperation.requests[0].parameters) {
-                        if (model.Parameter_InGlobal(param)) {
+                        if (parameterHandler.Parameter_InGlobal(param)) {
                             continue;
                         }
                         if (
-                            model.Parameter_IsFlattened(param) === true &&
-                            !model.Parameter_IsCliFlattened(param)
+                            parameterHandler.Parameter_IsFlattened(param) === true &&
+                            !parameterHandler.Parameter_IsCliFlattened(param)
                         ) {
                             continue;
                         }
                         if (param?.schema?.type === SchemaType.Constant || param.readOnly) {
                             continue;
                         }
-                        if (!isNullOrUndefined(param?.language?.python?.name)) {
-                            allPythonParam.set(param.language.python.name, true);
+                        const pythonParamName = parameterHandler.Parameter_NamePython(param);
+                        if (!isNullOrUndefined(pythonParamName)) {
+                            allPythonParam.set(pythonParamName, true);
                         }
                     }
                 }
@@ -190,26 +202,26 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
             let hasResourceGroupInOperation = false;
             if (model.SelectFirstMethodParameter()) {
                 do {
-                    if (model.MethodParameter_IsFlattened) {
+                    if (methodParameterHandler.MethodParameter_IsFlattened) {
                         continue;
                     }
                     if (
-                        model.MethodParameter_Type === SchemaType.Constant ||
-                        model.MethodParameter['readOnly']
+                        methodParameterHandler.MethodParameter_Type === SchemaType.Constant ||
+                        methodParameterHandler.MethodParameter['readOnly']
                     ) {
                         continue;
                     }
                     hasParam = true;
                     if (
                         isNullOrUndefined(originalOperation) &&
-                        !isNullOrUndefined(model.MethodParameter_NamePython)
+                        !isNullOrUndefined(methodParameterHandler.MethodParameter_NamePython)
                     ) {
-                        allPythonParam.set(model.MethodParameter_NamePython, true);
+                        allPythonParam.set(methodParameterHandler.MethodParameter_NamePython, true);
                     }
-                    const parameterName = model.MethodParameter_MapsTo;
+                    const parameterName = methodParameterHandler.MethodParameter_MapsTo;
                     if (
                         !isNullOrUndefined(originalOperation) &&
-                        model.MethodParameter['targetProperty']?.isDiscriminator
+                        methodParameterHandler.MethodParameter['targetProperty']?.isDiscriminator
                     ) {
                         continue;
                     }
@@ -218,9 +230,13 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                     }
                     let argument = "        c.argument('" + parameterName + "'";
 
-                    if (!isNullOrUndefined(model.MethodParameter.language['az'].alias)) {
+                    if (
+                        !isNullOrUndefined(
+                            methodParameterHandler.MethodParameter.language['az'].alias,
+                        )
+                    ) {
                         argument = "        c.argument('" + parameterName + "'";
-                        const aliases = model.MethodParameter.language['az'].alias;
+                        const aliases = methodParameterHandler.MethodParameter.language['az'].alias;
                         if (aliases.length > 0) {
                             const aliasStr = [];
                             const oriAlias = [];
@@ -237,7 +253,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                                     oriAlias.push(tmpAlias);
                                 }
                             }
-                            model.MethodParameter.language['az'].alias = oriAlias;
+                            methodParameterHandler.MethodParameter.language['az'].alias = oriAlias;
                             argument += ', options_list=[' + aliasStr.join(', ') + ']';
                         }
                     }
@@ -247,17 +263,17 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                     }
                     allParam.set(parameterName, true);
 
-                    if (model.MethodParameter_Type === SchemaType.Boolean) {
+                    if (methodParameterHandler.MethodParameter_Type === SchemaType.Boolean) {
                         hasBoolean = true;
                         argument += ', arg_type=get_three_state_flag()';
                     } else if (
-                        model.MethodParameter_Type === SchemaType.Choice ||
-                        model.MethodParameter_Type === SchemaType.SealedChoice
+                        methodParameterHandler.MethodParameter_Type === SchemaType.Choice ||
+                        methodParameterHandler.MethodParameter_Type === SchemaType.SealedChoice
                     ) {
                         hasEnum = true;
                         argument += ', arg_type=get_enum_type([';
 
-                        model.MethodParameter_EnumValues.forEach((element) => {
+                        methodParameterHandler.MethodParameter_EnumValues.forEach((element) => {
                             if (!argument.endsWith('[')) argument += ', ';
                             argument += "'" + element + "'";
                         });
@@ -283,34 +299,45 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                         }
                         hasLocation = true;
                         needSkip = true;
-                    } else if (model.MethodParameter_IsSimpleArray) {
-                        if (model.MethodParameter.language['cli'].required === false) {
+                    } else if (methodParameterHandler.MethodParameter_IsSimpleArray) {
+                        if (
+                            methodParameterHandler.MethodParameter.language['cli'].required ===
+                            false
+                        ) {
                             argument += ", nargs='*'";
                         } else {
                             argument += ", nargs='+'";
                         }
                     } else if (
-                        model.MethodParameter_IsList &&
-                        !model.MethodParameter_IsListOfSimple
+                        methodParameterHandler.MethodParameter_IsList &&
+                        !methodParameterHandler.MethodParameter_IsListOfSimple
                     ) {
-                        if (model.Parameter_IsPolyOfSimple(model.MethodParameter)) {
-                            baseParam = model.MethodParameter;
+                        if (
+                            parameterHandler.Parameter_IsPolyOfSimple(
+                                methodParameterHandler.MethodParameter,
+                            )
+                        ) {
+                            baseParam = methodParameterHandler.MethodParameter;
                             continue;
                         }
                         hasJson = true;
                         argument += ', type=validate_file_or_dict';
                     } else if (
-                        model.MethodParameter_IsList &&
-                        model.MethodParameter_IsListOfSimple
+                        methodParameterHandler.MethodParameter_IsList &&
+                        methodParameterHandler.MethodParameter_IsListOfSimple
                     ) {
-                        const actionName: string = model.MethodParameter_ActionName;
+                        const actionName: string =
+                            methodParameterHandler.MethodParameter_ActionName;
                         argument += ', action=' + actionName;
                         hasActions = true;
 
                         if (actions.indexOf(actionName) < 0) {
                             actions.push(actionName);
                         }
-                        if (model.MethodParameter.language['cli'].required === false) {
+                        if (
+                            methodParameterHandler.MethodParameter.language['cli'].required ===
+                            false
+                        ) {
                             argument += ", nargs='*'";
                         } else {
                             argument += ", nargs='+'";
@@ -318,19 +345,28 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                     }
 
                     if (!needSkip) {
-                        if (model.MethodParameter_Type === SchemaType.Integer) {
+                        if (methodParameterHandler.MethodParameter_Type === SchemaType.Integer) {
                             argument += ', type=int';
-                        } else if (model.MethodParameter_Type === SchemaType.Number) {
+                        } else if (
+                            methodParameterHandler.MethodParameter_Type === SchemaType.Number
+                        ) {
                             argument += ', type=float';
-                        } else if (model.MethodParameter_Type === SchemaType.String) {
+                        } else if (
+                            methodParameterHandler.MethodParameter_Type === SchemaType.String
+                        ) {
                             argument += ', type=str';
                         }
 
                         argument +=
                             ", help='" +
-                            EscapeString(model.MethodParameter_Description).trimRight();
-                        if (model.MethodParameter_IsList && !model.MethodParameter_IsSimpleArray) {
-                            const netDescription = model.MethodParameter_Description.trim();
+                            EscapeString(
+                                methodParameterHandler.MethodParameter_Description,
+                            ).trimRight();
+                        if (
+                            methodParameterHandler.MethodParameter_IsList &&
+                            !methodParameterHandler.MethodParameter_IsSimpleArray
+                        ) {
+                            const netDescription = methodParameterHandler.MethodParameter_Description.trim();
                             if (
                                 netDescription.length > 0 &&
                                 netDescription[netDescription.length - 1].match(
@@ -339,18 +375,25 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                             ) {
                                 argument += '.';
                             }
-                            if (model.MethodParameter_IsListOfSimple) {
+                            if (methodParameterHandler.MethodParameter_IsListOfSimple) {
                                 let options = [];
-                                if (!isNullOrUndefined(model.MethodParameter_ActionName)) {
+                                if (
+                                    !isNullOrUndefined(
+                                        methodParameterHandler.MethodParameter_ActionName,
+                                    )
+                                ) {
                                     if (
                                         baseParam &&
-                                        model.MethodParameter['polyBaseParam'] === baseParam
+                                        methodParameterHandler.MethodParameter['polyBaseParam'] ===
+                                            baseParam
                                     ) {
                                         const keyToMatch =
                                             baseParam.schema?.discriminator?.property?.language
                                                 .python?.name;
                                         const valueToMatch =
-                                            model.MethodParameter.schema?.['discriminatorValue'];
+                                            methodParameterHandler.MethodParameter.schema?.[
+                                                'discriminatorValue'
+                                            ];
                                         options = GetActionOptions(model, keyToMatch, valueToMatch);
                                     } else {
                                         options = GetActionOptions(model);
@@ -369,47 +412,60 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
                             if (!argument.endsWith('.')) {
                                 argument += '.';
                             }
-                            argument += ' Swagger name=' + model.MethodParameter_CliKey;
+                            argument +=
+                                ' Swagger name=' + methodParameterHandler.MethodParameter_CliKey;
                         }
                         argument += "'";
 
                         if (
                             !isNullOrUndefined(baseParam) &&
-                            model.MethodParameter['polyBaseParam'] === baseParam
+                            methodParameterHandler.MethodParameter['polyBaseParam'] === baseParam
                         ) {
                             argument +=
                                 ", arg_group='" +
-                                Capitalize(ToCamelCase(model.Parameter_MapsTo(baseParam))) +
+                                Capitalize(
+                                    ToCamelCase(parameterHandler.Parameter_MapsTo(baseParam)),
+                                ) +
                                 "'";
-                        } else if (!isNullOrUndefined(model.MethodParameter_ArgGroup)) {
-                            argument += ", arg_group='" + model.MethodParameter_ArgGroup + "'";
+                        } else if (
+                            !isNullOrUndefined(methodParameterHandler.MethodParameter_ArgGroup)
+                        ) {
+                            argument +=
+                                ", arg_group='" +
+                                methodParameterHandler.MethodParameter_ArgGroup +
+                                "'";
                         }
                     }
-                    const lastItem = model.Method_NameAz.split(' ').last;
+                    const lastItem = methodHandler.Method_NameAz.split(' ').last;
                     if (
                         !lastItem.startsWith('list') &&
-                        !model.Method_NameAz.split(' ').last.startsWith('create')
+                        !methodHandler.Method_NameAz.split(' ').last.startsWith('create')
                     ) {
-                        if (!isNullOrUndefined(model.MethodParameter_IdPart)) {
-                            argument += ", id_part='" + model.MethodParameter_IdPart + "'";
+                        if (!isNullOrUndefined(methodParameterHandler.MethodParameter_IdPart)) {
+                            argument +=
+                                ", id_part='" + methodParameterHandler.MethodParameter_IdPart + "'";
                         }
                     }
 
-                    if (!isNullOrUndefined(model.MethodParameter_DefaultConfigKey)) {
+                    if (
+                        !isNullOrUndefined(methodParameterHandler.MethodParameter_DefaultConfigKey)
+                    ) {
                         argument +=
-                            ", configured_default='" + model.MethodParameter_DefaultConfigKey + "'";
+                            ", configured_default='" +
+                            methodParameterHandler.MethodParameter_DefaultConfigKey +
+                            "'";
                     }
                     const paramRet = composeParamString(
-                        model.MethodParameter_MaxApi,
-                        model.MethodParameter_MinApi,
-                        model.MethodParameter_ResourceType,
+                        methodParameterHandler.MethodParameter_MaxApi,
+                        methodParameterHandler.MethodParameter_MinApi,
+                        methodParameterHandler.MethodParameter_ResourceType,
                     );
                     argument += paramRet[0];
                     if (paramRet[1]) useResourceType = true;
                     let parameterExtraInfo = '';
                     parameterExtraInfo = getExtraModeInfo(
-                        model.MethodParameter_Mode,
-                        model.Command_Mode,
+                        methodParameterHandler.MethodParameter_Mode,
+                        commandHandler.Command_Mode,
                     );
                     if (parameterExtraInfo !== '') {
                         parameterExtraInfo = ', ' + parameterExtraInfo;
@@ -444,6 +500,7 @@ function GetActionOptions(
     keyToMatch: string = null,
     valueToMatch: string = null,
 ): string[] {
+    const { parameterHandler } = model.GetHandler();
     const options = [];
 
     if (!SchemaType.Object || !SchemaType.Array) {
@@ -461,11 +518,11 @@ function GetActionOptions(
                 if (
                     !isNullOrUndefined(keyToMatch) &&
                     !isNullOrUndefined(valueToMatch) &&
-                    model.Parameter_NamePython(model.SubMethodParameter) === keyToMatch
+                    parameterHandler.Parameter_NamePython(model.SubMethodParameter) === keyToMatch
                 ) {
                     continue;
                 }
-                const azName = model.Parameter_NameAz(model.SubMethodParameter);
+                const azName = parameterHandler.Parameter_NameAz(model.SubMethodParameter);
                 if (azName) {
                     options.push(azName);
                 }

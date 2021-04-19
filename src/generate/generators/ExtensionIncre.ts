@@ -7,7 +7,7 @@ import * as path from 'path';
 import { PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
 import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
 import { CliTopAction } from '../renders/CliTopAction';
 import { CliTopCustom } from '../renders/CliTopCustom';
@@ -30,14 +30,17 @@ import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
+import { clearConfigCache } from 'prettier';
 
 export class AzExtensionIncrementalGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.azDirectory = model.AzextFolder;
+        const { configHandler } = model.GetHandler();
+        this.azDirectory = configHandler.AzextFolder;
     }
 
     public async generateAll(): Promise<void> {
+        const { extensionHandler, configHandler, exampleHandler } = this.model.GetHandler();
         this.files[
             path.join(this.azDirectory, PathConstants.generatedFolder, PathConstants.paramsFile)
         ] = GenerateAzureCliParams(this.model, this.isDebugMode);
@@ -65,7 +68,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
             path.join(this.azDirectory, PathConstants.manualFolder, PathConstants.initFile)
         ] = GenerateNamespaceInit(this.model);
 
-        if (this.model.SDK_NeedSDK) {
+        if (configHandler.SDK_NeedSDK) {
             this.files[
                 path.join(
                     this.azDirectory,
@@ -92,11 +95,13 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
         const cliTopActionGenerator = new CliTopAction(this.model);
         let cliTopActionBase = '';
         if (
-            fs.existsSync(path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath))
+            fs.existsSync(
+                path.join(configHandler.azOutputFolder, cliTopActionGenerator.relativePath),
+            )
         ) {
             cliTopActionBase = fs
                 .readFileSync(
-                    path.join(this.model.azOutputFolder, cliTopActionGenerator.relativePath),
+                    path.join(configHandler.azOutputFolder, cliTopActionGenerator.relativePath),
                 )
                 .toString();
         }
@@ -111,14 +116,14 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestStep(this.model), true);
-        for (const testGroup of this.model.Extension_TestScenario
-            ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
+        for (const testGroup of exampleHandler.Example_TestScenario
+            ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.incTestScenarioFile(testGroup),
-                    this.model.Extension_TestScenario[testGroup],
+                    exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -131,7 +136,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                 true,
             );
         }
-        this.model
+        exampleHandler
             .GetResourcePool()
             .generateArmTemplate(
                 this.files,
@@ -149,7 +154,7 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
                 new SimpleTemplate(
                     this.model,
                     path.join(
-                        this.model.AzextFolder,
+                        configHandler.AzextFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
                         PathConstants.conftestFile,

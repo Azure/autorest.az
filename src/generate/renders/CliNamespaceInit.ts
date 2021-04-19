@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 
 export function GenerateNamespaceInit(model: CodeModelAz): string[] {
     const output: string[] = [];

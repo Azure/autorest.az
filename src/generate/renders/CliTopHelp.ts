@@ -4,6 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import { EOL } from 'os';
 import * as path from 'path';
+import { config } from 'process';
 import {
     getIndentString,
     keepHeaderLines,
@@ -11,14 +12,15 @@ import {
     isNullOrUndefined,
 } from '../../utils/helper';
 import { GenerationMode, PathConstants } from '../../utils/models';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
 
 export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.helpFile);
     }
 
     public async fullGeneration(): Promise<string[]> {

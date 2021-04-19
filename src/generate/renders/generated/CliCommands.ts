@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { isNullOrUndefined } from '../../../utils/helper';
 import { TemplateBase } from '../TemplateBase';
 import {
@@ -17,6 +17,7 @@ import {
 import * as path from 'path';
 export class CliCommands extends TemplateBase {
     private importProfile = false;
+    private imports: Map<string, string[]> = new Map<string, string[]>();
     private importClientFactories = [];
     private lineTooLong = false;
     private needWaitCommand = false;
@@ -27,8 +28,9 @@ export class CliCommands extends TemplateBase {
 
     constructor(model: CodeModelAz) {
         super(model);
+        const { configHandler } = this.model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.generatedFolder,
             PathConstants.commandsFile,
         );
@@ -41,6 +43,19 @@ export class CliCommands extends TemplateBase {
 
     pythonString(str: string): string {
         return `'${str}'`;
+    }
+
+    addImport(importKey: string, importValues: string[]) {
+        let list = [];
+        if (this.imports.has(importKey)) {
+            list = this.imports.get(importKey);
+        }
+        importValues.forEach((val) => {
+            if (list.indexOf(val) === -1) {
+                list.push(val);
+            }
+        });
+        this.imports.set(importKey, importValues);
     }
 
     extensionConverter(item: any): any {
@@ -57,6 +72,20 @@ export class CliCommands extends TemplateBase {
                 item['propertiesString'][prop] = this.pythonString(item[prop]);
             }
         });
+        if (!isNullOrUndefined(item['features'])) {
+            Object.keys(item['features']).forEach((prop: string) => {
+                item['propertiesString'][prop] = item['features'][prop];
+            });
+        }
+        if (!isNullOrUndefined(item['imports'])) {
+            Object.keys(item['imports']).forEach((prop: string) => {
+                if (typeof item['imports'][prop] === 'string') {
+                    this.addImport(prop, [item['imports'][prop]]);
+                } else if (Array.isArray(item['imports'][prop])) {
+                    this.addImport(prop, item['imports'][prop]);
+                }
+            });
+        }
         this.extraNonStringProperties.forEach((prop) => {
             if (!isNullOrUndefined(item[prop])) {
                 item['propertiesString'][prop] = item[prop];
@@ -93,6 +122,20 @@ export class CliCommands extends TemplateBase {
                 item['propertiesString'][prop] = this.pythonString(item[prop]);
             }
         });
+        if (!isNullOrUndefined(item['features'])) {
+            Object.keys(item['features']).forEach((prop: string) => {
+                item['propertiesString'][prop] = item['features'][prop];
+            });
+        }
+        if (!isNullOrUndefined(item['imports'])) {
+            Object.keys(item['imports']).forEach((prop: string) => {
+                if (typeof item['imports'][prop] === 'string') {
+                    this.addImport(prop, [item['imports'][prop]]);
+                } else if (Array.isArray(item['imports'][prop])) {
+                    this.addImport(prop, item['imports'][prop]);
+                }
+            });
+        }
         this.extraNonStringProperties.forEach((prop) => {
             if (!isNullOrUndefined(item[prop])) {
                 item['propertiesString'][prop] = item[prop];
@@ -131,8 +174,9 @@ export class CliCommands extends TemplateBase {
     }
 
     public async GetRenderData(): Promise<Record<string, unknown>> {
+        const { configHandler } = this.model.GetHandler();
         let data = { imports: [], pylints: [] };
-        data['imports'].push([this.model.CliCoreLib + '.commands', ['CliCommandType']]);
+        this.addImport(configHandler.CliCoreLib + '.commands', ['CliCommandType']);
 
         const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
             CodeModelTypes,
@@ -162,6 +206,8 @@ export class CliCommands extends TemplateBase {
                         'resourceType',
                         'mode',
                         'hasCommand',
+                        'features',
+                        'imports',
                     ],
                     { name: SortOrder.ASEC },
                     [],
@@ -184,6 +230,8 @@ export class CliCommands extends TemplateBase {
                         'needGeneric',
                         'genericSetterArgName',
                         'clientFactoryName',
+                        'features',
+                        'imports',
                     ],
                     {},
                     [],
@@ -198,17 +246,17 @@ export class CliCommands extends TemplateBase {
         ];
         data = { ...data, ...this.model.getModelData('extension', inputProperties, dependencies) };
         if (this.importProfile) {
-            data['imports'].push([this.model.CliCoreLib + '.profiles', ['ResourceType']]);
+            this.addImport(configHandler.CliCoreLib + '.profiles', ['ResourceType']);
         }
         if (
             !isNullOrUndefined(this.importClientFactories) &&
             Array.isArray(this.importClientFactories) &&
             this.importClientFactories.length > 0
         ) {
-            data['imports'].push([
-                this.model.AzextFolder + '.generated._client_factory',
+            this.addImport(
+                configHandler.AzextFolder + '.generated._client_factory',
                 this.importClientFactories,
-            ]);
+            );
         }
         data['pylints'].push(
             '# pylint: disable=too-many-statements',
@@ -218,7 +266,8 @@ export class CliCommands extends TemplateBase {
         if (this.lineTooLong) {
             data['pylints'].push('# pylint: disable=line-too-long');
         }
-        data['azextFolder'] = this.model.AzextFolder;
+        data['azextFolder'] = configHandler.AzextFolder;
+        data.imports = Array.from(this.imports);
         const result = { data: { imports: [], pylints: [] } };
         result.data = data;
         return result;

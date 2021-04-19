@@ -6,7 +6,7 @@ import * as path from 'path';
 import { PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
 import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
 import { CliTopAction } from '../renders/CliTopAction';
 import { CliTopCustom } from '../renders/CliTopCustom';
@@ -35,10 +35,12 @@ import { SimpleTemplate } from '../renders/TemplateBase';
 export class AzExtensionFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.azDirectory = model.AzextFolder;
+        const { configHandler } = model.GetHandler();
+        this.azDirectory = configHandler.AzextFolder;
     }
 
     public async generateAll(): Promise<void> {
+        const { extensionHandler, configHandler, exampleHandler } = this.model.GetHandler();
         this.files[path.join(this.azDirectory, 'generated/_params.py')] = GenerateAzureCliParams(
             this.model,
             this.isDebugMode,
@@ -68,7 +70,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
             this.model,
         );
 
-        if (this.model.SDK_NeedSDK) {
+        if (configHandler.SDK_NeedSDK) {
             this.files[
                 path.join(this.azDirectory, 'vendored_sdks/__init__.py')
             ] = GenerateNamespaceInit(this.model);
@@ -88,14 +90,14 @@ export class AzExtensionFullGenerator extends GeneratorBase {
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
-        for (const testGroup of this.model.Extension_TestScenario
-            ? Object.getOwnPropertyNames(this.model.Extension_TestScenario)
+        for (const testGroup of exampleHandler.Example_TestScenario
+            ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
             : []) {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
                     PathConstants.fullTestSceanrioFile(testGroup),
-                    this.model.Extension_TestScenario[testGroup],
+                    exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),
                 true,
@@ -110,7 +112,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
                 true,
             );
         }
-        this.model
+        exampleHandler
             .GetResourcePool()
             .generateArmTemplate(
                 this.files,
@@ -129,7 +131,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
                 new SimpleTemplate(
                     this.model,
                     path.join(
-                        this.model.AzextFolder,
+                        configHandler.AzextFolder,
                         PathConstants.testFolder,
                         PathConstants.cmdletFolder,
                         PathConstants.conftestFile,

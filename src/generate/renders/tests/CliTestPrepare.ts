@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 import { PathConstants } from '../../../utils/models';
 import { GenPreparerName, preparerInfos } from './ScenarioTool';
@@ -26,9 +26,10 @@ export class CliTestPrepare extends TemplateBase {
     resourceNames: string[];
     constructor(model: CodeModelAz, resourceNames: string[]) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.resourceNames = resourceNames;
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
             PathConstants.preparersFile,
@@ -61,6 +62,7 @@ export class CliTestPrepare extends TemplateBase {
     }
 
     private CreatePreparer(model: CodeModelAz, resourceName: string) {
+        const { exampleHandler } = model.GetHandler();
         const preparerInfo = preparerInfos[resourceName];
         const preparerData = new PreparerData(GenPreparerName(preparerInfo.className));
         for (let i = 0; i < preparerInfo.dependResources.length; i++) {
@@ -99,12 +101,12 @@ export class CliTestPrepare extends TemplateBase {
                             i++
                         ) {
                             if (
-                                model
+                                exampleHandler
                                     .GetResourcePool()
                                     .isResource(
                                         preparerInfos[preparerInfo.className].dependResources[i],
                                         null,
-                                    ) === model.GetResourcePool().isResource(depend, null)
+                                    ) === exampleHandler.GetResourcePool().isResource(depend, null)
                             ) {
                                 variables.push(
                                     `self.test_class_instance.kwargs.get(self.${
