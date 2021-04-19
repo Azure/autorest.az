@@ -43,7 +43,7 @@ export interface MethodParameterModel {
     MethodParameter_IsPositional: boolean;
     MethodParameter_IsShorthandSyntax: boolean;
     MethodParameter_PositionalKeys: string[];
-    MethodParameter_Features: Record<string, any>;
+    MethodParameter_Features: Record<string, string | number>;
     MethodParameter_Imports: Record<string, any>;
 }
 
@@ -327,7 +327,7 @@ export class MethodParameterModelImpl implements MethodParameterModel {
         );
     }
 
-    public get MethodParameter_Features(): Record<string, any> {
+    public get MethodParameter_Features(): Record<string, string | number> {
         return this.MethodParameter.language['az']['features'];
     }
 
