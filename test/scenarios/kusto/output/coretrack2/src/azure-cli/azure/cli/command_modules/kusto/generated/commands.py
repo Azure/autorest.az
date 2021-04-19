@@ -118,7 +118,7 @@ def load_command_table(self, _):
         exception_handler=handle_template_based_exception,
         is_experimental=True,
     ) as g:
-        g.custom_command('list', 'kusto_database_list')
+        g.custom_command('list', 'kusto_database_list', option_list=['--private-cloud', 123, True])
         g.custom_show_command('show', 'kusto_database_show')
         g.custom_command('create', 'kusto_database_create', supports_no_wait=True)
         g.custom_command('update', 'kusto_database_update', supports_no_wait=True)
