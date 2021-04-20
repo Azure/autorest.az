@@ -129,13 +129,16 @@ function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
 }
 
 function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', debug: boolean) {
-    const { commandGroupHandler } = model.GetHandler();
+    const { commandGroupHandler, extensionHandler } = model.GetHandler();
     const output = [];
     output.push('');
     if (subCommandGroupName !== '') {
         output.push("helps['" + subCommandGroupName + '\'] = """');
     } else {
-        if (commandGroupHandler.CommandGroup_Help.trim() === '') {
+        if (
+            commandGroupHandler.CommandGroup_Help.trim() === '' ||
+            commandGroupHandler.CommandGroup_Name === extensionHandler.Extension_Name
+        ) {
             return [];
         }
         output.push("helps['" + commandGroupHandler.CommandGroup_Name + '\'] = """');
