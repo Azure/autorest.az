@@ -16,19 +16,19 @@ from msgraph.cli.core.commands import CliCommandType
 from azext_users_v1_0.generated._client_factory import cf_user_user, cf_user, cf_user_outlook, cf_user_setting
 
 
-users_v1_0_user_user = CliCommandType(
+users_user_user = CliCommandType(
     operations_tmpl='azext_users_v1_0.vendored_sdks.users.operations._users_user_operations#UsersUserOperations.{}',
     client_factory=cf_user_user,
 )
 
 
-users_v1_0_user = CliCommandType(
+users_user = CliCommandType(
     operations_tmpl='azext_users_v1_0.vendored_sdks.users.operations._users_operations#UsersOperations.{}',
     client_factory=cf_user,
 )
 
 
-users_v1_0_user_outlook = CliCommandType(
+users_user_outlook = CliCommandType(
     operations_tmpl=(
         'azext_users_v1_0.vendored_sdks.users.operations._users_outlook_operations#UsersOutlookOperations.{}'
     ),
@@ -36,7 +36,7 @@ users_v1_0_user_outlook = CliCommandType(
 )
 
 
-users_v1_0_user_setting = CliCommandType(
+users_user_setting = CliCommandType(
     operations_tmpl=(
         'azext_users_v1_0.vendored_sdks.users.operations._users_settings_operations#UsersSettingsOperations.{}'
     ),
@@ -46,14 +46,14 @@ users_v1_0_user_setting = CliCommandType(
 
 def load_command_table(self, _):
 
-    with self.command_group('users user', users_v1_0_user_user, client_factory=cf_user_user) as g:
+    with self.command_group('users user', users_user_user, client_factory=cf_user_user) as g:
         g.custom_command('list', 'users_user_list')
         g.custom_show_command('show', 'users_user_show')
         g.custom_command('create', 'users_user_create')
         g.custom_command('update', 'users_user_update')
         g.custom_command('delete', 'users_user_delete', confirmation=True)
 
-    with self.command_group('users user', users_v1_0_user, client_factory=cf_user) as g:
+    with self.command_group('users user', users_user, client_factory=cf_user) as g:
         g.custom_command('create-extension', 'users_user_create_extension')
         g.custom_command('create-license-detail', 'users_user_create_license_detail')
         g.custom_command('create-photo', 'users_user_create_photo')
@@ -104,17 +104,17 @@ def load_command_table(self, _):
         g.custom_command('update-photo', 'users_user_update_photo')
         g.custom_command('update-setting', 'users_user_update_setting')
 
-    with self.command_group('users user-outlook', users_v1_0_user_outlook, client_factory=cf_user_outlook) as g:
+    with self.command_group('users user-outlook', users_user_outlook, client_factory=cf_user_outlook) as g:
         g.custom_command('create-master-category', 'users_user_outlook_create_master_category')
         g.custom_command('delete-master-category', 'users_user_outlook_delete_master_category')
         g.custom_command('list-master-category', 'users_user_outlook_list_master_category')
         g.custom_command('show-master-category', 'users_user_outlook_show_master_category')
         g.custom_command('update-master-category', 'users_user_outlook_update_master_category')
 
-    with self.command_group('users user-setting', users_v1_0_user_setting, client_factory=cf_user_setting) as g:
+    with self.command_group('users user-setting', users_user_setting, client_factory=cf_user_setting) as g:
         g.custom_command('delete-shift-preference', 'users_user_setting_delete_shift_preference')
         g.custom_command('show-shift-preference', 'users_user_setting_show_shift_preference')
         g.custom_command('update-shift-preference', 'users_user_setting_update_shift_preference')
 
-    with self.command_group('users_v1_0', is_experimental=True):
+    with self.command_group('users', is_experimental=True):
         pass

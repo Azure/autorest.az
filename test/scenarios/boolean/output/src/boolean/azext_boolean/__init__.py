@@ -7,16 +7,10 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=unused-import
 
+import azext_boolean._help
 from azure.cli.core import AzCommandsLoader
-from azext_boolean.generated._help import helps  # pylint: disable=unused-import
-try:
-    from azext_boolean.manual._help import helps  # pylint: disable=reimported
-except ImportError as e:
-    if e.name.endswith('manual._help'):
-        pass
-    else:
-        raise e
 
 
 class AutoRestTestServiceCommandsLoader(AzCommandsLoader):

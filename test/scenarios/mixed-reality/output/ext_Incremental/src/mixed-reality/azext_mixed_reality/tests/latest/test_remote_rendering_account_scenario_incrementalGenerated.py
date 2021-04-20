@@ -68,12 +68,13 @@ def call_scenario(test):
 
 # Test class for Scenario
 @try_manual
-class Mixed_realityScenarioTest(ScenarioTest):
+class Remote_rendering_accountScenarioTest(ScenarioTest):
     def __init__(self, *args, **kwargs):
-        super(Mixed_realityScenarioTest, self).__init__(*args, **kwargs)
+        super(Remote_rendering_accountScenarioTest, self).__init__(*args, **kwargs)
 
-    @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')
-    def test_mixed_reality_Scenario(self, rg):
+    @ResourceGroupPreparer(name_prefix='clitestremote_rendering_account_MyResourceGroup'[:7], key='rg',
+                           parameter_name='rg')
+    def test_remote_rendering_account_Scenario(self, rg):
         call_scenario(self)
         calc_coverage(__file__)
         raise_if()

@@ -12,14 +12,14 @@
 from knack.help_files import helps
 
 
-helps['mixed-reality'] = '''
+helps['remote-rendering-account'] = '''
     type: group
     short-summary: Manage Mixed Reality
 '''
 
 helps['spatial-anchors-account'] = """
     type: group
-    short-summary: Manage spatial anchor account with mixed reality
+    short-summary: Manage spatial anchor account with remote rendering account
 """
 
 helps['spatial-anchors-account regenerate-key'] = """
@@ -30,11 +30,6 @@ helps['spatial-anchors-account regenerate-key'] = """
         text: |-
                az spatial-anchors-account regenerate-key --account-name "MyAccount" --serial 1 --resource-group \
 "MyResourceGroup"
-"""
-
-helps['remote-rendering-account'] = """
-    type: group
-    short-summary: Manage remote rendering account with mixed reality
 """
 
 helps['remote-rendering-account list'] = """

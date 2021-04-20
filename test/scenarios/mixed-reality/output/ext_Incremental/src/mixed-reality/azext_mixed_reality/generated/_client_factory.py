@@ -9,7 +9,7 @@
 # --------------------------------------------------------------------------
 
 
-def cf_mixed_reality_cl(cli_ctx, *_):
+def cf_remote_rendering_account_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
     from azext_mixed_reality.vendored_sdks.mixedreality import MixedRealityClient
     return get_mgmt_service_client(cli_ctx,
@@ -17,8 +17,8 @@ def cf_mixed_reality_cl(cli_ctx, *_):
 
 
 def cf_spatial_anchor_account(cli_ctx, *_):
-    return cf_mixed_reality_cl(cli_ctx).spatial_anchors_accounts
+    return cf_remote_rendering_account_cl(cli_ctx).spatial_anchors_accounts
 
 
 def cf_remote_rendering_account(cli_ctx, *_):
-    return cf_mixed_reality_cl(cli_ctx).remote_rendering_accounts
+    return cf_remote_rendering_account_cl(cli_ctx).remote_rendering_accounts

@@ -43,7 +43,7 @@ with open('HISTORY.rst', 'r', encoding='utf-8') as f:
     HISTORY = f.read()
 
 setup(
-    name='users_v1_0',
+    name='users',
     version=VERSION,
     description='Microsoft Azure Command-Line Tools Users Extension',
     author='Microsoft Corporation',

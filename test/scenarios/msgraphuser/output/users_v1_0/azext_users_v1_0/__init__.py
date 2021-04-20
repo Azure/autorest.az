@@ -7,28 +7,22 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=unused-import
 
+import azext_users_v1_0._help
 from msgraph.cli.core import AzCommandsLoader
-from azext_users_v1_0.generated._help import helps  # pylint: disable=unused-import
-try:
-    from azext_users_v1_0.manual._help import helps  # pylint: disable=reimported
-except ImportError as e:
-    if e.name.endswith('manual._help'):
-        pass
-    else:
-        raise e
 
 
 class UsersCommandsLoader(AzCommandsLoader):
 
     def __init__(self, cli_ctx=None):
         from msgraph.cli.core.commands import CliCommandType
-        from azext_users_v1_0.generated._client_factory import cf_users_v1_0_cl
-        users_v1_0_custom = CliCommandType(
+        from azext_users_v1_0.generated._client_factory import cf_users_cl
+        users_custom = CliCommandType(
             operations_tmpl='azext_users_v1_0.custom#{}',
-            client_factory=cf_users_v1_0_cl)
+            client_factory=cf_users_cl)
         parent = super(UsersCommandsLoader, self)
-        parent.__init__(cli_ctx=cli_ctx, custom_command_type=users_v1_0_custom)
+        parent.__init__(cli_ctx=cli_ctx, custom_command_type=users_custom)
 
     def load_command_table(self, args):
         from azext_users_v1_0.generated.commands import load_command_table
