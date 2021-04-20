@@ -155,7 +155,6 @@ export enum CodeGenConstants {
     //configuration keys under test-resources section
     test = 'test',
     scenarioTestOnly = 'scenario-test-only',
-    moduleFolder = 'module-folder',
 }
 
 export interface AzextMetadata {

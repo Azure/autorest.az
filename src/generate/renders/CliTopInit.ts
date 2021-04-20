@@ -20,10 +20,10 @@ export class CliTopInit extends TemplateBase {
     private moduleHelp: string;
     constructor(model: CodeModelAz) {
         super(model);
-        const { configHandler } = model.GetHandler();
+        const { configHandler, extensionHandler } = model.GetHandler();
         this.relativePath = path.join(configHandler.AzextFolder, PathConstants.initFile);
         if (configHandler.IsCliCore) {
-            this.moduleHelp = `azure.cli.command_modules.${configHandler.moduleFolder}._help`;
+            this.moduleHelp = `azure.cli.command_modules.${extensionHandler.Extension_NameUnderscored}._help`;
         } else {
             this.moduleHelp = `${configHandler.AzextFolder}._help`;
         }
@@ -181,7 +181,7 @@ export class CliTopInit extends TemplateBase {
         if (configHandler.IsCliCore) {
             output.push(
                 "            operations_tmpl='azure.cli.command_modules." +
-                    configHandler.moduleFolder +
+                    extensionHandler.Extension_NameUnderscored +
                     ".custom#{}',",
             );
         } else {

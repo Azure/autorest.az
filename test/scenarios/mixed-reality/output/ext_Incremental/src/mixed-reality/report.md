@@ -3,10 +3,10 @@
 ## EXTENSION
 |CLI Extension|Command Groups|
 |---------|------------|
-|az remote-rendering-account|[groups](#CommandGroups)
+|az mixed-reality|[groups](#CommandGroups)
 
 ## GROUPS
-### <a name="CommandGroups">Command groups in `az remote-rendering-account` extension </a>
+### <a name="CommandGroups">Command groups in `az mixed-reality` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 |az spatial-anchors-account|SpatialAnchorsAccounts|[commands](#CommandsInSpatialAnchorsAccounts)|

@@ -30,7 +30,6 @@ import { CliTestStep, NeedPreparers } from '../renders/tests/CliTestStep';
 import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
-import { clearConfigCache } from 'prettier';
 
 export class AzExtensionIncrementalGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {

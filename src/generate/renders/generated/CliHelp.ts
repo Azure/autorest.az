@@ -6,7 +6,7 @@
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { SchemaType, Parameter } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
-import { ToMultiLine, isNullOrUndefined, ToSentence } from '../../../utils/helper';
+import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
 import { CodeGenConstants } from '../../../utils/models';
 
 let showExampleStr: string;
@@ -29,13 +29,15 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     header.addFromImport('knack.help_files', ['helps']);
     let output: string[] = [];
     output.push('');
-
-    output.push('');
     exampleHandler.GatherInternalResource();
-    output.push("helps['" + extensionHandler.Extension_Name + "'] = '''");
-    output.push('    type: group');
-    output.push('    short-summary: ' + extensionHandler.Extension_Description);
-    output.push("'''");
+    if (extensionHandler.Extension_HasExtensionGroup === true) {
+        output.push('');
+        output.push("helps['" + extensionHandler.Extension_Name + "'] = '''");
+        output.push('    type: group');
+        output.push('    short-summary: ' + extensionHandler.Extension_Description);
+        output.push("'''");
+    }
+
     if (model.SelectFirstCommandGroup()) {
         do {
             // if there's no operation in this command group
@@ -137,7 +139,8 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', 
     } else {
         if (
             commandGroupHandler.CommandGroup_Help.trim() === '' ||
-            commandGroupHandler.CommandGroup_Name === extensionHandler.Extension_Name
+            (extensionHandler.Extension_HasExtensionGroup &&
+                commandGroupHandler.CommandGroup_Name === extensionHandler.Extension_Name)
         ) {
             return [];
         }

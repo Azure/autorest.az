@@ -122,6 +122,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
         this.dealingParameterAlias();
+        this.hasExtensionGroup();
     }
 
     private initHandler() {
@@ -751,6 +752,25 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
             }
         });
+    }
+
+    public hasExtensionGroup() {
+        let hasExtensionGroup = false;
+        const extensionName = isNullOrUndefined(this.extensionHandler.Extension_Parent)
+            ? this.extensionHandler.Extension_Name
+            : this.extensionHandler.Extension_Parent + ' ' + this.extensionHandler.Extension_Name;
+        if (this.SelectFirstCommandGroup()) {
+            do {
+                const groupName = this.commandGroupHandler.CommandGroup_Name;
+                if (groupName.startsWith(extensionName)) {
+                    hasExtensionGroup = true;
+                    break;
+                }
+            } while (this.SelectNextCommandGroup());
+        }
+        if (hasExtensionGroup) {
+            this.codeModel.info['hasExtensionGroup'] = hasExtensionGroup;
+        }
     }
 
     public GetActionData() {

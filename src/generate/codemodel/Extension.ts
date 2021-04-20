@@ -12,6 +12,7 @@ export interface ExtensionModel {
     Extension_ClientBaseUrlBound: boolean;
     Extension_ClientAuthenticationPolicy: string;
     Extension_Mode: string;
+    Extension_HasExtensionGroup: boolean;
 }
 
 export class ExtensionModelImpl implements ExtensionModel {
@@ -65,5 +66,9 @@ export class ExtensionModelImpl implements ExtensionModel {
 
     public get Extension_ClientAuthenticationPolicy(): string {
         return this.baseHandler._clientAuthenticationPolicy;
+    }
+
+    public get Extension_HasExtensionGroup(): boolean {
+        return this.baseHandler.codeModel.info['hasExtensionGroup'];
     }
 }

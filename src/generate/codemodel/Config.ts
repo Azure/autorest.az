@@ -13,7 +13,6 @@ export interface ConfigModel {
     SDK_NoFlatten: boolean;
     AzureCliFolder: string;
     AzureCliExtFolder: string;
-    moduleFolder: string;
     azOutputFolder: string;
     ResourceType: string | undefined;
     GetPythonNamespace(): string;
@@ -46,10 +45,6 @@ export class ConfigModelImpl implements ConfigModel {
 
     public get AzureCliExtFolder(): string {
         return AzConfiguration.getValue(CodeGenConstants.azureCliExtFolder);
-    }
-
-    public get moduleFolder(): string {
-        return AzConfiguration.getValue(CodeGenConstants.moduleFolder);
     }
 
     public get AzextFolder(): string {

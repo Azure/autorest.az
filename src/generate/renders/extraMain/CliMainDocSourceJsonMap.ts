@@ -6,8 +6,6 @@
 import * as fs from 'fs';
 import { EOL } from 'os';
 import * as path from 'path';
-import { clearConfigCache } from 'prettier';
-import { config } from 'process';
 import { isNullOrUndefined } from '../../../utils/helper';
 import { PathConstants } from '../../../utils/models';
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
@@ -32,15 +30,15 @@ export class CliMainDocSourceJsonMap extends TemplateBase {
     }
 
     private GenerateDocSourceJsonMap(model: CodeModelAz, docSourceJsonMapPath): string[] {
-        const { configHandler } = this.model.GetHandler();
+        const { extensionHandler } = this.model.GetHandler();
         const outputFile = fs.readFileSync(docSourceJsonMapPath).toString().split(EOL);
         const docSourceJson = JSON.parse(fs.readFileSync(docSourceJsonMapPath).toString());
-        if (isNullOrUndefined(docSourceJson[configHandler.moduleFolder])) {
+        if (isNullOrUndefined(docSourceJson[extensionHandler.Extension_NameUnderscored])) {
             const line =
                 '"' +
-                configHandler.moduleFolder +
+                extensionHandler.Extension_Name +
                 '": "src/azure-cli/azure/cli/command_modules/' +
-                configHandler.moduleFolder +
+                extensionHandler.Extension_Name +
                 '/_help.py"';
             let cnt = outputFile.length;
             let foundLastLine = false;

@@ -150,7 +150,6 @@ function processFolderPath() {
     const options = AzConfiguration.getValue(CodeGenConstants.az);
     const extensionName = options[CodeGenConstants.extensions];
     const azOutputFolder: string = AzConfiguration.getValue(CodeGenConstants.azOutputFolder);
-    AzConfiguration.setValue(CodeGenConstants.moduleFolder, extensionName);
     const pythonSdkOutputFolder: string = AzConfiguration.getValue(
         CodeGenConstants.pythonSdkOutputFolder,
     );
