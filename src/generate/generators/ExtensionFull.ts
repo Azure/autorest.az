@@ -31,6 +31,7 @@ import { CliExtHistory } from '../renders/extraExt/CliExtHistory';
 import { CliExtReadme } from '../renders/extraExt/CliExtReadme';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
+import { CliTopHelp } from '../renders/CliTopHelp';
 
 export class AzExtensionFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
@@ -81,6 +82,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliTopAction(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTopCustom(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTopInit(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliTopHelp(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliReport(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliExtHistory(this.model));

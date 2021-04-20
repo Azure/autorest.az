@@ -17,10 +17,16 @@ import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
 
 export class CliTopInit extends TemplateBase {
+    private moduleHelp: string;
     constructor(model: CodeModelAz) {
         super(model);
         const { configHandler } = model.GetHandler();
         this.relativePath = path.join(configHandler.AzextFolder, PathConstants.initFile);
+        if (configHandler.IsCliCore) {
+            this.moduleHelp = `azure.cli.command_modules.${configHandler.moduleFolder}._help`;
+        } else {
+            this.moduleHelp = `${configHandler.AzextFolder}._help`;
+        }
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -56,13 +62,25 @@ export class CliTopInit extends TemplateBase {
 
                 let loadtableIndex = -1;
                 let loadargIndex = -1;
+                let loadHelpInddex = -1;
                 for (let i = 0; i < output.length; ++i) {
+                    if (
+                        output[i].indexOf(this.moduleHelp) !== -1 ||
+                        output[i].indexOf('generated._help') !== -1
+                    ) {
+                        loadHelpInddex = i;
+                    }
                     if (output[i].indexOf('load_command_table') !== -1) {
                         loadtableIndex = i;
                     }
                     if (output[i].indexOf('load_arguments') !== -1) {
                         loadargIndex = i;
                     }
+                }
+
+                if (loadHelpInddex === -1) {
+                    headerGenerator.addImport(this.moduleHelp);
+                    headerGenerator.disableUnusedImport = true;
                 }
 
                 if (loadargIndex !== -1) {
@@ -124,7 +142,6 @@ export class CliTopInit extends TemplateBase {
         output.push(indentStr + '        pass');
         output.push(indentStr + '    else:');
         output.push(indentStr + '        raise e');
-        output.push('');
         return output;
     }
 
@@ -132,30 +149,14 @@ export class CliTopInit extends TemplateBase {
         const { configHandler, extensionHandler } = model.GetHandler();
         const header: HeaderGenerator = new HeaderGenerator();
         header.addFromImport(configHandler.CliCoreLib, ['AzCommandsLoader']);
+        header.addImport(this.moduleHelp);
+        header.disableUnusedImport = true;
         if (configHandler.ResourceType) {
             header.addFromImport('azure.cli.core.profiles', ['ResourceType']);
         }
         const output: string[] = header.getLines();
         let importPath = configHandler.AzextFolder;
-        if (!configHandler.IsCliCore) {
-            output.push(
-                'from ' +
-                    importPath +
-                    '.generated._help import helps  # pylint: disable=unused-import',
-            );
-            output.push('try:');
-            output.push(
-                '    from ' +
-                    importPath +
-                    '.manual._help import helps  # pylint: disable=reimported',
-            );
-            output.push('except ImportError as e:');
-            output.push("    if e.name.endswith('manual._help'):");
-            output.push('        pass');
-            output.push('    else:');
-            output.push('        raise e');
-            output.push('');
-        } else {
+        if (configHandler.IsCliCore) {
             importPath = '';
         }
 
@@ -180,7 +181,7 @@ export class CliTopInit extends TemplateBase {
         if (configHandler.IsCliCore) {
             output.push(
                 "            operations_tmpl='azure.cli.command_modules." +
-                    extensionHandler.Extension_NameUnderscored +
+                    configHandler.moduleFolder +
                     ".custom#{}',",
             );
         } else {
