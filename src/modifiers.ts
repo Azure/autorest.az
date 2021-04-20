@@ -187,7 +187,7 @@ export class Modifiers {
                     ? operationGroup.language['az'].command.replace(groupRegex, groupReplacer)
                     : groupReplacer
                 : operationGroup.language['az'].command;
-            if (groupReplacer.indexOf(' ') === -1) {
+            if (!isNullOrUndefined(groupReplacer) && groupReplacer.indexOf(' ') === -1) {
                 // change the extension name
                 const options = AzConfiguration.getValue(CodeGenConstants.az);
                 options[CodeGenConstants.extensions] = groupReplacer;
