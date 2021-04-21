@@ -4,6 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import { EOL } from 'os';
 import * as path from 'path';
+import { config } from 'process';
 import {
     getIndentString,
     keepHeaderLines,
@@ -11,14 +12,15 @@ import {
     isNullOrUndefined,
 } from '../../utils/helper';
 import { GenerationMode, PathConstants } from '../../utils/models';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
 
 export class CliTopHelp extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.helpFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.helpFile);
     }
 
     public async fullGeneration(): Promise<string[]> {
@@ -53,7 +55,7 @@ export class CliTopHelp extends TemplateBase {
 
                 let hasLoadLogic = false;
                 if (skipLineIdx !== -1) {
-                    for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
+                    for (let i: number = skipLineIdx; i < baseSplit.length; ++i) {
                         if (baseSplit[i].indexOf('from .generated._help import helps') > -1) {
                             hasLoadLogic = true;
                             break;

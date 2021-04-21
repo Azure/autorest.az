@@ -9,7 +9,6 @@
 #
 # Generation mode: Incremental
 # --------------------------------------------------------------------------
-
 from .generated.action import *  # noqa: F403
 try:
     from .manual.action import *  # noqa: F403

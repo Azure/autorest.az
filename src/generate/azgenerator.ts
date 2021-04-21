@@ -4,7 +4,7 @@ import { EOL } from 'os';
 import * as path from 'path';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../utils/models';
 import { AzGeneratorFactory } from './generators/Factory';
-import { CodeModelCliImpl } from './CodeModelAzImpl';
+import { CodeModelCliImpl } from './codemodel/CodeModelAzImpl';
 import { openInplaceGen, closeInplaceGen } from '../utils/inplace';
 
 export async function processRequest(host: Host) {
@@ -13,10 +13,14 @@ export async function processRequest(host: Host) {
         const session = await startSession<CodeModel>(host, {}, codeModelSchema);
 
         const model = new CodeModelCliImpl(session);
+        const { configHandler, exampleHandler } = model.GetHandler();
 
         if (model.SelectFirstExtension()) {
             do {
-                const azextpath = path.join(model.azOutputFolder, model.AzextFolder);
+                const azextpath = path.join(
+                    configHandler.azOutputFolder,
+                    configHandler.AzextFolder,
+                );
                 session.protectFiles(path.join(azextpath, PathConstants.manualFolder));
                 session.protectFiles(
                     path.join(
@@ -26,13 +30,15 @@ export async function processRequest(host: Host) {
                         PathConstants.recordingFolder,
                     ),
                 );
-                session.protectFiles(path.join(model.azOutputFolder, PathConstants.readmeFile));
+                session.protectFiles(
+                    path.join(configHandler.azOutputFolder, PathConstants.readmeFile),
+                );
             } while (model.SelectNextExtension());
         }
 
         openInplaceGen();
-        await model.resourcePool.loadTestResources();
-        model.GenerateTestInit();
+        await exampleHandler.GetResourcePool().loadTestResources();
+        exampleHandler.GenerateTestInit();
         const generator = AzGeneratorFactory.createAzGenerator(model);
         await generator.generateAll();
         const files = generator.files;

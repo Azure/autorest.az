@@ -53,4 +53,28 @@ az:
   package-name: azure-mgmt-kusto
 az-output-folder: $(azure-cli-folder)/src/azure-cli/azure/cli/command_modules/kusto
 python-sdk-output-folder: "$(az-output-folder)/vendored_sdks/kusto"
+
+directive:
+    - where:
+        command: kusto cluster remove-language-extension
+      features:
+        exception_handler: handle_template_based_exception
+      imports:
+        azure.cli.core.exception: handle_template_based_exception
+    - where:
+        command: kusto cluster add-language-extension
+      features:
+        completer: get_resource_name_completion_list('Microsoft.Network/expressRouteCircuits')
+      imports:
+        azure.cli.core.utils: get_resource_name_completion_list
+    - where:
+        group: kusto database
+      features:
+        exception_handler: handle_template_based_exception
+      imports:
+        azure.cli.core.exception: handle_template_based_exception
+    - where:
+        command: kusto database list
+      features:
+        option_list: "['--private-cloud', 123, True]"
 ```

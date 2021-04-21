@@ -104,6 +104,8 @@ describe('ScenarioTest', () => {
 
     function getOptions(testMode: string, outputDir: string) {
         const extraOption: any = {};
+        const key1 = CodeGenConstants.scenarioTestOnly;
+        extraOption[key1] = true;
         if (
             testMode === TestMode.ExtDefault ||
             testMode === TestMode.ExtIncremental ||

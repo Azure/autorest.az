@@ -245,11 +245,11 @@ key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-g
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
 |**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
+|**--name**|choice|SKU name.|name|name|
+|**--tier**|choice|SKU tier.|tier|tier|
 |**--tags**|dictionary|Resource tags.|tags|tags|
 |**--location**|string|Resource location.|location|location|
-|**--name**|choice|SKU name.|name|name|
 |**--capacity**|integer|The number of instances of the cluster.|capacity|capacity|
-|**--tier**|choice|SKU tier.|tier|tier|
 |**--trusted-external-tenants**|array|The cluster's external tenants.|trusted_external_tenants|trustedExternalTenants|
 |**--optimized-autoscale**|object|Optimized auto scale definition.|optimized_autoscale|optimizedAutoscale|
 |**--enable-disk-encryption**|boolean|A boolean value that indicates if the cluster's disks are encrypted.|enable_disk_encryption|enableDiskEncryption|

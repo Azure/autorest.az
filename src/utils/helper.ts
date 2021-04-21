@@ -7,7 +7,7 @@ import { values } from '@azure-tools/linq';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as request from 'request-promise-native';
-import { CodeGenConstants, ExtensionMode } from './models';
+import { AzConfiguration, CodeGenConstants, ExtensionMode } from './models';
 import * as child_process from 'child_process';
 
 export function changeCamelToDash(str: string): string {
@@ -595,7 +595,10 @@ export async function getLatestPyPiVersion(packageName: string) {
     const res = JSON.parse(response);
     const latest = res.urls[1];
     const filename = latest.filename;
-    const version = filename.replace(packageName + '-', '').replace('.zip', '');
+    let version = filename.replace(packageName + '-', '').replace('.zip', '');
+    if (AzConfiguration.getValue(CodeGenConstants.scenarioTestOnly) === true) {
+        version = '1.0.0';
+    }
     return version;
 }
 

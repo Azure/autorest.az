@@ -29,6 +29,7 @@ def step_attached_database_configuration_create(test, checks=None):
              checks=[])
     test.cmd('az kusto attached-database-configuration wait --created '
              '--name "{myAttachedDatabaseConfiguration2}" '
+             '--cluster-name "{myCluster}" '
              '--resource-group "{rg}"',
              checks=checks)
 

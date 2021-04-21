@@ -4,10 +4,11 @@
  *-------------------------------------------------------------------------------------------- */
 import * as fs from 'fs';
 import * as path from 'path';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { TemplateBase } from '../renders/TemplateBase';
 import { inplaceGen } from '../../utils/inplace';
 import { AzConfiguration, CodeGenConstants, TemplateRender } from '../../utils/models';
+import { CodeModelCliImpl } from '../codemodel/CodeModelAzImpl';
 
 export abstract class GeneratorBase {
     model: CodeModelAz;
@@ -15,11 +16,14 @@ export abstract class GeneratorBase {
     azDirectory: string;
     isDebugMode: boolean;
     templates: TemplateRender[];
+    azOutputFolder: string;
 
     constructor(model: CodeModelAz) {
         this.model = model;
         this.azDirectory = '';
         this.isDebugMode = AzConfiguration.getValue(CodeGenConstants.debug);
+        const { configHandler } = model.GetHandler();
+        this.azOutputFolder = configHandler.azOutputFolder;
     }
 
     public abstract generateAll(): Promise<void>;
@@ -31,7 +35,7 @@ export abstract class GeneratorBase {
     ): Promise<void> {
         if (
             override !== false ||
-            !fs.existsSync(path.join(this.model.azOutputFolder, template.relativePath))
+            !fs.existsSync(path.join(this.azOutputFolder, template.relativePath))
         ) {
             const genContent = await template.fullGeneration();
             if (template.skip) {
@@ -39,7 +43,7 @@ export abstract class GeneratorBase {
             }
             if (inplace) {
                 this.files[template.relativePath] = inplaceGen(
-                    this.model.azOutputFolder,
+                    this.azOutputFolder,
                     template.relativePath,
                     genContent,
                 );
@@ -54,9 +58,9 @@ export abstract class GeneratorBase {
         inplace = false,
     ): Promise<void> {
         let base = '';
-        if (fs.existsSync(path.join(this.model.azOutputFolder, template.relativePath))) {
+        if (fs.existsSync(path.join(this.azOutputFolder, template.relativePath))) {
             base = fs
-                .readFileSync(path.join(this.model.azOutputFolder, template.relativePath))
+                .readFileSync(path.join(this.azOutputFolder, template.relativePath))
                 .toString();
         }
         const genContent = await template.incrementalGeneration(base);
@@ -65,7 +69,7 @@ export abstract class GeneratorBase {
         }
         if (inplace) {
             this.files[template.relativePath] = inplaceGen(
-                this.model.azOutputFolder,
+                this.azOutputFolder,
                 template.relativePath,
                 genContent,
             );

@@ -3,12 +3,13 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
-import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { CliTestStep } from './CliTestStep';
 import { ToMultiLine, Capitalize } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants } from '../../../utils/models';
+import { CommandExample } from '../../codemodel/Example';
 
 export class CliTestScenario extends TemplateBase {
     public configValue: any;
@@ -18,8 +19,9 @@ export class CliTestScenario extends TemplateBase {
 
     constructor(model: CodeModelAz, testFilename: string, configValue: any, groupName: string) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
             testFilename,
@@ -58,7 +60,8 @@ export class CliTestScenario extends TemplateBase {
     }
 
     private GenerateAzureCliTestScenario(model: CodeModelAz, config: any, scenarioName: string) {
-        const commandParams = model.GatherInternalResource();
+        const { configHandler, exampleHandler } = model.GetHandler();
+        const commandParams = exampleHandler.GatherInternalResource();
         config.unshift({ function: `setup_${scenarioName}` });
         config.push({ function: `cleanup_${scenarioName}` });
 
@@ -70,7 +73,7 @@ export class CliTestScenario extends TemplateBase {
         const testClassName = Capitalize(this.groupName) + scenarioName + 'Test';
         classInfo.push('class ' + testClassName + '(ScenarioTest):');
 
-        const subscriptionId = model.GetSubscriptionKey();
+        const subscriptionId = exampleHandler.GetSubscriptionKey();
         if (subscriptionId) {
             initiates.push('        self.kwargs.update({');
             initiates.push(`            '${subscriptionId}': self.get_subscription_id()`);
@@ -101,7 +104,7 @@ export class CliTestScenario extends TemplateBase {
         );
 
         function buildSenario(template: CliTestScenario, outputFunc: string[], minimum: boolean) {
-            model.GetResourcePool().clearExampleParams();
+            exampleHandler.GetResourcePool().clearExampleParams();
 
             // go through the examples to generate steps
             for (let ci = 0; ci < config.length; ci++) {
@@ -113,7 +116,7 @@ export class CliTestScenario extends TemplateBase {
                     let found = false;
                     const examples: CommandExample[] = [];
                     let exampleIdx = -1;
-                    for (const exampleCmd of model.FindExampleById(
+                    for (const exampleCmd of exampleHandler.FindExampleById(
                         exampleId,
                         commandParams,
                         examples,
@@ -123,7 +126,7 @@ export class CliTestScenario extends TemplateBase {
                         exampleIdx += 1;
                         if (exampleCmd && exampleCmd.length > 0) {
                             found = true;
-                            const checks = model.GetExampleChecks(examples[exampleIdx]);
+                            const checks = exampleHandler.GetExampleChecks(examples[exampleIdx]);
                             functionName = CliTestStep.ToFunctionName(
                                 { name: examples[exampleIdx].Id },
                                 exampleCmd[0],
@@ -179,9 +182,9 @@ export class CliTestScenario extends TemplateBase {
                         );
                         if (
                             functionName.startsWith('setup_') &&
-                            model.GetResourcePool().hasTestResourceScenario
+                            exampleHandler.GetResourcePool().hasTestResourceScenario
                         ) {
-                            steps.push(...model.GetResourcePool().setupWithArmTemplate());
+                            steps.push(...exampleHandler.GetResourcePool().setupWithArmTemplate());
                         } else {
                             steps.push('    pass');
                         }
@@ -199,7 +202,7 @@ export class CliTestScenario extends TemplateBase {
             outputFunc.push('');
         }
         buildSenario(this, funcScenario, false);
-        if (model.GenMinTest) {
+        if (configHandler.GenMinTest) {
             funcMinScenario.push('@try_manual');
             funcMinScenario.push(
                 ...ToMultiLine(
@@ -245,7 +248,7 @@ export class CliTestScenario extends TemplateBase {
                 buildTestcase(testCaseName, false),
             ),
         );
-        if (model.GenMinTest) {
+        if (configHandler.GenMinTest) {
             this.scenarios.push(...buildTestcase(testCaseName, true));
         }
     }

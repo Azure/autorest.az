@@ -2,7 +2,7 @@ import * as path from 'path';
 import { SystemType, PathConstants, AzConfiguration, CodeGenConstants } from '../../utils/models';
 import { thoughtAsTrue } from '../../utils/helper';
 import { GeneratorBase } from './Base';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { GenerateNamespaceInit } from '../renders/CliNamespaceInit';
 import { CliReport } from '../renders/CliReport';
 import { CliPortalMapping } from '../renders/generated/PortalMapping';
@@ -27,11 +27,11 @@ import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
 import { CliActions } from '../renders/generated/CliActions';
+import { config } from 'process';
 
 export class AzCoreFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.azDirectory = model.AzureCliFolder;
     }
 
     private getParam() {
@@ -40,37 +40,37 @@ export class AzCoreFullGenerator extends GeneratorBase {
 
     public async generateAll() {
         const { model, isDebugMode, files } = this.getParam();
+        const { extensionHandler, configHandler, exampleHandler } = model.GetHandler();
         if (model.SelectFirstExtension()) {
             do {
                 files[
-                    path.join(model.azOutputFolder, 'generated/_params.py')
+                    path.join(configHandler.azOutputFolder, 'generated/_params.py')
                 ] = GenerateAzureCliParams(model, isDebugMode);
                 files[
-                    path.join(model.azOutputFolder, 'generated/custom.py')
+                    path.join(configHandler.azOutputFolder, 'generated/custom.py')
                 ] = GenerateAzureCliCustom(model);
                 files[
-                    path.join(model.azOutputFolder, 'generated/_client_factory.py')
+                    path.join(configHandler.azOutputFolder, 'generated/_client_factory.py')
                 ] = GenerateAzureCliClientFactory(model);
                 files[
-                    path.join(model.azOutputFolder, 'generated/_validators.py')
+                    path.join(configHandler.azOutputFolder, 'generated/_validators.py')
                 ] = GenerateAzureCliValidators(model);
                 files[
-                    path.join(model.azOutputFolder, 'generated/__init__.py')
+                    path.join(configHandler.azOutputFolder, 'generated/__init__.py')
                 ] = GenerateNamespaceInit(model);
-                files[path.join(model.azOutputFolder, 'generated/_help.py')] = GenerateAzureCliHelp(
-                    model,
-                    isDebugMode,
-                );
                 files[
-                    path.join(model.azOutputFolder, 'tests/latest/__init__.py')
+                    path.join(configHandler.azOutputFolder, 'generated/_help.py')
+                ] = GenerateAzureCliHelp(model, isDebugMode);
+                files[
+                    path.join(configHandler.azOutputFolder, 'tests/latest/__init__.py')
                 ] = GenerateNamespaceInit(model);
-                if (model.SDK_NeedSDK) {
+                if (configHandler.SDK_NeedSDK) {
                     files[
-                        path.join(model.azOutputFolder, 'vendored_sdks/__init__.py')
+                        path.join(configHandler.azOutputFolder, 'vendored_sdks/__init__.py')
                     ] = GenerateNamespaceInit(model);
                 }
                 files[
-                    path.join(model.azOutputFolder, 'manual/__init__.py')
+                    path.join(configHandler.azOutputFolder, 'manual/__init__.py')
                 ] = GenerateNamespaceInit(model);
                 await this.generateFullSingleAndAddtoOutput(new CliActions(model));
                 await this.generateFullSingleAndAddtoOutput(new CliCommands(model));
@@ -86,7 +86,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                 const requirementGenerator = new CliMainRequirement(model);
                 for (const sys of [SystemType.Darwin, SystemType.Linux, SystemType.windows]) {
                     requirementGenerator.relativePath = path.join(
-                        model.AzureCliFolder,
+                        configHandler.AzureCliFolder,
                         '/src/azure-cli/requirements.py3.' + sys + '.txt',
                     );
                     files[
@@ -97,14 +97,14 @@ export class AzCoreFullGenerator extends GeneratorBase {
 
                 await this.generateFullSingleAndAddtoOutput(new CliTestInit(model));
                 await this.generateFullSingleAndAddtoOutput(new CliTestStep(model), true, true);
-                for (const testGroup of model.Extension_TestScenario
-                    ? Object.getOwnPropertyNames(model.Extension_TestScenario)
+                for (const testGroup of exampleHandler.Example_TestScenario
+                    ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
                     : []) {
                     await this.generateFullSingleAndAddtoOutput(
                         new CliTestScenario(
                             model,
                             PathConstants.fullTestSceanrioFile(testGroup),
-                            model.Extension_TestScenario[testGroup],
+                            exampleHandler.Example_TestScenario[testGroup],
                             testGroup,
                         ),
                         true,
@@ -119,12 +119,12 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         true,
                     );
                 }
-                model
+                exampleHandler
                     .GetResourcePool()
                     .generateArmTemplate(
                         files,
                         path.join(
-                            model.azOutputFolder,
+                            configHandler.azOutputFolder,
                             PathConstants.testFolder,
                             PathConstants.latestFolder,
                         ),
@@ -144,7 +144,7 @@ export class AzCoreFullGenerator extends GeneratorBase {
                         new SimpleTemplate(
                             this.model,
                             path.join(
-                                model.AzextFolder,
+                                configHandler.AzextFolder,
                                 PathConstants.testFolder,
                                 PathConstants.cmdletFolder,
                                 PathConstants.conftestFile,

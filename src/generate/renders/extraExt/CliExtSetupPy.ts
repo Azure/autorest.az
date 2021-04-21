@@ -5,7 +5,7 @@
 import { EOL } from 'os';
 import { getLatestPyPiVersion, isNullOrUndefined } from '../../../utils/helper';
 import { CodeGenConstants, GenerationMode, PathConstants } from '../../../utils/models';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import compareVersions = require('compare-versions');
@@ -84,32 +84,33 @@ export class CliExtSetupPy extends TemplateBase {
     }
 
     public async GetRenderData(model: CodeModelAz): Promise<any> {
+        const { extensionHandler, configHandler } = this.model.GetHandler();
         const dependencies = [];
-        if (!model.SDK_NeedSDK) {
-            const packageName = model.GetPythonPackageName();
+        if (!configHandler.SDK_NeedSDK) {
+            const packageName = configHandler.GetPythonPackageName();
             const latestVersion = await getLatestPyPiVersion(packageName);
             const line = packageName + '~=' + latestVersion;
             dependencies.push(line);
         }
-        let azRelativeOutputFolder = path.resolve(model.azOutputFolder);
-        if (!isNullOrUndefined(model.AzureCliFolder)) {
+        let azRelativeOutputFolder = path.resolve(configHandler.azOutputFolder);
+        if (!isNullOrUndefined(configHandler.AzureCliFolder)) {
             azRelativeOutputFolder = azRelativeOutputFolder.replace(
-                path.join(path.resolve(model.AzureCliFolder), '/'),
+                path.join(path.resolve(configHandler.AzureCliFolder), '/'),
                 '',
             );
-        } else if (!isNullOrUndefined(model.AzureCliExtFolder)) {
+        } else if (!isNullOrUndefined(configHandler.AzureCliExtFolder)) {
             azRelativeOutputFolder = azRelativeOutputFolder.replace(
-                path.join(path.resolve(model.AzureCliExtFolder), '/'),
+                path.join(path.resolve(configHandler.AzureCliExtFolder), '/'),
                 '',
             );
         }
         const data = {
             model: {
-                AzextFolder: model.AzextFolder,
-                Extension_Name: model.Extension_Name,
+                AzextFolder: configHandler.AzextFolder,
+                Extension_Name: extensionHandler.Extension_Name,
                 azRelativeOutputFolder: azRelativeOutputFolder.replace(/\\/g, '/'),
-                Extension_NameClass: model.Extension_NameClass,
-                Extension_NameUnderscored: model.Extension_NameUnderscored,
+                Extension_NameClass: extensionHandler.Extension_NameClass,
+                Extension_NameUnderscored: extensionHandler.Extension_NameUnderscored,
                 dependencies: dependencies,
             },
         };

@@ -21,9 +21,9 @@ directive:
       set:
           group: users
     - where:
-          group: user-user
+          group: users user-user
       set:
-          group: user
+          group: users user
     - where:
           command: users user create-user
       set:

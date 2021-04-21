@@ -12,19 +12,21 @@ import {
     isNullOrUndefined,
 } from '../../utils/helper';
 import { GenerationMode, PathConstants } from '../../utils/models';
-import { CodeModelAz } from '../CodeModelAz';
+import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
+import { config } from 'process';
 
 export class CliTopAction extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
-        this.relativePath = path.join(model.AzextFolder, PathConstants.actionFile);
+        const { configHandler } = model.GetHandler();
+        this.relativePath = path.join(configHandler.AzextFolder, PathConstants.actionFile);
         const relativePathOldVersion = this.relativePath.replace(
             PathConstants.actionFile,
             PathConstants.actionFileOldVersion,
         );
-        if (fs.existsSync(path.join(model.azOutputFolder, relativePathOldVersion))) {
+        if (fs.existsSync(path.join(configHandler.azOutputFolder, relativePathOldVersion))) {
             this.relativePath = relativePathOldVersion;
         }
     }
@@ -65,7 +67,7 @@ export class CliTopAction extends TemplateBase {
                 const keepLineIdx = keepHeaderLines(baseSplit);
                 let hasLoadLogic = false;
                 if (skipLineIdx !== -1) {
-                    for (let i: number = skipLineIdx + 1; i < baseSplit.length; ++i) {
+                    for (let i: number = skipLineIdx; i < baseSplit.length; ++i) {
                         if (baseSplit[i].indexOf('from .generated.action import *') > -1) {
                             hasLoadLogic = true;
                             break;

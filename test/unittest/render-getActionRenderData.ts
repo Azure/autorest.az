@@ -14,7 +14,7 @@ import { AzConfiguration, CodeGenConstants, ExtensionMode } from '../../src/util
 import { CliActions } from '../../src/generate/renders/generated/CliActions';
 import { AzLinter } from '../../src/azlinter';
 import { Entry } from '../../src/entry';
-import { CodeModelCliImpl } from '../../src/generate/CodeModelAzImpl';
+import { CodeModelCliImpl } from '../../src/generate/codemodel/CodeModelAzImpl';
 import { createTestSession } from '../utils/test-helper';
 
 sourceMapSupport.install();
@@ -42,7 +42,8 @@ describe('getActionsRender', () => {
         await entry.init();
 
         const codeModel = new CodeModelCliImpl(session);
-        codeModel.GenerateTestInit();
+        const { exampleHandler } = codeModel.GetHandler();
+        exampleHandler.GenerateTestInit();
 
         model = codeModel;
     }

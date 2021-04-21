@@ -5,7 +5,7 @@
 
 import { Parameter, SchemaType } from '@azure-tools/codemodel';
 import { ToPythonString, ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import * as path from 'path';
@@ -16,8 +16,9 @@ let allActions: Map<string, boolean>;
 export class CliActions extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
+        const { configHandler } = this.model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.generatedFolder,
             PathConstants.actionFile,
         );

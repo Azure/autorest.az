@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { CodeModelAz } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import * as path from 'path';
 import { SchemaType } from '@azure-tools/codemodel';
 import {
@@ -23,15 +23,16 @@ export class CliPortalMapping extends TemplateBase {
     resourceKey: string;
     constructor(model: CodeModelAz) {
         super(model);
+        const { configHandler } = model.GetHandler();
         this.relativePath = path.join(
-            model.AzextFolder,
+            configHandler.AzextFolder,
             PathConstants.generatedFolder,
             PathConstants.portalMappingFile,
         );
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
             PathConstants.generatedFolder,
-            PathConstants.portalMappingFile + '.njx',
+            PathConstants.portalMappingFile + PathConstants.njxFileExtension,
         );
         this.resourceMappings = {};
         this.parameterMappings = [];

@@ -5,8 +5,9 @@
 import { HttpMethod } from '@azure-tools/codemodel';
 import { CmdToMultiLines, isNullOrUndefined } from '../../../utils/helper';
 import { PathConstants } from '../../../utils/models';
-import { CodeModelAz, CommandExample } from '../../CodeModelAz';
+import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
+import { CommandExample } from '../../codemodel/Example';
 
 export class CliExtReadme extends TemplateBase {
     constructor(model: CodeModelAz) {
@@ -15,28 +16,29 @@ export class CliExtReadme extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
+        const { extensionHandler, commandGroupHandler, exampleHandler } = this.model.GetHandler();
         let output: string[] = [];
 
-        output.push('# Azure CLI ' + this.model.Extension_Name + ' Extension #');
-        output.push('This is the extension for ' + this.model.Extension_Name);
+        output.push('# Azure CLI ' + extensionHandler.Extension_Name + ' Extension #');
+        output.push('This is the extension for ' + extensionHandler.Extension_Name);
         output.push('');
         output.push('### How to use ###');
         output.push('Install this extension using the below CLI command');
         output.push('```');
-        output.push('az extension add --name ' + this.model.Extension_Name);
+        output.push('az extension add --name ' + extensionHandler.Extension_Name);
         output.push('```');
         output.push('');
         output.push('### Included Features ###');
 
         if (this.model.SelectFirstCommandGroup()) {
             do {
-                output.push('#### ' + this.model.CommandGroup_Name + ' ####');
+                output.push('#### ' + commandGroupHandler.CommandGroup_Name + ' ####');
 
                 let exampleList: CommandExample[] = [];
                 const exampleCommandList: string[] = [];
                 if (this.model.SelectFirstCommand()) {
                     do {
-                        exampleList = exampleList.concat(this.model.GetExamples(false));
+                        exampleList = exampleList.concat(exampleHandler.GetExamples(false));
                     } while (this.model.SelectNextCommand());
                 }
 
@@ -62,12 +64,10 @@ export class CliExtReadme extends TemplateBase {
                         const temp = CmdToMultiLines(example.CommandString);
                         exampleCommandList.push(...temp);
                     }
-                    if (
-                        !isNullOrUndefined(example.WaitCommandString) &&
-                        example.WaitCommandString !== ''
-                    ) {
+                    const waitCommandString = exampleHandler.GetExampleWait(example).join(' ');
+                    if (!isNullOrUndefined(waitCommandString) && waitCommandString !== '') {
                         exampleCommandList.push('');
-                        const temp = CmdToMultiLines(example.WaitCommandString);
+                        const temp = CmdToMultiLines(waitCommandString);
                         exampleCommandList.push(...temp);
                     }
                     exampleCommandList.push('```');
