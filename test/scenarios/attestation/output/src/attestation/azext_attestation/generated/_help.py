@@ -17,11 +17,6 @@ helps['attestation'] = '''
     short-summary: Manage Attestation
 '''
 
-helps['attestation'] = """
-    type: group
-    short-summary: Manage operation with attestation
-"""
-
 helps['attestation create-provider'] = """
     type: command
     short-summary: "Creates or updates the Attestation Provider."

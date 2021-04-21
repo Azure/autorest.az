@@ -15,7 +15,6 @@ import {
 } from '../../utils/models';
 import { TemplateBase } from './TemplateBase';
 import { isNullOrUndefined, ToMultiLine } from '../../utils/helper';
-import { CommandGroupModelImpl } from '../codemodel/CommandGroup';
 
 export class CliReport extends TemplateBase {
     constructor(model: CodeModelAz) {

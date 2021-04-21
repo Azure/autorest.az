@@ -26,7 +26,6 @@ import { GenerateMetaFile } from '../renders/CliMeta';
 import { CliCmdletTest } from '../renders/tests/CliTestCmdlet';
 import { SimpleTemplate } from '../renders/TemplateBase';
 import { CliActions } from '../renders/generated/CliActions';
-import { config } from 'process';
 
 export class AzCoreFullGenerator extends GeneratorBase {
     constructor(model: CodeModelAz) {

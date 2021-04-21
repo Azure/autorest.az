@@ -12,7 +12,7 @@
 from knack.help_files import helps
 
 
-helps['users_v1_0'] = '''
+helps['users'] = '''
     type: group
     short-summary: Manage Users
 '''

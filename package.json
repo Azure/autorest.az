@@ -55,7 +55,6 @@
     "source-map-support": "^0.5.13",
     "ts-jest": "^26.5.0",
     "ts-node": "^9.1.1",
-    "typescript": "^3.7.5",
     "utf-8-validate": "^5.0.2"
   },
   "dependencies": {
@@ -81,7 +80,8 @@
     "oav": "2.2.0",
     "prettier": "^2.2.1",
     "request": "^2.87.0",
-    "request-promise-native": "1.0.8"
+    "request-promise-native": "1.0.8",
+    "typescript": "^3.7.5"
   },
   "files": [
     "dist/src",

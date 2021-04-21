@@ -1,4 +1,4 @@
-import { SchemaType, Schema, Parameter } from '@azure-tools/codemodel';
+import { SchemaType, Schema } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import { isNullOrUndefined } from '../../utils/helper';
 import { CodeModelCliImpl } from './CodeModelAzImpl';

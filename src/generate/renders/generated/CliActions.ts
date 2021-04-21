@@ -3,15 +3,10 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { Parameter, SchemaType } from '@azure-tools/codemodel';
-import { ToPythonString, ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
-import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import * as path from 'path';
 import { PathConstants } from '../../../utils/models';
-
-let allActions: Map<string, boolean>;
 
 export class CliActions extends TemplateBase {
     constructor(model: CodeModelAz) {

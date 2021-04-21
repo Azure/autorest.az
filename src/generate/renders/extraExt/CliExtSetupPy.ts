@@ -10,7 +10,6 @@ import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import compareVersions = require('compare-versions');
 import * as path from 'path';
-import * as nunjucks from 'nunjucks';
 
 export class CliExtSetupPy extends TemplateBase {
     constructor(model: CodeModelAz) {

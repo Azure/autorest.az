@@ -8,7 +8,6 @@ import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { TemplateBase } from '../renders/TemplateBase';
 import { inplaceGen } from '../../utils/inplace';
 import { AzConfiguration, CodeGenConstants, TemplateRender } from '../../utils/models';
-import { CodeModelCliImpl } from '../codemodel/CodeModelAzImpl';
 
 export abstract class GeneratorBase {
     model: CodeModelAz;
