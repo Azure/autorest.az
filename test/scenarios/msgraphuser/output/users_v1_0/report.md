@@ -3,10 +3,10 @@
 ## EXTENSION
 |CLI Extension|Command Groups|
 |---------|------------|
-|az users|[groups](#CommandGroups)
+|az users_v1_0|[groups](#CommandGroups)
 
 ## GROUPS
-### <a name="CommandGroups">Command groups in `az users` extension </a>
+### <a name="CommandGroups">Command groups in `az users_v1_0` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 |az users user|users.user|[commands](#CommandsInusers.user)|

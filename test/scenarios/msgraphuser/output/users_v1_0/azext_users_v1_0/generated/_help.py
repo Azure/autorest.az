@@ -12,14 +12,9 @@
 from knack.help_files import helps
 
 
-helps['users'] = '''
-    type: group
-    short-summary: Manage Users
-'''
-
 helps['users user'] = """
     type: group
-    short-summary: Manage user user with users
+    short-summary: Manage user user with users_v1_0
 """
 
 helps['users user list'] = """
@@ -731,7 +726,7 @@ helps['users user delete'] = """
 
 helps['users user'] = """
     type: group
-    short-summary: Manage user with users
+    short-summary: Manage user with users_v1_0
 """
 
 helps['users user create-extension'] = """
@@ -1055,7 +1050,7 @@ associated with the user won't show up as having changed when using delta.
 
 helps['users user-outlook'] = """
     type: group
-    short-summary: Manage user outlook with users
+    short-summary: Manage user outlook with users_v1_0
 """
 
 helps['users user-outlook create-master-category'] = """
@@ -1085,7 +1080,7 @@ helps['users user-outlook update-master-category'] = """
 
 helps['users user-setting'] = """
     type: group
-    short-summary: Manage user setting with users
+    short-summary: Manage user setting with users_v1_0
 """
 
 helps['users user-setting delete-shift-preference'] = """
