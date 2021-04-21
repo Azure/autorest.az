@@ -18,7 +18,7 @@ export class Hider {
 
     mergeOperation() {
         this.codeModel.operationGroups.forEach((operationGroup) => {
-            const operations = operationGroup.operations.filter(function cliSplitOperation(
+            let operations = operationGroup.operations.filter(function cliSplitOperation(
                 operation,
                 index,
                 array,
@@ -40,6 +40,27 @@ export class Hider {
                         originalOperation.extensions['cli-splitted-operations'] = [];
                     }
                     originalOperation.extensions['cli-splitted-operations'].push(operation);
+                    return false;
+                }
+                return true;
+            });
+            // cli-poly-as-resource-original-operation
+            operations = operations.filter(function cliSplitOperation(operation, index, array) {
+                if (
+                    !isNullOrUndefined(operation.extensions) &&
+                    !isNullOrUndefined(
+                        operation.extensions['cli-poly-as-resource-original-operation'],
+                    )
+                ) {
+                    const originalOperation =
+                        operation.extensions['cli-poly-as-resource-original-operation'];
+                    if (isNullOrUndefined(originalOperation.extensions)) {
+                        return false;
+                    }
+                    if (isNullOrUndefined(originalOperation.extensions['cli-operations'])) {
+                        originalOperation.extensions['cli-operations'] = [];
+                    }
+                    originalOperation.extensions['cli-operations'].push(operation);
                     return false;
                 }
                 return true;
