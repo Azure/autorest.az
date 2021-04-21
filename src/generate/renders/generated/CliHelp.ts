@@ -16,6 +16,8 @@ function initVars() {
     showExampleStr = '';
 }
 
+let extensionName;
+
 export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string[] {
     const {
         extensionHandler,
@@ -30,9 +32,14 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     let output: string[] = [];
     output.push('');
     exampleHandler.GatherInternalResource();
-    if (extensionHandler.Extension_HasExtensionGroup === true) {
+
+    extensionName = model.getActualExtensionName();
+    if (
+        extensionHandler.Extension_HasExtensionGroup === true ||
+        extensionName !== extensionHandler.Extension_Name
+    ) {
         output.push('');
-        output.push("helps['" + extensionHandler.Extension_Name + "'] = '''");
+        output.push("helps['" + extensionName + "'] = '''");
         output.push('    type: group');
         output.push('    short-summary: ' + extensionHandler.Extension_Description);
         output.push("'''");
@@ -140,7 +147,7 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', 
         if (
             commandGroupHandler.CommandGroup_Help.trim() === '' ||
             (extensionHandler.Extension_HasExtensionGroup &&
-                commandGroupHandler.CommandGroup_Name === extensionHandler.Extension_Name)
+                commandGroupHandler.CommandGroup_Name === extensionName)
         ) {
             return [];
         }

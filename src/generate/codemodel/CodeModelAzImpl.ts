@@ -773,6 +773,28 @@ export class CodeModelCliImpl implements CodeModelAz {
         }
     }
 
+    public getFirstGroups(): string[] {
+        const firstGroups = [];
+        if (this.SelectFirstCommandGroup()) {
+            do {
+                const groupName = this.commandGroupHandler.CommandGroup_Name;
+                const extensionParent = this.extensionHandler.Extension_Parent;
+                const fromIndex = isNullOrUndefined(extensionParent)
+                    ? 0
+                    : extensionParent.length + 1;
+                let endIndex = groupName.indexOf(' ', fromIndex);
+                if (endIndex === -1) {
+                    endIndex = groupName.length;
+                }
+                const firstGroup = groupName.substring(0, endIndex);
+                if (firstGroups.indexOf(firstGroup) === -1) {
+                    firstGroups.push(firstGroup);
+                }
+            } while (this.SelectNextCommandGroup());
+        }
+        return firstGroups;
+    }
+
     public GetActionData() {
         const actions = [];
         SchemaType.Array;
@@ -855,6 +877,17 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.ExitSubMethodParameters();
         });
         return actions;
+    }
+
+    public getActualExtensionName(): string {
+        const extensionName = isNullOrUndefined(this.extensionHandler.Extension_Parent)
+            ? this.extensionHandler.Extension_Name
+            : this.extensionHandler.Extension_Parent + ' ' + this.extensionHandler.Extension_Name;
+        const firstGroups = this.getFirstGroups();
+        if (firstGroups.length === 1) {
+            return firstGroups[0];
+        }
+        return extensionName;
     }
     //= ================================================================================================================
     // Extension level information
