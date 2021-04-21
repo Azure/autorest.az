@@ -163,7 +163,7 @@ function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) 
 
     if (model.SelectFirstMethod()) {
         do {
-            const originalOperation = methodHandler.Method_GetOriginalOperation;
+            const originalOperation = methodHandler.Method_GetOriginalOperation();
             let baseParam = null;
             if (model.SelectFirstMethodParameter()) {
                 do {

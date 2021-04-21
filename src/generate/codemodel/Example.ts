@@ -831,7 +831,7 @@ export class ExampleModelImpl implements ExampleModel {
         }
 
         // check polymophism here
-        const originalOperation = this.methodHandler.Method_GetOriginalOperation;
+        const originalOperation = this.methodHandler.Method_GetOriginalOperation();
         if (!isNullOrUndefined(originalOperation)) {
             if (this.baseHandler.SelectFirstMethodParameter()) {
                 do {

@@ -300,7 +300,7 @@ export class CliReport extends TemplateBase {
                         if (!model.SelectFirstMethodParameter()) {
                             continue;
                         }
-                        const originalOperation = methodHandler.Method_GetOriginalOperation;
+                        const originalOperation = methodHandler.Method_GetOriginalOperation();
                         do {
                             if (
                                 methodParameterHandler.MethodParameter_IsFlattened ||

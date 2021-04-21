@@ -68,7 +68,7 @@ class CustomParam {
 
 function getCustomParam(model: CodeModelAz, required: any) {
     const { methodHandler } = model.GetHandler();
-    const originalOperation = methodHandler.Method_GetOriginalOperation;
+    const originalOperation = methodHandler.Method_GetOriginalOperation();
     let genericParameter = null;
     if (!isNullOrUndefined(originalOperation)) {
         genericParameter = methodHandler.Method_GenericSetterParameter(originalOperation);

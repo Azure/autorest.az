@@ -158,7 +158,7 @@ export class MethodParameterModelImpl implements MethodParameterModel {
 
     public get MethodParameter_IsDiscriminator(): boolean {
         return (
-            this.methodHandler.Method_GetOriginalOperation &&
+            this.methodHandler.Method_GetOriginalOperation() &&
             this.MethodParameter['targetProperty'] &&
             this.MethodParameter['targetProperty']['isDiscriminator']
         );
