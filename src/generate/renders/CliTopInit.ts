@@ -62,13 +62,13 @@ export class CliTopInit extends TemplateBase {
 
                 let loadtableIndex = -1;
                 let loadargIndex = -1;
-                let loadHelpInddex = -1;
+                let loadHelpIndex = -1;
                 for (let i = 0; i < output.length; ++i) {
                     if (
                         output[i].indexOf(this.moduleHelp) !== -1 ||
                         output[i].indexOf('generated._help') !== -1
                     ) {
-                        loadHelpInddex = i;
+                        loadHelpIndex = i;
                     }
                     if (output[i].indexOf('load_command_table') !== -1) {
                         loadtableIndex = i;
@@ -78,7 +78,7 @@ export class CliTopInit extends TemplateBase {
                     }
                 }
 
-                if (loadHelpInddex === -1) {
+                if (loadHelpIndex === -1) {
                     headerGenerator.addImport(this.moduleHelp);
                     headerGenerator.disableUnusedImport = true;
                 }
