@@ -1,4 +1,4 @@
-import { CodeModel, codeModelSchema, Language } from '@azure-tools/codemodel';
+import { AnySchema, CodeModel, codeModelSchema, Language } from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@autorest/extension-base';
 import { serialize } from '@azure-tools/codegen';
 import { values } from '@azure-tools/linq';
@@ -20,8 +20,12 @@ export class AzNamer {
         let ons: Array<string> = [];
         if (operationNameOri.indexOf('#') > -1) {
             ons = operationNameOri.split('#');
-            if (ons && ons.length === 2) {
-                subOperationGroupName = changeCamelToDash(ons[1]);
+            if (ons && ons.length >= 2) {
+                const subgroups = [];
+                for (let i = 1; i < ons.length; i++) {
+                    subgroups.push(changeCamelToDash(ons[i]));
+                }
+                subOperationGroupName = subgroups.join(' ');
                 operationName = ons[0].toLowerCase();
             }
         }
