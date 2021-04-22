@@ -23,6 +23,12 @@ from azext_kusto.generated._client_factory import (
 )
 
 
+kusto_attached_database_configuration = CliCommandType(
+    operations_tmpl='azure.mgmt.kusto.operations._attached_database_configurations_operations#AttachedDatabaseConfigurationsOperations.{}',
+    client_factory=cf_attached_database_configuration,
+)
+
+
 kusto_cluster = CliCommandType(
     operations_tmpl='azure.mgmt.kusto.operations._clusters_operations#ClustersOperations.{}', client_factory=cf_cluster
 )
@@ -33,6 +39,12 @@ kusto_cluster_principal_assignment = CliCommandType(
         'azure.mgmt.kusto.operations._cluster_principal_assignments_operations#ClusterPrincipalAssignmentsOperations.{}'
     ),
     client_factory=cf_cluster_principal_assignment,
+)
+
+
+kusto_data_connection = CliCommandType(
+    operations_tmpl='azure.mgmt.kusto.operations._data_connections_operations#DataConnectionsOperations.{}',
+    client_factory=cf_data_connection,
 )
 
 
@@ -48,19 +60,23 @@ kusto_database_principal_assignment = CliCommandType(
 )
 
 
-kusto_attached_database_configuration = CliCommandType(
-    operations_tmpl='azure.mgmt.kusto.operations._attached_database_configurations_operations#AttachedDatabaseConfigurationsOperations.{}',
-    client_factory=cf_attached_database_configuration,
-)
-
-
-kusto_data_connection = CliCommandType(
-    operations_tmpl='azure.mgmt.kusto.operations._data_connections_operations#DataConnectionsOperations.{}',
-    client_factory=cf_data_connection,
-)
-
-
 def load_command_table(self, _):
+
+    with self.command_group(
+        'kusto attached-database-configuration',
+        kusto_attached_database_configuration,
+        client_factory=cf_attached_database_configuration,
+    ) as g:
+        g.custom_command('list', 'kusto_attached_database_configuration_list')
+        g.custom_show_command('show', 'kusto_attached_database_configuration_show')
+        g.custom_command('create', 'kusto_attached_database_configuration_create', supports_no_wait=True)
+        g.generic_update_command(
+            'update', supports_no_wait=True, custom_func_name='kusto_attached_database_configuration_update'
+        )
+        g.custom_command(
+            'delete', 'kusto_attached_database_configuration_delete', supports_no_wait=True, confirmation=True
+        )
+        g.custom_wait_command('wait', 'kusto_attached_database_configuration_show')
 
     with self.command_group('kusto cluster', kusto_cluster, client_factory=cf_cluster, is_experimental=True) as g:
         g.custom_command('list', 'kusto_cluster_list')
@@ -97,49 +113,6 @@ def load_command_table(self, _):
         )
         g.custom_wait_command('wait', 'kusto_cluster_principal_assignment_show')
 
-    with self.command_group('kusto database', kusto_database, client_factory=cf_database) as g:
-        g.custom_command('list', 'kusto_database_list')
-        g.custom_show_command('show', 'kusto_database_show')
-        g.custom_command('create', 'kusto_database_create', supports_no_wait=True)
-        g.custom_command('update', 'kusto_database_update', supports_no_wait=True)
-        g.custom_command('delete', 'kusto_database_delete', supports_no_wait=True, confirmation=True)
-        g.custom_command('add-principal', 'kusto_database_add_principal')
-        g.custom_command('list-principal', 'kusto_database_list_principal')
-        g.custom_command('remove-principal', 'kusto_database_remove_principal')
-        g.custom_wait_command('wait', 'kusto_database_show')
-
-    with self.command_group(
-        'kusto database-principal-assignment',
-        kusto_database_principal_assignment,
-        client_factory=cf_database_principal_assignment,
-    ) as g:
-        g.custom_command('list', 'kusto_database_principal_assignment_list')
-        g.custom_show_command('show', 'kusto_database_principal_assignment_show')
-        g.custom_command('create', 'kusto_database_principal_assignment_create', supports_no_wait=True)
-        g.generic_update_command(
-            'update', supports_no_wait=True, custom_func_name='kusto_database_principal_assignment_update'
-        )
-        g.custom_command(
-            'delete', 'kusto_database_principal_assignment_delete', supports_no_wait=True, confirmation=True
-        )
-        g.custom_wait_command('wait', 'kusto_database_principal_assignment_show')
-
-    with self.command_group(
-        'kusto attached-database-configuration',
-        kusto_attached_database_configuration,
-        client_factory=cf_attached_database_configuration,
-    ) as g:
-        g.custom_command('list', 'kusto_attached_database_configuration_list')
-        g.custom_show_command('show', 'kusto_attached_database_configuration_show')
-        g.custom_command('create', 'kusto_attached_database_configuration_create', supports_no_wait=True)
-        g.generic_update_command(
-            'update', supports_no_wait=True, custom_func_name='kusto_attached_database_configuration_update'
-        )
-        g.custom_command(
-            'delete', 'kusto_attached_database_configuration_delete', supports_no_wait=True, confirmation=True
-        )
-        g.custom_wait_command('wait', 'kusto_attached_database_configuration_show')
-
     with self.command_group('kusto data-connection', kusto_data_connection, client_factory=cf_data_connection) as g:
         g.custom_command('list', 'kusto_data_connection_list')
         g.custom_show_command('show', 'kusto_data_connection_show')
@@ -166,3 +139,30 @@ def load_command_table(self, _):
             supports_no_wait=True,
         )
         g.custom_wait_command('wait', 'kusto_data_connection_show')
+
+    with self.command_group('kusto database', kusto_database, client_factory=cf_database) as g:
+        g.custom_command('list', 'kusto_database_list')
+        g.custom_show_command('show', 'kusto_database_show')
+        g.custom_command('create', 'kusto_database_create', supports_no_wait=True)
+        g.custom_command('update', 'kusto_database_update', supports_no_wait=True)
+        g.custom_command('delete', 'kusto_database_delete', supports_no_wait=True, confirmation=True)
+        g.custom_command('add-principal', 'kusto_database_add_principal')
+        g.custom_command('list-principal', 'kusto_database_list_principal')
+        g.custom_command('remove-principal', 'kusto_database_remove_principal')
+        g.custom_wait_command('wait', 'kusto_database_show')
+
+    with self.command_group(
+        'kusto database-principal-assignment',
+        kusto_database_principal_assignment,
+        client_factory=cf_database_principal_assignment,
+    ) as g:
+        g.custom_command('list', 'kusto_database_principal_assignment_list')
+        g.custom_show_command('show', 'kusto_database_principal_assignment_show')
+        g.custom_command('create', 'kusto_database_principal_assignment_create', supports_no_wait=True)
+        g.generic_update_command(
+            'update', supports_no_wait=True, custom_func_name='kusto_database_principal_assignment_update'
+        )
+        g.custom_command(
+            'delete', 'kusto_database_principal_assignment_delete', supports_no_wait=True, confirmation=True
+        )
+        g.custom_wait_command('wait', 'kusto_database_principal_assignment_show')

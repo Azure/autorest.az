@@ -68,7 +68,7 @@ export interface CodeModelAz {
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-    );
+    ): Record<string, any>;
     getFirstGroups(): string[];
     getActualExtensionName(): string;
     GetActionData(): any[];

@@ -27,7 +27,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az vm virtual-machine`
 #### <a name="VirtualMachinesAssessPatches">Command `az vm virtual-machine assess-patch`</a>
 
