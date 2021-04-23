@@ -39,10 +39,10 @@ az offazure hyperv cluster cluster list --resource-group "ipsahoo-RI-121119" --s
 ##### <a name="ParametersHyperVClusterGetAllClustersInSite">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-|**--subscription-id**|string|The ID of the target subscription.||subscriptionId|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.||resourceGroupName|
-|**--site-name**|string|Site name.||siteName|
-|**--filter**|string|||$filter|
+|**--subscription-id**|string|The ID of the target subscription.|subscription_id|subscriptionId|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--site-name**|string|Site name.|site_name|siteName|
+|**--filter**|string||filter|$filter|
 
 #### <a name="HyperVClusterGetCluster">Command `az offazure hyperv cluster cluster show`</a>
 
@@ -55,10 +55,10 @@ az offazure hyperv cluster show --name "hypgqlclusrs1-ntdev-corp-micros-11e77b27
 ##### <a name="ParametersHyperVClusterGetCluster">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-|**--subscription-id**|string|The ID of the target subscription.||subscriptionId|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.||resourceGroupName|
-|**--site-name**|string|Site name.||siteName|
-|**--name**|string|Cluster ARM name.||clusterName|
+|**--subscription-id**|string|The ID of the target subscription.|subscription_id|subscriptionId|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--site-name**|string|Site name.|site_name|siteName|
+|**--name**|string|Cluster ARM name.|cluster_name|clusterName|
 
 ### group `az offazure hyperv host`
 #### <a name="HyperVHostPutHost">Command `az offazure hyperv host put-host`</a>
@@ -71,13 +71,13 @@ az offazure hyperv host put-host --fqdn "10.10.10.20" --run-as-account-id "Accou
 ##### <a name="ParametersHyperVHostPutHost">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-|**--subscription-id**|string|The ID of the target subscription.||subscriptionId|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.||resourceGroupName|
-|**--site-name**|string|Site name.||siteName|
-|**--host-name**|string|Host ARM name.||hostName|
-|**--name**|string|Name of the host.||name|
-|**--fqdn**|string|FQDN/IPAddress of the Hyper-V host.||fqdn|
-|**--run-as-account-id**|string|Run as account ID of the Hyper-V host.||runAsAccountId|
+|**--subscription-id**|string|The ID of the target subscription.|subscription_id|subscriptionId|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--site-name**|string|Site name.|site_name|siteName|
+|**--host-name**|string|Host ARM name.|host_name|hostName|
+|**--name**|string|Name of the host.|name|name|
+|**--fqdn**|string|FQDN/IPAddress of the Hyper-V host.|fqdn|fqdn|
+|**--run-as-account-id**|string|Run as account ID of the Hyper-V host.|run_as_account_id|runAsAccountId|
 
 #### <a name="HyperVHostGetAllHostsInSite">Command `az offazure hyperv host show-all-host-in-site`</a>
 
@@ -89,10 +89,10 @@ az offazure hyperv host show-all-host-in-site --resource-group "pajindTest" --si
 ##### <a name="ParametersHyperVHostGetAllHostsInSite">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-|**--subscription-id**|string|The ID of the target subscription.||subscriptionId|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.||resourceGroupName|
-|**--site-name**|string|Site name.||siteName|
-|**--filter**|string|||$filter|
+|**--subscription-id**|string|The ID of the target subscription.|subscription_id|subscriptionId|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--site-name**|string|Site name.|site_name|siteName|
+|**--filter**|string||filter|$filter|
 
 #### <a name="HyperVHostGetHost">Command `az offazure hyperv host show-host`</a>
 
@@ -104,7 +104,7 @@ az offazure hyperv host show-host --host-name "bcdr-ewlab-46-ntdev-corp-micros-e
 ##### <a name="ParametersHyperVHostGetHost">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
-|**--subscription-id**|string|The ID of the target subscription.||subscriptionId|
-|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.||resourceGroupName|
-|**--site-name**|string|Site name.||siteName|
-|**--host-name**|string|Host ARM name.||hostName|
+|**--subscription-id**|string|The ID of the target subscription.|subscription_id|subscriptionId|
+|**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
+|**--site-name**|string|Site name.|site_name|siteName|
+|**--host-name**|string|Host ARM name.|host_name|hostName|
