@@ -1,23 +1,23 @@
-# Azure CLI {{model.Extension_Name}} Extension #
-This is the extension for {{model.Extension_Name}}
+{%- for extension in Extensions -%}
+# Azure CLI {{extension.name}} Extension #
+This is the extension for {{extension.name}}
 
 ### How to use ###
 Install this extension using the below CLI command
 ```
-az extension add --name {{model.Extension_Name}}
+az extension add --name {{extension.name}}
 ```
 
 ### Included Features ###
-(% for group in model.CommandGroups %)
-#### model.CommandGroup_Name ####
-{% for op in model.Commands %}
-{% if model.Command_HasExample %}
-##### model.Command_Name #####
+{%- for group in extension.CommandGroups %}
+#### {{group.name}} ####
+{%- for azExample in group.examples %}
+##### {{azExample.title}} #####
 ```
-{% for example in model.Command_Examples %}
-{{example}}
-{% endfor %}
+{%- for line in azExample.CommandStringLines %}
+{{line}}
+{%- endfor %}
 ```
-(% endif %)
-{% endfor %}
-{% endfor %}
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}

@@ -2,83 +2,26 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
+import * as path from 'path';
 import { HttpMethod } from '@azure-tools/codemodel';
 import { CmdToMultiLines, isNullOrUndefined } from '../../../utils/helper';
-import { PathConstants } from '../../../utils/models';
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 import { CommandExample } from '../../codemodel/Example';
+import { CodeModelTypes, PathConstants, RenderInput } from '../../../utils/models';
 
 export class CliExtReadme extends TemplateBase {
     constructor(model: CodeModelAz) {
         super(model);
         this.relativePath = PathConstants.readmeFile;
+        this.tmplPath = path.join(
+            PathConstants.templateRootFolder,
+            PathConstants.readmeFile + PathConstants.njxFileExtension,
+        );
     }
 
     public async fullGeneration(): Promise<string[]> {
-        const { extensionHandler, commandGroupHandler, exampleHandler } = this.model.GetHandler();
-        let output: string[] = [];
-
-        output.push('# Azure CLI ' + extensionHandler.Extension_Name + ' Extension #');
-        output.push('This is the extension for ' + extensionHandler.Extension_Name);
-        output.push('');
-        output.push('### How to use ###');
-        output.push('Install this extension using the below CLI command');
-        output.push('```');
-        output.push('az extension add --name ' + extensionHandler.Extension_Name);
-        output.push('```');
-        output.push('');
-        output.push('### Included Features ###');
-
-        if (this.model.SelectFirstCommandGroup()) {
-            do {
-                output.push('#### ' + commandGroupHandler.CommandGroup_Name + ' ####');
-
-                let exampleList: CommandExample[] = [];
-                const exampleCommandList: string[] = [];
-                if (this.model.SelectFirstCommand()) {
-                    do {
-                        exampleList = exampleList.concat(exampleHandler.GetExamples(false));
-                    } while (this.model.SelectNextCommand());
-                }
-
-                // Sort
-                for (let i = 0; i < exampleList.length - 1; ++i) {
-                    for (let j = i + 1; j < exampleList.length; ++j) {
-                        if (this.compareExamples(exampleList[i], exampleList[j]) === false) {
-                            const tempExample = exampleList[i];
-                            exampleList[i] = exampleList[j];
-                            exampleList[j] = tempExample;
-                        }
-                    }
-                }
-
-                // Generate example
-                for (const example of exampleList) {
-                    if (!isNullOrUndefined(example.CommandString) && example.CommandString !== '') {
-                        const title =
-                            example.Method.charAt(0).toUpperCase() + example.Method.slice(1);
-                        // const title = example.Id.slice(example.Id.lastIndexOf("/") + 1).match(/[A-Z][a-z]+|[0-9]+/g).join(" ");
-                        exampleCommandList.push('##### ' + title + ' #####');
-                        exampleCommandList.push('```');
-                        const temp = CmdToMultiLines(example.CommandString);
-                        exampleCommandList.push(...temp);
-                    }
-                    const waitCommandString = exampleHandler.GetExampleWait(example).join(' ');
-                    if (!isNullOrUndefined(waitCommandString) && waitCommandString !== '') {
-                        exampleCommandList.push('');
-                        const temp = CmdToMultiLines(waitCommandString);
-                        exampleCommandList.push(...temp);
-                    }
-                    exampleCommandList.push('```');
-                }
-
-                if (exampleCommandList.length !== 0) {
-                    output = output.concat(exampleCommandList);
-                }
-            } while (this.model.SelectNextCommandGroup());
-        }
-        return output;
+        return await this.render();
     }
 
     public async incrementalGeneration(base: string): Promise<string[]> {
@@ -100,8 +43,66 @@ export class CliExtReadme extends TemplateBase {
         }
     }
 
-    public async GetRenderData(model: CodeModelAz): Promise<string[]> {
-        const output: string[] = [];
-        return output;
+    public async GetRenderData(model: CodeModelAz): Promise<Record<string, any>> {
+        const { exampleHandler } = this.model.GetHandler();
+
+        const exampleConverter = (item: any) => {
+            item.title = item.Method.charAt(0).toUpperCase() + item.Method.slice(1);
+            item.CommandStringLines = CmdToMultiLines(item.CommandString);
+            const waitCommandString = exampleHandler.GetExampleWait(item).join(' ');
+            if (!isNullOrUndefined(waitCommandString) && waitCommandString !== '') {
+                item.CommandStringLines.push('');
+                const temp = CmdToMultiLines(waitCommandString);
+                item.CommandStringLines.push(...temp);
+            }
+            return {
+                title: item.title,
+                CommandStringLines: item.CommandStringLines,
+                HttpMethod: item.HttpMethod,
+            };
+        };
+
+        const commandConverter = (item: any) => {
+            item.examples = exampleHandler.GetExamples(false);
+            for (let i = 0; i < item.examples.length; i++) {
+                item.examples[i] = exampleConverter(item.examples[i]);
+            }
+            return item;
+        };
+
+        const inputProperties: Map<CodeModelTypes, RenderInput> = new Map<
+            CodeModelTypes,
+            RenderInput
+        >([
+            ['extension', new RenderInput(['name'])],
+            ['commandGroup', new RenderInput(['name'])],
+            ['command', new RenderInput([], {}, [], commandConverter)],
+        ]);
+
+        const dependencies = <[CodeModelTypes, CodeModelTypes][]>[
+            ['extension', 'commandGroup'],
+            ['commandGroup', 'command'],
+        ];
+        const data = model.getModelData('extension', inputProperties, dependencies);
+        for (const extension of data.Extensions) {
+            for (const group of extension.CommandGroups) {
+                group.examples = [];
+                for (const command of group.Commands) {
+                    group.examples = group.examples.concat(command.examples);
+                }
+                group.Commands = undefined;
+
+                for (let i = 0; i < group.examples.length - 1; ++i) {
+                    for (let j = i + 1; j < group.examples.length; ++j) {
+                        if (!this.compareExamples(group.examples[i], group.examples[j])) {
+                            const tempExample = group.examples[i];
+                            group.examples[i] = group.examples[j];
+                            group.examples[j] = tempExample;
+                        }
+                    }
+                }
+            }
+        }
+        return data;
     }
 }
