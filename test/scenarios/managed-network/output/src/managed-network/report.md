@@ -9,10 +9,10 @@
 ### <a name="CommandGroups">Command groups in `az managed-network` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
-|az managed-network mn|ManagedNetworks|[commands](#CommandsInManagedNetworks)|
-|az managed-network mn scope-assignment|ScopeAssignments|[commands](#CommandsInScopeAssignments)|
-|az managed-network mn group|ManagedNetworkGroups|[commands](#CommandsInManagedNetworkGroups)|
 |az managed-network managed-network-peering-policy|ManagedNetworkPeeringPolicies|[commands](#CommandsInManagedNetworkPeeringPolicies)|
+|az managed-network mn|ManagedNetworks|[commands](#CommandsInManagedNetworks)|
+|az managed-network mn group|ManagedNetworkGroups|[commands](#CommandsInManagedNetworkGroups)|
+|az managed-network mn scope-assignment|ScopeAssignments|[commands](#CommandsInScopeAssignments)|
 
 ## COMMANDS
 ### <a name="CommandsInManagedNetworkPeeringPolicies">Commands in `az managed-network managed-network-peering-policy` group</a>
@@ -56,7 +56,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az managed-network managed-network-peering-policy`
 #### <a name="ManagedNetworkPeeringPoliciesListByManagedNetwork">Command `az managed-network managed-network-peering-policy list`</a>
 
@@ -111,6 +110,7 @@ agedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup" --reso
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Create#MeshTopology">Command `az managed-network managed-network-peering-policy mesh-topology create`</a>
 
+
 ##### <a name="ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Create#MeshTopology">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -146,6 +146,7 @@ agedNetworks/myManagedNetwork/managedNetworkGroups/myManagedNetworkGroup" --reso
 |**--managed-network-policy**|string|inside managedNetworkPolicy|managed_network_policy|managedNetworkPolicy|
 
 #### <a name="ManagedNetworkPeeringPoliciesCreateOrUpdate#Update#MeshTopology">Command `az managed-network managed-network-peering-policy mesh-topology update`</a>
+
 
 ##### <a name="ParametersManagedNetworkPeeringPoliciesCreateOrUpdate#Update#MeshTopology">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -196,6 +197,9 @@ az managed-network mn list
 ##### <a name="ParametersManagedNetworksListBySubscription">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+|**--top**|integer|May be used to limit the number of results in a page for list queries.|top|$top|
+|**--skiptoken**|string|Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls.|skiptoken|$skiptoken|
+
 #### <a name="ManagedNetworksCreateOrUpdate#Create">Command `az managed-network mn create`</a>
 
 ##### <a name="ExamplesManagedNetworksCreateOrUpdate#Create">Example</a>
@@ -310,6 +314,7 @@ work/virtualNetworks/VnetB" --group-name "myManagedNetworkGroup" --managed-netwo
 
 #### <a name="ManagedNetworkGroupsCreateOrUpdate#Update">Command `az managed-network mn group update`</a>
 
+
 ##### <a name="ParametersManagedNetworkGroupsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -377,6 +382,7 @@ yResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwo
 |**--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|assignedManagedNetwork|
 
 #### <a name="ScopeAssignmentsCreateOrUpdate#Update">Command `az managed-network mn scope-assignment update`</a>
+
 
 ##### <a name="ParametersScopeAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

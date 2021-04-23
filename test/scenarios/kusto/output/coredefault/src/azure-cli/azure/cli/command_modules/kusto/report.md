@@ -9,12 +9,12 @@
 ### <a name="CommandGroups">Command groups in `az kusto` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
+|az kusto attached-database-configuration|AttachedDatabaseConfigurations|[commands](#CommandsInAttachedDatabaseConfigurations)|
 |az kusto cluster|Clusters|[commands](#CommandsInClusters)|
 |az kusto cluster-principal-assignment|ClusterPrincipalAssignments|[commands](#CommandsInClusterPrincipalAssignments)|
+|az kusto data-connection|DataConnections|[commands](#CommandsInDataConnections)|
 |az kusto database|Databases|[commands](#CommandsInDatabases)|
 |az kusto database-principal-assignment|DatabasePrincipalAssignments|[commands](#CommandsInDatabasePrincipalAssignments)|
-|az kusto attached-database-configuration|AttachedDatabaseConfigurations|[commands](#CommandsInAttachedDatabaseConfigurations)|
-|az kusto data-connection|DataConnections|[commands](#CommandsInDataConnections)|
 
 ## COMMANDS
 ### <a name="CommandsInAttachedDatabaseConfigurations">Commands in `az kusto attached-database-configuration` group</a>
@@ -88,7 +88,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az kusto attached-database-configuration`
 #### <a name="AttachedDatabaseConfigurationsListByCluster">Command `az kusto attached-database-configuration list`</a>
 
@@ -138,6 +137,7 @@ sourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/KustoClusterLeader" 
 
 #### <a name="AttachedDatabaseConfigurationsCreateOrUpdate#Update">Command `az kusto attached-database-configuration update`</a>
 
+
 ##### <a name="ParametersAttachedDatabaseConfigurationsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -184,6 +184,7 @@ az kusto cluster list
 ##### <a name="ParametersClustersList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="ClustersGet">Command `az kusto cluster show`</a>
 
 ##### <a name="ExamplesClustersGet">Example</a>
@@ -350,6 +351,7 @@ az kusto cluster list-sku
 ##### <a name="ParametersClustersListSkus">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="ClustersRemoveLanguageExtensions">Command `az kusto cluster remove-language-extension`</a>
 
 ##### <a name="ExamplesClustersRemoveLanguageExtensions">Example</a>
@@ -435,6 +437,7 @@ az kusto cluster-principal-assignment create --cluster-name "kustoclusterrptest4
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
 
 #### <a name="ClusterPrincipalAssignmentsCreateOrUpdate#Update">Command `az kusto cluster-principal-assignment update`</a>
+
 
 ##### <a name="ParametersClusterPrincipalAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -740,6 +743,7 @@ az kusto database-principal-assignment create --cluster-name "kustoclusterrptest
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
 
 #### <a name="DatabasePrincipalAssignmentsCreateOrUpdate#Update">Command `az kusto database-principal-assignment update`</a>
+
 
 ##### <a name="ParametersDatabasePrincipalAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

@@ -1613,7 +1613,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-    ): unknown | any[] {
+    ): Record<string, any> {
         if (
             isNullOrUndefined(layer) ||
             isNullOrUndefined(dependencies) ||
@@ -1676,18 +1676,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 items.push(item);
             } while (this['SelectNext' + Type](...selector));
-            if (items.length > 0 && sortBy.length > 0) {
+            if (items.length > 1 && Object.keys(sortBy).length > 0) {
                 items.sort(function (a, b) {
                     for (const sortKey in sortBy) {
-                        if (
-                            a[Type + '_' + Capitalize(sortKey)] >
-                            b[Type + '_' + Capitalize(sortKey)]
-                        ) {
+                        if (a[sortKey] > b[sortKey]) {
                             return sortBy[sortKey];
-                        } else if (
-                            a[Type + '_' + Capitalize(sortKey)] <
-                            b[Type + '_' + Capitalize(sortKey)]
-                        ) {
+                        } else if (a[sortKey] < b[sortKey]) {
                             return 0 - sortBy[sortKey];
                         }
                     }

@@ -24,34 +24,44 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az test-server bool`
 #### <a name="boolputFalse">Command `az test-server bool put-false`</a>
+
 
 ##### <a name="ParametersboolputFalse">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="boolputTrue">Command `az test-server bool put-true`</a>
+
 
 ##### <a name="ParametersboolputTrue">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="boolgetFalse">Command `az test-server bool show-false`</a>
+
 
 ##### <a name="ParametersboolgetFalse">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="boolgetInvalid">Command `az test-server bool show-invalid`</a>
+
 
 ##### <a name="ParametersboolgetInvalid">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="boolgetNull">Command `az test-server bool show-null`</a>
+
 
 ##### <a name="ParametersboolgetNull">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="boolgetTrue">Command `az test-server bool show-true`</a>
+
 
 ##### <a name="ParametersboolgetTrue">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

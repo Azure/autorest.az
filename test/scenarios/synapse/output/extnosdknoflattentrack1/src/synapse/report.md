@@ -10,43 +10,43 @@
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 |az synapse big-data-pool|BigDataPools|[commands](#CommandsInBigDataPools)|
-|az synapse operation|Operations|[commands](#CommandsInOperations)|
+|az synapse integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az synapse integration-runtime-auth-key|IntegrationRuntimeAuthKeys|[commands](#CommandsInIntegrationRuntimeAuthKeys)|
+|az synapse integration-runtime-connection-info|IntegrationRuntimeConnectionInfos|[commands](#CommandsInIntegrationRuntimeConnectionInfos)|
+|az synapse integration-runtime-credentials|IntegrationRuntimeCredentials|[commands](#CommandsInIntegrationRuntimeCredentials)|
+|az synapse integration-runtime-monitoring-data|IntegrationRuntimeMonitoringData|[commands](#CommandsInIntegrationRuntimeMonitoringData)|
+|az synapse integration-runtime-node|IntegrationRuntimeNodes|[commands](#CommandsInIntegrationRuntimeNodes)|
+|az synapse integration-runtime-node-ip-address|IntegrationRuntimeNodeIpAddress|[commands](#CommandsInIntegrationRuntimeNodeIpAddress)|
+|az synapse integration-runtime-object-metadata|IntegrationRuntimeObjectMetadata|[commands](#CommandsInIntegrationRuntimeObjectMetadata)|
+|az synapse integration-runtime-status|IntegrationRuntimeStatus|[commands](#CommandsInIntegrationRuntimeStatus)|
 |az synapse ip-firewall-rule|IpFirewallRules|[commands](#CommandsInIpFirewallRules)|
+|az synapse operation|Operations|[commands](#CommandsInOperations)|
+|az synapse private-endpoint-connection|PrivateEndpointConnections|[commands](#CommandsInPrivateEndpointConnections)|
+|az synapse private-link-hub|PrivateLinkHubs|[commands](#CommandsInPrivateLinkHubs)|
+|az synapse private-link-resource|PrivateLinkResources|[commands](#CommandsInPrivateLinkResources)|
 |az synapse sql-pool|SqlPools|[commands](#CommandsInSqlPools)|
-|az synapse sql-pool-metadata-sync-config|SqlPoolMetadataSyncConfigs|[commands](#CommandsInSqlPoolMetadataSyncConfigs)|
-|az synapse sql-pool-operation-result|SqlPoolOperationResults|[commands](#CommandsInSqlPoolOperationResults)|
-|az synapse sql-pool-geo-backup-policy|SqlPoolGeoBackupPolicies|[commands](#CommandsInSqlPoolGeoBackupPolicies)|
-|az synapse sql-pool-data-warehouse-user-activity|SqlPoolDataWarehouseUserActivities|[commands](#CommandsInSqlPoolDataWarehouseUserActivities)|
-|az synapse sql-pool-restore-point|SqlPoolRestorePoints|[commands](#CommandsInSqlPoolRestorePoints)|
-|az synapse sql-pool-replication-link|SqlPoolReplicationLinks|[commands](#CommandsInSqlPoolReplicationLinks)|
-|az synapse sql-pool-transparent-data-encryption|SqlPoolTransparentDataEncryptions|[commands](#CommandsInSqlPoolTransparentDataEncryptions)|
 |az synapse sql-pool-blob-auditing-policy|SqlPoolBlobAuditingPolicies|[commands](#CommandsInSqlPoolBlobAuditingPolicies)|
+|az synapse sql-pool-connection-policy|SqlPoolConnectionPolicies|[commands](#CommandsInSqlPoolConnectionPolicies)|
+|az synapse sql-pool-data-warehouse-user-activity|SqlPoolDataWarehouseUserActivities|[commands](#CommandsInSqlPoolDataWarehouseUserActivities)|
+|az synapse sql-pool-geo-backup-policy|SqlPoolGeoBackupPolicies|[commands](#CommandsInSqlPoolGeoBackupPolicies)|
+|az synapse sql-pool-metadata-sync-config|SqlPoolMetadataSyncConfigs|[commands](#CommandsInSqlPoolMetadataSyncConfigs)|
 |az synapse sql-pool-operation|SqlPoolOperations|[commands](#CommandsInSqlPoolOperations)|
-|az synapse sql-pool-usage|SqlPoolUsages|[commands](#CommandsInSqlPoolUsages)|
-|az synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|[commands](#CommandsInSqlPoolSensitivityLabels)|
+|az synapse sql-pool-operation-result|SqlPoolOperationResults|[commands](#CommandsInSqlPoolOperationResults)|
+|az synapse sql-pool-replication-link|SqlPoolReplicationLinks|[commands](#CommandsInSqlPoolReplicationLinks)|
+|az synapse sql-pool-restore-point|SqlPoolRestorePoints|[commands](#CommandsInSqlPoolRestorePoints)|
 |az synapse sql-pool-schema|SqlPoolSchemas|[commands](#CommandsInSqlPoolSchemas)|
+|az synapse sql-pool-security-alert-policy|SqlPoolSecurityAlertPolicies|[commands](#CommandsInSqlPoolSecurityAlertPolicies)|
+|az synapse sql-pool-sensitivity-label|SqlPoolSensitivityLabels|[commands](#CommandsInSqlPoolSensitivityLabels)|
 |az synapse sql-pool-table|SqlPoolTables|[commands](#CommandsInSqlPoolTables)|
 |az synapse sql-pool-table-column|SqlPoolTableColumns|[commands](#CommandsInSqlPoolTableColumns)|
-|az synapse sql-pool-connection-policy|SqlPoolConnectionPolicies|[commands](#CommandsInSqlPoolConnectionPolicies)|
+|az synapse sql-pool-transparent-data-encryption|SqlPoolTransparentDataEncryptions|[commands](#CommandsInSqlPoolTransparentDataEncryptions)|
+|az synapse sql-pool-usage|SqlPoolUsages|[commands](#CommandsInSqlPoolUsages)|
 |az synapse sql-pool-vulnerability-assessment|SqlPoolVulnerabilityAssessments|[commands](#CommandsInSqlPoolVulnerabilityAssessments)|
-|az synapse sql-pool-vulnerability-assessment-scan|SqlPoolVulnerabilityAssessmentScans|[commands](#CommandsInSqlPoolVulnerabilityAssessmentScans)|
-|az synapse sql-pool-security-alert-policy|SqlPoolSecurityAlertPolicies|[commands](#CommandsInSqlPoolSecurityAlertPolicies)|
 |az synapse sql-pool-vulnerability-assessment-rule-baseline|SqlPoolVulnerabilityAssessmentRuleBaselines|[commands](#CommandsInSqlPoolVulnerabilityAssessmentRuleBaselines)|
+|az synapse sql-pool-vulnerability-assessment-scan|SqlPoolVulnerabilityAssessmentScans|[commands](#CommandsInSqlPoolVulnerabilityAssessmentScans)|
 |az synapse workspace|Workspaces|[commands](#CommandsInWorkspaces)|
 |az synapse workspace-aad-admin|WorkspaceAadAdmins|[commands](#CommandsInWorkspaceAadAdmins)|
 |az synapse workspace-managed-identity-sql-control-setting|WorkspaceManagedIdentitySqlControlSettings|[commands](#CommandsInWorkspaceManagedIdentitySqlControlSettings)|
-|az synapse integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
-|az synapse integration-runtime-node-ip-address|IntegrationRuntimeNodeIpAddress|[commands](#CommandsInIntegrationRuntimeNodeIpAddress)|
-|az synapse integration-runtime-object-metadata|IntegrationRuntimeObjectMetadata|[commands](#CommandsInIntegrationRuntimeObjectMetadata)|
-|az synapse integration-runtime-node|IntegrationRuntimeNodes|[commands](#CommandsInIntegrationRuntimeNodes)|
-|az synapse integration-runtime-credentials|IntegrationRuntimeCredentials|[commands](#CommandsInIntegrationRuntimeCredentials)|
-|az synapse integration-runtime-connection-info|IntegrationRuntimeConnectionInfos|[commands](#CommandsInIntegrationRuntimeConnectionInfos)|
-|az synapse integration-runtime-auth-key|IntegrationRuntimeAuthKeys|[commands](#CommandsInIntegrationRuntimeAuthKeys)|
-|az synapse integration-runtime-monitoring-data|IntegrationRuntimeMonitoringData|[commands](#CommandsInIntegrationRuntimeMonitoringData)|
-|az synapse integration-runtime-status|IntegrationRuntimeStatus|[commands](#CommandsInIntegrationRuntimeStatus)|
-|az synapse private-link-resource|PrivateLinkResources|[commands](#CommandsInPrivateLinkResources)|
-|az synapse private-endpoint-connection|PrivateEndpointConnections|[commands](#CommandsInPrivateEndpointConnections)|
-|az synapse private-link-hub|PrivateLinkHubs|[commands](#CommandsInPrivateLinkHubs)|
 
 ## COMMANDS
 ### <a name="CommandsInBigDataPools">Commands in `az synapse big-data-pool` group</a>
@@ -310,7 +310,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az synapse big-data-pool`
 #### <a name="BigDataPoolsListByWorkspace">Command `az synapse big-data-pool list`</a>
 
@@ -354,8 +353,8 @@ filename="requirements.txt" --node-count 4 --node-size "Medium" --node-size-fami
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--big-data-pool-name**|string|Big Data pool name|big_data_pool_name|bigDataPoolName|
-|**--location**|string|The geo-location where the resource lives|location|location|
 |**--force**|boolean|Whether to stop any running jobs in the Big Data pool|force|force|
+|**--location**|string|The geo-location where the resource lives|location|location|
 |**--tags**|dictionary|Resource tags.|tags|tags|
 |**--provisioning-state**|string|The state of the Big Data pool.|provisioning_state|provisioningState|
 |**--auto-scale**|object|Auto-scaling properties|auto_scale|autoScale|
@@ -440,8 +439,8 @@ integration runtime\\"}" --name "exampleIntegrationRuntime" --resource-group "ex
 |**--resource-group-name**|string|The name of the resource group. The name is case insensitive.|resource_group_name|resourceGroupName|
 |**--workspace-name**|string|The name of the workspace|workspace_name|workspaceName|
 |**--integration-runtime-name**|string|Integration runtime name|integration_runtime_name|integrationRuntimeName|
-|**--properties**|object|Integration runtime properties.|properties|properties|
 |**--if-match**|string|ETag of the integration runtime entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
+|**--properties**|object|Integration runtime properties.|properties|properties|
 
 #### <a name="IntegrationRuntimesUpdate">Command `az synapse integration-runtime update`</a>
 
@@ -743,6 +742,7 @@ az synapse ip-firewall-rule create --end-ip-address "10.0.0.254" --start-ip-addr
 
 #### <a name="IpFirewallRulesCreateOrUpdate#Update">Command `az synapse ip-firewall-rule update`</a>
 
+
 ##### <a name="ParametersIpFirewallRulesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -887,6 +887,7 @@ az synapse private-link-hub list
 ##### <a name="ParametersPrivateLinkHubsList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="PrivateLinkHubsGet">Command `az synapse private-link-hub show`</a>
 
 ##### <a name="ExamplesPrivateLinkHubsGet">Example</a>
@@ -972,9 +973,6 @@ az synapse private-link-resource show --name "sql" --resource-group "ExampleReso
 ##### <a name="ExamplesSqlPoolsListByWorkspace">Example</a>
 ```
 az synapse sql-pool list --resource-group "sqlcrudtest-6845" --workspace-name "sqlcrudtest-7177"
-```
-##### <a name="ExamplesSqlPoolsListByWorkspace">Example</a>
-```
 az synapse sql-pool list --resource-group "sqlcrudtest-6845" --workspace-name "sqlcrudtest-7177"
 ```
 ##### <a name="ParametersSqlPoolsListByWorkspace">Parameters</a> 
@@ -1135,9 +1133,6 @@ true --is-storage-secondary-key-in-use false --retention-days 6 --state "Enabled
 "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==" --storage-account-subscription-id\
  "00000000-1234-0000-5678-000000000000" --storage-endpoint "https://mystorage.blob.core.windows.net" --resource-group \
 "blobauditingtest-4799" --sql-pool-name "testdb" --workspace-name "blobauditingtest-6440"
-```
-##### <a name="ExamplesSqlPoolBlobAuditingPoliciesCreateOrUpdate#Create">Example</a>
-```
 az synapse sql-pool-blob-auditing-policy create --state "Enabled" --storage-account-access-key \
 "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==" --storage-endpoint \
 "https://mystorage.blob.core.windows.net" --resource-group "blobauditingtest-4799" --sql-pool-name "testdb" \
@@ -1159,6 +1154,7 @@ az synapse sql-pool-blob-auditing-policy create --state "Enabled" --storage-acco
 |**--is-azure-monitor-target-enabled**|boolean|Specifies whether audit events are sent to Azure Monitor.  In order to send the events to Azure Monitor, specify 'state' as 'Enabled' and 'isAzureMonitorTargetEnabled' as true.  When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created. Note that for server level audit you should use the 'master' database as {databaseName}.  Diagnostic Settings URI format: PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview  For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207) or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043) |is_azure_monitor_target_enabled|isAzureMonitorTargetEnabled|
 
 #### <a name="SqlPoolBlobAuditingPoliciesCreateOrUpdate#Update">Command `az synapse sql-pool-blob-auditing-policy update`</a>
+
 
 ##### <a name="ParametersSqlPoolBlobAuditingPoliciesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1427,6 +1423,7 @@ az synapse sql-pool-sensitivity-label create --column-name "myColumn" --informat
 
 #### <a name="SqlPoolSensitivityLabelsCreateOrUpdate#Update">Command `az synapse sql-pool-sensitivity-label update`</a>
 
+
 ##### <a name="ParametersSqlPoolSensitivityLabelsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1591,6 +1588,7 @@ az synapse sql-pool-transparent-data-encryption create --status "Enabled" --reso
 
 #### <a name="SqlPoolTransparentDataEncryptionsCreateOrUpdate#Update">Command `az synapse sql-pool-transparent-data-encryption update`</a>
 
+
 ##### <a name="ParametersSqlPoolTransparentDataEncryptionsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1653,16 +1651,10 @@ emails="email1@mail.com" emails="email2@mail.com" is-enabled=true --storage-acco
 s.net/vulnerability-assessment/" --storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"\
  --resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name "testdb" --workspace-name \
 "vulnerabilityaseessmenttest-6440"
-```
-##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Example</a>
-```
 az synapse sql-pool-vulnerability-assessment create --storage-account-access-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\
 XXXXXXXXXXXXXXXXXXX" --storage-container-path "https://myStorage.blob.core.windows.net/vulnerability-assessment/" \
 --resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name "testdb" --workspace-name \
 "vulnerabilityaseessmenttest-6440"
-```
-##### <a name="ExamplesSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Create">Example</a>
-```
 az synapse sql-pool-vulnerability-assessment create --storage-container-path "https://myStorage.blob.core.windows.net/v\
 ulnerability-assessment/" --storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
 --resource-group "vulnerabilityaseessmenttest-4799" --sql-pool-name "testdb" --workspace-name \
@@ -1680,6 +1672,7 @@ ulnerability-assessment/" --storage-container-sas-key "XXXXXXXXXXXXXXXXXXXXXXXXX
 |**--recurring-scans**|object|The recurring scans settings|recurring_scans|recurringScans|
 
 #### <a name="SqlPoolVulnerabilityAssessmentsCreateOrUpdate#Update">Command `az synapse sql-pool-vulnerability-assessment update`</a>
+
 
 ##### <a name="ParametersSqlPoolVulnerabilityAssessmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1727,6 +1720,7 @@ result="SELECT" result="tableId_4" --resource-group "vulnerabilityaseessmenttest
 |**--baseline-results**|array|The rule baseline result|baseline_results|baselineResults|
 
 #### <a name="SqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Update">Command `az synapse sql-pool-vulnerability-assessment-rule-baseline update`</a>
+
 
 ##### <a name="ParametersSqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1821,6 +1815,7 @@ az synapse workspace list
 ##### <a name="ParametersWorkspacesList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="WorkspacesGet">Command `az synapse workspace show`</a>
 
 ##### <a name="ExamplesWorkspacesGet">Example</a>
@@ -1920,6 +1915,7 @@ az synapse workspace-aad-admin create --administrator-type "ActiveDirectory" --l
 
 #### <a name="WorkspaceAadAdminsCreateOrUpdate#Update">Command `az synapse workspace-aad-admin update`</a>
 
+
 ##### <a name="ParametersWorkspaceAadAdminsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1971,6 +1967,7 @@ az synapse workspace-managed-identity-sql-control-setting create --desired-state
 |**--desired-state**|choice|Desired state|desired_state|desiredState|
 
 #### <a name="WorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update">Command `az synapse workspace-managed-identity-sql-control-setting update`</a>
+
 
 ##### <a name="ParametersWorkspaceManagedIdentitySqlControlSettingsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

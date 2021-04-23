@@ -9,12 +9,12 @@
 ### <a name="CommandGroups">Command groups in `az kusto` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
+|az kusto attached-database-configuration|AttachedDatabaseConfigurations|[commands](#CommandsInAttachedDatabaseConfigurations)|
 |az kusto cluster|Clusters|[commands](#CommandsInClusters)|
 |az kusto cluster-principal-assignment|ClusterPrincipalAssignments|[commands](#CommandsInClusterPrincipalAssignments)|
+|az kusto data-connection|DataConnections|[commands](#CommandsInDataConnections)|
 |az kusto database|Databases|[commands](#CommandsInDatabases)|
 |az kusto database-principal-assignment|DatabasePrincipalAssignments|[commands](#CommandsInDatabasePrincipalAssignments)|
-|az kusto attached-database-configuration|AttachedDatabaseConfigurations|[commands](#CommandsInAttachedDatabaseConfigurations)|
-|az kusto data-connection|DataConnections|[commands](#CommandsInDataConnections)|
 
 ## COMMANDS
 ### <a name="CommandsInAttachedDatabaseConfigurations">Commands in `az kusto attached-database-configuration` group</a>
@@ -94,7 +94,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az kusto attached-database-configuration`
 #### <a name="AttachedDatabaseConfigurationsListByCluster">Command `az kusto attached-database-configuration list`</a>
 
@@ -144,6 +143,7 @@ sourceGroups/kustorptest/providers/Microsoft.Kusto/Clusters/KustoClusterLeader" 
 
 #### <a name="AttachedDatabaseConfigurationsCreateOrUpdate#Update">Command `az kusto attached-database-configuration update`</a>
 
+
 ##### <a name="ParametersAttachedDatabaseConfigurationsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -190,6 +190,7 @@ az kusto cluster list
 ##### <a name="ParametersClustersList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="ClustersGet">Command `az kusto cluster show`</a>
 
 ##### <a name="ExamplesClustersGet">Example</a>
@@ -245,10 +246,10 @@ key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-g
 |------|----|-----------|----------|------------|
 |**--resource-group-name**|string|The name of the resource group containing the Kusto cluster.|resource_group_name|resourceGroupName|
 |**--cluster-name**|string|The name of the Kusto cluster.|cluster_name|clusterName|
-|**--name**|choice|SKU name.|name|name|
-|**--tier**|choice|SKU tier.|tier|tier|
 |**--tags**|dictionary|Resource tags.|tags|tags|
 |**--location**|string|Resource location.|location|location|
+|**--name**|choice|SKU name.|name|name|
+|**--tier**|choice|SKU tier.|tier|tier|
 |**--capacity**|integer|The number of instances of the cluster.|capacity|capacity|
 |**--trusted-external-tenants**|array|The cluster's external tenants.|trusted_external_tenants|trustedExternalTenants|
 |**--optimized-autoscale**|object|Optimized auto scale definition.|optimized_autoscale|optimizedAutoscale|
@@ -360,6 +361,7 @@ az kusto cluster list-sku
 ##### <a name="ParametersClustersListSkus">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="ClustersRemoveLanguageExtensions">Command `az kusto cluster remove-language-extension`</a>
 
 ##### <a name="ExamplesClustersRemoveLanguageExtensions">Example</a>
@@ -446,6 +448,7 @@ az kusto cluster-principal-assignment create --cluster-name "kustoclusterrptest4
 
 #### <a name="ClusterPrincipalAssignmentsCreateOrUpdate#Update">Command `az kusto cluster-principal-assignment update`</a>
 
+
 ##### <a name="ParametersClusterPrincipalAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -503,6 +506,7 @@ az kusto data-connection show --cluster-name "kustoclusterrptest4" --name "DataC
 
 #### <a name="DataConnectionsCreateOrUpdate#Create#EventGrid">Command `az kusto data-connection event-grid create`</a>
 
+
 ##### <a name="ParametersDataConnectionsCreateOrUpdate#Create#EventGrid">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -547,6 +551,7 @@ az kusto data-connection event-hub create --cluster-name "kustoclusterrptest4" -
 
 #### <a name="DataConnectionsCreateOrUpdate#Create#IotHub">Command `az kusto data-connection iot-hub create`</a>
 
+
 ##### <a name="ParametersDataConnectionsCreateOrUpdate#Create#IotHub">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -564,6 +569,7 @@ az kusto data-connection event-hub create --cluster-name "kustoclusterrptest4" -
 |**--shared-access-policy-name**|string|The name of the share access policy|iot_hub_shared_access_policy_name|sharedAccessPolicyName|
 
 #### <a name="DataConnectionsUpdate#EventGrid">Command `az kusto data-connection event-grid update`</a>
+
 
 ##### <a name="ParametersDataConnectionsUpdate#EventGrid">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -609,6 +615,7 @@ az kusto data-connection event-hub update --cluster-name "kustoclusterrptest4" -
 
 #### <a name="DataConnectionsUpdate#IotHub">Command `az kusto data-connection iot-hub update`</a>
 
+
 ##### <a name="ParametersDataConnectionsUpdate#IotHub">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -641,6 +648,7 @@ az kusto data-connection delete --cluster-name "kustoclusterrptest4" --name "kus
 |**--data-connection-name**|string|The name of the data connection.|data_connection_name|dataConnectionName|
 
 #### <a name="DataConnectionsdataConnectionValidation#EventGrid">Command `az kusto data-connection event-grid data-connection-validation`</a>
+
 
 ##### <a name="ParametersDataConnectionsdataConnectionValidation#EventGrid">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -685,6 +693,7 @@ az kusto data-connection event-hub data-connection-validation --cluster-name "ku
 |**--compression**|choice|The event hub messages compression type|event_hub_compression|compression|
 
 #### <a name="DataConnectionsdataConnectionValidation#IotHub">Command `az kusto data-connection iot-hub data-connection-validation`</a>
+
 
 ##### <a name="ParametersDataConnectionsdataConnectionValidation#IotHub">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -876,6 +885,7 @@ az kusto database-principal-assignment create --cluster-name "kustoclusterrptest
 |**--principal-type**|choice|Principal type.|principal_type|principalType|
 
 #### <a name="DatabasePrincipalAssignmentsCreateOrUpdate#Update">Command `az kusto database-principal-assignment update`</a>
+
 
 ##### <a name="ParametersDatabasePrincipalAssignmentsCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

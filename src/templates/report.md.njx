@@ -31,6 +31,7 @@
 {%- endfor %}
 {% endfor -%}
 {%- endfor %}
+
 ## COMMAND DETAILS
 {%- for extension in Extensions %}
 {%- for group in extension.CommandGroups %}
@@ -54,7 +55,7 @@
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
 {%- for param in method.MethodParameters %}
-|**--{{param.mapsTo}}**|{{param.type}}|{{param.description}}|{{param.namePython}}|{{param.cliKey}}|
+|**--{{param.mapsTo}}**|{{param.type}}|{{param.description}}|{{param.name}}|{{param.cliKey}}|
 {%- endfor %}
 {%- endif %}
 {% endfor %}
