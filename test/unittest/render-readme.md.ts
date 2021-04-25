@@ -12,7 +12,7 @@ sourceMapSupport.install();
 
 describe('renderReadmeMD', () => {
     it('renderReadmeMDTest', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/readme.md.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/README.md.njx');
         nunjucks.configure({ autoescape: false });
         const result = nunjucks.render(tmplPath, {
             hasExtension: true,
