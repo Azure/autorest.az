@@ -1114,6 +1114,10 @@
         "assignedManagedNetwork": {
           "type": "string",
           "description": "The managed network ID with scope will be assigned to."
+        },
+        "scopeAssignmentNameFake": {
+          "type": "string",
+          "description": "The name of the scope assignment to create."
         }
       },
       "allOf": [
