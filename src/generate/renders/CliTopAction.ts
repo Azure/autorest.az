@@ -15,7 +15,6 @@ import { GenerationMode, PathConstants } from '../../utils/models';
 import { CodeModelAz } from '../codemodel/CodeModelAz';
 import { HeaderGenerator } from './Header';
 import { TemplateBase } from './TemplateBase';
-import { config } from 'process';
 
 export class CliTopAction extends TemplateBase {
     constructor(model: CodeModelAz) {

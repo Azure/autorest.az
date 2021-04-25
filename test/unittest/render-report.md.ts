@@ -39,7 +39,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The ID of the target subscription.',
-                                                    namePython: 'subscription_id',
+                                                    name: 'subscription_id',
                                                     cliKey: 'subscriptionId',
                                                 },
                                                 {
@@ -47,21 +47,21 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The name of the resource group. The name is case insensitive.',
-                                                    namePython: 'resource_group_name',
+                                                    name: 'resource_group_name',
                                                     cliKey: 'resourceGroupName',
                                                 },
                                                 {
                                                     mapsTo: 'site-name',
                                                     type: 'string',
                                                     description: 'Site name.',
-                                                    namePython: 'site_name',
+                                                    name: 'site_name',
                                                     cliKey: 'siteName',
                                                 },
                                                 {
                                                     mapsTo: 'filter',
                                                     type: 'string',
                                                     description: '',
-                                                    namePython: 'filter',
+                                                    name: 'filter',
                                                     cliKey: '$filter',
                                                 },
                                             ],
@@ -90,7 +90,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The ID of the target subscription.',
-                                                    namePython: 'subscription_id',
+                                                    name: 'subscription_id',
                                                     cliKey: 'subscriptionId',
                                                 },
                                                 {
@@ -98,21 +98,21 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The name of the resource group. The name is case insensitive.',
-                                                    namePython: 'resource_group_name',
+                                                    name: 'resource_group_name',
                                                     cliKey: 'resourceGroupName',
                                                 },
                                                 {
                                                     mapsTo: 'site-name',
                                                     type: 'string',
                                                     description: 'Site name.',
-                                                    namePython: 'site_name',
+                                                    name: 'site_name',
                                                     cliKey: 'siteName',
                                                 },
                                                 {
                                                     mapsTo: 'name',
                                                     type: 'string',
                                                     description: 'Cluster ARM name.',
-                                                    namePython: 'cluster_name',
+                                                    name: 'cluster_name',
                                                     cliKey: 'clusterName',
                                                 },
                                             ],
@@ -149,7 +149,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The ID of the target subscription.',
-                                                    namePython: 'subscription_id',
+                                                    name: 'subscription_id',
                                                     cliKey: 'subscriptionId',
                                                 },
                                                 {
@@ -157,28 +157,28 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The name of the resource group. The name is case insensitive.',
-                                                    namePython: 'resource_group_name',
+                                                    name: 'resource_group_name',
                                                     cliKey: 'resourceGroupName',
                                                 },
                                                 {
                                                     mapsTo: 'site-name',
                                                     type: 'string',
                                                     description: 'Site name.',
-                                                    namePython: 'site_name',
+                                                    name: 'site_name',
                                                     cliKey: 'siteName',
                                                 },
                                                 {
                                                     mapsTo: 'host-name',
                                                     type: 'string',
                                                     description: 'Host ARM name.',
-                                                    namePython: 'host_name',
+                                                    name: 'host_name',
                                                     cliKey: 'hostName',
                                                 },
                                                 {
                                                     mapsTo: 'name',
                                                     type: 'string',
                                                     description: 'Name of the host.',
-                                                    namePython: 'name',
+                                                    name: 'name',
                                                     cliKey: 'name',
                                                 },
                                                 {
@@ -186,7 +186,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'FQDN/IPAddress of the Hyper-V host.',
-                                                    namePython: 'fqdn',
+                                                    name: 'fqdn',
                                                     cliKey: 'fqdn',
                                                 },
                                                 {
@@ -194,7 +194,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'Run as account ID of the Hyper-V host.',
-                                                    namePython: 'run_as_account_id',
+                                                    name: 'run_as_account_id',
                                                     cliKey: 'runAsAccountId',
                                                 },
                                             ],
@@ -223,7 +223,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The ID of the target subscription.',
-                                                    namePython: 'subscription_id',
+                                                    name: 'subscription_id',
                                                     cliKey: 'subscriptionId',
                                                 },
                                                 {
@@ -231,21 +231,21 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The name of the resource group. The name is case insensitive.',
-                                                    namePython: 'resource_group_name',
+                                                    name: 'resource_group_name',
                                                     cliKey: 'resourceGroupName',
                                                 },
                                                 {
                                                     mapsTo: 'site-name',
                                                     type: 'string',
                                                     description: 'Site name.',
-                                                    namePython: 'site_name',
+                                                    name: 'site_name',
                                                     cliKey: 'siteName',
                                                 },
                                                 {
                                                     mapsTo: 'filter',
                                                     type: 'string',
                                                     description: '',
-                                                    namePython: 'filter',
+                                                    name: 'filter',
                                                     cliKey: '$filter',
                                                 },
                                             ],
@@ -274,7 +274,7 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The ID of the target subscription.',
-                                                    namePython: 'subscription_id',
+                                                    name: 'subscription_id',
                                                     cliKey: 'subscriptionId',
                                                 },
                                                 {
@@ -282,21 +282,21 @@ describe('renderSetupCFG', () => {
                                                     type: 'string',
                                                     description:
                                                         'The name of the resource group. The name is case insensitive.',
-                                                    namePython: 'resource_group_name',
+                                                    name: 'resource_group_name',
                                                     cliKey: 'resourceGroupName',
                                                 },
                                                 {
                                                     mapsTo: 'site-name',
                                                     type: 'string',
                                                     description: 'Site name.',
-                                                    namePython: 'site_name',
+                                                    name: 'site_name',
                                                     cliKey: 'siteName',
                                                 },
                                                 {
                                                     mapsTo: 'host-name',
                                                     type: 'string',
                                                     description: 'Host ARM name.',
-                                                    namePython: 'host_name',
+                                                    name: 'host_name',
                                                     cliKey: 'hostName',
                                                 },
                                             ],

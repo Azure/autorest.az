@@ -18,6 +18,7 @@ except ImportError as e:
     else:
         raise e
 
+
 from knack.help_files import helps
 
 helps['spatial-anchors-account'] = """

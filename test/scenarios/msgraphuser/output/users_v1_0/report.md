@@ -98,9 +98,9 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az users user`
 #### <a name="users.userListUser">Command `az users user list`</a>
+
 
 ##### <a name="Parametersusers.userListUser">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -111,6 +111,7 @@
 
 #### <a name="users.userGetUser">Command `az users user show`</a>
 
+
 ##### <a name="Parametersusers.userGetUser">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -119,6 +120,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="users.userCreateUser">Command `az users user create`</a>
+
 
 ##### <a name="Parametersusers.userCreateUser">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -322,6 +324,7 @@
 |**--working-hours**|object|workingHours|working_hours|workingHours|
 
 #### <a name="users.userUpdateUser">Command `az users user update`</a>
+
 
 ##### <a name="Parametersusers.userUpdateUser">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -527,6 +530,7 @@
 
 #### <a name="users.userDeleteUser">Command `az users user delete`</a>
 
+
 ##### <a name="Parametersusers.userDeleteUser">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -536,6 +540,7 @@
 ### group `az users user`
 #### <a name="usersCreateExtensions">Command `az users user create-extension`</a>
 
+
 ##### <a name="ParametersusersCreateExtensions">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -543,6 +548,7 @@
 |**--id**|string|Read-only.|id|id|
 
 #### <a name="usersCreateLicenseDetails">Command `az users user create-license-detail`</a>
+
 
 ##### <a name="ParametersusersCreateLicenseDetails">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -555,6 +561,7 @@
 
 #### <a name="usersCreatePhotos">Command `az users user create-photo`</a>
 
+
 ##### <a name="ParametersusersCreatePhotos">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -565,6 +572,7 @@
 
 #### <a name="usersCreateRefCreatedObjects">Command `az users user create-ref-created-object`</a>
 
+
 ##### <a name="ParametersusersCreateRefCreatedObjects">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -572,6 +580,7 @@
 |**--body**|dictionary|New navigation property ref value|body|body|
 
 #### <a name="usersCreateRefDirectReports">Command `az users user create-ref-direct-report`</a>
+
 
 ##### <a name="ParametersusersCreateRefDirectReports">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -581,6 +590,7 @@
 
 #### <a name="usersCreateRefMemberOf">Command `az users user create-ref-member-of`</a>
 
+
 ##### <a name="ParametersusersCreateRefMemberOf">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -588,6 +598,7 @@
 |**--body**|dictionary|New navigation property ref value|body|body|
 
 #### <a name="usersCreateRefOauth2PermissionGrants">Command `az users user create-ref-oauth2-permission-grant`</a>
+
 
 ##### <a name="ParametersusersCreateRefOauth2PermissionGrants">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -597,6 +608,7 @@
 
 #### <a name="usersCreateRefOwnedDevices">Command `az users user create-ref-owned-device`</a>
 
+
 ##### <a name="ParametersusersCreateRefOwnedDevices">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -604,6 +616,7 @@
 |**--body**|dictionary|New navigation property ref value|body|body|
 
 #### <a name="usersCreateRefOwnedObjects">Command `az users user create-ref-owned-object`</a>
+
 
 ##### <a name="ParametersusersCreateRefOwnedObjects">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -613,6 +626,7 @@
 
 #### <a name="usersCreateRefRegisteredDevices">Command `az users user create-ref-registered-device`</a>
 
+
 ##### <a name="ParametersusersCreateRefRegisteredDevices">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -621,6 +635,7 @@
 
 #### <a name="usersCreateRefTransitiveMemberOf">Command `az users user create-ref-transitive-member-of`</a>
 
+
 ##### <a name="ParametersusersCreateRefTransitiveMemberOf">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -628,6 +643,7 @@
 |**--body**|dictionary|New navigation property ref value|body|body|
 
 #### <a name="usersDeleteExtensions">Command `az users user delete-extension`</a>
+
 
 ##### <a name="ParametersusersDeleteExtensions">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -638,6 +654,7 @@
 
 #### <a name="usersDeleteLicenseDetails">Command `az users user delete-license-detail`</a>
 
+
 ##### <a name="ParametersusersDeleteLicenseDetails">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -647,6 +664,7 @@
 
 #### <a name="usersDeleteOutlook">Command `az users user delete-outlook`</a>
 
+
 ##### <a name="ParametersusersDeleteOutlook">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -654,6 +672,7 @@
 |**--if-match**|string|ETag|if_match|If-Match|
 
 #### <a name="usersDeletePhotos">Command `az users user delete-photo`</a>
+
 
 ##### <a name="ParametersusersDeletePhotos">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -664,10 +683,15 @@
 
 #### <a name="usersDeletePhoto">Command `az users user delete-photo`</a>
 
+
 ##### <a name="ParametersusersDeletePhoto">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+|**--user-id**|string|key: id of user|user_id|user-id|
+|**--if-match**|string|ETag|if_match|If-Match|
+
 #### <a name="usersDeleteRefManager">Command `az users user delete-ref-manager`</a>
+
 
 ##### <a name="ParametersusersDeleteRefManager">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -677,6 +701,7 @@
 
 #### <a name="usersDeleteSettings">Command `az users user delete-setting`</a>
 
+
 ##### <a name="ParametersusersDeleteSettings">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -684,6 +709,7 @@
 |**--if-match**|string|ETag|if_match|If-Match|
 
 #### <a name="usersListCreatedObjects">Command `az users user list-created-object`</a>
+
 
 ##### <a name="ParametersusersListCreatedObjects">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -695,6 +721,7 @@
 
 #### <a name="usersListDirectReports">Command `az users user list-direct-report`</a>
 
+
 ##### <a name="ParametersusersListDirectReports">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -704,6 +731,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="usersListExtensions">Command `az users user list-extension`</a>
+
 
 ##### <a name="ParametersusersListExtensions">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -715,6 +743,7 @@
 
 #### <a name="usersListLicenseDetails">Command `az users user list-license-detail`</a>
 
+
 ##### <a name="ParametersusersListLicenseDetails">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -724,6 +753,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="usersListMemberOf">Command `az users user list-member-of`</a>
+
 
 ##### <a name="ParametersusersListMemberOf">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -735,6 +765,7 @@
 
 #### <a name="usersListOauth2PermissionGrants">Command `az users user list-oauth2-permission-grant`</a>
 
+
 ##### <a name="ParametersusersListOauth2PermissionGrants">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -744,6 +775,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="usersListOwnedDevices">Command `az users user list-owned-device`</a>
+
 
 ##### <a name="ParametersusersListOwnedDevices">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -755,6 +787,7 @@
 
 #### <a name="usersListOwnedObjects">Command `az users user list-owned-object`</a>
 
+
 ##### <a name="ParametersusersListOwnedObjects">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -764,6 +797,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="usersListPhotos">Command `az users user list-photo`</a>
+
 
 ##### <a name="ParametersusersListPhotos">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -775,6 +809,7 @@
 
 #### <a name="usersListRefCreatedObjects">Command `az users user list-ref-created-object`</a>
 
+
 ##### <a name="ParametersusersListRefCreatedObjects">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -782,6 +817,7 @@
 |**--orderby**|array|Order items by property values|orderby|$orderby|
 
 #### <a name="usersListRefDirectReports">Command `az users user list-ref-direct-report`</a>
+
 
 ##### <a name="ParametersusersListRefDirectReports">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -791,6 +827,7 @@
 
 #### <a name="usersListRefMemberOf">Command `az users user list-ref-member-of`</a>
 
+
 ##### <a name="ParametersusersListRefMemberOf">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -798,6 +835,7 @@
 |**--orderby**|array|Order items by property values|orderby|$orderby|
 
 #### <a name="usersListRefOauth2PermissionGrants">Command `az users user list-ref-oauth2-permission-grant`</a>
+
 
 ##### <a name="ParametersusersListRefOauth2PermissionGrants">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -807,6 +845,7 @@
 
 #### <a name="usersListRefOwnedDevices">Command `az users user list-ref-owned-device`</a>
 
+
 ##### <a name="ParametersusersListRefOwnedDevices">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -814,6 +853,7 @@
 |**--orderby**|array|Order items by property values|orderby|$orderby|
 
 #### <a name="usersListRefOwnedObjects">Command `az users user list-ref-owned-object`</a>
+
 
 ##### <a name="ParametersusersListRefOwnedObjects">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -823,6 +863,7 @@
 
 #### <a name="usersListRefRegisteredDevices">Command `az users user list-ref-registered-device`</a>
 
+
 ##### <a name="ParametersusersListRefRegisteredDevices">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -831,6 +872,7 @@
 
 #### <a name="usersListRefTransitiveMemberOf">Command `az users user list-ref-transitive-member-of`</a>
 
+
 ##### <a name="ParametersusersListRefTransitiveMemberOf">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -838,6 +880,7 @@
 |**--orderby**|array|Order items by property values|orderby|$orderby|
 
 #### <a name="usersListRegisteredDevices">Command `az users user list-registered-device`</a>
+
 
 ##### <a name="ParametersusersListRegisteredDevices">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -849,6 +892,7 @@
 
 #### <a name="usersListTransitiveMemberOf">Command `az users user list-transitive-member-of`</a>
 
+
 ##### <a name="ParametersusersListTransitiveMemberOf">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -859,6 +903,7 @@
 
 #### <a name="usersSetRefManager">Command `az users user set-ref-manager`</a>
 
+
 ##### <a name="ParametersusersSetRefManager">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -866,6 +911,7 @@
 |**--body**|dictionary|New navigation property ref values|body|body|
 
 #### <a name="usersGetExtensions">Command `az users user show-extension`</a>
+
 
 ##### <a name="ParametersusersGetExtensions">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -877,6 +923,7 @@
 
 #### <a name="usersGetLicenseDetails">Command `az users user show-license-detail`</a>
 
+
 ##### <a name="ParametersusersGetLicenseDetails">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -887,6 +934,7 @@
 
 #### <a name="usersGetManager">Command `az users user show-manager`</a>
 
+
 ##### <a name="ParametersusersGetManager">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -896,6 +944,7 @@
 
 #### <a name="usersGetOutlook">Command `az users user show-outlook`</a>
 
+
 ##### <a name="ParametersusersGetOutlook">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -904,6 +953,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="usersGetPhotos">Command `az users user show-photo`</a>
+
 
 ##### <a name="ParametersusersGetPhotos">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -915,10 +965,16 @@
 
 #### <a name="usersGetPhoto">Command `az users user show-photo`</a>
 
+
 ##### <a name="ParametersusersGetPhoto">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+|**--user-id**|string|key: id of user|user_id|user-id|
+|**--select**|array|Select properties to be returned|select|$select|
+|**--expand**|array|Expand related entities|expand|$expand|
+
 #### <a name="usersGetRefManager">Command `az users user show-ref-manager`</a>
+
 
 ##### <a name="ParametersusersGetRefManager">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -926,6 +982,7 @@
 |**--user-id**|string|key: id of user|user_id|user-id|
 
 #### <a name="usersGetSettings">Command `az users user show-setting`</a>
+
 
 ##### <a name="ParametersusersGetSettings">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -936,6 +993,7 @@
 
 #### <a name="usersUpdateExtensions">Command `az users user update-extension`</a>
 
+
 ##### <a name="ParametersusersUpdateExtensions">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -944,6 +1002,7 @@
 |**--id**|string|Read-only.|id|id|
 
 #### <a name="usersUpdateLicenseDetails">Command `az users user update-license-detail`</a>
+
 
 ##### <a name="ParametersusersUpdateLicenseDetails">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -957,6 +1016,7 @@
 
 #### <a name="usersUpdateOutlook">Command `az users user update-outlook`</a>
 
+
 ##### <a name="ParametersusersUpdateOutlook">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -965,6 +1025,7 @@
 |**--master-categories**|array|A list of categories defined for the user.|master_categories|masterCategories|
 
 #### <a name="usersUpdatePhotos">Command `az users user update-photo`</a>
+
 
 ##### <a name="ParametersusersUpdatePhotos">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -977,10 +1038,17 @@
 
 #### <a name="usersUpdatePhoto">Command `az users user update-photo`</a>
 
+
 ##### <a name="ParametersusersUpdatePhoto">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+|**--user-id**|string|key: id of user|user_id|user-id|
+|**--id**|string|Read-only.|id|id|
+|**--height**|integer|The height of the photo. Read-only.|height|height|
+|**--width**|integer|The width of the photo. Read-only.|width|width|
+
 #### <a name="usersUpdateSettings">Command `az users user update-setting`</a>
+
 
 ##### <a name="ParametersusersUpdateSettings">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1000,6 +1068,7 @@
 ### group `az users user-outlook`
 #### <a name="users.outlookCreateMasterCategories">Command `az users user-outlook create-master-category`</a>
 
+
 ##### <a name="Parametersusers.outlookCreateMasterCategories">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1010,6 +1079,7 @@
 
 #### <a name="users.outlookDeleteMasterCategories">Command `az users user-outlook delete-master-category`</a>
 
+
 ##### <a name="Parametersusers.outlookDeleteMasterCategories">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1018,6 +1088,7 @@
 |**--if-match**|string|ETag|if_match|If-Match|
 
 #### <a name="users.outlookListMasterCategories">Command `az users user-outlook list-master-category`</a>
+
 
 ##### <a name="Parametersusers.outlookListMasterCategories">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1029,6 +1100,7 @@
 
 #### <a name="users.outlookGetMasterCategories">Command `az users user-outlook show-master-category`</a>
 
+
 ##### <a name="Parametersusers.outlookGetMasterCategories">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1038,6 +1110,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="users.outlookUpdateMasterCategories">Command `az users user-outlook update-master-category`</a>
+
 
 ##### <a name="Parametersusers.outlookUpdateMasterCategories">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1051,6 +1124,7 @@
 ### group `az users user-setting`
 #### <a name="users.settingsDeleteShiftPreferences">Command `az users user-setting delete-shift-preference`</a>
 
+
 ##### <a name="Parametersusers.settingsDeleteShiftPreferences">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -1058,6 +1132,7 @@
 |**--if-match**|string|ETag|if_match|If-Match|
 
 #### <a name="users.settingsGetShiftPreferences">Command `az users user-setting show-shift-preference`</a>
+
 
 ##### <a name="Parametersusers.settingsGetShiftPreferences">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -1067,6 +1142,7 @@
 |**--expand**|array|Expand related entities|expand|$expand|
 
 #### <a name="users.settingsUpdateShiftPreferences">Command `az users user-setting update-shift-preference`</a>
+
 
 ##### <a name="Parametersusers.settingsUpdateShiftPreferences">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|

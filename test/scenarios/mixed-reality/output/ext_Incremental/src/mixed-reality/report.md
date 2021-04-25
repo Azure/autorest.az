@@ -9,8 +9,8 @@
 ### <a name="CommandGroups">Command groups in `az mixed-reality` extension </a>
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
-|az spatial-anchors-account|SpatialAnchorsAccounts|[commands](#CommandsInSpatialAnchorsAccounts)|
 |az remote-rendering-account|RemoteRenderingAccounts|[commands](#CommandsInRemoteRenderingAccounts)|
+|az spatial-anchors-account|SpatialAnchorsAccounts|[commands](#CommandsInSpatialAnchorsAccounts)|
 
 ## COMMANDS
 ### <a name="CommandsInRemoteRenderingAccounts">Commands in `az remote-rendering-account` group</a>
@@ -32,7 +32,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az remote-rendering-account`
 #### <a name="RemoteRenderingAccountsListByResourceGroup">Command `az remote-rendering-account list`</a>
 
@@ -54,6 +53,7 @@ az remote-rendering-account list
 ##### <a name="ParametersRemoteRenderingAccountsListBySubscription">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="RemoteRenderingAccountsGet">Command `az remote-rendering-account show`</a>
 
 ##### <a name="ExamplesRemoteRenderingAccountsGet">Example</a>

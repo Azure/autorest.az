@@ -17,11 +17,6 @@ helps['datafactory'] = '''
     short-summary: Manage DFAZ
 '''
 
-helps['datafactory'] = """
-    type: group
-    short-summary: Manage factory with datafactory
-"""
-
 helps['datafactory list'] = """
     type: command
     short-summary: "Lists factories. And Lists factories under the specified subscription."

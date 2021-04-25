@@ -26,6 +26,7 @@
 |[az offazure hyperv host show-all-host-in-site](#HyperVHostGetAllHostsInSite)|GetAllHostsInSite|[Parameters](#ParametersHyperVHostGetAllHostsInSite)|[Example](#ExamplesHyperVHostGetAllHostsInSite)|
 |[az offazure hyperv host show-host](#HyperVHostGetHost)|GetHost|[Parameters](#ParametersHyperVHostGetHost)|[Example](#ExamplesHyperVHostGetHost)|
 
+
 ## COMMAND DETAILS
 ### group `az offazure hyperv cluster`
 #### <a name="HyperVClusterGetAllClustersInSite">Command `az offazure hyperv cluster cluster list`</a>

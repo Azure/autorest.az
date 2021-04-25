@@ -7,8 +7,11 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=unused-import
 
+import azure.cli.command_modules.synapse._help
 from azure.cli.core import AzCommandsLoader
+
 
 class SynapseManagementClientCommandsLoader(AzCommandsLoader):
 

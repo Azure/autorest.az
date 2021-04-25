@@ -12,15 +12,10 @@
 from knack.help_files import helps
 
 
-helps['bool'] = '''
+helps['test-server bool'] = '''
     type: group
     short-summary: Manage Bool Services in Test Server
 '''
-
-helps['test-server bool'] = """
-    type: group
-    short-summary: Manage bool
-"""
 
 helps['test-server bool put-false'] = """
     type: command

@@ -7,17 +7,11 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=unused-import
 
+import azext_managed_network._help
 from azure.cli.core import AzCommandsLoader
 from azure.cli.core.profiles import ResourceType
-from azext_managed_network.generated._help import helps  # pylint: disable=unused-import
-try:
-    from azext_managed_network.manual._help import helps  # pylint: disable=reimported
-except ImportError as e:
-    if e.name.endswith('manual._help'):
-        pass
-    else:
-        raise e
 
 
 class ManagedNetworkManagementClientCommandsLoader(AzCommandsLoader):

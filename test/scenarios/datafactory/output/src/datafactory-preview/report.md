@@ -10,11 +10,11 @@
 |CLI Command Group|Group Swagger name|Commands|
 |---------|------------|--------|
 |az datafactory|Factories|[commands](#CommandsInFactories)|
-|az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
-|az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
-|az datafactory linked-integration-runtime||[commands](#CommandsIn)|
 |az datafactory domain-service|DomainServices|[commands](#CommandsInDomainServices)|
 |az datafactory group|Groups|[commands](#CommandsInGroups)|
+|az datafactory integration-runtime|IntegrationRuntimes|[commands](#CommandsInIntegrationRuntimes)|
+|az datafactory linked-integration-runtime||[commands](#CommandsIn)|
+|az datafactory trigger|Triggers|[commands](#CommandsInTriggers)|
 
 ## COMMANDS
 ### <a name="CommandsInFactories">Commands in `az datafactory` group</a>
@@ -83,7 +83,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az datafactory`
 #### <a name="FactoriesListByResourceGroup">Command `az datafactory list`</a>
 
@@ -220,6 +219,7 @@ az datafactory get-git-hub-access-token --name "myFactory" --git-hub-access-code
 ### group `az datafactory domain-service`
 #### <a name="DomainServicesCreateOrUpdate#Create">Command `az datafactory domain-service create`</a>
 
+
 ##### <a name="ParametersDomainServicesCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
@@ -234,6 +234,7 @@ az datafactory get-git-hub-access-token --name "myFactory" --git-hub-access-code
 |**--filtered-sync**|choice|Enabled or Disabled flag to turn on Group-based filtered sync|filtered_sync|filteredSync|
 
 #### <a name="DomainServicesCreateOrUpdate#Update">Command `az datafactory domain-service update`</a>
+
 
 ##### <a name="ParametersDomainServicesCreateOrUpdate#Update">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -250,6 +251,7 @@ az datafactory get-git-hub-access-token --name "myFactory" --git-hub-access-code
 
 ### group `az datafactory group`
 #### <a name="GroupsCreate">Command `az datafactory group create`</a>
+
 
 ##### <a name="ParametersGroupsCreate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -288,6 +290,7 @@ az datafactory integration-runtime show --factory-name "myFactory" --name "myInt
 |**--if-none-match**|string|ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.|if_none_match|If-None-Match|
 
 #### <a name="IntegrationRuntimesCreateOrUpdate#Create#Managed">Command `az datafactory integration-runtime managed create`</a>
+
 
 ##### <a name="ParametersIntegrationRuntimesCreateOrUpdate#Create#Managed">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -557,8 +560,8 @@ perties\\":{\\"recurrence\\":{\\"endTime\\":\\"2018-06-16T00:55:13.8441801Z\\",\
 |**--resource-group-name**|string|The resource group name.|resource_group_name|resourceGroupName|
 |**--factory-name**|string|The factory name.|factory_name|factoryName|
 |**--trigger-name**|string|The trigger name.|trigger_name|triggerName|
-|**--properties**|object|Properties of the trigger.|properties|properties|
 |**--if-match**|string|ETag of the trigger entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update.|if_match|If-Match|
+|**--properties**|object|Properties of the trigger.|properties|properties|
 
 #### <a name="TriggersCreateOrUpdate#Update">Command `az datafactory trigger update`</a>
 

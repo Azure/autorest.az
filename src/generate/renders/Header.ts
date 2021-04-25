@@ -25,6 +25,7 @@ export class HeaderGenerator {
         this.disableProtectedAccess = false;
         this.disableWildcardImport = false;
         this.disableUnusedWildcardImport = false;
+        this.disableUnusedImport = false;
         this.generationMode = GenerationMode.Full;
         this.fromImports = [];
         this.imports = [];
@@ -123,6 +124,10 @@ export class HeaderGenerator {
             output.push('# pylint: disable=unused-wildcard-import');
         }
 
+        if (this.disableUnusedImport) {
+            output.push('# pylint: disable=unused-import');
+        }
+
         if (this.imports.length || this.fromImports.length > 0) {
             output.push('');
         }
@@ -164,6 +169,7 @@ export class HeaderGenerator {
     public disableProtectedAccess: boolean;
     public disableWildcardImport: boolean;
     public disableUnusedWildcardImport: boolean;
+    public disableUnusedImport: boolean;
     public codingUtf8: boolean;
     public generationMode: GenerationMode;
     private fromImports: FromImport[];

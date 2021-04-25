@@ -6,7 +6,7 @@
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { SchemaType, Parameter } from '@azure-tools/codemodel';
 import { HeaderGenerator } from '../Header';
-import { ToMultiLine, isNullOrUndefined, ToSentence } from '../../../utils/helper';
+import { ToMultiLine, isNullOrUndefined } from '../../../utils/helper';
 import { CodeGenConstants } from '../../../utils/models';
 
 let showExampleStr: string;
@@ -15,6 +15,8 @@ const allSupportWaited = ['create', 'update', 'delete'];
 function initVars() {
     showExampleStr = '';
 }
+
+let extensionName;
 
 export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string[] {
     const {
@@ -29,13 +31,20 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
     header.addFromImport('knack.help_files', ['helps']);
     let output: string[] = [];
     output.push('');
-
-    output.push('');
     exampleHandler.GatherInternalResource();
-    output.push("helps['" + extensionHandler.Extension_Name + "'] = '''");
-    output.push('    type: group');
-    output.push('    short-summary: ' + extensionHandler.Extension_Description);
-    output.push("'''");
+
+    extensionName = model.getActualExtensionName();
+    if (
+        extensionHandler.Extension_HasExtensionGroup === true ||
+        extensionName !== extensionHandler.Extension_Name
+    ) {
+        output.push('');
+        output.push("helps['" + extensionName + "'] = '''");
+        output.push('    type: group');
+        output.push('    short-summary: ' + extensionHandler.Extension_Description);
+        output.push("'''");
+    }
+
     if (model.SelectFirstCommandGroup()) {
         do {
             // if there's no operation in this command group
@@ -129,13 +138,17 @@ function generateWaitCommandHelp(commandGroup, allLongRunCommand) {
 }
 
 function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', debug: boolean) {
-    const { commandGroupHandler } = model.GetHandler();
+    const { commandGroupHandler, extensionHandler } = model.GetHandler();
     const output = [];
     output.push('');
     if (subCommandGroupName !== '') {
         output.push("helps['" + subCommandGroupName + '\'] = """');
     } else {
-        if (commandGroupHandler.CommandGroup_Help.trim() === '') {
+        if (
+            commandGroupHandler.CommandGroup_Help.trim() === '' ||
+            (extensionHandler.Extension_HasExtensionGroup &&
+                commandGroupHandler.CommandGroup_Name === extensionName)
+        ) {
             return [];
         }
         output.push("helps['" + commandGroupHandler.CommandGroup_Name + '\'] = """');

@@ -4,7 +4,6 @@
  *-------------------------------------------------------------------------------------------- */
 
 import { Operation, Parameter, SchemaType } from '@azure-tools/codemodel';
-import { config } from 'process';
 import {
     Capitalize,
     ToCamelCase,

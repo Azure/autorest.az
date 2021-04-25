@@ -5,7 +5,6 @@ import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { CommandGroupModel } from './CommandGroup';
 import { MethodModel } from './Method';
 import { ParameterModel } from './Parameter';
-import { SchemaModel } from './Schema';
 
 export interface MethodParameterModel {
     MethodParameter_Name: string;

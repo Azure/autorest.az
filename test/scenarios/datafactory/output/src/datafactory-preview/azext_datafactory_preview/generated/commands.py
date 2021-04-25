@@ -29,9 +29,15 @@ datafactory_factory = CliCommandType(
 )
 
 
-datafactory_trigger = CliCommandType(
-    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations#TriggersOperations.{}',
-    client_factory=cf_trigger,
+datafactory_domain_service = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_operations#DomainServicesOperations.{}',
+    client_factory=cf_domain_service,
+)
+
+
+datafactory_group = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#GroupsOperations.{}',
+    client_factory=cf_group,
 )
 
 
@@ -47,15 +53,9 @@ datafactory_ = CliCommandType(
 )
 
 
-datafactory_domain_service = CliCommandType(
-    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._domain_services_operations#DomainServicesOperations.{}',
-    client_factory=cf_domain_service,
-)
-
-
-datafactory_group = CliCommandType(
-    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._groups_operations#GroupsOperations.{}',
-    client_factory=cf_group,
+datafactory_trigger = CliCommandType(
+    operations_tmpl='azext_datafactory_preview.vendored_sdks.azure_mgmt_datafactory.operations._triggers_operations#TriggersOperations.{}',
+    client_factory=cf_trigger,
 )
 
 
@@ -71,19 +71,14 @@ def load_command_table(self, _):
         g.custom_command('get-data-plane-access', 'datafactory_get_data_plane_access')
         g.custom_command('get-git-hub-access-token', 'datafactory_get_git_hub_access_token')
 
-    with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger) as g:
-        g.custom_command('list', 'datafactory_trigger_list')
-        g.custom_show_command('show', 'datafactory_trigger_show')
-        g.custom_command('create', 'datafactory_trigger_create')
-        g.generic_update_command('update', custom_func_name='datafactory_trigger_update', setter_arg_name='trigger')
-        g.custom_command('delete', 'datafactory_trigger_delete', confirmation=True)
-        g.custom_command('get-event-subscription-status', 'datafactory_trigger_get_event_subscription_status')
-        g.custom_command('query-by-factory', 'datafactory_trigger_query_by_factory')
-        g.custom_command('start', 'datafactory_trigger_start', supports_no_wait=True)
-        g.custom_command('stop', 'datafactory_trigger_stop', supports_no_wait=True)
-        g.custom_command('subscribe-to-event', 'datafactory_trigger_subscribe_to_event', supports_no_wait=True)
-        g.custom_command('unsubscribe-from-event', 'datafactory_trigger_unsubscribe_from_event', supports_no_wait=True)
-        g.custom_wait_command('wait', 'datafactory_trigger_show')
+    with self.command_group(
+        'datafactory domain-service', datafactory_domain_service, client_factory=cf_domain_service
+    ) as g:
+        g.custom_command('create', 'datafactory_domain_service_create')
+        g.custom_command('update', 'datafactory_domain_service_update')
+
+    with self.command_group('datafactory group', datafactory_group, client_factory=cf_group) as g:
+        g.custom_command('create', 'datafactory_group_create')
 
     with self.command_group(
         'datafactory integration-runtime', datafactory_integration_runtime, client_factory=cf_integration_runtime
@@ -111,11 +106,16 @@ def load_command_table(self, _):
     ) as g:
         g.custom_command('create', 'datafactory_linked_integration_runtime_create')
 
-    with self.command_group(
-        'datafactory domain-service', datafactory_domain_service, client_factory=cf_domain_service
-    ) as g:
-        g.custom_command('create', 'datafactory_domain_service_create')
-        g.custom_command('update', 'datafactory_domain_service_update')
-
-    with self.command_group('datafactory group', datafactory_group, client_factory=cf_group) as g:
-        g.custom_command('create', 'datafactory_group_create')
+    with self.command_group('datafactory trigger', datafactory_trigger, client_factory=cf_trigger) as g:
+        g.custom_command('list', 'datafactory_trigger_list')
+        g.custom_show_command('show', 'datafactory_trigger_show')
+        g.custom_command('create', 'datafactory_trigger_create')
+        g.generic_update_command('update', custom_func_name='datafactory_trigger_update', setter_arg_name='trigger')
+        g.custom_command('delete', 'datafactory_trigger_delete', confirmation=True)
+        g.custom_command('get-event-subscription-status', 'datafactory_trigger_get_event_subscription_status')
+        g.custom_command('query-by-factory', 'datafactory_trigger_query_by_factory')
+        g.custom_command('start', 'datafactory_trigger_start', supports_no_wait=True)
+        g.custom_command('stop', 'datafactory_trigger_stop', supports_no_wait=True)
+        g.custom_command('subscribe-to-event', 'datafactory_trigger_subscribe_to_event', supports_no_wait=True)
+        g.custom_command('unsubscribe-from-event', 'datafactory_trigger_unsubscribe_from_event', supports_no_wait=True)
+        g.custom_wait_command('wait', 'datafactory_trigger_show')

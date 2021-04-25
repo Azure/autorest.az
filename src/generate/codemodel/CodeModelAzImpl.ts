@@ -122,6 +122,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.sortOperationByAzCommand();
         this.calcOptionRequiredByMethod();
         this.dealingParameterAlias();
+        this.hasExtensionGroup();
     }
 
     private initHandler() {
@@ -753,6 +754,47 @@ export class CodeModelCliImpl implements CodeModelAz {
         });
     }
 
+    public hasExtensionGroup() {
+        let hasExtensionGroup = false;
+        const extensionName = isNullOrUndefined(this.extensionHandler.Extension_Parent)
+            ? this.extensionHandler.Extension_Name
+            : this.extensionHandler.Extension_Parent + ' ' + this.extensionHandler.Extension_Name;
+        if (this.SelectFirstCommandGroup()) {
+            do {
+                const groupName = this.commandGroupHandler.CommandGroup_Name;
+                if (groupName.startsWith(extensionName)) {
+                    hasExtensionGroup = true;
+                    break;
+                }
+            } while (this.SelectNextCommandGroup());
+        }
+        if (hasExtensionGroup) {
+            this.codeModel.info['hasExtensionGroup'] = hasExtensionGroup;
+        }
+    }
+
+    public getFirstGroups(): string[] {
+        const firstGroups = [];
+        if (this.SelectFirstCommandGroup()) {
+            do {
+                const groupName = this.commandGroupHandler.CommandGroup_Name;
+                const extensionParent = this.extensionHandler.Extension_Parent;
+                const fromIndex = isNullOrUndefined(extensionParent)
+                    ? 0
+                    : extensionParent.length + 1;
+                let endIndex = groupName.indexOf(' ', fromIndex);
+                if (endIndex === -1) {
+                    endIndex = groupName.length;
+                }
+                const firstGroup = groupName.substring(0, endIndex);
+                if (firstGroups.indexOf(firstGroup) === -1) {
+                    firstGroups.push(firstGroup);
+                }
+            } while (this.SelectNextCommandGroup());
+        }
+        return firstGroups;
+    }
+
     public GetActionData() {
         const actions = [];
         SchemaType.Array;
@@ -835,6 +877,17 @@ export class CodeModelCliImpl implements CodeModelAz {
             this.ExitSubMethodParameters();
         });
         return actions;
+    }
+
+    public getActualExtensionName(): string {
+        const extensionName = isNullOrUndefined(this.extensionHandler.Extension_Parent)
+            ? this.extensionHandler.Extension_Name
+            : this.extensionHandler.Extension_Parent + ' ' + this.extensionHandler.Extension_Name;
+        const firstGroups = this.getFirstGroups();
+        if (firstGroups.length === 1) {
+            return firstGroups[0];
+        }
+        return extensionName;
     }
     //= ================================================================================================================
     // Extension level information
@@ -1560,7 +1613,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         layer: CodeModelTypes,
         inputProperties: Map<CodeModelTypes, RenderInput>,
         dependencies: DataGraph,
-    ): unknown | any[] {
+    ): Record<string, any> {
         if (
             isNullOrUndefined(layer) ||
             isNullOrUndefined(dependencies) ||
@@ -1623,18 +1676,12 @@ export class CodeModelCliImpl implements CodeModelAz {
                 }
                 items.push(item);
             } while (this['SelectNext' + Type](...selector));
-            if (items.length > 0 && sortBy.length > 0) {
+            if (items.length > 1 && Object.keys(sortBy).length > 0) {
                 items.sort(function (a, b) {
                     for (const sortKey in sortBy) {
-                        if (
-                            a[Type + '_' + Capitalize(sortKey)] >
-                            b[Type + '_' + Capitalize(sortKey)]
-                        ) {
+                        if (a[sortKey] > b[sortKey]) {
                             return sortBy[sortKey];
-                        } else if (
-                            a[Type + '_' + Capitalize(sortKey)] <
-                            b[Type + '_' + Capitalize(sortKey)]
-                        ) {
+                        } else if (a[sortKey] < b[sortKey]) {
                             return 0 - sortBy[sortKey];
                         }
                     }

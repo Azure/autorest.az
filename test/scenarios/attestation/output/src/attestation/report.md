@@ -30,7 +30,6 @@
 
 
 ## COMMAND DETAILS
-
 ### group `az attestation`
 #### <a name="OperationCreate">Command `az attestation create-provider`</a>
 
@@ -57,6 +56,7 @@ az attestation list-operation
 ##### <a name="ParametersOperationList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 ### group `az attestation attestation-provider`
 #### <a name="AttestationProvidersListByResourceGroup">Command `az attestation attestation-provider provider list`</a>
 
@@ -78,6 +78,7 @@ az attestation attestation-provider provider list
 ##### <a name="ParametersAttestationProvidersList">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
 |------|----|-----------|----------|------------|
+
 #### <a name="AttestationProvidersGet">Command `az attestation attestation-provider show`</a>
 
 ##### <a name="ExamplesAttestationProvidersGet">Example</a>

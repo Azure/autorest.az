@@ -9,7 +9,7 @@
 # --------------------------------------------------------------------------
 # pylint: disable=wildcard-import
 # pylint: disable=unused-wildcard-import
-
+# pylint: disable=unused-import
 from .generated._help import helps  # pylint: disable=reimported
 try:
     from .manual._help import helps  # pylint: disable=reimported
