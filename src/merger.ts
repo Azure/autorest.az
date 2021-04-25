@@ -4,6 +4,7 @@ import {
     getAllProperties,
     ObjectSchema,
     Operation,
+    Parameter,
     SchemaType,
 } from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@autorest/extension-base';
@@ -47,6 +48,12 @@ export class Merger {
                 originalOperation.parameters[idx]['subParams'][operation.language['cli'].name] =
                     subParam.language['cli'].name;
                 subParam['nameBaseParam'] = originalOperation.parameters[idx];
+                if (!isNullOrUndefined(subParam['originalParameter'])) {
+                    const originalIdx = nameIndexMap.get(
+                        subParam['originalParameter'].language['cli'].name,
+                    );
+                    subParam['originalParameter'] = operation.parameters[originalIdx];
+                }
             }
         });
         if (!isNullOrUndefined(operation?.requests?.[0]?.parameters)) {
@@ -64,6 +71,13 @@ export class Merger {
                         operation.language['cli'].name
                     ] = subParam.language['cli'].name;
                     subParam['nameBaseParam'] = originalOperation.requests[0].parameters[idx];
+                    if (!isNullOrUndefined(subParam['originalParameter'])) {
+                        const originalIdx = nameIndexMapRequest.get(
+                            subParam['originalParameter'].language['cli'].name,
+                        );
+                        subParam['originalParameter'] =
+                            operation.requests[0].parameters[originalIdx];
+                    }
                 }
             });
         }
