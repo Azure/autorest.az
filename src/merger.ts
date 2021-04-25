@@ -3,6 +3,7 @@ import {
     codeModelSchema,
     getAllProperties,
     ObjectSchema,
+    Operation,
     SchemaType,
 } from '@azure-tools/codemodel';
 import { Session, startSession, Host, Channel } from '@autorest/extension-base';
@@ -22,9 +23,55 @@ export class Merger {
         return this.codeModel;
     }
 
+    getNameBaseParam(originalOperation: Operation, operation: Operation) {
+        const nameIndexMap: Map<string, number> = new Map<string, number>();
+        let index = 0;
+        originalOperation.parameters.forEach((param) => {
+            nameIndexMap.set(param.language['cli'].name, index);
+            index++;
+        });
+        const nameIndexMapRequest: Map<string, number> = new Map<string, number>();
+        let indexRequest = 0;
+        if (!isNullOrUndefined(originalOperation.requests?.[0]?.parameters)) {
+            originalOperation.requests[0].parameters.forEach((rparam) => {
+                nameIndexMapRequest.set(rparam.language['cli'].name, indexRequest);
+                indexRequest++;
+            });
+        }
+        operation.parameters.forEach((subParam) => {
+            const idx = nameIndexMap.get(subParam.language['cli'].name);
+            if (idx > -1) {
+                if (isNullOrUndefined(originalOperation.parameters[idx]['subParams'])) {
+                    originalOperation.parameters[idx]['subParams'] = {};
+                }
+                originalOperation.parameters[idx]['subParams'][operation.language['cli'].name] =
+                    subParam.language['cli'].name;
+                subParam['nameBaseParam'] = originalOperation.parameters[idx];
+            }
+        });
+        if (!isNullOrUndefined(operation?.requests?.[0]?.parameters)) {
+            operation.requests[0].parameters.forEach((subParam) => {
+                const idx = nameIndexMapRequest.get(subParam.language['cli'].name);
+                if (idx > -1) {
+                    if (
+                        isNullOrUndefined(
+                            originalOperation?.requests?.[0]?.parameters[idx]['subParams'],
+                        )
+                    ) {
+                        originalOperation.requests[0].parameters[idx]['subParams'] = {};
+                    }
+                    originalOperation.requests[0].parameters[idx]['subParams'][
+                        operation.language['cli'].name
+                    ] = subParam.language['cli'].name;
+                    subParam['nameBaseParam'] = originalOperation.requests[0].parameters[idx];
+                }
+            });
+        }
+    }
+
     mergeOperation() {
         this.codeModel.operationGroups.forEach((operationGroup) => {
-            let operations = operationGroup.operations;
+            const operations = operationGroup.operations;
             operationGroup.operations.forEach((operation) => {
                 if (
                     !isNullOrUndefined(operation.extensions) &&
@@ -32,132 +79,19 @@ export class Merger {
                         operation.extensions['cli-split-operation-original-operation'],
                     )
                 ) {
-                    const nameIndexMap: Map<string, number> = new Map<string, number>();
-                    let index = 0;
-                    operation.extensions[
-                        'cli-split-operation-original-operation'
-                    ].parameters.forEach((param) => {
-                        nameIndexMap.set(param.language['cli'].name, index);
-                        index++;
-                    });
-                    const nameIndexMapRequest: Map<string, number> = new Map<string, number>();
-                    let indexRequest = 0;
-                    if (
-                        !isNullOrUndefined(
-                            operation.extensions['cli-split-operation-original-operation']
-                                .requests?.[0]?.parameters,
-                        )
-                    ) {
-                        operation.extensions[
-                            'cli-split-operation-original-operation'
-                        ].requests[0].parameters.forEach((rparam) => {
-                            nameIndexMapRequest.set(rparam.language.cli.name, indexRequest);
-                            indexRequest++;
-                        });
-                    }
-                    operation.parameters.forEach((subParam) => {
-                        const idx = nameIndexMap.get(subParam.language['cli'].name);
-                        if (idx > -1) {
-                            if (
-                                isNullOrUndefined(
-                                    operation.extensions['cli-split-operation-original-operation']
-                                        .parameters[idx].subParams,
-                                )
-                            ) {
-                                operation.extensions[
-                                    'cli-split-operation-original-operation'
-                                ].parameters[idx].subParams = {};
-                            }
-                            operation.extensions[
-                                'cli-split-operation-original-operation'
-                            ].parameters[idx].subParams[operation.language['cli'].name] =
-                                subParam.language['cli'].name;
-                            subParam['nameBaseParam'] =
-                                operation.extensions[
-                                    'cli-split-operation-original-operation'
-                                ].parameters[idx];
-                        }
-                    });
-                    if (!isNullOrUndefined(operation?.requests?.[0]?.parameters)) {
-                        operation.requests[0].parameters.forEach((subParam) => {
-                            const idx = nameIndexMapRequest.get(subParam.language['cli'].name);
-                            if (idx > -1) {
-                                if (
-                                    isNullOrUndefined(
-                                        operation.extensions[
-                                            'cli-split-operation-original-operation'
-                                        ]?.requests?.[0]?.parameters[idx].subParams,
-                                    )
-                                ) {
-                                    operation.extensions[
-                                        'cli-split-operation-original-operation'
-                                    ].requests[0].parameters[idx].subParams = {};
-                                }
-                                operation.extensions[
-                                    'cli-split-operation-original-operation'
-                                ].requests[0].parameters[idx].subParams[
-                                    operation.language['cli'].name
-                                ] = subParam.language['cli'].name;
-                                subParam['nameBaseParam'] =
-                                    operation.extensions[
-                                        'cli-split-operation-original-operation'
-                                    ].requests[0].parameters[idx];
-                            }
-                        });
-                    }
+                    const originalOperation =
+                        operation.extensions['cli-split-operation-original-operation'];
+                    this.getNameBaseParam(originalOperation, operation);
                 }
                 if (
                     !isNullOrUndefined(operation.extensions) &&
-                    !isNullOrUndefined(operation.extensions['cli-operations']) &&
-                    !operation.language['cli']['cli-operation-splitted']
+                    !isNullOrUndefined(
+                        operation.extensions['cli-poly-as-resource-original-operation'],
+                    )
                 ) {
-                    const nameIndexMap: Map<string, number> = new Map<string, number>();
-                    let index = 0;
-                    operation.parameters.forEach((param) => {
-                        nameIndexMap.set(param.language['cli'].name, index);
-                        index++;
-                    });
-                    const nameIndexMapRequest: Map<string, number> = new Map<string, number>();
-                    let indexRequest = 0;
-                    if (!isNullOrUndefined(operation.requests?.[0]?.parameters)) {
-                        operation.requests[0].parameters.forEach((rparam) => {
-                            nameIndexMapRequest.set(rparam.language['cli'].name, indexRequest);
-                            indexRequest++;
-                        });
-                    }
-                    operation.extensions['cli-operations'].forEach((subOperation) => {
-                        subOperation.parameters.forEach((subParam) => {
-                            const idx = nameIndexMap.get(subParam.language['cli'].name);
-                            if (idx > -1) {
-                                if (isNullOrUndefined(operation.parameters[idx]['subParams'])) {
-                                    operation.parameters[idx]['subParams'] = {};
-                                }
-                                operation.parameters[idx]['subParams'][
-                                    subOperation.language['cli'].name
-                                ] = subParam.language['cli'].name;
-                                subParam.nameBaseParam = operation.parameters[idx];
-                            }
-                        });
-                        if (!isNullOrUndefined(subOperation?.requests?.[0]?.parameters)) {
-                            subOperation.requests[0].parameters.forEach((subParam) => {
-                                const idx = nameIndexMapRequest.get(subParam.language['cli'].name);
-                                if (idx > -1) {
-                                    if (
-                                        isNullOrUndefined(
-                                            operation?.requests?.[0]?.parameters[idx]['subParams'],
-                                        )
-                                    ) {
-                                        operation.requests[0].parameters[idx]['subParams'] = {};
-                                    }
-                                    operation.requests[0].parameters[idx]['subParams'][
-                                        subOperation.language['cli'].name
-                                    ] = subParam.language['cli'].name;
-                                    subParam.nameBaseParam = operation.requests[0].parameters[idx];
-                                }
-                            });
-                        }
-                    });
-                    operations = operations.concat(operation.extensions['cli-operations']);
+                    const originalOperation =
+                        operation.extensions['cli-poly-as-resource-original-operation'];
+                    this.getNameBaseParam(originalOperation, operation);
                 }
             });
             operationGroup.operations = operations;

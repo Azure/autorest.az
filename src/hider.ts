@@ -45,7 +45,7 @@ export class Hider {
                 return true;
             });
             // cli-poly-as-resource-original-operation
-            operations = operations.filter(function cliSplitOperation(operation, index, array) {
+            operations = operations.filter(function cliPolyOperation(operation, index, array) {
                 if (
                     !isNullOrUndefined(operation.extensions) &&
                     !isNullOrUndefined(
