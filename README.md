@@ -482,7 +482,7 @@ scope-az:
         #- source-file-az-hider
         #- source-file-pynamer
         #- source-file-aznamer
-        - source-file-modifiers
+        #- source-file-modifiers
         #- source-file-merger
         - source-file-extension
     output-folder: $(az-output-folder)
@@ -530,7 +530,7 @@ pipeline:
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        output-artifact: source-file-modifiers
+        #output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
@@ -582,7 +582,7 @@ pipeline:
         #output-artifact: source-file-aznamer
     az/modifiers:
         input: az/aznamer
-        output-artifact: source-file-modifiers
+        #output-artifact: source-file-modifiers
     az/azgenerator:
         input: az/modifiers
         output-artifact: source-file-extension
@@ -592,7 +592,7 @@ pipeline:
             #- az/clicommon
             #- az/merger
             #- az/aznamer
-            - az/modifiers
+            #- az/modifiers
             - az/azgenerator
         scope: scope-az
     az/azlinter:
