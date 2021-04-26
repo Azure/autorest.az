@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { Operation, OperationGroup, Parameter } from '@azure-tools/codemodel';
+import { Operation, OperationGroup, Parameter, CodeModel } from '@azure-tools/codemodel';
 import { CodeModelTypes, DataGraph, RenderInput } from '../../utils/models';
 import { ExtensionModel } from './Extension';
 import { CommandGroupModel } from './CommandGroup';
