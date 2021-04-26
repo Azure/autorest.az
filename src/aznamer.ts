@@ -84,7 +84,7 @@ export class AzNamer {
         return this.codeModel;
     }
 
-    getAzName(obj) {
+    getAzName(obj, methodKey?) {
         if (obj.language['az']) {
             return;
         }
@@ -94,6 +94,13 @@ export class AzNamer {
             : obj.language.python.name;
         obj.language['az'].name = changeCamelToDash(obj.language['az'].name);
         obj.language['az'].mapsto = obj.language['az'].name.replace(/-/g, '_');
+        if (
+            !isNullOrUndefined(obj['nameBaseParam']) &&
+            !isNullOrUndefined(methodKey) &&
+            !isNullOrUndefined(obj['nameBaseParam'].subParams?.[methodKey])
+        ) {
+            obj['nameBaseParam'].subParams[methodKey] = obj.language['az'].mapsto;
+        }
         obj.language['az'].description = obj.language['cli']
             ? obj.language['cli'].description
             : obj.language.python.description;
@@ -276,7 +283,7 @@ export class AzNamer {
                     }
                     operation.parameters.forEach((parameter) => {
                         if (!isNullOrUndefined(parameter.language['cli'])) {
-                            this.getAzName(parameter);
+                            this.getAzName(parameter, operation.language['cli'].name);
                             for (const k of ['alias', 'positionalKeys']) {
                                 this.addAttributes(parameter, false, k);
                                 this.addAttributes(parameter, true, k);
@@ -291,7 +298,7 @@ export class AzNamer {
                     if (request.parameters) {
                         request.parameters.forEach((parameter) => {
                             if (!isNullOrUndefined(parameter.language['cli'])) {
-                                this.getAzName(parameter);
+                                this.getAzName(parameter, operation.language['cli'].name);
                                 for (const k of ['alias', 'positionalKeys']) {
                                     this.addAttributes(parameter, false, k);
                                     this.addAttributes(parameter, true, k);

@@ -47,7 +47,10 @@ export class Merger {
                 }
                 originalOperation.parameters[idx]['subParams'][operation.language['cli'].name] =
                     subParam.language['cli'].name;
-                subParam['nameBaseParam'] = originalOperation.parameters[idx];
+                const tmpParam = originalOperation.parameters[idx];
+                if (isNullOrUndefined(subParam['nameBaseParam'])) {
+                    subParam['nameBaseParam'] = tmpParam;
+                }
                 if (!isNullOrUndefined(subParam['originalParameter'])) {
                     const originalIdx = nameIndexMap.get(
                         subParam['originalParameter'].language['cli'].name,
@@ -70,7 +73,13 @@ export class Merger {
                     originalOperation.requests[0].parameters[idx]['subParams'][
                         operation.language['cli'].name
                     ] = subParam.language['cli'].name;
-                    subParam['nameBaseParam'] = originalOperation.requests[0].parameters[idx];
+                    const tmpParam = originalOperation.requests[0].parameters[idx];
+                    // while (!isNullOrUndefined(tmpParam['nameBaseParam'])) {
+                    //     tmpParam = tmpParam['nameBaseParam'];
+                    // }
+                    if (isNullOrUndefined(subParam['nameBaseParam'])) {
+                        subParam['nameBaseParam'] = tmpParam;
+                    }
                     if (!isNullOrUndefined(subParam['originalParameter'])) {
                         const originalIdx = nameIndexMapRequest.get(
                             subParam['originalParameter'].language['cli'].name,
@@ -90,21 +99,28 @@ export class Merger {
                 if (
                     !isNullOrUndefined(operation.extensions) &&
                     !isNullOrUndefined(
+                        operation.extensions['cli-poly-as-resource-original-operation'],
+                    )
+                ) {
+                    let originalOperation =
+                        operation.extensions['cli-poly-as-resource-original-operation'];
+                    if (
+                        !isNullOrUndefined(
+                            originalOperation.extensions['cli-split-operation-original-operation'],
+                        )
+                    ) {
+                        originalOperation =
+                            originalOperation.extensions['cli-split-operation-original-operation'];
+                    }
+                    this.getNameBaseParam(originalOperation, operation);
+                } else if (
+                    !isNullOrUndefined(operation.extensions) &&
+                    !isNullOrUndefined(
                         operation.extensions['cli-split-operation-original-operation'],
                     )
                 ) {
                     const originalOperation =
                         operation.extensions['cli-split-operation-original-operation'];
-                    this.getNameBaseParam(originalOperation, operation);
-                }
-                if (
-                    !isNullOrUndefined(operation.extensions) &&
-                    !isNullOrUndefined(
-                        operation.extensions['cli-poly-as-resource-original-operation'],
-                    )
-                ) {
-                    const originalOperation =
-                        operation.extensions['cli-poly-as-resource-original-operation'];
                     this.getNameBaseParam(originalOperation, operation);
                 }
             });
