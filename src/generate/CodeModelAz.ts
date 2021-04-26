@@ -3,10 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *-------------------------------------------------------------------------------------------- */
 
-import { Operation, OperationGroup, Parameter, Property, Schema } from '@azure-tools/codemodel';
+import {
+    Operation,
+    OperationGroup,
+    Parameter,
+    Property,
+    Schema,
+    CodeModel,
+} from '@azure-tools/codemodel';
 import { CodeModelTypes, DataGraph, GenerationMode, RenderInput } from '../utils/models';
 import { ResourcePool } from './renders/tests/ScenarioTool';
-import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
+import { TestStepRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
 
 export class MethodParam {
     public value: any;
@@ -81,6 +88,7 @@ export class CommandExample {
     public ExampleObj: any;
     public commandStringItems: string[];
     public CommandString: string;
+    public MethodObj: Operation;
 }
 
 export interface CodeModelAz {
@@ -263,10 +271,9 @@ export interface CodeModelAz {
     FindExampleById(
         id: string,
         commandParams: any,
-        examples: any[],
         minimum: boolean,
-        step?: TestStepExampleFileRestCall,
-    ): string[][];
+        step?: TestStepRestCall,
+    ): [string[], CommandExample];
     GetExampleWait(example: CommandExample): string[];
     SelectFirstAzExample(): boolean;
     SelectNextAzExample(): boolean;
@@ -277,7 +284,7 @@ export interface CodeModelAz {
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
-    FindExampleWaitById(id: string, step?: TestStepExampleFileRestCall): string[][];
+    FindExampleWaitById(id: string, step?: TestStepRestCall): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
     RandomizeNames: boolean;
@@ -293,4 +300,5 @@ export interface CodeModelAz {
     );
     GetActionData(): any[];
     GetTestUniqueResource: boolean;
+    CodeModel: CodeModel;
 }

@@ -5,7 +5,7 @@
 import * as path from 'path';
 import { CodeModelAz, CommandExample } from '../../CodeModelAz';
 import { CliTestStep } from './CliTestStep';
-import { ToMultiLine, Capitalize } from '../../../utils/helper';
+import { ToMultiLine, Capitalize, isNullOrUndefined } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants } from '../../../utils/models';
@@ -31,12 +31,22 @@ export class CliTestScenario extends TemplateBase {
 
     public async fullGeneration(): Promise<string[]> {
         this.StartGenerateAzureCliTestScenario();
-        for (const scenarioName of Object.getOwnPropertyNames(this.configValue)) {
-            this.GenerateAzureCliTestScenario(
-                this.model,
-                this.configValue[scenarioName],
-                scenarioName,
-            );
+        if (this.model.GetResourcePool().hasTestResourceScenario) {
+            for (const scenarioName of Object.getOwnPropertyNames(this.configValue)) {
+                this.GenerateTestResourceScenario(
+                    this.model,
+                    this.configValue[scenarioName],
+                    scenarioName,
+                );
+            }
+        } else {
+            for (const scenarioName of Object.getOwnPropertyNames(this.configValue)) {
+                this.GenerateAzureCliTestScenario(
+                    this.model,
+                    this.configValue[scenarioName],
+                    scenarioName,
+                );
+            }
         }
         return this.EndGenerateAzureCliTestScenario();
     }
@@ -110,57 +120,44 @@ export class CliTestScenario extends TemplateBase {
                 if (exampleId) {
                     const disabled: string = config[ci].disabled ? '# ' : '';
                     // find example by name
-                    let found = false;
-                    const examples: CommandExample[] = [];
-                    let exampleIdx = -1;
-                    for (const exampleCmd of model.FindExampleById(
+
+                    const [exampleCmd, commandExample] = model.FindExampleById(
                         exampleId,
                         commandParams,
-                        examples,
                         minimum,
-                        config[ci].step,
-                    )) {
-                        exampleIdx += 1;
-                        if (exampleCmd && exampleCmd.length > 0) {
-                            found = true;
-                            const checks = model.GetExampleChecks(examples[exampleIdx]);
-                            functionName = CliTestStep.ToFunctionName(
-                                { name: examples[exampleIdx].Id },
-                                exampleCmd[0],
+                    );
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        functionName = CliTestStep.ToFunctionName(
+                            { name: commandExample.Id },
+                            exampleCmd[0],
+                        );
+                        const checks = model.GetExampleChecks(commandExample);
+                        if (minimum) functionName += '_min';
+                        if (checks.length > 0) {
+                            outputFunc.push(
+                                ...ToMultiLine(
+                                    `    ${disabled}${functionName}(test${CliTestStep.parameterLine(
+                                        parameterNames,
+                                    )}, checks=[`,
+                                ),
                             );
-                            if (minimum) functionName += '_min';
-                            if (checks.length > 0) {
-                                outputFunc.push(
-                                    ...ToMultiLine(
-                                        `    ${disabled}${functionName}(test${CliTestStep.parameterLine(
-                                            parameterNames,
-                                        )}, checks=[`,
-                                    ),
-                                );
-                                for (const check of checks) {
-                                    ToMultiLine('    ' + disabled + '    ' + check, outputFunc);
-                                    if (
-                                        !jsonAdded &&
-                                        !disabled &&
-                                        check.indexOf('json.loads') >= 0
-                                    ) {
-                                        template.header.addImport('json');
-                                        jsonAdded = true;
-                                    }
+                            for (const check of checks) {
+                                ToMultiLine('    ' + disabled + '    ' + check, outputFunc);
+                                if (!jsonAdded && !disabled && check.indexOf('json.loads') >= 0) {
+                                    template.header.addImport('json');
+                                    jsonAdded = true;
                                 }
-                                outputFunc.push(`    ${disabled}])`);
-                            } else {
-                                outputFunc.push(
-                                    ...ToMultiLine(
-                                        `    ${functionName}(test${CliTestStep.parameterLine(
-                                            parameterNames,
-                                        )}, checks=[])`,
-                                    ),
-                                );
                             }
+                            outputFunc.push(`    ${disabled}])`);
+                        } else {
+                            outputFunc.push(
+                                ...ToMultiLine(
+                                    `    ${functionName}(test${CliTestStep.parameterLine(
+                                        parameterNames,
+                                    )}, checks=[])`,
+                                ),
+                            );
                         }
-                    }
-                    if (found) {
                         template.header.addFromImport('.example_steps', [functionName]);
                         template.skip = false;
                     } else {
@@ -177,14 +174,7 @@ export class CliTestScenario extends TemplateBase {
                                 )}):`,
                             ),
                         );
-                        if (
-                            functionName.startsWith('setup_') &&
-                            model.GetResourcePool().hasTestResourceScenario
-                        ) {
-                            steps.push(...model.GetResourcePool().setupWithArmTemplate());
-                        } else {
-                            steps.push('    pass');
-                        }
+                        steps.push('    pass');
                         steps.push('');
                         steps.push('');
                     }
@@ -248,6 +238,149 @@ export class CliTestScenario extends TemplateBase {
         if (model.GenMinTest) {
             this.scenarios.push(...buildTestcase(testCaseName, true));
         }
+    }
+
+    private GenerateTestResourceScenario(model: CodeModelAz, config: any, scenarioName: string) {
+        const commandParams = model.GatherInternalResource();
+        config.unshift({ function: `setup_${scenarioName}` });
+        config.push({ function: `cleanup_${scenarioName}` });
+
+        const classInfo: string[] = [];
+        const initiates: string[] = [];
+
+        classInfo.push(`# Test class for ${scenarioName}`);
+        classInfo.push('@try_manual');
+        const testClassName = Capitalize(this.groupName) + scenarioName + 'Test';
+        classInfo.push('class ' + testClassName + '(ScenarioTest):');
+
+        const decorators: string[] = [];
+        const scenarioVariables = model.GetResourcePool().getTestResourceVariables(config);
+        const kwargs = {};
+        for (const v of scenarioVariables) {
+            if (v === 'location') {
+                kwargs[v] = "'westus'";
+            }
+            if (v === 'subscriptionId') {
+                kwargs[v] = 'self.get_subscription_id()';
+            }
+            if (v === 'resourceGroupName') {
+                decorators.push(
+                    `    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')`,
+                );
+                this.header.addFromImport('azure.cli.testsdk', ['ResourceGroupPreparer']);
+            }
+        }
+        if (Object.keys(kwargs).length > 0) {
+            initiates.push('        self.kwargs.update({');
+            for (const k of Object.keys(kwargs)) {
+                initiates.push(`            '${k}': ${kwargs[k]},`);
+            }
+            initiates.push('        })');
+            initiates.push('');
+        }
+
+        let jsonAdded = false;
+
+        const funcScenario: string[] = [];
+        const steps: string[] = [];
+        funcScenario.push(`# Testcase: ${scenarioName}`);
+        funcScenario.push('@try_manual');
+        funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test):`));
+
+        function buildSenario(template: CliTestScenario, outputFunc: string[]) {
+            model.GetResourcePool().clearExampleParams();
+
+            // go through the examples to generate steps
+            for (let ci = 0; ci < config.length; ci++) {
+                const exampleId: string = config[ci].name;
+                let functionName: string = CliTestStep.ToFunctionName(config[ci]);
+                if (exampleId) {
+                    const disabled: string = config[ci].disabled ? '# ' : '';
+                    // find example by name
+
+                    const [normalCmd, commandExample] = model.FindExampleById(
+                        exampleId,
+                        commandParams,
+                        false,
+                        config[ci].step,
+                    );
+                    let exampleCmd = normalCmd;
+                    if (
+                        exampleCmd.length == 0 &&
+                        !isNullOrUndefined(config[ci].step) &&
+                        !isNullOrUndefined(config[ci].method)
+                    ) {
+                        // The command for this example is not generated in current autorest running.
+                        exampleCmd = model
+                            .GetResourcePool()
+                            .genAzRestCall(config[ci].step, config[ci].method, scenarioVariables);
+                    } else {
+                        // The command for this example is generated in current autorest running.
+                        // regenerate functionName with the az commandName
+                        if (exampleCmd.length > 0)
+                            functionName = CliTestStep.ToFunctionName(
+                                { name: commandExample.Id },
+                                exampleCmd[0],
+                            );
+                    }
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        const checks = model.GetExampleChecks(commandExample);
+                        if (checks.length > 0) {
+                            outputFunc.push(
+                                ...ToMultiLine(`    ${disabled}${functionName}(test, checks=[`),
+                            );
+                            for (const check of checks) {
+                                ToMultiLine('    ' + disabled + '    ' + check, outputFunc);
+                                if (!jsonAdded && !disabled && check.indexOf('json.loads') >= 0) {
+                                    template.header.addImport('json');
+                                    jsonAdded = true;
+                                }
+                            }
+                            outputFunc.push(`    ${disabled}])`);
+                        } else {
+                            outputFunc.push(...ToMultiLine(`    ${functionName}(test, checks=[])`));
+                        }
+                        template.header.addFromImport('.example_steps', [functionName]);
+                        template.skip = false;
+                    } else {
+                        outputFunc.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
+                    }
+                } else {
+                    steps.push(`# Env ${functionName}`);
+                    steps.push('@try_manual');
+                    steps.push(...ToMultiLine(`def ${functionName}(test):`));
+                    if (functionName.startsWith('setup_')) {
+                        steps.push(...model.GetResourcePool().setupWithArmTemplate());
+                    } else {
+                        steps.push('    pass');
+                    }
+                    steps.push('');
+                    steps.push('');
+                    outputFunc.push(...ToMultiLine(`    ${functionName}(test)`));
+                }
+            }
+            outputFunc.push('');
+            outputFunc.push('');
+        }
+        buildSenario(this, funcScenario);
+        classInfo.push('    def __init__(self, *args, **kwargs):');
+        classInfo.push(`        super(${testClassName}, self).__init__(*args, **kwargs)`);
+        classInfo.push(...initiates);
+        classInfo.push('');
+
+        function buildTestcase(testcaseName: string) {
+            const ret = [...decorators];
+            let funcLine = '    def test_' + testcaseName + '(self';
+            funcLine += '):';
+            ToMultiLine(funcLine, ret);
+            ret.push(`        call_${scenarioName.toLowerCase()}(self)`);
+            ret.push('        calc_coverage(__file__)');
+            ret.push('        raise_if()');
+            ret.push('');
+            return ret;
+        }
+        const testCaseName = this.groupName + '_' + scenarioName;
+        this.scenarios.push(...steps.concat(funcScenario, classInfo, buildTestcase(testCaseName)));
     }
 
     private EndGenerateAzureCliTestScenario(): string[] {

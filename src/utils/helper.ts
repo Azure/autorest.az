@@ -806,3 +806,7 @@ export function isGeneratedExampleId(exampleId: string): boolean {
     if (isNullOrUndefined(exampleId)) return false;
     return exampleId.toLowerCase().endsWith('_gen');
 }
+
+export function toPythonName(str: string): string {
+    return str.toLowerCase().replace(/[^0-9a-z]/gi, '_');
+}

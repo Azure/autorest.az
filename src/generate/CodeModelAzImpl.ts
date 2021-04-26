@@ -61,9 +61,10 @@ import {
     ObjectStatus,
     GroupTestScenario,
     LoadPreparesConfig,
+    matchExample,
 } from './renders/tests/ScenarioTool';
 import { readFile } from '@azure-tools/async-io';
-import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
+import { TestStepRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
 import * as process from 'process';
 class ActionParam {
     public constructor(
@@ -874,13 +875,7 @@ export class CodeModelCliImpl implements CodeModelAz {
     //= ================================================================================================================
 
     public GenerateTestInit(): void {
-        if (this.GetResourcePool().hasTestResourceScenario) {
-            this._testScenario = GroupTestScenario(
-                this.GetResourcePool().generateTestScenario(),
-                this.Extension_NameUnderscored,
-            );
-            this._configuredScenario = true;
-        } else if (this.codeModel['test-scenario']) {
+        if (this.codeModel['test-scenario']) {
             this._testScenario = GroupTestScenario(
                 this.codeModel['test-scenario'],
                 this.Extension_NameUnderscored,
@@ -891,7 +886,18 @@ export class CodeModelCliImpl implements CodeModelAz {
             this._configuredScenario = false;
         }
         this.GatherInternalResource();
-        this.GetAllExamples();
+        const allExamples = this.GetAllExamples();
+        if (this.GetResourcePool().hasTestResourceScenario) {
+            this._testScenario = GroupTestScenario(
+                this.GetResourcePool().generateTestScenario(allExamples, this),
+                this.Extension_NameUnderscored,
+                true,
+            );
+        }
+    }
+
+    public get CodeModel(): CodeModel {
+        return this.codeModel;
     }
 
     public get ConfiguredScenario(): boolean {
@@ -3291,6 +3297,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         example.MethodResponses = this.Method.responses || [];
         example.Method_IsLongRun = !!this.Method.extensions?.['x-ms-long-running-operation'];
         example.ExampleObj = exampleObj;
+        example.MethodObj = this.Method;
         if (this.Method_GetSplitOriginalOperation) {
             // filter example by name for generic createorupdate
             if (this.Command_MethodName.toLowerCase() === 'update' && !forUpdate(this, id)) {
@@ -3515,26 +3522,23 @@ export class CodeModelCliImpl implements CodeModelAz {
     public FindExampleById(
         id: string,
         commandParams: any,
-        examples: CommandExample[],
         minimum = false,
-        step: TestStepExampleFileRestCall = undefined,
-    ): string[][] {
-        const ret: string[][] = [];
+        step: TestStepRestCall = undefined,
+    ): [string[], CommandExample] {
+        let commandExample: CommandExample = undefined;
+        let commandString: string[] = [];
         this.GetAllExamples(
             id,
             (example) => {
-                examples.push(example);
-                ret.push(this.GetExampleItems(example, true, commandParams, minimum));
+                commandExample = example;
+                commandString = this.GetExampleItems(example, true, commandParams, minimum);
             },
-            step?.exampleTemplate,
+            this.resourcePool.genExampleTemplate(step),
         );
-        return ret;
+        return [commandString, commandExample];
     }
 
-    public FindExampleWaitById(
-        id: string,
-        step: TestStepExampleFileRestCall = undefined,
-    ): string[][] {
+    public FindExampleWaitById(id: string, step: TestStepRestCall = undefined): string[][] {
         const ret: string[][] = [];
         this.GetAllExamples(
             id,
@@ -3542,7 +3546,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 const waitCmd = this.GetExampleWait(example);
                 if (waitCmd.length > 0) ret.push(waitCmd);
             },
-            step?.exampleTemplate,
+            this.resourcePool.genExampleTemplate(step),
         );
         return ret;
     }
@@ -3657,7 +3661,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                 this._defaultTestScenario,
             );
             this.SortExamplesByDependency();
-            PrintTestScenario(this._defaultTestScenario);
+            if (!this.GetResourcePool().hasTestResourceScenario) {
+                PrintTestScenario(this._defaultTestScenario);
+            }
         }
 
         if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
@@ -3745,7 +3751,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         const commandExamples = this.GetAllExamples();
         for (let i = 0; i < this._defaultTestScenario.length; i++) {
             for (const commandExample of commandExamples) {
-                if (this.matchExample(commandExample, this._defaultTestScenario[i].name)) {
+                if (matchExample(commandExample, this._defaultTestScenario[i].name)) {
                     scenarioExamples.set(this._defaultTestScenario[i].name, commandExample);
                     break;
                 }
@@ -3786,14 +3792,6 @@ export class CodeModelCliImpl implements CodeModelAz {
         return ret;
     }
 
-    private matchExample(example: CommandExample, id: string) {
-        if (!id) return false;
-        return (
-            example.Id.toLowerCase() === id.toLowerCase() ||
-            example.Id.toLowerCase().endsWith(`/${id.toLowerCase()}`)
-        );
-    }
-
     public GetAllExamples(
         id?: string,
         callback?: (example) => void,
@@ -3812,7 +3810,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                 examples = this.GetExamples(true);
             }
             for (const example of examples) {
-                if (id && !this.matchExample(example, id)) continue;
+                if (id && !matchExample(example, id)) continue;
                 if (callback) {
                     callback(example);
                 }

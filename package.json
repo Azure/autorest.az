@@ -78,8 +78,9 @@
     "mkdirp": "1.0.4",
     "node-yaml": "^3.2.0",
     "nunjucks": "^3.2.2",
-    "oav": "2.2.0",
+    "oav": "2.3.2",
     "prettier": "^2.2.1",
+    "reflect-metadata": "^0.1.13",
     "request": "^2.87.0",
     "request-promise-native": "1.0.8"
   },

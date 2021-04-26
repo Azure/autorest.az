@@ -36,6 +36,9 @@ export class CliTestStep extends TemplateBase {
     }
 
     public async fullGeneration(): Promise<string[]> {
+        if (this.model.GetResourcePool().hasTestResourceScenario) {
+            return this.GenerateTestResourceStep(this.model);
+        }
         return this.GenerateAzureCliTestStep(this.model);
     }
 
@@ -53,15 +56,7 @@ export class CliTestStep extends TemplateBase {
 
         const commandParams = model.GatherInternalResource();
         let config: any = [];
-        if (model.GetResourcePool().hasTestResourceScenario) {
-            for (const g in model.Extension_TestScenario) {
-                for (const s in model.Extension_TestScenario[g])
-                    config.push(...model.Extension_TestScenario[g][s]);
-            }
-        } else {
-            config = deepCopy(model.Extension_DefaultTestScenario);
-        }
-
+        config = deepCopy(model.Extension_DefaultTestScenario);
         const header: HeaderGenerator = new HeaderGenerator();
 
         const parameterNames = CliTestStep.InitiateDependencies(
@@ -86,77 +81,20 @@ export class CliTestStep extends TemplateBase {
                     steps.push('@try_manual');
 
                     // find example by name
-                    let found = false;
-                    const examples: CommandExample[] = [];
-                    let exampleIdx = -1;
                     let waitCmds: string[][];
-                    for (const exampleCmd of model.FindExampleById(
+
+                    const [exampleCmd, commandExample] = model.FindExampleById(
                         exampleId,
                         commandParams,
-                        examples,
                         minimum,
                         config[ci].step,
-                    )) {
-                        exampleIdx += 1;
-                        if (exampleCmd && exampleCmd.length > 0) {
-                            functionName = CliTestStep.ToFunctionName(
-                                { name: examples[exampleIdx].Id },
-                                exampleCmd[0],
-                            );
-                            if (minimum) functionName += '_min';
-                            if (exampleIdx === 0) {
-                                steps.push(
-                                    ...ToMultiLine(
-                                        `def ${functionName}(test${CliTestStep.parameterLine(
-                                            parameterNames,
-                                            true,
-                                        )}):`,
-                                    ),
-                                );
-                            }
-                            found = true;
-                            if (isNullOrUndefined(waitCmds)) {
-                                waitCmds = model.FindExampleWaitById(exampleId);
-                            }
+                    );
 
-                            const cmdString = exampleCmd.join('\n');
-                            if (Object.prototype.hasOwnProperty.call(stepBuff, cmdString)) {
-                                steps.push(
-                                    ...ToMultiLine(
-                                        `    return ${
-                                            stepBuff[cmdString]
-                                        }(test${CliTestStep.parameterLine(
-                                            parameterNames,
-                                        )}, checks)`,
-                                    ),
-                                );
-                            } else {
-                                stepBuff[cmdString] = functionName;
-                                if (examples[exampleIdx].Method === 'delete') {
-                                    exampleCmd[0] += ' -y';
-                                }
-
-                                steps.push('    if checks is None:');
-                                steps.push('        checks = []');
-
-                                for (let idx = 0; idx < exampleCmd.length; idx++) {
-                                    const prefix: string =
-                                        '    ' +
-                                        disabled +
-                                        (idx === 0 ? "test.cmd('" : "         '");
-                                    const postfix: string =
-                                        idx < exampleCmd.length - 1 ? " '" : "',";
-                                    ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
-                                }
-                                if (isNullOrUndefined(waitCmds) || waitCmds.length === 0) {
-                                    steps.push('    ' + disabled + '         checks=checks)');
-                                } else {
-                                    steps.push('    ' + disabled + '         checks=[])');
-                                }
-                            }
-                        }
-                    }
-                    if (!found) {
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        functionName = CliTestStep.ToFunctionName(
+                            { name: commandExample.Id },
+                            exampleCmd[0],
+                        );
                         if (minimum) functionName += '_min';
                         steps.push(
                             ...ToMultiLine(
@@ -166,9 +104,40 @@ export class CliTestStep extends TemplateBase {
                                 )}):`,
                             ),
                         );
-                        steps.push('    # EXAMPLE NOT FOUND!');
-                        steps.push('    pass');
-                    } else {
+                        if (isNullOrUndefined(waitCmds)) {
+                            waitCmds = model.FindExampleWaitById(exampleId);
+                        }
+
+                        const cmdString = exampleCmd.join('\n');
+                        if (Object.prototype.hasOwnProperty.call(stepBuff, cmdString)) {
+                            steps.push(
+                                ...ToMultiLine(
+                                    `    return ${
+                                        stepBuff[cmdString]
+                                    }(test${CliTestStep.parameterLine(parameterNames)}, checks)`,
+                                ),
+                            );
+                        } else {
+                            stepBuff[cmdString] = functionName;
+                            if (commandExample.Method === 'delete') {
+                                exampleCmd[0] += ' -y';
+                            }
+
+                            steps.push('    if checks is None:');
+                            steps.push('        checks = []');
+
+                            for (let idx = 0; idx < exampleCmd.length; idx++) {
+                                const prefix: string =
+                                    '    ' + disabled + (idx === 0 ? "test.cmd('" : "         '");
+                                const postfix: string = idx < exampleCmd.length - 1 ? " '" : "',";
+                                ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                            }
+                            if (isNullOrUndefined(waitCmds) || waitCmds.length === 0) {
+                                steps.push('    ' + disabled + '         checks=checks)');
+                            } else {
+                                steps.push('    ' + disabled + '         checks=[])');
+                            }
+                        }
                         for (const exampleCmd of waitCmds) {
                             if (exampleCmd && exampleCmd.length > 0) {
                                 for (let idx = 0; idx < exampleCmd.length; idx++) {
@@ -183,6 +152,18 @@ export class CliTestStep extends TemplateBase {
                                 steps.push('    ' + disabled + '         checks=checks)');
                             }
                         }
+                    } else {
+                        if (minimum) functionName += '_min';
+                        steps.push(
+                            ...ToMultiLine(
+                                `def ${functionName}(test${CliTestStep.parameterLine(
+                                    parameterNames,
+                                    true,
+                                )}):`,
+                            ),
+                        );
+                        steps.push('    # EXAMPLE NOT FOUND!');
+                        steps.push('    pass');
                     }
                     if (disabled) {
                         steps.push('    pass');
@@ -358,5 +339,146 @@ export class CliTestStep extends TemplateBase {
     public async GetRenderData(model: CodeModelAz): Promise<string[]> {
         const output: string[] = [];
         return output;
+    }
+
+    private GenerateTestResourceStep(model: CodeModelAz): string[] {
+        initVars();
+        const steps: string[] = [];
+        steps.push('');
+        steps.push('');
+        steps.push('from .. import try_manual');
+        steps.push('');
+
+        const commandParams = model.GatherInternalResource();
+        const config: any = [];
+        for (const g in model.Extension_TestScenario) {
+            for (const s in model.Extension_TestScenario[g])
+                config.push(...model.Extension_TestScenario[g][s]);
+        }
+
+        const header: HeaderGenerator = new HeaderGenerator();
+
+        model.GetResourcePool().clearExampleParams();
+        const scenarioVariables = model.GetResourcePool().getTestResourceVariables(config);
+
+        // go through the examples to generate steps
+        for (let ci = 0; ci < config.length; ci++) {
+            const exampleId: string = config[ci].name;
+            let functionName: string = CliTestStep.ToFunctionName(config[ci]);
+            if (allSteps.includes(functionName)) continue;
+            allSteps.push(functionName);
+            if (exampleId) {
+                const disabled: string = config[ci].disabled ? '# ' : '';
+                steps.push('');
+                steps.push('# EXAMPLE: ' + exampleId);
+                const createStep = () => {
+                    steps.push('@try_manual');
+
+                    // find example by name
+                    let waitCmds: string[][];
+
+                    const [normalCmd, commandExample] = model.FindExampleById(
+                        exampleId,
+                        commandParams,
+                        false,
+                        config[ci].step,
+                    );
+                    let exampleCmd = commandExample.commandStringItems.map((x, i) =>
+                        this.model.GetResourcePool().formatable(x, scenarioVariables),
+                    );
+                    if (
+                        exampleCmd.length == 0 &&
+                        !isNullOrUndefined(config[ci].step) &&
+                        !isNullOrUndefined(config[ci].method)
+                    ) {
+                        // The command for this example is not generated in current autorest running.
+                        exampleCmd = model
+                            .GetResourcePool()
+                            .genAzRestCall(config[ci].step, config[ci].method, scenarioVariables);
+                    } else {
+                        // The command for this example is generated in current autorest running.
+                        // regenerate functionName with the az commandName
+                        if (exampleCmd.length > 0)
+                            functionName = CliTestStep.ToFunctionName(
+                                { name: commandExample.Id },
+                                exampleCmd[0],
+                            );
+                    }
+                    if (exampleCmd && exampleCmd.length > 0) {
+                        steps.push(...ToMultiLine(`def ${functionName}(test, checks):`));
+                        if (isNullOrUndefined(waitCmds)) {
+                            waitCmds = model.FindExampleWaitById(exampleId);
+                        }
+
+                        const cmdString = exampleCmd.join('\n');
+                        if (Object.prototype.hasOwnProperty.call(stepBuff, cmdString)) {
+                            steps.push(
+                                ...ToMultiLine(`    return ${stepBuff[cmdString]}(test, checks)`),
+                            );
+                        } else {
+                            stepBuff[cmdString] = functionName;
+                            if (
+                                exampleCmd[0] == normalCmd[0] &&
+                                commandExample.Method === 'delete'
+                            ) {
+                                exampleCmd[0] += ' -y';
+                            }
+
+                            steps.push('    if checks is None:');
+                            steps.push('        checks = []');
+
+                            for (let idx = 0; idx < exampleCmd.length; idx++) {
+                                const prefix: string =
+                                    '    ' + disabled + (idx === 0 ? "test.cmd('" : "         '");
+                                const postfix: string = idx < exampleCmd.length - 1 ? " '" : "',";
+                                ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                            }
+                            if (isNullOrUndefined(waitCmds) || waitCmds.length === 0) {
+                                steps.push('    ' + disabled + '         checks=checks)');
+                            } else {
+                                steps.push('    ' + disabled + '         checks=[])');
+                            }
+                        }
+                        for (const exampleCmd of waitCmds) {
+                            if (exampleCmd && exampleCmd.length > 0) {
+                                for (let idx = 0; idx < exampleCmd.length; idx++) {
+                                    const prefix: string =
+                                        '    ' +
+                                        disabled +
+                                        (idx === 0 ? "test.cmd('" : "         '");
+                                    const postfix: string =
+                                        idx < exampleCmd.length - 1 ? " '" : "',";
+                                    ToMultiLine(prefix + exampleCmd[idx] + postfix, steps);
+                                }
+                                steps.push('    ' + disabled + '         checks=checks)');
+                            }
+                        }
+                    } else {
+                        steps.push(...ToMultiLine(`def ${functionName}(test, checks):`));
+                        steps.push('    # EXAMPLE NOT FOUND!');
+                        steps.push('    pass');
+                    }
+                    if (disabled) {
+                        steps.push('    pass');
+                    }
+                    steps.push('');
+                };
+                createStep();
+            } else if (functionName) {
+                steps.push('');
+                steps.push(`# Env ${functionName}`);
+                steps.push('@try_manual');
+                steps.push(...ToMultiLine(`def ${functionName}(test):`));
+                steps.push('    pass');
+                steps.push('');
+            }
+        }
+
+        steps.forEach((element) => {
+            if (element.length > CodeGenConstants.PYLINT_MAX_CODE_LENGTH + 1) {
+                header.disableLineTooLong = true;
+            }
+        });
+        return header.getLines().concat(steps);
     }
 }
