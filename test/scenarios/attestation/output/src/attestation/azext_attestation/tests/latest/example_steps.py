@@ -14,22 +14,22 @@ from .. import try_manual
 
 # EXAMPLE: AttestationProviders_Create
 @try_manual
-def step_create_provider(test, rg, rg_2, rg_3, checks=None):
+def step_create_provider(test, checks):
     if checks is None:
         checks = []
     test.cmd('az attestation create-provider '
-             '--resource-group "{rg_4}" '
+             '--resource-group "{resourceGroupName}" '
              '--provider-name "myattestationprovider"',
              checks=checks)
 
 
 # EXAMPLE: AttestationProviders_Update
 @try_manual
-def step_attestation_provider_update(test, rg, rg_2, rg_3, checks=None):
+def step_attestation_provider_update(test, checks):
     if checks is None:
         checks = []
     test.cmd('az attestation attestation-provider update '
-             '--resource-group "{rg_4}" '
+             '--resource-group "{resourceGroupName}" '
              '--provider-name "myattestationprovider" '
-             '--tags Property1="{storageAccountId}" Property2="Value2" Property3="Value3"',
+             '--tags Property1="Value1" Property2="Value2" Property3="Value3"',
              checks=checks)
