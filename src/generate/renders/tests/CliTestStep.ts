@@ -9,7 +9,6 @@ import { ToMultiLine, deepCopy, isNullOrUndefined } from '../../../utils/helper'
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants, AzConfiguration } from '../../../utils/models';
-import { CommandExample } from '../../codemodel/Example';
 
 let usePreparers: Set<string>, shortToLongName, funcNames, allSteps, stepBuff: Record<string, any>;
 

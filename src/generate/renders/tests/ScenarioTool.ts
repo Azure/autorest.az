@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { TestResourceLoader } from 'oav/dist/lib/testScenario/testResourceLoader';
-import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { CommandExample, ExampleParam, KeyValueType } from '../../codemodel/Example';
 import {
     deepCopy,
@@ -12,10 +11,7 @@ import {
     isNullOrUndefined,
     Capitalize,
     ToSnakeCase,
-    setPathValue,
-    checkNested,
     toPythonName,
-    ToMultiLine,
     ToJsonString,
 } from '../../../utils/helper';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
@@ -29,6 +25,7 @@ import {
 } from 'oav/dist/lib/testScenario/testResourceTypes';
 import * as path from 'path';
 import * as process from 'process';
+import * as fs from 'fs';
 export const azOptions = {};
 
 function MethodToOrder(httpMethod: string): number {
@@ -1406,16 +1403,31 @@ export class ResourcePool {
             return undefined;
         }
 
-        const loader = TestResourceLoader.create({
-            useJsonParser: false,
-            checkUnderFileRoot: false,
-            fileRoot: getSwaggerFolder(),
-            swaggerFilePaths: AzConfiguration.getValue(CodeGenConstants.inputFile),
-        });
+        try {
+            const fileRoot = getSwaggerFolder();
+            const loader = TestResourceLoader.create({
+                useJsonParser: false,
+                checkUnderFileRoot: false,
+                fileRoot: fileRoot,
+                swaggerFilePaths: AzConfiguration.getValue(CodeGenConstants.inputFile),
+            });
 
-        for (const testResource of AzConfiguration.getValue(CodeGenConstants.testResources) || []) {
-            const testDef = await loader.load(testResource[CodeGenConstants.test]);
-            this.testDefs.push(testDef);
+            for (const testResource of AzConfiguration.getValue(CodeGenConstants.testResources) ||
+                []) {
+                if (fs.existsSync(path.join(fileRoot, testResource[CodeGenConstants.test]))) {
+                    const testDef = await loader.load(testResource[CodeGenConstants.test]);
+                    this.testDefs.push(testDef);
+                } else {
+                    console.warn(
+                        `Unexisted test resource scenario file: ${
+                            testResource[CodeGenConstants.test]
+                        }`,
+                    );
+                }
+            }
+        } catch (error) {
+            console.warn('Exception occured when load test resource scenario!');
+            console.warn(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
     }
 
@@ -1522,7 +1534,7 @@ export class ResourcePool {
     }
 
     public applyTestResourceReplace(step: TestStepRestCall) {
-        // TODO: wait for detail design for oav output
+        // TODO: wait for detail design for oav output, comment below part temporarily
         // for (const replace of step.replace) {
         //     if (replace.pathInBody) {
         //         for (const k in step.requestParameters.parameters) {
