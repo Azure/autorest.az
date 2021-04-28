@@ -24,43 +24,43 @@ from .. import (
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup_scenario
+# Env setup_fakedtestscenario
 @try_manual
-def setup_scenario(test, rg, rg_2, rg_3, rg_4):
+def setup_fakedtestscenario(test):
     cmd = "az deployment group create --resource-group {{rg}} --template-file \"{}\"".format(os.path.join(TEST_DIR, 'depSto.json'))
     o = test.cmd(cmd).get_output_in_json()
     kwargs = {k: v.get("value") for k, v in o.get('properties', {}).get('outputs', {}).items()}
     test.kwargs.update(kwargs)
 
 
-# Env cleanup_scenario
+# Env cleanup_fakedtestscenario
 @try_manual
-def cleanup_scenario(test, rg, rg_2, rg_3, rg_4):
+def cleanup_fakedtestscenario(test):
     pass
 
 
-# Testcase: Scenario
+# Testcase: fakedtestscenario
 @try_manual
-def call_scenario(test, rg, rg_2, rg_3, rg_4):
-    setup_scenario(test, rg, rg_2, rg_3, rg_4)
-    step_create_provider(test, rg, rg_2, rg_3, rg_4, checks=[])
-    step_attestation_provider_update(test, rg, rg_2, rg_3, rg_4, checks=[])
-    cleanup_scenario(test, rg, rg_2, rg_3, rg_4)
+def call_fakedtestscenario(test):
+    setup_fakedtestscenario(test)
+    step_create_provider(test, checks=[])
+    step_attestation_provider_update(test, checks=[])
+    cleanup_fakedtestscenario(test)
 
 
-# Test class for Scenario
+# Test class for fakedtestscenario
 @try_manual
-class FakedTestScenarioScenarioTest(ScenarioTest):
+class AttestationfakedtestscenarioTest(ScenarioTest):
     def __init__(self, *args, **kwargs):
-        super(FakedTestScenarioScenarioTest, self).__init__(*args, **kwargs)
+        super(AttestationfakedtestscenarioTest, self).__init__(*args, **kwargs)
+        self.kwargs.update({
+            'subscriptionId': self.get_subscription_id(),
+            'location': 'westus',
+        })
 
-    @ResourceGroupPreparer(name_prefix='clitestattestation_MyResourceGroup'[:7], key='rg', parameter_name='rg')
-    @ResourceGroupPreparer(name_prefix='clitestattestation_testrg1'[:7], key='rg_2', parameter_name='rg_2')
-    @ResourceGroupPreparer(name_prefix='clitestattestation_sample-resource-group'[:7], key='rg_3',
-                           parameter_name='rg_3')
-    @ResourceGroupPreparer(name_prefix='clitestattestation_$(resourceGroupName)'[:7], key='rg_4',
-                           parameter_name='rg_4')
-    def test_FakedTestScenario_Scenario(self, rg, rg_2, rg_3, rg_4):
-        call_scenario(self, rg, rg_2, rg_3, rg_4)
+
+    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')
+    def test_attestation_fakedtestscenario(self):
+        call_fakedtestscenario(self)
         calc_coverage(__file__)
         raise_if()
