@@ -370,8 +370,8 @@ az managed-network mn scope-assignment show --scope "subscriptions/subscriptionC
 ##### <a name="ExamplesScopeAssignmentsCreateOrUpdate#Create">Example</a>
 ```
 az managed-network mn scope-assignment create --assigned-managed-network "/subscriptions/subscriptionA/resourceGroups/m\
-yResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope \
-"subscriptions/subscriptionC" --name "myScopeAssignment"
+yResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --name "myScopeAssignment" --scope \
+"subscriptions/subscriptionC"
 ```
 ##### <a name="ParametersScopeAssignmentsCreateOrUpdate#Create">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
@@ -380,6 +380,7 @@ yResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwo
 |**--scope-assignment-name**|string|The name of the scope assignment to create.|scope_assignment_name|scopeAssignmentName|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|assignedManagedNetwork|
+|**--scope-assignment-name**|string|The name of the scope assignment to create.|scope_assignment_name|scopeAssignmentNameFake|
 
 #### <a name="ScopeAssignmentsCreateOrUpdate#Update">Command `az managed-network mn scope-assignment update`</a>
 
@@ -391,6 +392,7 @@ yResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwo
 |**--scope-assignment-name**|string|The name of the scope assignment to create.|scope_assignment_name|scopeAssignmentName|
 |**--location**|string|The geo-location where the resource lives|location|location|
 |**--assigned-managed-network**|string|The managed network ID with scope will be assigned to.|assigned_managed_network|assignedManagedNetwork|
+|**--scope-assignment-name**|string|The name of the scope assignment to create.|scope_assignment_name|scopeAssignmentNameFake|
 
 #### <a name="ScopeAssignmentsDelete">Command `az managed-network mn scope-assignment delete`</a>
 

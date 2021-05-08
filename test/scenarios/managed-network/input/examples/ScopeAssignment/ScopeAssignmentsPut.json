@@ -6,7 +6,8 @@
     "scopeAssignmentName": "subscriptionCAssignment",
     "parameters": {
       "properties": {
-        "assignedManagedNetwork": "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork"
+        "assignedManagedNetwork": "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork",
+        "scopeAssignmentNameFake": "subscriptionCAssignment"
       }
     }
   },
@@ -19,7 +20,8 @@
         "properties": {
           "provisioningState": "Succeeded",
           "etag": "sadf-asdf-asdf-asdf",
-          "assignedManagedNetwork": "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork"
+          "assignedManagedNetwork": "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork",
+          "scopeAssignmentNameFake": "subscriptionCAssignment"
         }
       }
     },

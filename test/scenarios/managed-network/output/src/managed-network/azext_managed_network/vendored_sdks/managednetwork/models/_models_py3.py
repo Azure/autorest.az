@@ -912,6 +912,8 @@ class ScopeAssignment(Resource):
     :vartype etag: str
     :param assigned_managed_network: The managed network ID with scope will be assigned to.
     :type assigned_managed_network: str
+    :param scope_assignment_name_fake: The name of the scope assignment to create.
+    :type scope_assignment_name_fake: str
     """
 
     _validation = {
@@ -930,6 +932,7 @@ class ScopeAssignment(Resource):
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'etag': {'key': 'properties.etag', 'type': 'str'},
         'assigned_managed_network': {'key': 'properties.assignedManagedNetwork', 'type': 'str'},
+        'scope_assignment_name_fake': {'key': 'properties.scopeAssignmentNameFake', 'type': 'str'},
     }
 
     def __init__(
@@ -937,12 +940,14 @@ class ScopeAssignment(Resource):
         *,
         location: Optional[str] = None,
         assigned_managed_network: Optional[str] = None,
+        scope_assignment_name_fake: Optional[str] = None,
         **kwargs
     ):
         super(ScopeAssignment, self).__init__(location=location, **kwargs)
         self.provisioning_state = None
         self.etag = None
         self.assigned_managed_network = assigned_managed_network
+        self.scope_assignment_name_fake = scope_assignment_name_fake
 
 
 class ScopeAssignmentListResult(msrest.serialization.Model):
@@ -983,6 +988,8 @@ class ScopeAssignmentProperties(ResourceProperties):
     :vartype etag: str
     :param assigned_managed_network: The managed network ID with scope will be assigned to.
     :type assigned_managed_network: str
+    :param scope_assignment_name_fake: The name of the scope assignment to create.
+    :type scope_assignment_name_fake: str
     """
 
     _validation = {
@@ -994,13 +1001,16 @@ class ScopeAssignmentProperties(ResourceProperties):
         'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'assigned_managed_network': {'key': 'assignedManagedNetwork', 'type': 'str'},
+        'scope_assignment_name_fake': {'key': 'scopeAssignmentNameFake', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
         assigned_managed_network: Optional[str] = None,
+        scope_assignment_name_fake: Optional[str] = None,
         **kwargs
     ):
         super(ScopeAssignmentProperties, self).__init__(**kwargs)
         self.assigned_managed_network = assigned_managed_network
+        self.scope_assignment_name_fake = scope_assignment_name_fake

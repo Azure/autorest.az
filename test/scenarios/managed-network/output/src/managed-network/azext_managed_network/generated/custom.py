@@ -84,6 +84,7 @@ def managed_network_mn_scope_assignment_create(client,
     parameters = {}
     parameters['location'] = location
     parameters['assigned_managed_network'] = assigned_managed_network
+    parameters['scope_assignment_name_fake'] = scope_assignment_name
     return client.create_or_update(scope=scope,
                                    scope_assignment_name=scope_assignment_name,
                                    parameters=parameters)
@@ -98,6 +99,8 @@ def managed_network_mn_scope_assignment_update(instance,
         instance.location = location
     if assigned_managed_network is not None:
         instance.assigned_managed_network = assigned_managed_network
+    if scope_assignment_name is not None:
+        instance.scope_assignment_name_fake = scope_assignment_name
     return instance
 
 

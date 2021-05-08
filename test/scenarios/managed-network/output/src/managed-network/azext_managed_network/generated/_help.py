@@ -115,8 +115,8 @@ helps['managed-network mn scope-assignment create'] = """
       - name: Create/Update Managed Network
         text: |-
                az managed-network mn scope-assignment create --assigned-managed-network "/subscriptions/subscriptionA/r\
-esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --scope \
-"subscriptions/subscriptionC" --name "myScopeAssignment"
+esourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" --name \
+"myScopeAssignment" --scope "subscriptions/subscriptionC"
 """
 
 helps['managed-network mn scope-assignment update'] = """
