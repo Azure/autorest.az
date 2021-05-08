@@ -91,7 +91,7 @@ describe('getActionsRender', () => {
     it('getActionRenderDataTest2', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         const data = await getActionsRenderData();
-        let result = render(tmplPath, data);
+        let result = render(path.relative(process.cwd(), tmplPath), data);
         const oriFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/generated/ori_action.py',
