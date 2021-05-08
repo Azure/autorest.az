@@ -107,5 +107,5 @@ describe('getActionsRender', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic for action.py is incorrect');
         await rmFile(oriFile);
-    });
+    }, 30000);
 });
