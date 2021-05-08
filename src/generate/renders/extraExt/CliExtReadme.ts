@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
 import { HttpMethod } from '@azure-tools/codemodel';
-import { CmdToMultiLines, isNullOrUndefined } from '../../../utils/helper';
+import { CmdToMultiLines, isNullOrUndefined, MergeSort } from '../../../utils/helper';
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 import { CommandExample } from '../../codemodel/Example';
@@ -28,10 +28,6 @@ export class CliExtReadme extends TemplateBase {
         throw new Error('Method not implemented.');
     }
 
-    private compareExamples(example1: CommandExample, example2: CommandExample): boolean {
-        return this.getExampleOrder(example1) >= this.getExampleOrder(example2);
-    }
-
     private getExampleOrder(example: CommandExample): number {
         switch (example.HttpMethod.toLowerCase()) {
             case HttpMethod.Put:
@@ -46,26 +42,24 @@ export class CliExtReadme extends TemplateBase {
     public async GetRenderData(model: CodeModelAz): Promise<Record<string, any>> {
         const { exampleHandler } = this.model.GetHandler();
 
-        const exampleConverter = (item: any) => {
-            item.title = item.Method.charAt(0).toUpperCase() + item.Method.slice(1);
-            item.CommandStringLines = CmdToMultiLines(item.CommandString);
-            const waitCommandString = exampleHandler.GetExampleWait(item).join(' ');
-            if (!isNullOrUndefined(waitCommandString) && waitCommandString !== '') {
-                item.CommandStringLines.push('');
-                const temp = CmdToMultiLines(waitCommandString);
-                item.CommandStringLines.push(...temp);
-            }
-            return {
-                title: item.title,
-                CommandStringLines: item.CommandStringLines,
-                HttpMethod: item.HttpMethod,
-            };
-        };
-
         const commandConverter = (item: any) => {
+            const ret = [];
             item.examples = exampleHandler.GetExamples(false);
             for (let i = 0; i < item.examples.length; i++) {
-                item.examples[i] = exampleConverter(item.examples[i]);
+                const example = item.examples[i];
+                example.title = example.Method.charAt(0).toUpperCase() + example.Method.slice(1);
+                example.CommandStringLines = CmdToMultiLines(example.CommandString);
+                const waitCommandString = exampleHandler.GetExampleWait(example).join(' ');
+                if (!isNullOrUndefined(waitCommandString) && waitCommandString !== '') {
+                    example.CommandStringLines.push('');
+                    const temp = CmdToMultiLines(waitCommandString);
+                    example.CommandStringLines.push(...temp);
+                }
+                ret.push({
+                    title: example.title,
+                    CommandStringLines: example.CommandStringLines,
+                    HttpMethod: example.HttpMethod,
+                });
             }
             return item;
         };
@@ -91,16 +85,11 @@ export class CliExtReadme extends TemplateBase {
                     group.examples = group.examples.concat(command.examples);
                 }
                 group.Commands = undefined;
-
-                for (let i = 0; i < group.examples.length - 1; ++i) {
-                    for (let j = i + 1; j < group.examples.length; ++j) {
-                        if (!this.compareExamples(group.examples[i], group.examples[j])) {
-                            const tempExample = group.examples[i];
-                            group.examples[i] = group.examples[j];
-                            group.examples[j] = tempExample;
-                        }
-                    }
-                }
+                group.examples = MergeSort(
+                    group.examples,
+                    (example1: CommandExample, example2: CommandExample) =>
+                        this.getExampleOrder(example1) >= this.getExampleOrder(example2) ? -1 : 1,
+                );
             }
         }
         return data;
