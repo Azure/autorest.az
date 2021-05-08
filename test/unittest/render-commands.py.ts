@@ -306,7 +306,7 @@ describe('renderCommandsPYTest', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 1 in commands.py is incorrect');
         await rmFile(oriFile);
-    });
+    }, 30000);
 
     it('renderCommandsPYTestCase2', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
@@ -334,5 +334,5 @@ describe('renderCommandsPYTest', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 2 in commands.py is incorrect');
         await rmFile(oriFile);
-    });
+    }, 30000);
 });

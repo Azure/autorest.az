@@ -108,5 +108,5 @@ describe('getCommandsRender', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic for commands.py is incorrect');
         await rmFile(oriFile);
-    }, 10000);
+    }, 30000);
 });
