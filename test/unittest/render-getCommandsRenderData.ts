@@ -92,7 +92,7 @@ describe('getCommandsRender', () => {
     it('getCommandRenderDataTest2', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         const data = await getCommandsRenderData();
-        let result = render(tmplPath, data);
+        let result = render(path.relative(process.cwd(), tmplPath), data);
         const oriFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/generated/ori_commands3.py',
@@ -108,5 +108,5 @@ describe('getCommandsRender', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic for commands.py is incorrect');
         await rmFile(oriFile);
-    });
+    }, 30000);
 });

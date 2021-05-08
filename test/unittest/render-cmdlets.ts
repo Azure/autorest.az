@@ -131,7 +131,7 @@ describe('renderTestsCmdlets', () => {
         );
         nunjucks.configure({ autoescape: false });
         data.testData.className = 'PositiveTest';
-        const result = nunjucks.render(tmplPath, data);
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), data);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/tests/cmdlet/test_positive.py',
@@ -147,7 +147,7 @@ describe('renderTestsCmdlets', () => {
         );
         nunjucks.configure({ autoescape: false });
         data.testData.className = 'NegativeTest';
-        const result = nunjucks.render(tmplPath, data);
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), data);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/tests/cmdlet/test_negative.py',
@@ -163,7 +163,7 @@ describe('renderTestsCmdlets', () => {
         );
         nunjucks.configure({ autoescape: false });
         data_empty.testData.className = 'PositiveTest';
-        const result = nunjucks.render(tmplPath, data_empty);
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), data_empty);
         const expectedFile = path.join(
             `${__dirname}`,
             '../../test/unittest/expected/tests/cmdlet/test_positive_empty.py',

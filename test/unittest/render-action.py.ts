@@ -15,7 +15,7 @@ describe('renderActionPYTest', () => {
     it('single positional action test', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
                 actions: [
@@ -113,12 +113,12 @@ describe('renderActionPYTest', () => {
             'render positional action in action.py is incorrect',
         );
         await rmFile(oriFile);
-    });
+    }, 30000);
 
     it('single key value action test', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
                 actions: [
@@ -211,12 +211,12 @@ describe('renderActionPYTest', () => {
             'render key value action in action.py is incorrect',
         );
         await rmFile(oriFile);
-    });
+    }, 30000);
 
     it('single shorthand syntax action test', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
                 actions: [
@@ -266,5 +266,5 @@ describe('renderActionPYTest', () => {
             'render shorthand syntax action in action.py is incorrect',
         );
         await rmFile(oriFile);
-    });
+    }, 30000);
 });
