@@ -15,7 +15,7 @@ describe('renderActionPYTest', () => {
     it('single positional action test', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
                 actions: [
@@ -118,7 +118,7 @@ describe('renderActionPYTest', () => {
     it('single key value action test', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
                 actions: [
@@ -216,7 +216,7 @@ describe('renderActionPYTest', () => {
     it('single shorthand syntax action test', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: ['# pylint: disable=protected-access', '# pylint: disable=no-self-use'],
                 actions: [

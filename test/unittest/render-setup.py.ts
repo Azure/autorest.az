@@ -14,7 +14,7 @@ sourceMapSupport.install();
 describe('RenderSetupPy', () => {
     it('setupPYTestCase1', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/setup.py.njx');
-        const result = nunjucks.render(tmplPath, {
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             model: {
                 AzextFolder: 'azext_offazure',
                 Extension_Name: 'offazure',
@@ -30,7 +30,7 @@ describe('RenderSetupPy', () => {
 
     it('setupPYTestCase2', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/setup.py.njx');
-        const result = nunjucks.render(tmplPath, {
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             model: {
                 AzextFolder: 'azext_offazure',
                 Extension_Name: 'offazure',

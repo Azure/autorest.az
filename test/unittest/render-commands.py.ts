@@ -15,7 +15,7 @@ describe('renderCommandsPYTest', () => {
     it('renderCommandsPYTestCase1', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: [
                     '# pylint: disable=too-many-statements',
@@ -311,7 +311,7 @@ describe('renderCommandsPYTest', () => {
     it('renderCommandsPYTestCase2', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: [],
                 imports: {},
