@@ -264,8 +264,8 @@ def step_mn_scope_assignment_create(test, checks=None):
     test.cmd('az managed-network mn scope-assignment create '
              '--assigned-managed-network "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Mana'
              'gedNetwork/managedNetworks/{myManagedNetwork}" '
-             '--scope "subscriptions/subscriptionC" '
-             '--name "{myScopeAssignment}"',
+             '--name "{myScopeAssignment}" '
+             '--scope "subscriptions/subscriptionC"',
              checks=checks)
 
 @try_manual

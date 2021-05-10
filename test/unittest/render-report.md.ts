@@ -10,8 +10,8 @@ import * as sourceMapSupport from 'source-map-support';
 import { readFile } from '@azure-tools/async-io';
 sourceMapSupport.install();
 
-describe('renderSetupCFG', () => {
-    it('renderSetupCFGTest', async () => {
+describe('renderReportMD', () => {
+    it('renderReportMDTest', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/report.md.njx');
         nunjucks.configure({ autoescape: false });
         const result = nunjucks.render(tmplPath, {

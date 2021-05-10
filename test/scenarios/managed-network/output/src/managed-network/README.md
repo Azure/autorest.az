@@ -36,7 +36,7 @@ az managed-network mn delete --name "myManagedNetwork" --resource-group "myResou
 ```
 az managed-network mn scope-assignment create \
     --assigned-managed-network "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork" \
-    --scope "subscriptions/subscriptionC" --name "myScopeAssignment" 
+    --name "myScopeAssignment" --scope "subscriptions/subscriptionC" 
 ```
 ##### Show #####
 ```
