@@ -4,7 +4,7 @@
  *-------------------------------------------------------------------------------------------- */
 import * as path from 'path';
 import { HttpMethod } from '@azure-tools/codemodel';
-import { CmdToMultiLines, isNullOrUndefined, MergeSort } from '../../../utils/helper';
+import { CmdToMultiLines, isNullOrUndefined } from '../../../utils/helper';
 import { CodeModelAz } from '../../codemodel/CodeModelAz';
 import { TemplateBase } from '../TemplateBase';
 import { CommandExample } from '../../codemodel/Example';
@@ -26,6 +26,10 @@ export class CliExtReadme extends TemplateBase {
 
     public async incrementalGeneration(base: string): Promise<string[]> {
         throw new Error('Method not implemented.');
+    }
+
+    private compareExamples(example1: CommandExample, example2: CommandExample): boolean {
+        return this.getExampleOrder(example1) >= this.getExampleOrder(example2);
     }
 
     private getExampleOrder(example: CommandExample): number {
@@ -85,11 +89,17 @@ export class CliExtReadme extends TemplateBase {
                     group.examples = group.examples.concat(command.examples);
                 }
                 group.Commands = undefined;
-                group.examples = MergeSort(
-                    group.examples,
-                    (example1: CommandExample, example2: CommandExample) =>
-                        this.getExampleOrder(example1) >= this.getExampleOrder(example2) ? -1 : 1,
-                );
+
+                for (let i = 0; i < group.examples.length - 1; ++i) {
+                    for (let j = i + 1; j < group.examples.length; ++j) {
+                        if (!this.compareExamples(group.examples[i], group.examples[j])) {
+                            [group.examples[i], group.examples[j]] = [
+                                group.examples[j],
+                                group.examples[i],
+                            ];
+                        }
+                    }
+                }
             }
         }
         return data;
