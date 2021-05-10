@@ -14,7 +14,7 @@ describe('renderReadmeMD', () => {
     it('renderReadmeMDTest', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/README.md.njx');
         nunjucks.configure({ autoescape: false });
-        const result = nunjucks.render(tmplPath, {
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             hasExtension: true,
             Extensions: [
                 {

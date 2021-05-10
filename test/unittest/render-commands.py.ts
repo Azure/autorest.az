@@ -15,7 +15,7 @@ describe('renderCommandsPYTest', () => {
     it('renderCommandsPYTestCase1', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: [
                     '# pylint: disable=too-many-statements',
@@ -306,12 +306,12 @@ describe('renderCommandsPYTest', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 1 in commands.py is incorrect');
         await rmFile(oriFile);
-    });
+    }, 30000);
 
     it('renderCommandsPYTestCase2', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
         nunjucks.configure({ autoescape: false });
-        let result = nunjucks.render(tmplPath, {
+        let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
                 pylints: [],
                 imports: {},
@@ -334,5 +334,5 @@ describe('renderCommandsPYTest', () => {
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic 2 in commands.py is incorrect');
         await rmFile(oriFile);
-    });
+    }, 30000);
 });

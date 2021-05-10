@@ -13,7 +13,7 @@ sourceMapSupport.install();
 describe('renderSetupCFG', () => {
     it('renderSetupCFGTest', async () => {
         const tmplPath = path.join(`${__dirname}`, '../../src/templates/setup.cfg.njx');
-        const result = nunjucks.render(tmplPath, {});
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {});
         const expectedFile = path.join(`${__dirname}`, '../../test/unittest/expected/setup.cfg');
         const expected = await readFile(expectedFile);
         assert.deepStrictEqual(result, expected, 'render logic in setup.cfg is incorrect');
