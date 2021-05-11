@@ -995,7 +995,7 @@ export class ExampleModelImpl implements ExampleModel {
 
     public GetExampleChecks(example: CommandExample): string[] {
         const ret: string[] = [];
-        if (!this.configHandler.GenChecks) return ret;
+        if (!this.configHandler.GenChecks || isNullOrUndefined(example)) return ret;
         let resourceObjectName = undefined;
         for (const param of example.Parameters) {
             if (

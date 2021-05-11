@@ -48,7 +48,7 @@ export class CliTestStep extends TemplateBase {
     }
 
     private GenerateAzureCliTestStep(model: CodeModelAz): string[] {
-        const { extensionHandler, configHandler, exampleHandler } = model.GetHandler();
+        const { configHandler, exampleHandler } = model.GetHandler();
         initVars();
         const steps: string[] = [];
         steps.push('');
@@ -352,7 +352,7 @@ export class CliTestStep extends TemplateBase {
         steps.push('from .. import try_manual');
         steps.push('');
 
-        const { extensionHandler, configHandler, exampleHandler } = model.GetHandler();
+        const { exampleHandler } = model.GetHandler();
         const commandParams = exampleHandler.GatherInternalResource();
         const config: any = [];
         for (const g in exampleHandler.Example_TestScenario) {
@@ -387,9 +387,10 @@ export class CliTestStep extends TemplateBase {
                         false,
                         config[ci].step,
                     );
-                    let exampleCmd = commandExample.commandStringItems.map((x, i) =>
-                        exampleHandler.GetResourcePool().formatable(x, scenarioVariables),
-                    );
+                    let exampleCmd =
+                        commandExample?.commandStringItems.map((x, i) =>
+                            exampleHandler.GetResourcePool().formatable(x, scenarioVariables),
+                        ) || [];
                     if (
                         exampleCmd.length == 0 &&
                         !isNullOrUndefined(config[ci].step) &&
