@@ -1588,10 +1588,13 @@ export class ResourcePool {
         let url = step.operation._path._pathTemplate;
         let hasBody = false;
         let body = null;
-        for (const parameter of (method.parameters ?? []).concat(
-            method.requests?.[0]?.parameters ?? ([] as Parameter[]),
-        )) {
-            const param = parameter.language?.default?.serializedName;
+        let operationParams = [];
+        if (method.requests && method.requests.length > 0 && method.requests[0].parameters) {
+            operationParams = method.requests[0].parameters;
+        }
+        for (const parameter of (method.parameters ?? []).concat(operationParams)) {
+            const param =
+                parameter.language?.default?.serializedName || parameter.language?.default?.name;
             if (isNullOrUndefined(param)) continue;
             const paramValue = step.requestParameters[param];
 
@@ -1607,7 +1610,9 @@ export class ResourcePool {
                 case 'body':
                     if (paramValue !== undefined) {
                         hasBody = true;
-                        body = paramValue;
+                        body = JSON.stringify(paramValue)
+                            .split(/[\r\n]+/)
+                            .join('');
                     }
                     break;
                 default:
@@ -1620,7 +1625,8 @@ export class ResourcePool {
         }
         parameters.push(`--url "${this.formatable(url, variables)}"`);
         if (hasBody) {
-            parameters.push(`--body "${this.formatable(ToJsonString(body), variables)}"`);
+            parameters.push('--headers "Content-Type=application/json"');
+            body = parameters.push(`--body "${this.formatable(ToJsonString(body), variables)}"`);
         }
         return parameters;
     }
