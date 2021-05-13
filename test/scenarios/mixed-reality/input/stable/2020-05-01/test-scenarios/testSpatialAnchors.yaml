@@ -1,0 +1,15 @@
+scope: ResourceGroup
+
+prepareSteps:
+  - armTemplateDeployment: depSto.json
+
+testScenarios:
+  - description: FakedSpatialAnchorsScenario
+    steps:
+      - exampleFile: ../examples/spatial-anchors/Put.json
+        step: put spatial-anchors
+      - exampleFile: ../examples/spatial-anchors/RegenerateKey.json
+        step: regenerate-key spatial-anchors
+
+
+

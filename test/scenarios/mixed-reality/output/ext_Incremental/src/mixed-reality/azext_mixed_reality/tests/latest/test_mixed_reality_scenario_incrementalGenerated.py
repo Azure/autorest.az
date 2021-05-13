@@ -7,18 +7,21 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=line-too-long
 
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
 from .example_steps import step_create
-from .example_steps import step_list
-from .example_steps import step_show
-from .example_steps import step_list2
 from .example_steps import step_regenerate_key
-from .example_steps import step_regenerate_key2
+from .example_steps import step_show
+from .example_steps import step_list
+from .example_steps import step_list2
+from .example_steps import step_list_key
 from .example_steps import step_update
 from .example_steps import step_delete
+from .example_steps import step_create_spatial_anchor_account
+from .example_steps import step_regenerate_key2
 from .. import (
     try_manual,
     raise_if,
@@ -29,51 +32,90 @@ from .. import (
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-# Env setup_scenario
+# Env setup_fakedremoterenderingscenario
 @try_manual
-def setup_scenario(test):
+def setup_fakedremoterenderingscenario(test):
+    cmd = "az deployment group create --resource-group {{rg}} --template-file \"{}\"".format(os.path.join(TEST_DIR, 'depSto.json'))
+    o = test.cmd(cmd).get_output_in_json()
+    kwargs = {k: v.get("value") for k, v in o.get('properties', {}).get('outputs', {}).items()}
+    test.kwargs.update(kwargs)
+
+
+# Env cleanup_fakedremoterenderingscenario
+@try_manual
+def cleanup_fakedremoterenderingscenario(test):
     pass
 
 
-# Env cleanup_scenario
+# Testcase: fakedremoterenderingscenario
 @try_manual
-def cleanup_scenario(test):
-    pass
-
-
-# Testcase: Scenario
-@try_manual
-def call_scenario(test):
-    setup_scenario(test)
-    # STEP NOT FOUND: Create spatial anchor account
+def call_fakedremoterenderingscenario(test):
+    setup_fakedremoterenderingscenario(test)
     step_create(test, checks=[])
-    # STEP NOT FOUND: Get remote rendering account key
-    # STEP NOT FOUND: Get spatial anchor account key
-    # STEP NOT FOUND: List spatial anchor accounts by resource group
-    step_list(test, checks=[])
-    # STEP NOT FOUND: Get spatial anchors account
-    step_show(test, checks=[])
-    step_list2(test, checks=[])
-    # STEP NOT FOUND: List spatial anchors accounts by subscription
-    # STEP NOT FOUND: List available operations
     step_regenerate_key(test, checks=[])
-    step_regenerate_key2(test, checks=[])
+    step_show(test, checks=[])
+    step_list(test, checks=[])
+    step_list2(test, checks=[])
+    step_list_key(test, checks=[])
     step_update(test, checks=[])
-    # STEP NOT FOUND: Update spatial anchors account
-    # STEP NOT FOUND: CheckLocalNameAvailability
-    # STEP NOT FOUND: Delete spatial anchors account
     step_delete(test, checks=[])
-    cleanup_scenario(test)
+    cleanup_fakedremoterenderingscenario(test)
 
 
-# Test class for Scenario
+# Test class for fakedremoterenderingscenario
 @try_manual
-class Mixed_realityScenarioTest(ScenarioTest):
+class Mixed_realityfakedremoterenderingscenarioTest(ScenarioTest):
     def __init__(self, *args, **kwargs):
-        super(Mixed_realityScenarioTest, self).__init__(*args, **kwargs)
+        super(Mixed_realityfakedremoterenderingscenarioTest, self).__init__(*args, **kwargs)
+        self.kwargs.update({
+            'subscriptionId': self.get_subscription_id(),
+            'location': 'westus',
+        })
 
-    @ResourceGroupPreparer(name_prefix='clitestmixed_reality_MyResourceGroup'[:7], key='rg', parameter_name='rg')
-    def test_mixed_reality_Scenario(self, rg):
-        call_scenario(self)
+
+    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')
+    def test_mixed_reality_fakedremoterenderingscenario(self):
+        call_fakedremoterenderingscenario(self)
+        calc_coverage(__file__)
+        raise_if()
+
+# Env setup_fakedspatialanchorsscenario
+@try_manual
+def setup_fakedspatialanchorsscenario(test):
+    cmd = "az deployment group create --resource-group {{rg}} --template-file \"{}\"".format(os.path.join(TEST_DIR, 'depSto.json'))
+    o = test.cmd(cmd).get_output_in_json()
+    kwargs = {k: v.get("value") for k, v in o.get('properties', {}).get('outputs', {}).items()}
+    test.kwargs.update(kwargs)
+
+
+# Env cleanup_fakedspatialanchorsscenario
+@try_manual
+def cleanup_fakedspatialanchorsscenario(test):
+    pass
+
+
+# Testcase: fakedspatialanchorsscenario
+@try_manual
+def call_fakedspatialanchorsscenario(test):
+    setup_fakedspatialanchorsscenario(test)
+    step_create_spatial_anchor_account(test, checks=[])
+    step_regenerate_key2(test, checks=[])
+    cleanup_fakedspatialanchorsscenario(test)
+
+
+# Test class for fakedspatialanchorsscenario
+@try_manual
+class Mixed_realityfakedspatialanchorsscenarioTest(ScenarioTest):
+    def __init__(self, *args, **kwargs):
+        super(Mixed_realityfakedspatialanchorsscenarioTest, self).__init__(*args, **kwargs)
+        self.kwargs.update({
+            'subscriptionId': self.get_subscription_id(),
+            'location': 'westus',
+        })
+
+
+    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')
+    def test_mixed_reality_fakedspatialanchorsscenario(self):
+        call_fakedspatialanchorsscenario(self)
         calc_coverage(__file__)
         raise_if()

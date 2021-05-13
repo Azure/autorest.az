@@ -1,0 +1,24 @@
+scope: ResourceGroup
+
+testScenarios:
+  - description: FakedRemoteRenderingScenario
+    steps:
+      - exampleFile: ../examples/remote-rendering/Put.json
+        step: put remote-rendering
+      - exampleFile: ../examples/remote-rendering/RegenerateKey.json
+        step: regenerate-key spatial-anchors
+      - exampleFile: ../examples/remote-rendering/Get.json
+        step: get remote-rendering
+      - exampleFile: ../examples/remote-rendering/GetByResourceGroup.json
+        step: GetByResourceGroup remote-rendering
+      - exampleFile: ../examples/remote-rendering/GetBySubscription.json
+        step: GetBySubscription remote-rendering
+      - exampleFile: ../examples/remote-rendering/ListKeys.json
+        step: ListKeys remote-rendering
+      - exampleFile: ../examples/remote-rendering/Patch.json
+        step: patch remote-rendering
+      - exampleFile: ../examples/remote-rendering/Delete.json
+        step: delete remote-rendering
+
+
+

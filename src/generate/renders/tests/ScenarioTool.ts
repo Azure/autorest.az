@@ -22,6 +22,7 @@ import {
     TestDefinitionFile,
     TestStepArmTemplateDeployment,
     TestStepRestCall,
+    TestScenario,
 } from 'oav/dist/lib/testScenario/testResourceTypes';
 import * as path from 'path';
 import * as process from 'process';
@@ -1484,7 +1485,7 @@ export class ResourcePool {
     public generateTestScenario(allExamples: CommandExample[], codeModel: CodeModel) {
         // filter scenario by 1) checking wheather any example step can be found in current codemodel
         //                    2) no raw call step
-        const testScenarios = [];
+        const testScenarios: TestScenario[] = [];
         const exampleMap = this.getExampleMethodMap(codeModel);
         for (const testDef of this.testDefs) {
             for (const testScenario of testDef.testScenarios) {

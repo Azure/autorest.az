@@ -12,103 +12,113 @@
 from .. import try_manual
 
 
-# EXAMPLE: /RemoteRenderingAccounts/put/Create remote rendering account
+# EXAMPLE: Create remote rendering account
 @try_manual
-def step_create(test, checks=None):
+def step_create(test, checks):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account create '
+             '--resource-group "{resourceGroupName}" '
              '--account-name "MyAccount" '
-             '--location "eastus2euap" '
-             '--resource-group "{rg}"',
+             '--location "eastus2euap"',
              checks=checks)
 
 
-# EXAMPLE: /RemoteRenderingAccounts/get/Get remote rendering account
+# EXAMPLE: Regenerate remote rendering account keys
 @try_manual
-def step_show(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az remote-rendering-account show '
-             '--account-name "MyAccount" '
-             '--resource-group "{rg}"',
-             checks=checks)
-
-
-# EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by resource group
-@try_manual
-def step_list(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az remote-rendering-account list '
-             '--resource-group "{rg}"',
-             checks=checks)
-
-
-# EXAMPLE: /RemoteRenderingAccounts/get/List remote rendering accounts by subscription
-@try_manual
-def step_list2(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az remote-rendering-account list '
-             '-g ""',
-             checks=checks)
-
-
-# EXAMPLE: /RemoteRenderingAccounts/patch/Update remote rendering account
-@try_manual
-def step_update(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az remote-rendering-account update '
-             '--account-name "MyAccount" '
-             '--location "eastus2euap" '
-             '--tags hero="romeo" heroine="juliet" '
-             '--resource-group "{rg}"',
-             checks=checks)
-
-
-# EXAMPLE: /RemoteRenderingAccounts/post/List remote rendering account key
-@try_manual
-def step_list_key(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az remote-rendering-account list-key '
-             '--account-name "MyAccount" '
-             '--resource-group "{rg}"',
-             checks=checks)
-
-
-# EXAMPLE: /RemoteRenderingAccounts/post/Regenerate remote rendering account keys
-@try_manual
-def step_regenerate_key(test, checks=None):
+def step_regenerate_key(test, checks):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account regenerate-key '
+             '--resource-group "{resourceGroupName}" '
              '--account-name "MyAccount" '
-             '--serial 1 '
-             '--resource-group "{rg}"',
+             '--serial 1',
              checks=checks)
 
 
-# EXAMPLE: /RemoteRenderingAccounts/delete/Delete remote rendering account
+# EXAMPLE: Get remote rendering account
 @try_manual
-def step_delete(test, checks=None):
+def step_show(test, checks):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account show '
+             '--resource-group "{resourceGroupName}" '
+             '--account-name "MyAccount"',
+             checks=checks)
+
+
+# EXAMPLE: List remote rendering accounts by resource group
+@try_manual
+def step_list(test, checks):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account list '
+             '--resource-group "{resourceGroupName}"',
+             checks=checks)
+
+
+# EXAMPLE: List remote rendering accounts by subscription
+@try_manual
+def step_list2(test, checks):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account list',
+             checks=checks)
+
+
+# EXAMPLE: List remote rendering account key
+@try_manual
+def step_list_key(test, checks):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account list-key '
+             '--resource-group "{resourceGroupName}" '
+             '--account-name "MyAccount"',
+             checks=checks)
+
+
+# EXAMPLE: Update remote rendering account
+@try_manual
+def step_update(test, checks):
+    if checks is None:
+        checks = []
+    test.cmd('az remote-rendering-account update '
+             '--resource-group "{resourceGroupName}" '
+             '--account-name "MyAccount" '
+             '--location "eastus2euap" '
+             '--tags heroine="juliet" hero="romeo"',
+             checks=checks)
+
+
+# EXAMPLE: Delete remote rendering account
+@try_manual
+def step_delete(test, checks):
     if checks is None:
         checks = []
     test.cmd('az remote-rendering-account delete -y '
-             '--account-name "MyAccount" '
-             '--resource-group "{rg}"',
+             '--resource-group "{resourceGroupName}" '
+             '--account-name "MyAccount"',
              checks=checks)
 
 
-# EXAMPLE: /SpatialAnchorsAccounts/post/Regenerate spatial anchors account keys
+# EXAMPLE: Create spatial anchor account
 @try_manual
-def step_regenerate_key2(test, checks=None):
+def step_create_spatial_anchor_account(test, checks):
+    if checks is None:
+        checks = []
+    test.cmd('az rest --method put '
+             '--url "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedRealit'
+             'y/spatialAnchorsAccounts/MyAccount?api-version=2020-05-01"',
+             checks=checks)
+
+
+# EXAMPLE: Regenerate spatial anchors account keys
+@try_manual
+def step_regenerate_key2(test, checks):
     if checks is None:
         checks = []
     test.cmd('az spatial-anchors-account regenerate-key '
+             '--resource-group "{resourceGroupName}" '
              '--account-name "MyAccount" '
-             '--serial 1 '
-             '--resource-group "{rg}"',
+             '--serial 1',
              checks=checks)

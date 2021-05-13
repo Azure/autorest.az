@@ -10,8 +10,5 @@ testScenarios:
         step: create attestation provider
       - exampleFile: ../examples/Update_AttestationProvider.json
         step: create attestation provider
-        replace:
-          - pathInBody: tags.Property1
-            to: $(storageAccountId)
 
 
