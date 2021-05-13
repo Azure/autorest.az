@@ -1516,7 +1516,6 @@ export class ResourcePool {
             for (let step of testScenario.steps) {
                 if ((step as TestStepRestCall).exampleId) {
                     step = step as TestStepRestCall;
-                    this.applyTestResourceReplace(step);
                     cliScenario[scenarioName].push({
                         name: step.exampleId,
                         step: step,
@@ -1532,28 +1531,6 @@ export class ResourcePool {
 
     public get hasTestResourceScenario(): boolean {
         return this.testDefs.length > 0;
-    }
-
-    public applyTestResourceReplace(step: TestStepRestCall) {
-        // TODO: wait for detail design for oav output, comment below part temporarily
-        // for (const replace of step.replace) {
-        //     if (replace.pathInBody) {
-        //         for (const k in step.requestParameters.parameters) {
-        //             if (checkNested(step.requestParameters.parameters[k], replace.pathInBody)) {
-        //                 setPathValue(
-        //                     step.requestParameters.parameters[k],
-        //                     replace.pathInBody,
-        //                     replace.to,
-        //                 );
-        //             }
-        //         }
-        //     }
-        //     if (replace.pathInExample) {
-        //         if (checkNested(step.requestParameters, replace.pathInBody)) {
-        //             setPathValue(step.requestParameters, replace.pathInBody, replace.to);
-        //         }
-        //     }
-        // }
     }
 
     public genExampleTemplate(step: TestStepRestCall) {

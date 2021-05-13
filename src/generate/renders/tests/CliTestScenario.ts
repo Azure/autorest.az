@@ -9,7 +9,6 @@ import { ToMultiLine, Capitalize, isNullOrUndefined } from '../../../utils/helpe
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
 import { CodeGenConstants, PathConstants } from '../../../utils/models';
-import { CommandExample } from '../../codemodel/Example';
 
 export class CliTestScenario extends TemplateBase {
     public configValue: any;
