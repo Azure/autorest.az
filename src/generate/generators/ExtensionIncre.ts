@@ -121,7 +121,9 @@ export class AzExtensionIncrementalGenerator extends GeneratorBase {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    PathConstants.incTestScenarioFile(testGroup),
+                    this.model.GetHandler().exampleHandler.GetResourcePool().hasTestResourceScenario
+                        ? PathConstants.testSwaggerScenarioFile(testGroup)
+                        : PathConstants.incTestScenarioFile(testGroup),
                     exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),

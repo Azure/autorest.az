@@ -98,7 +98,10 @@ export class AzCoreFullGenerator extends GeneratorBase {
                     await this.generateFullSingleAndAddtoOutput(
                         new CliTestScenario(
                             model,
-                            PathConstants.fullTestSceanrioFile(testGroup),
+                            model.GetHandler().exampleHandler.GetResourcePool()
+                                .hasTestResourceScenario
+                                ? PathConstants.testSwaggerScenarioFile(testGroup)
+                                : PathConstants.fullTestSceanrioFile(testGroup),
                             exampleHandler.Example_TestScenario[testGroup],
                             testGroup,
                         ),

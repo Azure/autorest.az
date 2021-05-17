@@ -97,7 +97,11 @@ export class PathConstants {
         return 'test_' + rpName + '_scenario_incrementalGenerated.py';
     }
 
-    public static readonly njkFileExtension = '.njk';
+    public static testSwaggerScenarioFile(rpName: string): string {
+        return 'test_' + rpName + '_swagger_scenario.py';
+    }
+
+    public static readonly njxFileExtension = '.njk';
 }
 
 export enum CodeGenConstants {

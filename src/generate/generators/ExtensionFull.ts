@@ -98,7 +98,9 @@ export class AzExtensionFullGenerator extends GeneratorBase {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    PathConstants.fullTestSceanrioFile(testGroup),
+                    this.model.GetHandler().exampleHandler.GetResourcePool().hasTestResourceScenario
+                        ? PathConstants.testSwaggerScenarioFile(testGroup)
+                        : PathConstants.fullTestSceanrioFile(testGroup),
                     exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),
