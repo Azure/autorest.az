@@ -32,7 +32,9 @@ export class CliTestStep extends TemplateBase {
             configHandler.AzextFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
-            PathConstants.testStepFile,
+            model.GetHandler().exampleHandler.GetResourcePool().hasTestResourceScenario
+                ? PathConstants.testSwaggerStepFile
+                : PathConstants.testStepFile,
         );
     }
 
