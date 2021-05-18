@@ -12,16 +12,16 @@
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
-from .example_steps import step_create
-from .example_steps import step_regenerate_key
-from .example_steps import step_show
-from .example_steps import step_list
-from .example_steps import step_list2
-from .example_steps import step_list_key
-from .example_steps import step_update
-from .example_steps import step_delete
-from .example_steps import step_create_spatial_anchor_account
-from .example_steps import step_regenerate_key2
+from .swagger_steps import step_create
+from .swagger_steps import step_regenerate_key
+from .swagger_steps import step_show
+from .swagger_steps import step_list
+from .swagger_steps import step_list2
+from .swagger_steps import step_list_key
+from .swagger_steps import step_update
+from .swagger_steps import step_delete
+from .swagger_steps import step_create_spatial_anchor_account
+from .swagger_steps import step_regenerate_key2
 from .. import (
     try_manual,
     raise_if,

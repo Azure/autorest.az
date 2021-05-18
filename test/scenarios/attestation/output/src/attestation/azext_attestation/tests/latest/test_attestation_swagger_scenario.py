@@ -12,8 +12,8 @@
 import os
 from azure.cli.testsdk import ScenarioTest
 from azure.cli.testsdk import ResourceGroupPreparer
-from .example_steps import step_create_provider
-from .example_steps import step_attestation_provider_update
+from .swagger_steps import step_create_provider
+from .swagger_steps import step_attestation_provider_update
 from .. import (
     try_manual,
     raise_if,

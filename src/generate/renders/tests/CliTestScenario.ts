@@ -343,7 +343,7 @@ export class CliTestScenario extends TemplateBase {
                         } else {
                             outputFunc.push(...ToMultiLine(`    ${functionName}(test, checks=[])`));
                         }
-                        template.header.addFromImport('.example_steps', [functionName]);
+                        template.header.addFromImport('.swagger_steps', [functionName]);
                         template.skip = false;
                     } else {
                         outputFunc.push(...ToMultiLine(`    # STEP NOT FOUND: ${exampleId}`));
