@@ -44,6 +44,7 @@ export interface MethodParameterModel {
     MethodParameter_PositionalKeys: string[];
     MethodParameter_Features: Record<string, string | number>;
     MethodParameter_Imports: Record<string, any>;
+    MethodParameter_FullParamPath: string;
 }
 
 export class MethodParameterModelImpl implements MethodParameterModel {
@@ -331,5 +332,15 @@ export class MethodParameterModelImpl implements MethodParameterModel {
 
     public get MethodParameter_Imports(): Record<string, any> {
         return this.MethodParameter.language['az']['imports'];
+    }
+
+    public get MethodParameter_FullParamPath(): string {
+        const parameter = this.MethodParameter;
+        const path = [];
+        if (parameter.language?.['cli']?.cliFlattenTrace) {
+            path.push(...parameter.language?.['cli']?.cliFlattenTrace);
+        }
+        path.push(this.MethodParameter_Name);
+        return path.join('$$');
     }
 }

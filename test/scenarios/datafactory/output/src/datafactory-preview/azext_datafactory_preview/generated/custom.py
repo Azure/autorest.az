@@ -182,6 +182,7 @@ def datafactory_trigger_update(instance,
                                if_match=None,
                                description=None,
                                annotations=None):
+    instance.properties.type = 'Trigger'
     if description is not None:
         instance.properties.description = description
     if annotations is not None:
