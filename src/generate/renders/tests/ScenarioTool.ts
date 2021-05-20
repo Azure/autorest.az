@@ -65,7 +65,10 @@ export function GenerateDefaultTestScenario(examples: CommandExample[]): any[] {
         const example: CommandExample = sorted[i];
         testScenario.push({ name: example.Id });
     }
-    return testScenario;
+
+    return testScenario.filter((value, index, self) => {
+        return index === self.findIndex((t) => t.name === value.name);
+    });
 }
 
 export function GenerateDefaultTestScenarioByDependency(
