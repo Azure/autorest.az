@@ -194,13 +194,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                                 do {
                                     if (
                                         !paramRequired.has(
-                                            this.methodParameterHandler
-                                                .MethodParameter_FullParamPath,
+                                            this.methodParameterHandler.MethodParameter_Name,
                                         )
                                     ) {
                                         paramRequired.set(
-                                            this.methodParameterHandler
-                                                .MethodParameter_FullParamPath,
+                                            this.methodParameterHandler.MethodParameter_Name,
                                             this.methodParameterHandler.MethodParameter_IsRequired
                                                 ? 1
                                                 : 0,
@@ -209,11 +207,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         this.methodParameterHandler.MethodParameter_IsRequired
                                     ) {
                                         paramRequired.set(
-                                            this.methodParameterHandler
-                                                .MethodParameter_FullParamPath,
+                                            this.methodParameterHandler.MethodParameter_Name,
                                             paramRequired.get(
-                                                this.methodParameterHandler
-                                                    .MethodParameter_FullParamPath,
+                                                this.methodParameterHandler.MethodParameter_Name,
                                             ) + 1,
                                         );
                                     }
@@ -225,13 +221,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                                     do {
                                         if (
                                             !paramRequired.has(
-                                                this.methodParameterHandler
-                                                    .MethodParameter_FullParamPath,
+                                                this.methodParameterHandler.MethodParameter_Name,
                                             )
                                         ) {
                                             paramRequired.set(
-                                                this.methodParameterHandler
-                                                    .MethodParameter_FullParamPath,
+                                                this.methodParameterHandler.MethodParameter_Name,
                                                 this.methodParameterHandler
                                                     .MethodParameter_IsRequired
                                                     ? 1
@@ -241,11 +235,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             this.methodParameterHandler.MethodParameter_IsRequired
                                         ) {
                                             paramRequired.set(
-                                                this.methodParameterHandler
-                                                    .MethodParameter_FullParamPath,
+                                                this.methodParameterHandler.MethodParameter_Name,
                                                 paramRequired.get(
                                                     this.methodParameterHandler
-                                                        .MethodParameter_FullParamPath,
+                                                        .MethodParameter_Name,
                                                 ) + 1,
                                             );
                                         }
@@ -283,8 +276,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             'RequiredByMethod'
                                         ] =
                                             paramRequired.get(
-                                                this.methodParameterHandler
-                                                    .MethodParameter_FullParamPath,
+                                                this.methodParameterHandler.MethodParameter_Name,
                                             ) === paramTime;
                                     }
                                     if (
@@ -330,7 +322,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             ] =
                                                 paramRequired.get(
                                                     this.methodParameterHandler
-                                                        .MethodParameter_NameAz,
+                                                        .MethodParameter_Name,
                                                 ) === paramTime;
                                         }
                                         if (

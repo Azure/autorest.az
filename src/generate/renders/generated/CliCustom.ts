@@ -98,12 +98,7 @@ function GenerateBody(model: CodeModelAz, required: any): string[] {
     return output;
 }
 
-function ConstructMethodBodyParameter(
-    model: CodeModelAz,
-    needGeneric = false,
-    required: any,
-    outputParamNames: string[],
-) {
+function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, required: any) {
     const {
         methodHandler,
         methodParameterHandler,
@@ -196,7 +191,6 @@ function ConstructMethodBodyParameter(
                             originalParameterNameStack,
                             null,
                             '{}',
-                            outputParamNames,
                         ),
                     );
                 }
@@ -262,7 +256,6 @@ function ConstructMethodBodyParameter(
                                         originalParameterNameStack,
                                         null,
                                         '{}',
-                                        outputParamNames,
                                     ),
                                 );
                             }
@@ -286,7 +279,6 @@ function ConstructMethodBodyParameter(
                                 originalParameterNameStack,
                                 paramName,
                                 "'" + valueToMatch + "'",
-                                outputParamNames,
                             );
                         } else {
                             continue;
@@ -314,7 +306,6 @@ function ConstructMethodBodyParameter(
                                 originalParameterNameStack,
                                 paramName,
                                 methodParameterHandler.MethodParameter_MapsTo,
-                                outputParamNames,
                                 defaultValue,
                                 needIfClause,
                             );
@@ -339,7 +330,6 @@ function ConstructMethodBodyParameter(
                                 originalParameterNameStack,
                                 paramName,
                                 defaultValue,
-                                outputParamNames,
                             );
                         }
                     }
@@ -395,7 +385,6 @@ function ConstructValuation(
     classNames: string[],
     paramName: string,
     value: string,
-    outputParamNames: string[],
     defaultValue: string = null,
     needIfClause = true,
 ): string[] {
@@ -421,13 +410,6 @@ function ConstructValuation(
 
             if (!isNullOrUndefined(paramName)) {
                 left = left + "['" + paramName + "']";
-            } else if (classNames.length == 1 && outputParamNames.indexOf(classNames[0]) >= 0) {
-                //in case the body parameter has the same name with an function parameter, define a temp parameter for the function parameter
-                str.push(prefix + `_${classNames[0]} = ${classNames[0]}`);
-            }
-            if (outputParamNames.indexOf(value) >= 0 && value == classNames[0]) {
-                //use the temp parameter
-                value = '_' + value;
             }
         }
         str.push(left + ' = ' + value);
@@ -445,14 +427,13 @@ function ConstructValuation(
                 classNames,
                 paramName,
                 defaultValue,
-                outputParamNames,
             ) + ifClause,
         );
     }
     return str;
 }
 
-function GetSingleCommandDef(model: CodeModelAz, required: any, outputParamNames: string[]) {
+function GetSingleCommandDef(model: CodeModelAz, required: any) {
     const {
         commandGroupHandler,
         commandHandler,
@@ -481,7 +462,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, outputParamNames
             }
             if (!firstLine) {
                 output.push(call);
-                outputParamNames.push(call);
                 firstLine = true;
             }
             if (methodHandler.Method_IsLongRun && commandGroupHandler.CommandGroup_HasShowCommand) {
@@ -532,7 +512,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, outputParamNames
                         allParam.set(name, true);
                         output[output.length - 1] += ',';
                         output.push(indent + name);
-                        outputParamNames.push(name);
                     }
                 } while (model.SelectNextMethodParameter());
             }
@@ -558,10 +537,7 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, outputParamNames
                         needGeneric &&
                         !isNullOrUndefined(genericParameter) &&
                         methodParameterHandler.MethodParameter_MapsTo ===
-                            parameterHandler.Parameter_MapsTo(genericParameter) &&
-                        isNullOrUndefined(
-                            methodParameterHandler.MethodParameter.language['cli']?.cliFlattenTrace,
-                        )
+                            parameterHandler.Parameter_MapsTo(genericParameter)
                     ) {
                         continue;
                     }
@@ -593,7 +569,6 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, outputParamNames
                         allParam.set(name, true);
                         output[output.length - 1] += ',';
                         output.push(indent + name + '=None');
-                        outputParamNames.push(name);
                     }
                 } while (model.SelectNextMethodParameter());
             }
@@ -603,13 +578,12 @@ function GetSingleCommandDef(model: CodeModelAz, required: any, outputParamNames
     if (hasLongRun) {
         output[output.length - 1] += ',';
         output.push(indent + 'no_wait=False');
-        outputParamNames.push('no_wait');
     }
     output[output.length - 1] += '):';
     return output;
 }
 
-function GetSingleCommandBody(model: CodeModelAz, required: any, outputParamNames: string[]) {
+function GetSingleCommandBody(model: CodeModelAz, required: any) {
     const { methodHandler, methodParameterHandler, parameterHandler } = model.GetHandler();
     let originalParameters = null;
 
@@ -748,7 +722,7 @@ function GetSingleCommandBody(model: CodeModelAz, required: any, outputParamName
             }
 
             outputBody = outputBody.concat(
-                ConstructMethodBodyParameter(model, needGeneric, required, outputParamNames),
+                ConstructMethodBodyParameter(model, needGeneric, required),
             );
         } while (model.SelectNextMethod());
 
@@ -837,9 +811,8 @@ function GetCommandBody(model: CodeModelAz, required: any) {
     output.push('');
     output.push('');
 
-    const outputParamNames: string[] = [];
-    output = output.concat(GetSingleCommandDef(model, required, outputParamNames));
-    output = output.concat(GetSingleCommandBody(model, required, outputParamNames));
+    output = output.concat(GetSingleCommandDef(model, required));
+    output = output.concat(GetSingleCommandBody(model, required));
     return output;
 }
 
