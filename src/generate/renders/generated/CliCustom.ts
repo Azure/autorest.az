@@ -270,7 +270,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                             methodParameterHandler.MethodParameter.extensions?.[
                                 'cli-discriminator-value'
                             ];
-                        if (!isNullOrUndefined(valueToMatch)) {
+                        if (!isNullOrUndefined(valueToMatch) && !needGeneric) {
                             access = ConstructValuation(
                                 model,
                                 required,
