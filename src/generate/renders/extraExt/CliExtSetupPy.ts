@@ -17,7 +17,7 @@ export class CliExtSetupPy extends TemplateBase {
         this.relativePath = PathConstants.setupPyFile;
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
-            PathConstants.setupPyFile + PathConstants.njxFileExtension,
+            PathConstants.setupPyFile + PathConstants.njkFileExtension,
         );
     }
 

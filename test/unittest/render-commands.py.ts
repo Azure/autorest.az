@@ -13,7 +13,7 @@ sourceMapSupport.install();
 
 describe('renderCommandsPYTest', () => {
     it('renderCommandsPYTestCase1', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njk');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
@@ -309,7 +309,7 @@ describe('renderCommandsPYTest', () => {
     }, 30000);
 
     it('renderCommandsPYTestCase2', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njk');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {

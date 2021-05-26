@@ -127,7 +127,7 @@ describe('renderTestsCmdlets', () => {
     it('renderPositive', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../src/templates/tests/cmdlet/test_positive.py.njx',
+            '../../src/templates/tests/cmdlet/test_positive.py.njk',
         );
         nunjucks.configure({ autoescape: false });
         data.testData.className = 'PositiveTest';
@@ -143,7 +143,7 @@ describe('renderTestsCmdlets', () => {
     it('renderNegative', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../src/templates/tests/cmdlet/test_negative.py.njx',
+            '../../src/templates/tests/cmdlet/test_negative.py.njk',
         );
         nunjucks.configure({ autoescape: false });
         data.testData.className = 'NegativeTest';
@@ -159,7 +159,7 @@ describe('renderTestsCmdlets', () => {
     it('renderEmptyData', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../src/templates/tests/cmdlet/test_positive.py.njx',
+            '../../src/templates/tests/cmdlet/test_positive.py.njk',
         );
         nunjucks.configure({ autoescape: false });
         data_empty.testData.className = 'PositiveTest';

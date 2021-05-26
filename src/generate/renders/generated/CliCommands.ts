@@ -37,7 +37,7 @@ export class CliCommands extends TemplateBase {
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
             PathConstants.generatedFolder,
-            PathConstants.commandsFile + PathConstants.njxFileExtension,
+            PathConstants.commandsFile + PathConstants.njkFileExtension,
         );
     }
 

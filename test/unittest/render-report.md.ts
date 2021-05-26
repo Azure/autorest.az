@@ -12,7 +12,7 @@ sourceMapSupport.install();
 
 describe('renderRepordMd', () => {
     it('renderRepordMdTest', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/report.md.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/report.md.njk');
         nunjucks.configure({ autoescape: false });
         const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             hasExtension: true,

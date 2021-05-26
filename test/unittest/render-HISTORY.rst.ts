@@ -12,7 +12,7 @@ sourceMapSupport.install();
 
 describe('renderHistoryRST', () => {
     it('renderHistoryRSTTest', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/HISTORY.rst.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/HISTORY.rst.njk');
         const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {});
         const expectedFile = path.join(`${__dirname}`, '../../test/unittest/expected/HISTORY.rst');
         const expected = await readFile(expectedFile);

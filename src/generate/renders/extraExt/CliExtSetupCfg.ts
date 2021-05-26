@@ -14,7 +14,7 @@ export class CliExtSetupCfg extends TemplateBase {
         this.relativePath = PathConstants.setupCfgFile;
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
-            PathConstants.setupCfgFile + PathConstants.njxFileExtension,
+            PathConstants.setupCfgFile + PathConstants.njkFileExtension,
         );
     }
 

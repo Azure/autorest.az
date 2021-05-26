@@ -90,7 +90,7 @@ describe('getCommandsRender', () => {
     });
 
     it('getCommandRenderDataTest2', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/commands.py.njk');
         const data = await getCommandsRenderData();
         let result = render(path.relative(process.cwd(), tmplPath), data);
         const oriFile = path.join(

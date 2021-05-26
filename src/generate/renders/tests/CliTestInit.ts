@@ -19,7 +19,7 @@ export class CliTestInit extends TemplateBase {
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
             PathConstants.testFolder,
-            PathConstants.initFile + PathConstants.njxFileExtension,
+            PathConstants.initFile + PathConstants.njkFileExtension,
         );
     }
 
