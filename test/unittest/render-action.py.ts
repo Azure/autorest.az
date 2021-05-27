@@ -13,7 +13,7 @@ sourceMapSupport.install();
 
 describe('renderActionPYTest', () => {
     it('single positional action test', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njk');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
@@ -116,7 +116,7 @@ describe('renderActionPYTest', () => {
     }, 30000);
 
     it('single key value action test', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njk');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {
@@ -214,7 +214,7 @@ describe('renderActionPYTest', () => {
     }, 30000);
 
     it('single shorthand syntax action test', async () => {
-        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njx');
+        const tmplPath = path.join(`${__dirname}`, '../../src/templates/generated/action.py.njk');
         nunjucks.configure({ autoescape: false });
         let result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             data: {

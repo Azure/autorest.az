@@ -38,7 +38,7 @@ export class CliTestPrepare extends TemplateBase {
             PathConstants.templateRootFolder,
             PathConstants.testFolder,
             PathConstants.latestFolder,
-            PathConstants.preparersFile + PathConstants.njxFileExtension,
+            PathConstants.preparersFile + PathConstants.njkFileExtension,
         );
     }
 

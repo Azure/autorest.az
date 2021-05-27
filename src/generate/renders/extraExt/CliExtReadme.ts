@@ -16,7 +16,7 @@ export class CliExtReadme extends TemplateBase {
         this.relativePath = PathConstants.readmeFile;
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
-            PathConstants.readmeFile + PathConstants.njxFileExtension,
+            PathConstants.readmeFile + PathConstants.njkFileExtension,
         );
     }
 

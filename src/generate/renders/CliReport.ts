@@ -16,7 +16,7 @@ export class CliReport extends TemplateBase {
         this.relativePath = path.join(PathConstants.reportFile);
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
-            PathConstants.reportFile + PathConstants.njxFileExtension,
+            PathConstants.reportFile + PathConstants.njkFileExtension,
         );
     }
 

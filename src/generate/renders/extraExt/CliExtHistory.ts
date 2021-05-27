@@ -14,7 +14,7 @@ export class CliExtHistory extends TemplateBase {
         this.relativePath = PathConstants.historyRstFile;
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
-            PathConstants.historyRstFile + PathConstants.njxFileExtension,
+            PathConstants.historyRstFile + PathConstants.njkFileExtension,
         );
     }
 
