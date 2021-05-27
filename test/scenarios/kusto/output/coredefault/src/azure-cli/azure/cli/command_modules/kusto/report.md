@@ -616,8 +616,8 @@ location="westus" soft-delete-period="P1D" --resource-group "kustorptest"
 
 ##### <a name="ExamplesDatabasesUpdate">Example</a>
 ```
-az kusto database update --cluster-name "kustoclusterrptest4" --database-name "KustoDatabase8" --parameters \
-"{\\"properties\\":{\\"softDeletePeriod\\":\\"P1D\\"}}" --resource-group "kustorptest"
+az kusto database update --cluster-name "kustoclusterrptest4" --database-name "KustoDatabase8" --read-write-database \
+soft-delete-period="P1D" --resource-group "kustorptest"
 ```
 ##### <a name="ParametersDatabasesUpdate">Parameters</a> 
 |Option|Type|Description|Path (SDK)|Swagger name|
