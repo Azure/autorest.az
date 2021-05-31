@@ -517,12 +517,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             paramFlattenedName = paramName;
                                         }
                                         if (names.length > 1) {
-                                            let subgroup: string = names[0];
-                                            subgroup = subgroup.replace(/-/g, '_');
-                                            if (paramFlattenedName.startsWith(subgroup)) {
-                                                paramFlattenedName = paramFlattenedName.substr(
-                                                    subgroup.length + 1,
-                                                );
+                                            for (let subgroup of names.slice(0, names.length - 1)) {
+                                                subgroup = subgroup.replace(/-/g, '_');
+                                                if (paramFlattenedName.startsWith(subgroup)) {
+                                                    paramFlattenedName = paramFlattenedName.substr(
+                                                        subgroup.length + 1,
+                                                    );
+                                                }
                                             }
                                         }
                                         if (
