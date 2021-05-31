@@ -1,0 +1,23 @@
+{%- for extension in Extensions -%}
+# Azure CLI {{extension.name}} Extension #
+This is the extension for {{extension.name}}
+
+### How to use ###
+Install this extension using the below CLI command
+```
+az extension add --name {{extension.name}}
+```
+
+### Included Features ###
+{%- for group in extension.CommandGroups %}
+#### {{group.name}} ####
+{%- for azExample in group.examples %}
+##### {{azExample.title}} #####
+```
+{%- for line in azExample.CommandStringLines %}
+{{line}}
+{%- endfor %}
+```
+{%- endfor %}
+{%- endfor %}
+{%- endfor %}

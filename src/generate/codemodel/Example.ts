@@ -1023,6 +1023,8 @@ export class ExampleModelImpl implements ExampleModel {
 
         let hasRG = false;
         let resourceObjectName;
+
+        const handledParameters = {};
         for (const param of example.Parameters) {
             if (
                 minimum &&
@@ -1056,7 +1058,6 @@ export class ExampleModelImpl implements ExampleModel {
             if (param.keyValue === KeyValueType.No) {
                 slp = ToJsonString(slp);
             }
-            parameters.push(param.name + ' ' + slp);
 
             if (['--resource-group', '-g'].indexOf(param.name) >= 0) {
                 hasRG = true;
@@ -1069,6 +1070,15 @@ export class ExampleModelImpl implements ExampleModel {
             ) {
                 resourceObjectName = param.value;
             }
+
+            if (
+                !isNullOrUndefined(handledParameters[param.name]) &&
+                handledParameters[param.name] !== param.methodParam.value
+            ) {
+                continue;
+            }
+            handledParameters[param.name] = param.methodParam.value;
+            parameters.push(param.name + ' ' + slp);
         }
 
         if (

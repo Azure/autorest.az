@@ -20,7 +20,7 @@ export class CliActions extends TemplateBase {
         this.tmplPath = path.join(
             PathConstants.templateRootFolder,
             PathConstants.generatedFolder,
-            PathConstants.actionFile + PathConstants.njxFileExtension,
+            PathConstants.actionFile + PathConstants.njkFileExtension,
         );
     }
 

@@ -14,9 +14,9 @@ describe('renderHistoryRST', () => {
     it('renderHistoryRSTCase1', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../src/templates/azext/azext_metadata.json.njx',
+            '../../src/templates/azext/azext_metadata.json.njk',
         );
-        const result = nunjucks.render(tmplPath, {
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             model: { Extension_Mode: 'experimental', minCliCoreVersion: '2.15.0' },
         });
         const expectedFile = path.join(
@@ -34,9 +34,9 @@ describe('renderHistoryRST', () => {
     it('renderHistoryRSTCase2', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../src/templates/azext/azext_metadata.json.njx',
+            '../../src/templates/azext/azext_metadata.json.njk',
         );
-        const result = nunjucks.render(tmplPath, {
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             model: { Extension_Mode: 'preview', minCliCoreVersion: '2.15.1' },
         });
         const expectedFile = path.join(
@@ -54,10 +54,10 @@ describe('renderHistoryRST', () => {
     it('renderHistoryRSTCase3', async () => {
         const tmplPath = path.join(
             `${__dirname}`,
-            '../../src/templates/azext/azext_metadata.json.njx',
+            '../../src/templates/azext/azext_metadata.json.njk',
         );
 
-        const result = nunjucks.render(tmplPath, {
+        const result = nunjucks.render(path.relative(process.cwd(), tmplPath), {
             model: { Extension_Mode: 'stable', minCliCoreVersion: '2.15.1' },
         });
         const expectedFile = path.join(

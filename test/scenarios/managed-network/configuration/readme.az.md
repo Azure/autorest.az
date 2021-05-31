@@ -29,6 +29,10 @@ directive:
         group: managed-network scope-assignment
       set:
         group: managed-network mn scope-assignment
+    - where: 
+        parameter-name: scope-assignment-name-fake 
+      set:
+        parameter-name: scope-assignment-name
 
 cli:
     cli-directive:

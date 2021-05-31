@@ -304,7 +304,7 @@ cli:
     - where:
         group: groupCondition
         op: opCondition
-      hide: true    
+      hidden: true    
 ```
 * Note: if a parameter has the flattened schema prefix in the name, then we can't rename it in this way, because in Autorest.Clicommon it doesn't have the flattened schema prefix. We can only add alias for this parameter in such case.
 
