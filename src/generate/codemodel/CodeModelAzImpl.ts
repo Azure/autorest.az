@@ -461,7 +461,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                         >();
                         if (this.SelectFirstMethod()) {
                             do {
-                                const methodParamMaptos: Set<string> = new Set<string>();
+                                const methodParamMaptos: Map<string, Schema> = new Map<
+                                    string,
+                                    Schema
+                                >();
                                 if (this.SelectFirstMethodParameter()) {
                                     do {
                                         const paramName = this.methodParameterHandler
@@ -578,7 +581,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     param,
                                                 );
                                                 nameParamReference.set(paramName, param);
-                                                methodParamMaptos.add(paramName);
+                                                methodParamMaptos.set(paramName, param.schema);
                                             } else {
                                                 // if the full flattenedName within one command is the same but has two different reference. there's no way to split them.
                                                 this.session.message({
@@ -597,10 +600,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             ) {
                                                 paramFlattenedName += '_';
                                             }
-                                            while (methodParamMaptos.has(paramFlattenedName)) {
+                                            while (
+                                                methodParamMaptos.has(paramFlattenedName) &&
+                                                methodParamMaptos.get(paramFlattenedName).type !==
+                                                    param.schema.type
+                                            ) {
                                                 paramFlattenedName += '_';
                                             }
-                                            methodParamMaptos.add(paramFlattenedName);
+                                            methodParamMaptos.set(paramFlattenedName, param.schema);
                                             this.parameterHandler.Parameter_SetAzNameMapsTo(
                                                 paramFlattenedName,
                                                 param,
