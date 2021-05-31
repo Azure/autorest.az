@@ -54,7 +54,7 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             {% endfor %}
             {% if action.subProperties.length > 0 %}
             else:
-                raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
+                raise CLIError('Unsupported Key {} is provided for parameter {{action.mapsTo | replace("_", "-")}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                 format(k))
             {% endif %}
             {% else %}
