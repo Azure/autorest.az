@@ -145,10 +145,7 @@ class AddHub(argparse.Action):
                 d['id'] = v[0]
 
             else:
-                raise CLIError(
-                    'Unsupported Key {} is provided for parameter hub-and-spoke-topology_hub. All possible keys are: id'
-                    .format(k)
-                )
+                raise CLIError('Unsupported Key {} is provided for parameter hub. All possible keys are: id'.format(k))
 
         return d
 
@@ -179,8 +176,7 @@ class AddSpokes(argparse._AppendAction):
 
             else:
                 raise CLIError(
-                    'Unsupported Key {} is provided for parameter hub-and-spoke-topology_spokes. All possible keys'
-                    ' are: id'.format(k)
+                    'Unsupported Key {} is provided for parameter spokes. All possible keys are: id'.format(k)
                 )
 
         return d
@@ -211,9 +207,6 @@ class AddMesh(argparse._AppendAction):
                 d['id'] = v[0]
 
             else:
-                raise CLIError(
-                    'Unsupported Key {} is provided for parameter hub-and-spoke-topology_mesh. All possible keys'
-                    ' are: id'.format(k)
-                )
+                raise CLIError('Unsupported Key {} is provided for parameter mesh. All possible keys are: id'.format(k))
 
         return d

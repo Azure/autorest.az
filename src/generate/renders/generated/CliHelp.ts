@@ -58,6 +58,7 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
             const allSubGroup: Map<string, boolean> = new Map<string, boolean>();
             let hasWait = false;
             const allLongRunCommand = [];
+            let commandGroupName = commandGroupHandler.CommandGroup_Name;
             if (model.SelectFirstCommand()) {
                 do {
                     const subCommandGroupName = commandHandler.Command_SubGroupName;
@@ -66,7 +67,14 @@ export function GenerateAzureCliHelp(model: CodeModelAz, debug: boolean): string
                         output = output.concat(
                             generateCommandGroupHelp(model, subCommandGroupName, debug),
                         );
+                        commandGroupName = subCommandGroupName;
                     }
+                    output = output.concat(
+                        generateMiddleCommandGroupHelp(
+                            commandGroupName,
+                            commandHandler.Command_Name,
+                        ),
+                    );
                     if (
                         commandHandler.Command_IsLongRun &&
                         commandGroupHandler.CommandGroup_HasShowCommand
@@ -170,13 +178,35 @@ function generateCommandGroupHelp(model: CodeModelAz, subCommandGroupName = '', 
     return output;
 }
 
+function generateMiddleCommandGroupHelp(lastName: string, nextName: string) {
+    const lastNames = lastName.split(' ');
+    const nextNames = nextName.split(' ');
+    const output = [];
+
+    while (lastNames.length < nextNames.length - 1) {
+        output.push('');
+        const curName = nextNames.slice(0, lastNames.length + 1).join(' ');
+        output.push("helps['" + curName + '\'] = """');
+        output.push('    type: group');
+        ToMultiLine(
+            `    short-summary: Manage ${lastNames.last} with ${nextNames[lastNames.length]}`,
+            output,
+            CodeGenConstants.PYLINT_MAX_CODE_LENGTH,
+            true,
+        );
+        output.push('"""');
+        lastNames.push(nextNames[lastNames.length]);
+    }
+    return output;
+}
+
 function addParameterHelp(output: string[], model: CodeModelAz, debug: boolean) {
     const { methodHandler, methodParameterHandler, parameterHandler } = model.GetHandler();
     let parameterOutput = ['    parameters:'];
 
     if (model.SelectFirstMethod()) {
         do {
-            const originalOperation = methodHandler.Method_GetOriginalOperation;
+            const originalOperation = methodHandler.Method_GetOriginalOperation();
             let baseParam = null;
             if (model.SelectFirstMethodParameter()) {
                 do {

@@ -160,7 +160,7 @@ function getCommandBody(model: CodeModelAz, needGeneric = false, debug = false) 
     const allPythonParam: Map<string, boolean> = new Map<string, boolean>();
     if (model.SelectFirstMethod()) {
         do {
-            const originalOperation = methodHandler.Method_GetOriginalOperation;
+            const originalOperation = methodHandler.Method_GetOriginalOperation();
             if (!isNullOrUndefined(originalOperation)) {
                 for (const param of originalOperation.parameters) {
                     if (parameterHandler.Parameter_InGlobal(param)) {

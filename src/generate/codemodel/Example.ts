@@ -292,10 +292,21 @@ export class ExampleModelImpl implements ExampleModel {
     public GetExampleParameters(exampleObj): ExampleParam[] {
         const parameters: ExampleParam[] = [];
         const methodParamList: MethodParam[] = this.GetMethodParametersList();
+        let flattenSucceed = true;
         Object.entries(exampleObj.parameters).forEach(([paramName, paramValue]) => {
-            this.FlattenExampleParameter(methodParamList, parameters, paramName, paramValue, []);
+            if (
+                !this.FlattenExampleParameter(
+                    methodParamList,
+                    parameters,
+                    paramName,
+                    paramValue,
+                    [],
+                )
+            ) {
+                flattenSucceed = false;
+            }
         });
-        return parameters;
+        return flattenSucceed ? parameters : undefined;
     }
 
     private isDiscriminator(param: any): boolean {
@@ -676,7 +687,7 @@ export class ExampleModelImpl implements ExampleModel {
         name: string,
         value: any,
         ancestors: string[],
-    ) {
+    ): boolean {
         for (const methodParam of this.matchMethodParam(methodParamList, name, ancestors)) {
             let polySubParam: MethodParam = null;
             let netValue =
@@ -691,15 +702,27 @@ export class ExampleModelImpl implements ExampleModel {
                         if (polySubParamObj.schema.extensions) {
                             const valueToMatch =
                                 polySubParamObj.schema.extensions['x-ms-discriminator-value'];
-                            if (netValue[keyToMatch] === valueToMatch) {
+                            if (
+                                isNullOrUndefined(netValue[keyToMatch]) ||
+                                netValue[keyToMatch] === valueToMatch
+                            ) {
                                 polySubParam = methodParam;
                                 delete netValue[keyToMatch];
                                 break;
+                            } else {
+                                return false;
                             }
                         }
                     }
                 }
+            } else if (
+                !isNullOrUndefined(methodParam.value.extensions?.['cli-discriminator-value'])
+            ) {
+                if (value !== methodParam.value.extensions?.['cli-discriminator-value']) {
+                    return false;
+                }
             }
+
             if (polySubParam) {
                 netValue = this.FlattenProperty(polySubParam.value?.schema, netValue);
                 rawValue = this.FlattenProperty(polySubParam.value?.schema, rawValue);
@@ -722,7 +745,7 @@ export class ExampleModelImpl implements ExampleModel {
                         ancestors,
                         rawValue,
                     );
-                    return;
+                    return true;
                 }
             } else if (
                 'targetProperty' in methodParam.value &&
@@ -741,7 +764,7 @@ export class ExampleModelImpl implements ExampleModel {
                         ancestors,
                         rawValue,
                     );
-                    return;
+                    return true;
                 }
             } else if (ancestors.length === 0) {
                 // exampleParam.set(name, value);
@@ -755,21 +778,26 @@ export class ExampleModelImpl implements ExampleModel {
                         rawValue,
                     )
                 )
-                    return;
+                    return true;
             }
         }
 
         if (!isNullOrUndefined(value) && typeof value === 'object') {
             for (const subName in value) {
-                this.FlattenExampleParameter(
-                    methodParamList,
-                    exampleParam,
-                    subName,
-                    value[subName],
-                    ancestors.concat(name),
-                );
+                if (
+                    !this.FlattenExampleParameter(
+                        methodParamList,
+                        exampleParam,
+                        subName,
+                        value[subName],
+                        ancestors.concat(name),
+                    )
+                ) {
+                    return false;
+                }
             }
         }
+        return true;
     }
 
     public ConvertToCliParameters(
@@ -831,7 +859,7 @@ export class ExampleModelImpl implements ExampleModel {
         }
 
         // check polymophism here
-        const originalOperation = this.methodHandler.Method_GetOriginalOperation;
+        const originalOperation = this.methodHandler.Method_GetOriginalOperation();
         if (!isNullOrUndefined(originalOperation)) {
             if (this.baseHandler.SelectFirstMethodParameter()) {
                 do {
@@ -917,6 +945,9 @@ export class ExampleModelImpl implements ExampleModel {
         example.HttpMethod = this.methodHandler.Method_HttpMethod;
         example.ResourceClassName = this.commandGroupHandler.CommandGroup_Key;
         const params = this.GetExampleParameters(exampleObj);
+        if (isNullOrUndefined(params)) {
+            return undefined;
+        }
         example.Parameters = this.ConvertToCliParameters(
             params,
             this.commandGroupHandler.CommandGroup_Key,
@@ -932,13 +963,13 @@ export class ExampleModelImpl implements ExampleModel {
                 this.commandHandler.Command_MethodName.toLowerCase() === 'update' &&
                 !forUpdate(this.baseHandler, id)
             ) {
-                return;
+                return undefined;
             }
             if (
                 this.commandHandler.Command_MethodName.toLowerCase() !== 'update' &&
                 forUpdate(this.baseHandler, id)
             ) {
-                return;
+                return undefined;
             }
         }
         if (this.filterExampleByPoly(exampleObj, example)) {

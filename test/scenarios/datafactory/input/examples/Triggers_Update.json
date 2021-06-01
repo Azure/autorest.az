@@ -7,7 +7,7 @@
     "ifMatch": null,
     "trigger": {
       "properties": {
-        "type": "ScheduleTrigger",
+        "type": "Trigger",
         "typeProperties": {
           "recurrence": {
             "frequency": "Minute",

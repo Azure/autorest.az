@@ -18,7 +18,7 @@ export interface MethodModel {
     Method_ResourceType: string | undefined;
     Method_BodyParameterName: string;
     Method_IsLongRun: boolean;
-    Method_GetOriginalOperation: any;
+    Method_GetOriginalOperation(op?): any;
     Method_GetSplitOriginalOperation: any;
     Method_GenericSetterParameter(Operation): Parameter;
     Method_NeedGeneric: boolean;
@@ -139,7 +139,9 @@ export class MethodModelImpl implements MethodModel {
         if (
             this.Method.language['az'].isSplitUpdate &&
             this.commandGroupHandler.CommandGroup_HasShowCommand &&
-            !isNullOrUndefined(this.Method_GenericSetterParameter(this.Method_GetOriginalOperation))
+            !isNullOrUndefined(
+                this.Method_GenericSetterParameter(this.Method_GetOriginalOperation()),
+            )
         ) {
             return true;
         }
@@ -150,8 +152,11 @@ export class MethodModelImpl implements MethodModel {
         return this.Method.language[language].name;
     }
 
-    public get Method_GetOriginalOperation(): any {
-        const polyOriginal = this.Method.extensions?.['cli-poly-as-resource-original-operation'];
+    public Method_GetOriginalOperation(op: Operation = this.Method): any {
+        if (isNullOrUndefined(op)) {
+            return undefined;
+        }
+        const polyOriginal = op?.extensions?.['cli-poly-as-resource-original-operation'];
         if (
             !isNullOrUndefined(polyOriginal) &&
             !isNullOrUndefined(polyOriginal.extensions?.['cli-split-operation-original-operation'])
@@ -160,10 +165,21 @@ export class MethodModelImpl implements MethodModel {
                 polyOriginal.extensions?.['cli-split-operation-original-operation'];
             return splitOriginal;
         }
-        const splittedOriginal = this.Method.extensions?.['cli-split-operation-original-operation'];
+        const splittedOriginal = op?.extensions?.['cli-split-operation-original-operation'];
         if (!isNullOrUndefined(splittedOriginal)) {
             return splittedOriginal;
         }
+        if (
+            !isNullOrUndefined(
+                polyOriginal?.extensions?.['cli-poly-as-resource-original-operation'],
+            )
+        ) {
+            const polyOriginalDeeper = this.Method_GetOriginalOperation(polyOriginal);
+            if (!isNullOrUndefined(polyOriginalDeeper)) {
+                return polyOriginalDeeper;
+            }
+        }
+
         return polyOriginal;
     }
 

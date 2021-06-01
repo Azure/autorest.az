@@ -218,10 +218,10 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_create
                                                                                  managed_network_name,
                                                                                  policy_name,
                                                                                  location,
-                                                                                 managed_network_policy,
                                                                                  hub=None,
                                                                                  spokes=None,
                                                                                  mesh=None,
+                                                                                 managed_network_policy_=None,
                                                                                  no_wait=False):
     managed_network_policy = {}
     managed_network_policy['location'] = location
@@ -230,6 +230,7 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_create
     managed_network_policy['properties']['hub'] = hub
     managed_network_policy['properties']['spokes'] = spokes
     managed_network_policy['properties']['mesh'] = mesh
+    managed_network_policy['managed_network_policy'] = managed_network_policy_
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -243,10 +244,10 @@ def managed_network_managed_network_peering_policy_mesh_topology_create(client,
                                                                         managed_network_name,
                                                                         policy_name,
                                                                         location,
-                                                                        managed_network_policy,
                                                                         hub=None,
                                                                         spokes=None,
                                                                         mesh=None,
+                                                                        managed_network_policy_=None,
                                                                         no_wait=False):
     managed_network_policy = {}
     managed_network_policy['location'] = location
@@ -255,6 +256,7 @@ def managed_network_managed_network_peering_policy_mesh_topology_create(client,
     managed_network_policy['properties']['hub'] = hub
     managed_network_policy['properties']['spokes'] = spokes
     managed_network_policy['properties']['mesh'] = mesh
+    managed_network_policy['managed_network_policy'] = managed_network_policy_
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -271,16 +273,18 @@ def managed_network_managed_network_peering_policy_hub_and_spoke_topology_update
                                                                                  hub=None,
                                                                                  spokes=None,
                                                                                  mesh=None,
+                                                                                 managed_network_policy_=None,
                                                                                  no_wait=False):
     if location is not None:
         instance.location = location
-    instance.properties.type = 'HubAndSpokeTopology'
     if hub is not None:
         instance.properties.hub = hub
     if spokes is not None:
         instance.properties.spokes = spokes
     if mesh is not None:
         instance.properties.mesh = mesh
+    if managed_network_policy_ is not None:
+        instance.managed_network_policy = managed_network_policy_
     return instance
 
 
@@ -292,16 +296,18 @@ def managed_network_managed_network_peering_policy_mesh_topology_update(instance
                                                                         hub=None,
                                                                         spokes=None,
                                                                         mesh=None,
+                                                                        managed_network_policy_=None,
                                                                         no_wait=False):
     if location is not None:
         instance.location = location
-    instance.properties.type = 'MeshTopology'
     if hub is not None:
         instance.properties.hub = hub
     if spokes is not None:
         instance.properties.spokes = spokes
     if mesh is not None:
         instance.properties.mesh = mesh
+    if managed_network_policy_ is not None:
+        instance.managed_network_policy = managed_network_policy_
     return instance
 
 

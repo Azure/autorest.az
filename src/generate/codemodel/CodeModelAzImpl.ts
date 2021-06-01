@@ -194,11 +194,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                                 do {
                                     if (
                                         !paramRequired.has(
-                                            this.methodParameterHandler.MethodParameter_Name,
+                                            this.methodParameterHandler.MethodParameter_MapsTo,
                                         )
                                     ) {
                                         paramRequired.set(
-                                            this.methodParameterHandler.MethodParameter_Name,
+                                            this.methodParameterHandler.MethodParameter_MapsTo,
                                             this.methodParameterHandler.MethodParameter_IsRequired
                                                 ? 1
                                                 : 0,
@@ -207,9 +207,9 @@ export class CodeModelCliImpl implements CodeModelAz {
                                         this.methodParameterHandler.MethodParameter_IsRequired
                                     ) {
                                         paramRequired.set(
-                                            this.methodParameterHandler.MethodParameter_Name,
+                                            this.methodParameterHandler.MethodParameter_MapsTo,
                                             paramRequired.get(
-                                                this.methodParameterHandler.MethodParameter_Name,
+                                                this.methodParameterHandler.MethodParameter_MapsTo,
                                             ) + 1,
                                         );
                                     }
@@ -221,11 +221,11 @@ export class CodeModelCliImpl implements CodeModelAz {
                                     do {
                                         if (
                                             !paramRequired.has(
-                                                this.methodParameterHandler.MethodParameter_Name,
+                                                this.methodParameterHandler.MethodParameter_MapsTo,
                                             )
                                         ) {
                                             paramRequired.set(
-                                                this.methodParameterHandler.MethodParameter_Name,
+                                                this.methodParameterHandler.MethodParameter_MapsTo,
                                                 this.methodParameterHandler
                                                     .MethodParameter_IsRequired
                                                     ? 1
@@ -235,10 +235,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             this.methodParameterHandler.MethodParameter_IsRequired
                                         ) {
                                             paramRequired.set(
-                                                this.methodParameterHandler.MethodParameter_Name,
+                                                this.methodParameterHandler.MethodParameter_MapsTo,
                                                 paramRequired.get(
                                                     this.methodParameterHandler
-                                                        .MethodParameter_Name,
+                                                        .MethodParameter_MapsTo,
                                                 ) + 1,
                                             );
                                         }
@@ -276,7 +276,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             'RequiredByMethod'
                                         ] =
                                             paramRequired.get(
-                                                this.methodParameterHandler.MethodParameter_Name,
+                                                this.methodParameterHandler.MethodParameter_MapsTo,
                                             ) === paramTime;
                                     }
                                     if (
@@ -322,7 +322,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             ] =
                                                 paramRequired.get(
                                                     this.methodParameterHandler
-                                                        .MethodParameter_Name,
+                                                        .MethodParameter_MapsTo,
                                                 ) === paramTime;
                                         }
                                         if (
@@ -450,6 +450,7 @@ export class CodeModelCliImpl implements CodeModelAz {
         this.allActions = new Map<Parameter, string>();
         const nameActionReference: Map<string, ActionParam> = new Map<string, ActionParam>();
         const pythonReserveWord = ['all', 'id', 'format', 'type', 'filter'];
+
         if (this.SelectFirstCommandGroup()) {
             do {
                 if (this.SelectFirstCommand()) {
@@ -460,6 +461,10 @@ export class CodeModelCliImpl implements CodeModelAz {
                         >();
                         if (this.SelectFirstMethod()) {
                             do {
+                                const methodParamMaptos: Map<string, Schema> = new Map<
+                                    string,
+                                    Schema
+                                >();
                                 if (this.SelectFirstMethodParameter()) {
                                     do {
                                         const paramName = this.methodParameterHandler
@@ -512,12 +517,13 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             paramFlattenedName = paramName;
                                         }
                                         if (names.length > 1) {
-                                            let subgroup: string = names[0];
-                                            subgroup = subgroup.replace(/-/g, '_');
-                                            if (paramFlattenedName.startsWith(subgroup)) {
-                                                paramFlattenedName = paramFlattenedName.substr(
-                                                    subgroup.length + 1,
-                                                );
+                                            for (let subgroup of names.slice(0, names.length - 1)) {
+                                                subgroup = subgroup.replace(/-/g, '_');
+                                                if (paramFlattenedName.startsWith(subgroup)) {
+                                                    paramFlattenedName = paramFlattenedName.substr(
+                                                        subgroup.length + 1,
+                                                    );
+                                                }
                                             }
                                         }
                                         if (
@@ -576,6 +582,7 @@ export class CodeModelCliImpl implements CodeModelAz {
                                                     param,
                                                 );
                                                 nameParamReference.set(paramName, param);
+                                                methodParamMaptos.set(paramName, param.schema);
                                             } else {
                                                 // if the full flattenedName within one command is the same but has two different reference. there's no way to split them.
                                                 this.session.message({
@@ -594,6 +601,14 @@ export class CodeModelCliImpl implements CodeModelAz {
                                             ) {
                                                 paramFlattenedName += '_';
                                             }
+                                            while (
+                                                methodParamMaptos.has(paramFlattenedName) &&
+                                                methodParamMaptos.get(paramFlattenedName).type !==
+                                                    param.schema.type
+                                            ) {
+                                                paramFlattenedName += '_';
+                                            }
+                                            methodParamMaptos.set(paramFlattenedName, param.schema);
                                             this.parameterHandler.Parameter_SetAzNameMapsTo(
                                                 paramFlattenedName,
                                                 param,

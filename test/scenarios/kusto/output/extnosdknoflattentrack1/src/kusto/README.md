@@ -117,7 +117,7 @@ az kusto database list --cluster-name "kustoclusterrptest4" --resource-group "ku
 ##### Update #####
 ```
 az kusto database update --cluster-name "kustoclusterrptest4" --database-name "KustoDatabase8" \
-    --parameters "{\\"properties\\":{\\"softDeletePeriod\\":\\"P1D\\"}}" --resource-group "kustorptest" 
+    --read-write-database soft-delete-period="P1D" --resource-group "kustorptest" 
 ```
 ##### Add-principal #####
 ```

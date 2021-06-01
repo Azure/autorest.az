@@ -382,7 +382,7 @@ def step_database_update(test, checks=None):
     test.cmd('az kusto database update '
              '--cluster-name "{myCluster}" '
              '--database-name "KustoDatabase8" '
-             '--parameters "{{\\"properties\\":{{\\"softDeletePeriod\\":\\"P1D\\"}}}}" '
+             '--read-write-database soft-delete-period="P1D" '
              '--resource-group "{rg}"',
              checks=checks)
 
