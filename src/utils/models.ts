@@ -102,7 +102,7 @@ export class PathConstants {
         return 'test_' + rpName + '_swagger_scenario.py';
     }
 
-    public static readonly njxFileExtension = '.njk';
+    public static readonly njkFileExtension = '.njk';
 }
 
 export enum CodeGenConstants {
