@@ -55,11 +55,11 @@ class AttestationfakedtestscenarioTest(ScenarioTest):
         super(AttestationfakedtestscenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
             'subscriptionId': self.get_subscription_id(),
-            'location': 'westus',
+            'location': 'eastus',
         })
 
 
-    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')
+    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName', location='eastus')
     def test_attestation_fakedtestscenario(self):
         call_fakedtestscenario(self)
         calc_coverage(__file__)

@@ -33,6 +33,7 @@ cli:
         cli-flatten-all-overwrite-swagger: false
 
 az:
+  use-swagger-test-scenario: true
   preparers:
     virtualNetworks:
       abbr:  vn

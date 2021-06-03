@@ -1,0 +1,11 @@
+scope: ResourceGroup
+
+prepareSteps: []
+
+testScenarios:
+  - description: FakedTestScenario
+    steps:
+      - exampleFile: ../examples/Factories_Get.json
+        step: create factory
+
+

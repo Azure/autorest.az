@@ -13,10 +13,11 @@ import {
     ToSnakeCase,
     toPythonName,
     ToJsonString,
+    thoughtAsTrue,
 } from '../../../utils/helper';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import { AzConfiguration, CodeGenConstants } from '../../../utils/models';
-import { CodeModel, Operation, Parameter } from '@azure-tools/codemodel';
+import { CodeModel, codeModelSchema, Operation, Parameter } from '@azure-tools/codemodel';
 
 import {
     TestDefinitionFile,
@@ -1530,7 +1531,13 @@ export class ResourcePool {
     }
 
     public get hasTestResourceScenario(): boolean {
-        return this.testDefs.length > 0;
+        return (
+            thoughtAsTrue(
+                AzConfiguration.getValue(CodeGenConstants.az)[
+                    CodeGenConstants.useSwaggerTestScenario
+                ],
+            ) && this.testDefs.length > 0
+        );
     }
 
     public genExampleTemplate(step: TestStepRestCall) {

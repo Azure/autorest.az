@@ -8,7 +8,7 @@ import { CliTestStep } from './CliTestStep';
 import { ToMultiLine, Capitalize, isNullOrUndefined } from '../../../utils/helper';
 import { HeaderGenerator } from '../Header';
 import { TemplateBase } from '../TemplateBase';
-import { CodeGenConstants, PathConstants } from '../../../utils/models';
+import { CodeGenConstants, PathConstants, AzConfiguration } from '../../../utils/models';
 
 export class CliTestScenario extends TemplateBase {
     public configValue: any;
@@ -257,18 +257,22 @@ export class CliTestScenario extends TemplateBase {
         classInfo.push('class ' + testClassName + '(ScenarioTest):');
 
         const decorators: string[] = [];
-        const scenarioVariables = exampleHandler.GetResourcePool().getTestResourceVariables(config);
+        const resourcePool = exampleHandler.GetResourcePool();
+        const testLocation =
+            AzConfiguration.getValue(CodeGenConstants.az)[CodeGenConstants.testLocation] ||
+            'westus';
+        const scenarioVariables = resourcePool.getTestResourceVariables(config);
         const kwargs = {};
         for (const v of scenarioVariables) {
             if (v === 'location') {
-                kwargs[v] = "'westus'";
+                kwargs[v] = `'${testLocation}'`;
             }
             if (v === 'subscriptionId') {
                 kwargs[v] = 'self.get_subscription_id()';
             }
             if (v === 'resourceGroupName') {
                 decorators.push(
-                    `    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')`,
+                    `    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName', location='${testLocation}')`,
                 );
                 this.header.addFromImport('azure.cli.testsdk', ['ResourceGroupPreparer']);
             }
@@ -291,7 +295,7 @@ export class CliTestScenario extends TemplateBase {
         funcScenario.push(...ToMultiLine(`def call_${scenarioName.toLowerCase()}(test):`));
 
         function buildSenario(template: CliTestScenario, outputFunc: string[]) {
-            exampleHandler.GetResourcePool().clearExampleParams();
+            resourcePool.clearExampleParams();
 
             // go through the examples to generate steps
             for (let ci = 0; ci < config.length; ci++) {
@@ -314,9 +318,11 @@ export class CliTestScenario extends TemplateBase {
                         !isNullOrUndefined(config[ci].method)
                     ) {
                         // The command for this example is not generated in current autorest running.
-                        exampleCmd = exampleHandler
-                            .GetResourcePool()
-                            .genAzRestCall(config[ci].step, config[ci].method, scenarioVariables);
+                        exampleCmd = resourcePool.genAzRestCall(
+                            config[ci].step,
+                            config[ci].method,
+                            scenarioVariables,
+                        );
                     } else {
                         // The command for this example is generated in current autorest running.
                         // regenerate functionName with the az commandName
@@ -353,7 +359,7 @@ export class CliTestScenario extends TemplateBase {
                     steps.push('@try_manual');
                     steps.push(...ToMultiLine(`def ${functionName}(test):`));
                     if (functionName.startsWith('setup_')) {
-                        steps.push(...exampleHandler.GetResourcePool().setupWithArmTemplate());
+                        steps.push(...resourcePool.setupWithArmTemplate());
                     } else {
                         steps.push('    pass');
                     }

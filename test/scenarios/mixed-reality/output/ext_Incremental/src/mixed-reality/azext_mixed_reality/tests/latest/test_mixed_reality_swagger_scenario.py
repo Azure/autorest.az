@@ -73,7 +73,7 @@ class Mixed_realityfakedremoterenderingscenarioTest(ScenarioTest):
         })
 
 
-    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')
+    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName', location='westus')
     def test_mixed_reality_fakedremoterenderingscenario(self):
         call_fakedremoterenderingscenario(self)
         calc_coverage(__file__)
@@ -114,7 +114,7 @@ class Mixed_realityfakedspatialanchorsscenarioTest(ScenarioTest):
         })
 
 
-    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName')
+    @ResourceGroupPreparer(name_prefix='clitest', key='resourceGroupName', location='westus')
     def test_mixed_reality_fakedspatialanchorsscenario(self):
         call_fakedspatialanchorsscenario(self)
         calc_coverage(__file__)

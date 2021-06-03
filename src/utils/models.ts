@@ -137,6 +137,7 @@ export enum CodeGenConstants {
     preparers = 'preparers',
     genCmdletTest = 'gen-cmdlet-test',
     extensionDescription = 'extension-description',
+    testLocation = 'test-location',
 
     // some configuration keys under az section
     namespace = 'namespace',
@@ -147,6 +148,7 @@ export enum CodeGenConstants {
     clientAuthenticationPolicy = 'client-authentication-policy',
     testUniqueResource = 'test-unique-resource',
     useTestStepParam = 'use-test-step-param',
+    useSwaggerTestScenario = 'use-swagger-test-scenario',
 
     // default constant values
     minCliCoreVersion = '2.15.0',

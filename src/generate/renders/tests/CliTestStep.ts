@@ -247,6 +247,12 @@ export class CliTestStep extends TemplateBase {
                 entity.info.className,
                 entity.objectName,
             )}'`;
+            const testLocation = AzConfiguration.getValue(CodeGenConstants.az)[
+                CodeGenConstants.testLocation
+            ];
+            if (testLocation) {
+                line += `, location='${testLocation}'`;
+            }
             for (let i = 0; i < entity.dependParameterValues.length; i++) {
                 line += `, ${entity.info.dependParameters[i]}='${entity.dependParameterValues[i]}'`;
             }
