@@ -456,7 +456,7 @@ az:
   test-location: eastus
 ~~~
 
-## How to disable swagget test scenario
+## How to disable swagger test scenario
 The swagger test scenario can be disabled with below configuration:
 ~~~
 az:
