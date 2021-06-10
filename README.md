@@ -125,10 +125,10 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 
 ## Generate Azure CLI Code
 1. Sample command for authoring Azure CLI extensions:  
-`autorest --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --sdk-no-flatten --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
+`autorest --version=3.0.6370 --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --sdk-no-flatten --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
 
 1. Sample command for authoring Azure CLI main modules:  
-`autorest --az --use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz <path-to-the-swagger-readme.md> --compatible-level=track2 --azure-cli-folder=<path-to-the-azure-cli-repo>`
+`autorest --version=3.0.6370 --az --use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz <path-to-the-swagger-readme.md> --compatible-level=track2 --azure-cli-folder=<path-to-the-azure-cli-repo>`
 
 See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 
