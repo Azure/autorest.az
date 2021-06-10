@@ -127,13 +127,17 @@ export class AzCoreIncrementalGenerator extends GeneratorBase {
 
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateIncrementalSingleAndAddtoOutput(new CliTestStep(this.model), true);
+        const hasTestResourceScenario = this.model.GetHandler().exampleHandler.GetResourcePool()
+            .hasTestResourceScenario;
         for (const testGroup of exampleHandler.Example_TestScenario
             ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
             : []) {
             await this.generateIncrementalSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    PathConstants.incTestScenarioFile(testGroup),
+                    hasTestResourceScenario
+                        ? PathConstants.testSwaggerScenarioFile(testGroup)
+                        : PathConstants.incTestScenarioFile(testGroup),
                     exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),

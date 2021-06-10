@@ -9,6 +9,7 @@ az:
   namespace: azure.mgmt.datafactory
   formalize-names: true
   disable-checks: true 
+  use-swagger-test-scenario: false
 az-output-folder: $(azure-cli-extension-folder)/src/datafactory-preview
 python-sdk-output-folder: "$(az-output-folder)/azext_datafactory_preview/vendored_sdks/azure_mgmt_datafactory"
 gen-cmdlet-test: true

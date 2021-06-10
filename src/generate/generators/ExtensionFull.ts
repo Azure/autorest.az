@@ -92,13 +92,17 @@ export class AzExtensionFullGenerator extends GeneratorBase {
 
         await this.generateFullSingleAndAddtoOutput(new CliTestInit(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTestStep(this.model), true, true);
+        const hasTestResourceScenario = this.model.GetHandler().exampleHandler.GetResourcePool()
+            .hasTestResourceScenario;
         for (const testGroup of exampleHandler.Example_TestScenario
             ? Object.getOwnPropertyNames(exampleHandler.Example_TestScenario)
             : []) {
             await this.generateFullSingleAndAddtoOutput(
                 new CliTestScenario(
                     this.model,
-                    PathConstants.fullTestSceanrioFile(testGroup),
+                    hasTestResourceScenario
+                        ? PathConstants.testSwaggerScenarioFile(testGroup)
+                        : PathConstants.fullTestSceanrioFile(testGroup),
                     exampleHandler.Example_TestScenario[testGroup],
                     testGroup,
                 ),

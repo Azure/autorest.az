@@ -7,9 +7,8 @@ testScenarios:
   - description: FakedTestScenario
     steps:
       - exampleFile: ../examples/Create_AttestationProvider.json
+        step: create attestation provider
       - exampleFile: ../examples/Update_AttestationProvider.json
-        replace:
-          - pathInBody: tags.Property1
-            to: $(storageAccountId)
+        step: create attestation provider
 
 

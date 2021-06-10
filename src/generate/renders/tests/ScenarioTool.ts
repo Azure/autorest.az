@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import { TestResourceLoader } from 'oav/dist/lib/testScenario/testResourceLoader';
 import { CommandExample, ExampleParam, KeyValueType } from '../../codemodel/Example';
 import {
     deepCopy,
@@ -9,20 +11,23 @@ import {
     isNullOrUndefined,
     Capitalize,
     ToSnakeCase,
-    setPathValue,
-    checkNested,
+    toPythonName,
+    ToJsonString,
+    thoughtAsTrue,
 } from '../../../utils/helper';
 import { EnglishPluralizationService } from '@azure-tools/codegen';
 import { AzConfiguration, CodeGenConstants } from '../../../utils/models';
-import { TestResourceLoader } from 'oav/dist/lib/testScenario/testResourceLoader';
+import { CodeModel, codeModelSchema, Operation, Parameter } from '@azure-tools/codemodel';
+
 import {
     TestDefinitionFile,
     TestStepArmTemplateDeployment,
-    TestStepExampleFileRestCall,
+    TestStepRestCall,
+    TestScenario,
 } from 'oav/dist/lib/testScenario/testResourceTypes';
 import * as path from 'path';
 import * as process from 'process';
-
+import * as fs from 'fs';
 export const azOptions = {};
 
 function MethodToOrder(httpMethod: string): number {
@@ -118,13 +123,15 @@ export function PrintTestScenario(testScenario: any[]) {
     console.warn('--------------------------------------------------------');
 }
 
-export function GroupTestScenario(testScenario: any, extensionName: string) {
+export function GroupTestScenario(testScenario: any, extensionName: string, singleGroup = false) {
     if (isNullOrUndefined(testScenario)) return testScenario;
 
     const ret = {};
     const defaultScenario = 'Scenario';
 
     function addScenario(groupName: string, scenarioName: string, items: any[]) {
+        groupName = groupName.substr(0, 50);
+        scenarioName = scenarioName.substr(0, 50);
         if (!Object.prototype.hasOwnProperty.call(ret, groupName)) ret[groupName] = {};
         if (!Object.prototype.hasOwnProperty.call(ret[groupName], scenarioName))
             ret[groupName][scenarioName] = [];
@@ -136,10 +143,14 @@ export function GroupTestScenario(testScenario: any, extensionName: string) {
         for (const key of keys) {
             const item = testScenario[key];
             const splitedName = key.split('_');
-            if (splitedName.length > 1) {
-                addScenario(splitedName[0], splitedName.slice(1).join('_'), item);
+            if (singleGroup) {
+                addScenario(extensionName, key, item);
             } else {
-                addScenario(splitedName[0], defaultScenario, item);
+                if (splitedName.length > 1) {
+                    addScenario(splitedName[0], splitedName.slice(1).join('_'), item);
+                } else {
+                    addScenario(splitedName[0], defaultScenario, item);
+                }
             }
         }
     } else if (Array.isArray(testScenario)) {
@@ -367,8 +378,11 @@ class ResourceObject {
         return getResourceKey(this.className, this.objectName);
     }
 
-    public placeholder(isTest: boolean): string {
-        if (isTest) return '{' + this.key + '}';
+    public placeholder(isTest: boolean, hasTestResourceScenario: boolean): string {
+        if (isTest) {
+            if (hasTestResourceScenario) return this.objectName;
+            return '{' + this.key + '}';
+        }
         return getResourceKey(this.className, this.objectName, true);
     }
 
@@ -961,7 +975,7 @@ export class ResourcePool {
         return instanceResource || classResource;
     }
 
-    private formatable(str: string, placeholders: string[]) {
+    public formatable(str: string, placeholders: string[]) {
         str = str.split('{').join('{{').split('}').join('}}');
         for (const placeholder of placeholders) {
             str = str.split(`{${placeholder}}`).join(placeholder);
@@ -1200,9 +1214,15 @@ export class ResourcePool {
             const resource = this.isResource(nodes[i], nodes[i + 1], fullType);
             if (resource) {
                 resourceObject = this.addTreeResource(resource, nodes[i + 1], resourceObject);
-                nodes[i + 1] = resourceObject.placeholder(isTest);
-                if (placeholders.indexOf(resourceObject.placeholder(isTest)) < 0) {
-                    placeholders.push(resourceObject.placeholder(isTest));
+                nodes[i + 1] = resourceObject.placeholder(isTest, this.hasTestResourceScenario);
+                if (
+                    placeholders.indexOf(
+                        resourceObject.placeholder(isTest, this.hasTestResourceScenario),
+                    ) < 0
+                ) {
+                    placeholders.push(
+                        resourceObject.placeholder(isTest, this.hasTestResourceScenario),
+                    );
                 }
                 if (resources.indexOf(resource) < 0) {
                     resources.push(resource);
@@ -1235,7 +1255,7 @@ export class ResourcePool {
         }
         const resourceObject = this.addMapResource(resource, paramValue);
         if (resourceObject) {
-            return resourceObject.placeholder(isTest);
+            return resourceObject.placeholder(isTest, this.hasTestResourceScenario);
         } else {
             return this.getPlaceholder(paramValue, isTest);
         }
@@ -1254,7 +1274,10 @@ export class ResourcePool {
                 !isNullOrUndefined(this.map[className].objects) &&
                 Object.prototype.hasOwnProperty.call(this.map[className].objects, objectName)
             ) {
-                const ret = this.map[className].objects[objectName].placeholder(isTest);
+                const ret = this.map[className].objects[objectName].placeholder(
+                    isTest,
+                    this.hasTestResourceScenario,
+                );
                 if (!isNullOrUndefined(placeholders)) {
                     if (placeholders.indexOf(ret) < 0) {
                         placeholders.push(ret);
@@ -1267,7 +1290,7 @@ export class ResourcePool {
         // find in TreeResource
         const resourceObject = this.findTreeResource(targetClassName, objectName, this.root);
         if (resourceObject) {
-            const ret = resourceObject.placeholder(isTest);
+            const ret = resourceObject.placeholder(isTest, this.hasTestResourceScenario);
             if (!isNullOrUndefined(placeholders)) {
                 if (placeholders.indexOf(ret) < 0) {
                     placeholders.push(ret);
@@ -1382,16 +1405,31 @@ export class ResourcePool {
             return undefined;
         }
 
-        const loader = new TestResourceLoader({
-            useJsonParser: false,
-            checkUnderFileRoot: false,
-            fileRoot: getSwaggerFolder(),
-            swaggerFilePaths: AzConfiguration.getValue(CodeGenConstants.inputFile),
-        });
+        try {
+            const fileRoot = getSwaggerFolder();
+            const loader = TestResourceLoader.create({
+                useJsonParser: false,
+                checkUnderFileRoot: false,
+                fileRoot: fileRoot,
+                swaggerFilePaths: AzConfiguration.getValue(CodeGenConstants.inputFile),
+            });
 
-        for (const testResource of AzConfiguration.getValue(CodeGenConstants.testResources) || []) {
-            const testDef = await loader.load(testResource[CodeGenConstants.test]);
-            this.testDefs.push(testDef);
+            for (const testResource of AzConfiguration.getValue(CodeGenConstants.testResources) ||
+                []) {
+                if (fs.existsSync(path.join(fileRoot, testResource[CodeGenConstants.test]))) {
+                    const testDef = await loader.load(testResource[CodeGenConstants.test]);
+                    this.testDefs.push(testDef);
+                } else {
+                    console.warn(
+                        `Unexisted test resource scenario file: ${
+                            testResource[CodeGenConstants.test]
+                        }`,
+                    );
+                }
+            }
+        } catch (error) {
+            console.warn('Exception occured when load test resource scenario!');
+            console.warn(`${__filename} - FAILURE  ${JSON.stringify(error)} ${error.stack}`);
         }
     }
 
@@ -1432,48 +1470,157 @@ export class ResourcePool {
         return ret;
     }
 
-    public generateTestScenario() {
-        const cliScenario = {};
-        for (const testDef of this.testDefs) {
-            for (const testScenario of testDef.testScenarios) {
-                cliScenario[testScenario.description] = [];
-                for (let step of testScenario.steps) {
-                    if ((step as TestStepExampleFileRestCall).exampleId) {
-                        step = step as TestStepExampleFileRestCall;
-                        this.applyTestResourceReplace(step);
-                        cliScenario[testScenario.description].push({
-                            name: step.exampleId,
-                            step: step,
-                        });
-                    }
+    public getExampleMethodMap(codeModel: CodeModel): Record<string, Operation> {
+        const exampleMap: Record<string, Operation> = {};
+        for (const groups of codeModel.operationGroups) {
+            for (const op of groups.operations) {
+                const xMsExamples = op.extensions?.['x-ms-examples'];
+                for (const exampleid in xMsExamples ?? {}) {
+                    exampleMap[exampleid] = op;
                 }
             }
         }
+        return exampleMap;
+    }
+
+    public generateTestScenario(allExamples: CommandExample[], codeModel: CodeModel) {
+        // filter scenario by 1) checking wheather any example step can be found in current codemodel
+        //                    2) no raw call step
+        const testScenarios: TestScenario[] = [];
+        const exampleMap = this.getExampleMethodMap(codeModel);
+        for (const testDef of this.testDefs) {
+            for (const testScenario of testDef.testScenarios) {
+                let hasRawCall = false;
+                let inCurrentModel = false;
+                for (const step of testScenario.steps) {
+                    if ('requestParameters' in step && 'exampleId' in step) {
+                        for (const example of allExamples) {
+                            if (matchExample(example, step.exampleId)) {
+                                inCurrentModel = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        hasRawCall = true;
+                    }
+                }
+                if (!hasRawCall && inCurrentModel) {
+                    testScenarios.push(testScenario);
+                }
+            }
+        }
+
+        const cliScenario = {};
+        for (const testScenario of testScenarios) {
+            const scenarioName = toPythonName(testScenario.description);
+            cliScenario[scenarioName] = [];
+            for (let step of testScenario.steps) {
+                if ((step as TestStepRestCall).exampleId) {
+                    step = step as TestStepRestCall;
+                    cliScenario[scenarioName].push({
+                        name: step.exampleId,
+                        step: step,
+                        scenario: testScenario,
+                        method: exampleMap[step.exampleId],
+                    });
+                }
+            }
+        }
+
         return cliScenario;
     }
 
     public get hasTestResourceScenario(): boolean {
-        return this.testDefs.length > 0;
+        return (
+            thoughtAsTrue(
+                AzConfiguration.getValue(CodeGenConstants.az)[
+                    CodeGenConstants.useSwaggerTestScenario
+                ],
+            ) && this.testDefs.length > 0
+        );
     }
 
-    public applyTestResourceReplace(step: TestStepExampleFileRestCall) {
-        for (const replace of step.replace) {
-            if (replace.pathInBody) {
-                for (const k in step.exampleTemplate.parameters) {
-                    if (checkNested(step.exampleTemplate.parameters[k], replace.pathInBody)) {
-                        setPathValue(
-                            step.exampleTemplate.parameters[k],
-                            replace.pathInBody,
-                            replace.to,
-                        );
-                    }
-                }
-            }
-            if (replace.pathInExample) {
-                if (checkNested(step.exampleTemplate, replace.pathInBody)) {
-                    setPathValue(step.exampleTemplate, replace.pathInBody, replace.to);
-                }
+    public genExampleTemplate(step: TestStepRestCall) {
+        if (isNullOrUndefined(step)) {
+            return undefined;
+        }
+        return {
+            parameters: step.requestParameters,
+            responses: {
+                [step.statusCode]: {
+                    body: step.responseExpected,
+                },
+            },
+        };
+    }
+
+    public getTestResourceVariables(config: any[]): string[] {
+        if (!this.hasTestResourceScenario) return [];
+        const variables = new Set<string>(['subscriptionId', 'resourceGroupName']);
+        for (const c of config) {
+            for (const v of c.scenario?._testDef?.requiredVariables || []) {
+                variables.add(v);
             }
         }
+        return [...variables];
     }
+
+    public genAzRestCall(step: TestStepRestCall, method: Operation, variables: string[]): string[] {
+        const parameters: string[] = [];
+        parameters.push('az rest --method ' + step.operation._method);
+
+        const queryParams = [];
+        let url = step.operation._path._pathTemplate;
+        let hasBody = false;
+        let body = null;
+        let operationParams = [];
+        if (method.requests && method.requests.length > 0 && method.requests[0].parameters) {
+            operationParams = method.requests[0].parameters;
+        }
+        for (const parameter of (method.parameters ?? []).concat(operationParams)) {
+            const param =
+                parameter.language?.default?.serializedName || parameter.language?.default?.name;
+            if (isNullOrUndefined(param)) continue;
+            const paramValue = step.requestParameters[param];
+
+            switch (parameter.protocol?.http?.in) {
+                case 'path':
+                    url = url.split(`{${param}}`).join(paramValue + '');
+                    break;
+                case 'query':
+                    if (paramValue !== undefined) {
+                        queryParams.push(`${param}=${paramValue}`);
+                    }
+                    break;
+                case 'body':
+                    if (paramValue !== undefined) {
+                        hasBody = true;
+                        body = JSON.stringify(paramValue)
+                            .split(/[\r\n]+/)
+                            .join('');
+                    }
+                    break;
+                default:
+                // ignore flattened parameters
+            }
+        }
+        if (queryParams.length > 0) {
+            url += '?';
+            url += queryParams.join('&');
+        }
+        parameters.push(`--url "${this.formatable(url, variables)}"`);
+        if (hasBody) {
+            parameters.push('--headers "Content-Type=application/json"');
+            body = parameters.push(`--body "${this.formatable(ToJsonString(body), variables)}"`);
+        }
+        return parameters;
+    }
+}
+
+export function matchExample(example: CommandExample, id: string): boolean {
+    if (!id) return false;
+    return (
+        example.Id.toLowerCase() === id.toLowerCase() ||
+        example.Id.toLowerCase().endsWith(`/${id.toLowerCase()}`)
+    );
 }

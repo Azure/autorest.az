@@ -70,6 +70,7 @@ export class PathConstants {
     public static readonly reportFile: string = 'report.md';
     public static readonly preparersFile: string = 'preparers.py';
     public static readonly testStepFile: string = 'example_steps.py';
+    public static readonly testSwaggerStepFile: string = 'swagger_steps.py';
     public static readonly metadataFile: string = 'azext_metadata.json';
     public static readonly setupPyFile: string = 'setup.py';
     public static readonly setupCfgFile: string = 'setup.cfg';
@@ -95,6 +96,10 @@ export class PathConstants {
 
     public static incTestScenarioFile(rpName: string): string {
         return 'test_' + rpName + '_scenario_incrementalGenerated.py';
+    }
+
+    public static testSwaggerScenarioFile(rpName: string): string {
+        return 'test_' + rpName + '_swagger_scenario.py';
     }
 
     public static readonly njkFileExtension = '.njk';
@@ -132,6 +137,7 @@ export enum CodeGenConstants {
     preparers = 'preparers',
     genCmdletTest = 'gen-cmdlet-test',
     extensionDescription = 'extension-description',
+    testLocation = 'test-location',
 
     // some configuration keys under az section
     namespace = 'namespace',
@@ -142,6 +148,7 @@ export enum CodeGenConstants {
     clientAuthenticationPolicy = 'client-authentication-policy',
     testUniqueResource = 'test-unique-resource',
     useTestStepParam = 'use-test-step-param',
+    useSwaggerTestScenario = 'use-swagger-test-scenario',
 
     // default constant values
     minCliCoreVersion = '2.15.0',

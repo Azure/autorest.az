@@ -17,8 +17,9 @@ import {
     ObjectStatus,
     GroupTestScenario,
     LoadPreparesConfig,
+    matchExample,
 } from '../renders/tests/ScenarioTool';
-import { TestStepExampleFileRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
+import { TestStepRestCall } from 'oav/dist/lib/testScenario/testResourceTypes';
 import { CodeModelCliImpl } from './CodeModelAzImpl';
 import { CommandModel } from './Command';
 import { CommandGroupModel } from './CommandGroup';
@@ -31,7 +32,7 @@ import { AzConfiguration, CodeGenConstants } from '../../utils/models';
 import { readFile } from '@azure-tools/async-io';
 import * as process from 'process';
 import * as path from 'path';
-import { Property } from '@azure-tools/codemodel';
+import { Operation, Property } from '@azure-tools/codemodel';
 
 export class MethodParam {
     public value: any;
@@ -107,6 +108,7 @@ export class CommandExample {
     public ExampleObj: any;
     public commandStringItems: string[];
     public CommandString: string;
+    public MethodObj: Operation;
 }
 
 export interface ExampleModel {
@@ -115,7 +117,7 @@ export interface ExampleModel {
     GetSubscriptionKey(): string;
     GetPreparerEntities(): any[];
     GatherInternalResource();
-    FindExampleWaitById(id: string, step?: TestStepExampleFileRestCall): string[][];
+    FindExampleWaitById(id: string, step?: TestStepRestCall): string[][];
     GetExampleItems(example: CommandExample, isTest: boolean, commandParams: any): string[];
     GetExampleChecks(example: CommandExample): string[];
 
@@ -124,10 +126,9 @@ export interface ExampleModel {
     FindExampleById(
         id: string,
         commandParams: any,
-        examples: any[],
         minimum: boolean,
-        step?: TestStepExampleFileRestCall,
-    ): string[][];
+        step?: TestStepRestCall,
+    ): [string[], CommandExample];
     GenerateTestInit(): void;
     Example_TestScenario: any;
     Example_DefaultTestScenario: any;
@@ -231,13 +232,7 @@ export class ExampleModelImpl implements ExampleModel {
     }
 
     public GenerateTestInit(): void {
-        if (this.GetResourcePool().hasTestResourceScenario) {
-            this._testScenario = GroupTestScenario(
-                this.GetResourcePool().generateTestScenario(),
-                this.extensionHandler.Extension_NameUnderscored,
-            );
-            this._configuredScenario = true;
-        } else if (this.baseHandler.codeModel['test-scenario']) {
+        if (this.baseHandler.codeModel['test-scenario']) {
             this._testScenario = GroupTestScenario(
                 this.baseHandler.codeModel['test-scenario'],
                 this.extensionHandler.Extension_NameUnderscored,
@@ -248,7 +243,18 @@ export class ExampleModelImpl implements ExampleModel {
             this._configuredScenario = false;
         }
         this.GatherInternalResource();
-        this.GetAllExamples();
+        const allExamples = this.GetAllExamples();
+        if (this.GetResourcePool().hasTestResourceScenario) {
+            this._testScenario = GroupTestScenario(
+                this.GetResourcePool().generateTestScenario(
+                    allExamples,
+                    this.baseHandler.codeModel,
+                ),
+                this.extensionHandler.Extension_NameUnderscored,
+                true,
+            );
+            // this._configuredScenario = true;
+        }
     }
     /**
      * Gets method parameters dict
@@ -957,6 +963,7 @@ export class ExampleModelImpl implements ExampleModel {
             'x-ms-long-running-operation'
         ];
         example.ExampleObj = exampleObj;
+        example.MethodObj = this.methodHandler.Method;
         if (this.methodHandler.Method_GetSplitOriginalOperation) {
             // filter example by name for generic createorupdate
             if (
@@ -988,7 +995,7 @@ export class ExampleModelImpl implements ExampleModel {
 
     public GetExampleChecks(example: CommandExample): string[] {
         const ret: string[] = [];
-        if (!this.configHandler.GenChecks) return ret;
+        if (!this.configHandler.GenChecks || isNullOrUndefined(example)) return ret;
         let resourceObjectName = undefined;
         for (const param of example.Parameters) {
             if (
@@ -1202,26 +1209,23 @@ export class ExampleModelImpl implements ExampleModel {
     public FindExampleById(
         id: string,
         commandParams: any,
-        examples: CommandExample[],
         minimum = false,
-        step: TestStepExampleFileRestCall = undefined,
-    ): string[][] {
-        const ret: string[][] = [];
+        step: TestStepRestCall = undefined,
+    ): [string[], CommandExample] {
+        let commandExample: CommandExample = undefined;
+        let commandString: string[] = [];
         this.GetAllExamples(
             id,
             (example) => {
-                examples.push(example);
-                ret.push(this.GetExampleItems(example, true, commandParams, minimum));
+                commandExample = example;
+                commandString = this.GetExampleItems(example, true, commandParams, minimum);
             },
-            step?.exampleTemplate,
+            this.resourcePool.genExampleTemplate(step),
         );
-        return ret;
+        return [commandString, commandExample];
     }
 
-    public FindExampleWaitById(
-        id: string,
-        step: TestStepExampleFileRestCall = undefined,
-    ): string[][] {
+    public FindExampleWaitById(id: string, step: TestStepRestCall = undefined): string[][] {
         const ret: string[][] = [];
         this.GetAllExamples(
             id,
@@ -1229,7 +1233,7 @@ export class ExampleModelImpl implements ExampleModel {
                 const waitCmd = this.GetExampleWait(example);
                 if (waitCmd.length > 0) ret.push(waitCmd);
             },
-            step?.exampleTemplate,
+            this.resourcePool.genExampleTemplate(step),
         );
         return ret;
     }
@@ -1351,7 +1355,9 @@ export class ExampleModelImpl implements ExampleModel {
                 this._defaultTestScenario,
             );
             this.SortExamplesByDependency();
-            PrintTestScenario(this._defaultTestScenario);
+            if (!this.GetResourcePool().hasTestResourceScenario) {
+                PrintTestScenario(this._defaultTestScenario);
+            }
         }
 
         if (!this._configuredScenario && isNullOrUndefined(this._testScenario)) {
@@ -1440,7 +1446,7 @@ export class ExampleModelImpl implements ExampleModel {
         const commandExamples = this.GetAllExamples();
         for (let i = 0; i < this._defaultTestScenario.length; i++) {
             for (const commandExample of commandExamples) {
-                if (this.matchExample(commandExample, this._defaultTestScenario[i].name)) {
+                if (matchExample(commandExample, this._defaultTestScenario[i].name)) {
                     scenarioExamples.set(this._defaultTestScenario[i].name, commandExample);
                     break;
                 }
@@ -1453,14 +1459,6 @@ export class ExampleModelImpl implements ExampleModel {
                 scenarioExamples.get(exampleB.name),
             );
         });
-    }
-
-    private matchExample(example: CommandExample, id: string) {
-        if (!id) return false;
-        return (
-            example.Id.toLowerCase() === id.toLowerCase() ||
-            example.Id.toLowerCase().endsWith(`/${id.toLowerCase()}`)
-        );
     }
 
     public GetAllExamples(
@@ -1481,7 +1479,7 @@ export class ExampleModelImpl implements ExampleModel {
                 examples = this.GetExamples(true);
             }
             for (const example of examples) {
-                if (id && !this.matchExample(example, id)) continue;
+                if (id && !matchExample(example, id)) continue;
                 if (callback) {
                     callback(example);
                 }

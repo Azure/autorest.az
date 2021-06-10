@@ -448,3 +448,18 @@ or configure in readme.az.md:
 gen-cmdlet-test: true
 ~~~
 
+## How to customize test location
+The default test location is 'westus', you can change it with below configuration:
+~~~
+az:
+  ...
+  test-location: eastus
+~~~
+
+## How to disable swagger test scenario
+The swagger test scenario can be disabled with below configuration:
+~~~
+az:
+  ...
+  use-swagger-test-scenario: false
+~~~
