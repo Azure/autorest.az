@@ -869,7 +869,15 @@ export class CodeModelCliImpl implements CodeModelAz {
                     ) {
                         action['constants'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
                     } else {
+                        let parentKeys = [];
+                        if (!isNullOrUndefined(tmpParam['flattenedNames'])) {
+                            parentKeys = tmpParam['flattenedNames'].map((fn) => ToSnakeCase(fn));
+                            if (parentKeys.length > 0) {
+                                parentKeys.pop();
+                            }
+                        }
                         action['subProperties'].push({
+                            parentKeys: parentKeys,
                             namePython: pythonName,
                             nameAz: nameAz,
                             type: subType,

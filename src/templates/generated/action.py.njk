@@ -46,10 +46,16 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
             {% for subprop in action.subProperties %}
             {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
+                sub_d = d
+                {% for parentKey in subprop.parentKeys %}
+                if '{{parentKey}}' not in sub_d:
+                    sub_d['{{parentKey}}'] = {}
+                sub_d = sub_d['{{parentKey}}']
+                {% endfor %}
                 {% if subprop.type == 'array' %}
-                d['{{subprop.namePython}}'] = v
+                sub_d['{{subprop.namePython}}'] = v
                 {% else %}
-                d['{{subprop.namePython}}'] = v[0]
+                sub_d['{{subprop.namePython}}'] = v[0]
                 {% endif %}
             {% endfor %}
             {% if action.subProperties.length > 0 %}
@@ -127,10 +133,16 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
                 {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
                 {% for subprop in action.subProperties %}
                 {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
+                    sub_d = d
+                    {% for parentKey in subprop.parentKeys %}
+                    if '{{parentKey}}' not in sub_d:
+                        sub_d['{{parentKey}}'] = {}
+                    sub_d = sub_d['{{parentKey}}']
+                    {% endfor %}
                     {% if subprop.type == 'array' %}
-                    d['{{subprop.namePython}}'] = v
+                    sub_d['{{subprop.namePython}}'] = v
                     {% else %}
-                    d['{{subprop.namePython}}'] = v[0]
+                    sub_d['{{subprop.namePython}}'] = v[0]
                     {% endif %}
                 {% endfor %}
                 {% if action.subProperties.length > 0 %}
