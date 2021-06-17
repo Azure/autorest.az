@@ -88,17 +88,8 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
 
     def get_action(self, values, option_string=None):
         try:
-            value_chunk_list = [values[x:x+{{action.subProperties.length}}] for x in range(0, len(values), {{action.subProperties.length}})]
-            value_list = []
-            for chunk in value_chunk_list:
-                {{ action.subPropertiesNamePython | join(', ') }} = chunk
-                value_list.append(
-                    {
-                        {% for item in action.subPropertiesNamePython %}
-                        '{{item}}': {{item}},
-                        {% endfor %}
-                    }
-                )
+            value_keys = [{% for item in action.subPropertiesNamePython %}'{{item}}', {% endfor %}]
+            value_list = [dict(zip(value_keys, values[x:x+{{action.subProperties.length}}])) for x in range(0, len(values), {{action.subProperties.length}})]
             return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
