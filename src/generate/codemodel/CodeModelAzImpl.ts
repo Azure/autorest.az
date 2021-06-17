@@ -12,6 +12,8 @@ import {
     Request,
     Schema,
     SchemaType,
+    getAllProperties,
+    ObjectSchema,
 } from '@azure-tools/codemodel';
 import { values } from '@azure-tools/linq';
 import {
@@ -43,6 +45,7 @@ import { ParameterModel, ParameterModelImpl } from './Parameter';
 import { SchemaModel, SchemaModelImpl } from './Schema';
 import { AzExampleModel, AzExampleModelImpl } from './AzExample';
 import { ExampleModel, ExampleModelImpl } from './Example';
+import { assert } from 'console';
 class ActionParam {
     public constructor(
         public groupOpActionName: string,
@@ -869,11 +872,24 @@ export class CodeModelCliImpl implements CodeModelAz {
                     ) {
                         action['constants'][`'${keyToMatch}'`] = `'${valueToMatch}'`;
                     } else {
-                        let parentKeys = [];
+                        const parentKeys = [];
                         if (!isNullOrUndefined(tmpParam['flattenedNames'])) {
-                            parentKeys = tmpParam['flattenedNames'].map((fn) => ToSnakeCase(fn));
-                            if (parentKeys.length > 0) {
-                                parentKeys.pop();
+                            const flattenedNames = tmpParam['flattenedNames'];
+                            let parentProp = tmpParam.language['cli'].pythonFlattenedFrom;
+                            let i = 0;
+                            while (
+                                i < flattenedNames.length - 1 &&
+                                !isNullOrUndefined(parentProp)
+                            ) {
+                                assert(parentProp.serializedName === flattenedNames[i]);
+                                parentKeys.push(parentProp.language['python'].name);
+                                i += 1;
+                                for (const p of getAllProperties(<ObjectSchema>parentProp.schema)) {
+                                    if (p.serializedName === flattenedNames[i]) {
+                                        parentProp = p;
+                                        break;
+                                    }
+                                }
                             }
                         }
                         action['subProperties'].push({
