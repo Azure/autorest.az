@@ -39,37 +39,37 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-            {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
+            {% if action.type != 'dictionary' or action.subProperties.length > 0 -%}
             kl = k.lower()
-            {% endif %}
+            {% endif -%}
             v = properties[k]
             {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
             {% for subprop in action.subProperties %}
             {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
                 sub_d = d
-                {% for parentKey in subprop.parentKeys %}
+                {%- for parentKey in subprop.parentKeys %}
                 if '{{parentKey}}' not in sub_d:
                     sub_d['{{parentKey}}'] = {}
                 sub_d = sub_d['{{parentKey}}']
                 {% endfor %}
-                {% if subprop.type == 'array' %}
+                {% if subprop.type == 'array' -%}
                 sub_d['{{subprop.namePython}}'] = v
-                {% else %}
+                {% else -%}
                 sub_d['{{subprop.namePython}}'] = v[0]
-                {% endif %}
+                {%- endif %}
             {% endfor %}
-            {% if action.subProperties.length > 0 %}
+            {% if action.subProperties.length > 0 -%}
             else:
                 raise CLIError('Unsupported Key {} is provided for parameter {{action.mapsTo | replace("_", "-")}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                 format(k))
-            {% endif %}
+            {%- endif %}
             {% else %}
-            {% if subprop.type == 'array' %}
+            {% if subprop.type == 'array' -%}
             d[k] = v
-            {% else %}
+            {% else -%}
             d[k] = v[0]
-            {% endif %}
-            {% endif %}
+            {%- endif %}
+            {%- endif %}
         {% for key, value in action.constants %}
         d[{{key}}] = {{value}}
         {% endfor %}
@@ -79,12 +79,12 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
 class {{action.actionName}}(argparse.{{action.baseClass}}):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        {% if action.type == 'array' %} 
+        {% if action.type == 'array' -%} 
         for item in action:
            super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
-        {% else %}
+        {% else -%}
         namespace.{{action.mapsTo}} = action[0]
-        {% endif %}
+        {%- endif %}
 
     def get_action(self, values, option_string=None):
         try:
@@ -98,12 +98,12 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
 class {{action.actionName}}(argparse.{{action.baseClass}}):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        {% if action.type == 'array' %} 
+        {% if action.type == 'array' -%} 
         for item in action:
            super({{action.actionName}}, self).__call__(parser, namespace, item, option_string)
-        {% else %}
+        {% else -%}
         namespace.{{action.mapsTo}} = action[0]
-        {% endif %}
+        {%- endif %}
 
     def get_action(self, values, option_string):
         ret = []
@@ -117,37 +117,37 @@ class {{action.actionName}}(argparse.{{action.baseClass}}):
                 raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
             d = {}
             for k in properties:
-                {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
+                {% if action.type != 'dictionary' or action.subProperties.length > 0 -%}
                 kl = k.lower()
-                {% endif %}
+                {% endif -%}
                 v = properties[k]
                 {% if action.type != 'dictionary' or action.subProperties.length > 0 %}
                 {% for subprop in action.subProperties %}
                 {% if loop.first %}if{% else %}elif{% endif %} kl == '{{subprop.nameAz}}':
                     sub_d = d
-                    {% for parentKey in subprop.parentKeys %}
+                    {%- for parentKey in subprop.parentKeys %}
                     if '{{parentKey}}' not in sub_d:
                         sub_d['{{parentKey}}'] = {}
                     sub_d = sub_d['{{parentKey}}']
                     {% endfor %}
-                    {% if subprop.type == 'array' %}
+                    {% if subprop.type == 'array' -%}
                     sub_d['{{subprop.namePython}}'] = v
-                    {% else %}
+                    {% else -%}
                     sub_d['{{subprop.namePython}}'] = v[0]
-                    {% endif %}
+                    {%- endif %}
                 {% endfor %}
-                {% if action.subProperties.length > 0 %}
+                {% if action.subProperties.length > 0 -%}
                 else:
                     raise CLIError('Unsupported Key {} is provided for parameter {{action.nameAz}}. All possible keys are: {{ action.subPropertiesNameAz | join(', ') }}'.
                     format(k))
-                {% endif %}
+                {%- endif %}
                 {% else %}
-                {% if subprop.type == 'array' %}
+                {% if subprop.type == 'array' -%}
                 d[k] = v
-                {% else %}
+                {% else -%}
                 d[k] = v[0]
-                {% endif %}
-                {% endif %}
+                {%- endif %}
+                {%- endif %}
             ret.append(d)
         return ret
 
