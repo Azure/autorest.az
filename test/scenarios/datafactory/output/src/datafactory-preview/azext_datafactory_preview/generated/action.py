@@ -22,26 +22,20 @@ from knack.util import CLIError
 class AddFactoryVstsConfiguration(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.factory_vsts_configuration = action[0]
 
     def get_action(self, values, option_string=None):
         try:
-            value_chunk_list = [values[x: x + 7] for x in range(0, len(values), 7)]
-            value_list = []
-            for chunk in value_chunk_list:
-                type, project_name, tenant_id, account_name, repository_name, root_folder, collaboration_branch = chunk
-                value_list.append(
-                    {
-                        'type': type,
-                        'project_name': project_name,
-                        'tenant_id': tenant_id,
-                        'account_name': account_name,
-                        'repository_name': repository_name,
-                        'root_folder': root_folder,
-                        'collaboration_branch': collaboration_branch,
-                    }
-                )
+            value_keys = [
+                'type',
+                'project_name',
+                'tenant_id',
+                'account_name',
+                'repository_name',
+                'root_folder',
+                'collaboration_branch',
+            ]
+            value_list = [dict(zip(value_keys, values[x: x + 7])) for x in range(0, len(values), 7)]
             return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
@@ -62,33 +56,25 @@ class AddFactoryGitHubConfiguration(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'host-name':
-
                 d['host_name'] = v[0]
 
             elif kl == 'account-name':
-
                 d['account_name'] = v[0]
 
             elif kl == 'repository-name':
-
                 d['repository_name'] = v[0]
 
             elif kl == 'collaboration-branch':
-
                 d['collaboration_branch'] = v[0]
 
             elif kl == 'root-folder':
-
                 d['root_folder'] = v[0]
 
             elif kl == 'last-commit-id':
-
                 d['last_commit_id'] = v[0]
 
             else:
@@ -106,21 +92,15 @@ class AddFactoryGitHubConfiguration(argparse.Action):
 class AddFakeIdentity(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.fake_identity = action[0]
 
     def get_action(self, values, option_string=None):
         try:
-            value_chunk_list = [values[x: x + 2] for x in range(0, len(values), 2)]
-            value_list = []
-            for chunk in value_chunk_list:
-                name, zones_inside = chunk
-                value_list.append(
-                    {
-                        'name': name,
-                        'zones_inside': zones_inside,
-                    }
-                )
+            value_keys = [
+                'name',
+                'zones_inside',
+            ]
+            value_list = [dict(zip(value_keys, values[x: x + 2])) for x in range(0, len(values), 2)]
             return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))
@@ -141,17 +121,13 @@ class AddReplicaSets(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'location':
-
                 d['location'] = v[0]
 
             elif kl == 'subnet-id':
-
                 d['subnet_id'] = v[0]
 
             else:

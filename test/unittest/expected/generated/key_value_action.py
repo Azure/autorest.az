@@ -34,40 +34,44 @@ class AddFactoryGitHubConfiguration(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'host-name':
-
                 d['host_name'] = v[0]
 
             elif kl == 'account-name':
-
                 d['account_name'] = v[0]
 
             elif kl == 'repository-name':
-
                 d['repository_name'] = v[0]
 
             elif kl == 'collaboration-branch':
-
                 d['collaboration_branch'] = v[0]
 
             elif kl == 'root-folder':
-
                 d['root_folder'] = v[0]
 
             elif kl == 'last-commit-id':
-
                 d['last_commit_id'] = v[0]
+
+            elif kl == 'alias':
+                sub_d = d
+                if 'company' not in sub_d:
+                    sub_d['company'] = {}
+                sub_d = sub_d['company']
+
+                if 'info' not in sub_d:
+                    sub_d['info'] = {}
+                sub_d = sub_d['info']
+
+                sub_d['alias'] = v[0]
 
             else:
                 raise CLIError(
                     'Unsupported Key {} is provided for parameter factory-git-hub-configuration. All possible keys are:'
-                    ' host-name, account-name, repository-name, collaboration-branch, root-folder, last-commit-id'
-                    .format(k)
+                    ' host-name, account-name, repository-name, collaboration-branch, root-folder, last-commit-id,'
+                    ' alias'.format(k)
                 )
 
         d['type'] = 'FactoryGitHubConfiguration'

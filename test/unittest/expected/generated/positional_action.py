@@ -21,26 +21,20 @@ from knack.util import CLIError
 class AddFactoryVstsConfiguration(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         namespace.factory_vsts_configuration = action[0]
 
     def get_action(self, values, option_string=None):
         try:
-            value_chunk_list = [values[x: x + 7] for x in range(0, len(values), 7)]
-            value_list = []
-            for chunk in value_chunk_list:
-                type, project_name, tenant_id, account_name, repository_name, root_folder, collaboration_branch = chunk
-                value_list.append(
-                    {
-                        'type': type,
-                        'project_name': project_name,
-                        'tenant_id': tenant_id,
-                        'account_name': account_name,
-                        'repository_name': repository_name,
-                        'root_folder': root_folder,
-                        'collaboration_branch': collaboration_branch,
-                    }
-                )
+            value_keys = [
+                'type',
+                'project_name',
+                'tenant_id',
+                'account_name',
+                'repository_name',
+                'root_folder',
+                'collaboration_branch',
+            ]
+            value_list = [dict(zip(value_keys, values[x: x + 7])) for x in range(0, len(values), 7)]
             return value_list
         except ValueError:
             raise CLIError('usage error: {} NAME METRIC OPERATION VALUE'.format(option_string))

@@ -34,21 +34,16 @@ class AddAutoScale(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'min-node-count':
-
                 d['min_node_count'] = v[0]
 
             elif kl == 'enabled':
-
                 d['enabled'] = v[0]
 
             elif kl == 'max-node-count':
-
                 d['max_node_count'] = v[0]
 
             else:
@@ -75,17 +70,13 @@ class AddAutoPause(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'delay-in-minutes':
-
                 d['delay_in_minutes'] = v[0]
 
             elif kl == 'enabled':
-
                 d['enabled'] = v[0]
 
             else:
@@ -112,17 +103,13 @@ class AddLibraryRequirements(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'content':
-
                 d['content'] = v[0]
 
             elif kl == 'filename':
-
                 d['filename'] = v[0]
 
             else:
@@ -149,17 +136,13 @@ class AddSku(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'tier':
-
                 d['tier'] = v[0]
 
             elif kl == 'name':
-
                 d['name'] = v[0]
 
             else:
@@ -185,21 +168,16 @@ class AddRecurringScans(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'is-enabled':
-
                 d['is_enabled'] = v[0]
 
             elif kl == 'email-subscription-admins':
-
                 d['email_subscription_admins'] = v[0]
 
             elif kl == 'emails':
-
                 d['emails'] = v
 
             else:
@@ -226,13 +204,10 @@ class AddBaselineResults(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'result':
-
                 d['result'] = v
 
             else:
@@ -259,17 +234,13 @@ class AddDefaultDataLakeStorage(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'account-url':
-
                 d['account_url'] = v[0]
 
             elif kl == 'filesystem':
-
                 d['filesystem'] = v[0]
 
             else:
@@ -296,7 +267,6 @@ class AddConnectivityEndpoints(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             v = properties[k]
 
             d[k] = v[0]
