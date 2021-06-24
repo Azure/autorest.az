@@ -34,29 +34,22 @@ class AddSubstatuses(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'code':
-
                 d['code'] = v[0]
 
             elif kl == 'level':
-
                 d['level'] = v[0]
 
             elif kl == 'display-status':
-
                 d['display_status'] = v[0]
 
             elif kl == 'message':
-
                 d['message'] = v[0]
 
             elif kl == 'time':
-
                 d['time'] = v[0]
 
             else:
@@ -83,29 +76,22 @@ class AddStatuses(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'code':
-
                 d['code'] = v[0]
 
             elif kl == 'level':
-
                 d['level'] = v[0]
 
             elif kl == 'display-status':
-
                 d['display_status'] = v[0]
 
             elif kl == 'message':
-
                 d['message'] = v[0]
 
             elif kl == 'time':
-
                 d['time'] = v[0]
 
             else:

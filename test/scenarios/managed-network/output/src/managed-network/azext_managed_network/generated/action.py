@@ -34,13 +34,10 @@ class AddSubscriptions(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'id':
-
                 d['id'] = v[0]
 
             else:
@@ -66,13 +63,10 @@ class AddVirtualNetworks(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'id':
-
                 d['id'] = v[0]
 
             else:
@@ -86,7 +80,6 @@ class AddVirtualNetworks(argparse._AppendAction):
 class AddSubnets(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         for item in action:
             super(AddSubnets, self).__call__(parser, namespace, item, option_string)
 
@@ -102,13 +95,10 @@ class AddSubnets(argparse._AppendAction):
                 raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
             d = {}
             for k in properties:
-
                 kl = k.lower()
-
                 v = properties[k]
 
                 if kl == 'id':
-
                     d['id'] = v[0]
 
                 else:
@@ -135,13 +125,10 @@ class AddHub(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'id':
-
                 d['id'] = v[0]
 
             else:
@@ -165,13 +152,10 @@ class AddSpokes(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'id':
-
                 d['id'] = v[0]
 
             else:
@@ -197,13 +181,10 @@ class AddMesh(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'id':
-
                 d['id'] = v[0]
 
             else:

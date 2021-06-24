@@ -17,36 +17,43 @@
           {
             "namePython": "project_name",
             "nameAz": "project-name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "tenant_id",
             "nameAz": "tenant-id",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "account_name",
             "nameAz": "account-name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "repository_name",
             "nameAz": "repository-name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "collaboration_branch",
             "nameAz": "collaboration-branch",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "root_folder",
             "nameAz": "root-folder",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "last_commit_id",
             "nameAz": "last-commit-id",
+            "parentKeys": [],
             "type": "string"
           }
         ],
@@ -92,31 +99,37 @@
           {
             "namePython": "host_name",
             "nameAz": "host-name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "account_name",
             "nameAz": "account-name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "repository_name",
             "nameAz": "repository-name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "collaboration_branch",
             "nameAz": "collaboration-branch",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "root_folder",
             "nameAz": "root-folder",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "last_commit_id",
             "nameAz": "last-commit-id",
+            "parentKeys": [],
             "type": "string"
           }
         ],
@@ -159,11 +172,13 @@
           {
             "namePython": "name",
             "nameAz": "name",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "zones_inside",
             "nameAz": "zones-inside",
+            "parentKeys": [],
             "type": "array"
           }
         ],
@@ -192,11 +207,13 @@
           {
             "namePython": "location",
             "nameAz": "location",
+            "parentKeys": [],
             "type": "string"
           },
           {
             "namePython": "subnet_id",
             "nameAz": "subnet-id",
+            "parentKeys": [],
             "type": "string"
           }
         ],

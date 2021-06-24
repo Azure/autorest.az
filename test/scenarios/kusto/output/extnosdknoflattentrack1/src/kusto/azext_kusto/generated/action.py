@@ -34,13 +34,10 @@ class AddTrustedExternalTenants(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'value':
-
                 d['value'] = v[0]
 
             else:
@@ -67,25 +64,19 @@ class AddOptimizedAutoscale(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'version':
-
                 d['version'] = v[0]
 
             elif kl == 'is-enabled':
-
                 d['is_enabled'] = v[0]
 
             elif kl == 'minimum':
-
                 d['minimum'] = v[0]
 
             elif kl == 'maximum':
-
                 d['maximum'] = v[0]
 
             else:
@@ -112,21 +103,16 @@ class AddVirtualNetworkConfiguration(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'subnet-id':
-
                 d['subnet_id'] = v[0]
 
             elif kl == 'engine-public-ip-id':
-
                 d['engine_public_ip_id'] = v[0]
 
             elif kl == 'data-management-public-ip-id':
-
                 d['data_management_public_ip_id'] = v[0]
 
             else:
@@ -153,21 +139,16 @@ class AddKeyVaultProperties(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'key-name':
-
                 d['key_name'] = v[0]
 
             elif kl == 'key-version':
-
                 d['key_version'] = v[0]
 
             elif kl == 'key-vault-uri':
-
                 d['key_vault_uri'] = v[0]
 
             else:
@@ -194,13 +175,10 @@ class AddClustersValue(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'language-extension-name':
-
                 d['language_extension_name'] = v[0]
 
             else:
@@ -227,21 +205,16 @@ class AddReadWriteDatabase(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'soft-delete-period':
-
                 d['soft_delete_period'] = v[0]
 
             elif kl == 'hot-cache-period':
-
                 d['hot_cache_period'] = v[0]
 
             elif kl == 'location':
-
                 d['location'] = v[0]
 
             else:
@@ -270,17 +243,13 @@ class AddReadOnlyFollowingDatabase(argparse.Action):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'hot-cache-period':
-
                 d['hot_cache_period'] = v[0]
 
             elif kl == 'location':
-
                 d['location'] = v[0]
 
             else:
@@ -309,33 +278,25 @@ class AddDatabasesValue(argparse._AppendAction):
             raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
         d = {}
         for k in properties:
-
             kl = k.lower()
-
             v = properties[k]
 
             if kl == 'role':
-
                 d['role'] = v[0]
 
             elif kl == 'name':
-
                 d['name'] = v[0]
 
             elif kl == 'type':
-
                 d['type'] = v[0]
 
             elif kl == 'fqn':
-
                 d['fqn'] = v[0]
 
             elif kl == 'email':
-
                 d['email'] = v[0]
 
             elif kl == 'app-id':
-
                 d['app_id'] = v[0]
 
             else:

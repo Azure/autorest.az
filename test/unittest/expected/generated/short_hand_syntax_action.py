@@ -22,7 +22,6 @@ from knack.util import CLIError
 class AddSubnets(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-
         for item in action:
             super(AddSubnets, self).__call__(parser, namespace, item, option_string)
 
@@ -38,24 +37,31 @@ class AddSubnets(argparse._AppendAction):
                 raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
             d = {}
             for k in properties:
-
                 kl = k.lower()
-
                 v = properties[k]
 
                 if kl == 'id':
-
                     d['id'] = v[0]
 
                 elif kl == 'name':
-
                     d['name'] = v[0]
+
+                elif kl == 'alias':
+                    sub_d = d
+                    if 'company' not in sub_d:
+                        sub_d['company'] = {}
+                    sub_d = sub_d['company']
+
+                    if 'info' not in sub_d:
+                        sub_d['info'] = {}
+                    sub_d = sub_d['info']
+
+                    sub_d['alias'] = v[0]
 
                 else:
                     raise CLIError(
-                        'Unsupported Key {} is provided for parameter subnets. All possible keys are: id, name'.format(
-                            k
-                        )
+                        'Unsupported Key {} is provided for parameter subnets. All possible keys are: id, name, alias'
+                        .format(k)
                     )
 
             ret.append(d)
