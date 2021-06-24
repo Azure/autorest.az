@@ -388,48 +388,42 @@ function ConstructValuation(
     defaultValue: string = null,
     needIfClause = true,
 ): string[] {
-    let str = [];
-    if (isNullOrUndefined(defaultValue)) {
-        let left = '';
-        if (isGeneric) {
-            if (value.startsWith("'") && value.endsWith("'")) {
-                left = prefix + GetInstancePath(model, required) + '.';
-            } else {
-                str.push(prefix + 'if ' + value + ' is not None:');
-                left = prefix + '    ' + GetInstancePath(model, required) + '.';
-            }
-            for (let i = 1; i < classNames.length; ++i) {
-                left = left + classNames[i] + '.';
-            }
-            left = left + paramName;
-        } else {
-            left = prefix + classNames[0];
-            for (let i = 1; i < classNames.length; ++i) {
-                left = left + "['" + classNames[i] + "']";
-            }
+    const str = [];
+    let sentence = '';
+    if (isGeneric) {
+        if (
+            !(value.startsWith("'") && value.endsWith("'")) &&
+            !(value.startsWith('"') && value.endsWith('"'))
+        ) {
+            str.push(prefix + 'if ' + value + ' is not None:');
+            prefix += '    ';
+        }
 
-            if (!isNullOrUndefined(paramName)) {
-                left = left + "['" + paramName + "']";
-            }
+        sentence = prefix + GetInstancePath(model, required) + '.';
+        for (let i = 1; i < classNames.length; ++i) {
+            sentence += classNames[i] + '.';
         }
-        str.push(left + ' = ' + value);
+        sentence += paramName;
     } else {
-        let ifClause = '';
-        if (needIfClause) {
-            ifClause = ' if ' + value + ' is None else ' + value;
+        sentence = prefix + classNames[0];
+        for (let i = 1; i < classNames.length; ++i) {
+            sentence += "['" + classNames[i] + "']";
         }
-        str = str.concat(
-            ConstructValuation(
-                model,
-                required,
-                isGeneric,
-                prefix,
-                classNames,
-                paramName,
-                defaultValue,
-            ) + ifClause,
-        );
+
+        if (!isNullOrUndefined(paramName)) {
+            sentence += "['" + paramName + "']";
+        }
     }
+
+    if (isNullOrUndefined(defaultValue)) {
+        sentence += ' = ' + value;
+    } else {
+        sentence += ' = ' + defaultValue;
+        if (needIfClause) {
+            sentence += ' if ' + value + ' is None else ' + value;
+        }
+    }
+    str.push(sentence);
     return str;
 }
 
