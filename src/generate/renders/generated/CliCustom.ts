@@ -949,6 +949,12 @@ function GetSimpleCallItem(
                             parameterHandler.Parameter_Type(param),
                         );
                 }
+            } else if (param.required) {
+                if (schemaHandler.Schema_Type(param.schema) === SchemaType.Object) {
+                    parameterPair = paramNamePython + '={}';
+                } else {
+                    parameterPair = paramNamePython + '=None';
+                }
             } else {
                 parameterPair = paramNamePython + '=None';
             }
@@ -978,6 +984,12 @@ function GetSimpleCallItem(
                         paramNamePython +
                         '=' +
                         ToPythonString(paramDefaultValue, parameterHandler.Parameter_Type(param));
+                }
+            } else if (param.required) {
+                if (schemaHandler.Schema_Type(param.schema) === SchemaType.Object) {
+                    parameterPair = paramNamePython + '={}';
+                } else {
+                    parameterPair = paramNamePython + '=None';
                 }
             } else {
                 parameterPair = paramNamePython + '=None';
