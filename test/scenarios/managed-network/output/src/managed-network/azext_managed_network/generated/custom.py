@@ -168,8 +168,7 @@ def managed_network_mn_group_update(instance,
                                     no_wait=False):
     if location is not None:
         instance.location = location
-    if "Connectivity" is not None:
-        instance.kind = "Connectivity"
+    instance.kind = "Connectivity"
     if management_groups is not None:
         instance.management_groups = management_groups
     if subscriptions is not None:
