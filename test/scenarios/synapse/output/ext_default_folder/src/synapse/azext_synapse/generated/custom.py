@@ -48,22 +48,32 @@ def synapse_big_data_pool_create(client,
                                  node_size=None,
                                  node_size_family=None,
                                  no_wait=False):
-    if force is None:
-        force = False
     big_data_pool_info = {}
-    big_data_pool_info['tags'] = tags
+    if tags is not None:
+        big_data_pool_info['tags'] = tags
     big_data_pool_info['location'] = location
-    big_data_pool_info['provisioning_state'] = provisioning_state
-    big_data_pool_info['auto_scale'] = auto_scale
-    big_data_pool_info['creation_date'] = creation_date
-    big_data_pool_info['auto_pause'] = auto_pause
-    big_data_pool_info['spark_events_folder'] = spark_events_folder
-    big_data_pool_info['node_count'] = node_count
-    big_data_pool_info['library_requirements'] = library_requirements
-    big_data_pool_info['spark_version'] = spark_version
-    big_data_pool_info['default_spark_log_folder'] = default_spark_log_folder
-    big_data_pool_info['node_size'] = node_size
-    big_data_pool_info['node_size_family'] = node_size_family
+    if provisioning_state is not None:
+        big_data_pool_info['provisioning_state'] = provisioning_state
+    if auto_scale is not None:
+        big_data_pool_info['auto_scale'] = auto_scale
+    if creation_date is not None:
+        big_data_pool_info['creation_date'] = creation_date
+    if auto_pause is not None:
+        big_data_pool_info['auto_pause'] = auto_pause
+    if spark_events_folder is not None:
+        big_data_pool_info['spark_events_folder'] = spark_events_folder
+    if node_count is not None:
+        big_data_pool_info['node_count'] = node_count
+    if library_requirements is not None:
+        big_data_pool_info['library_requirements'] = library_requirements
+    if spark_version is not None:
+        big_data_pool_info['spark_version'] = spark_version
+    if default_spark_log_folder is not None:
+        big_data_pool_info['default_spark_log_folder'] = default_spark_log_folder
+    if node_size is not None:
+        big_data_pool_info['node_size'] = node_size
+    if node_size_family is not None:
+        big_data_pool_info['node_size_family'] = node_size_family
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -79,7 +89,8 @@ def synapse_big_data_pool_update(client,
                                  big_data_pool_name,
                                  tags=None):
     big_data_pool_patch_info = {}
-    big_data_pool_patch_info['tags'] = tags
+    if tags is not None:
+        big_data_pool_patch_info['tags'] = tags
     return client.update(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          big_data_pool_name=big_data_pool_name,
@@ -140,8 +151,10 @@ def synapse_ip_firewall_rule_create(client,
                                     start_ip_address=None,
                                     no_wait=False):
     ip_firewall_rule_info = {}
-    ip_firewall_rule_info['end_ip_address'] = end_ip_address
-    ip_firewall_rule_info['start_ip_address'] = start_ip_address
+    if end_ip_address is not None:
+        ip_firewall_rule_info['end_ip_address'] = end_ip_address
+    if start_ip_address is not None:
+        ip_firewall_rule_info['start_ip_address'] = start_ip_address
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -182,7 +195,8 @@ def synapse_ip_firewall_rule_replace_all(client,
                                          ip_firewall_rules=None,
                                          no_wait=False):
     request = {}
-    request['ip_firewall_rules'] = ip_firewall_rules
+    if ip_firewall_rules is not None:
+        request['ip_firewall_rules'] = ip_firewall_rules
     return sdk_no_wait(no_wait,
                        client.begin_replace_all,
                        resource_group_name=resource_group_name,
@@ -224,18 +238,29 @@ def synapse_sql_pool_create(client,
                             creation_date=None,
                             no_wait=False):
     sql_pool_info = {}
-    sql_pool_info['tags'] = tags
+    if tags is not None:
+        sql_pool_info['tags'] = tags
     sql_pool_info['location'] = location
-    sql_pool_info['sku'] = sku
-    sql_pool_info['max_size_bytes'] = max_size_bytes
-    sql_pool_info['collation'] = collation
-    sql_pool_info['source_database_id'] = source_database_id
-    sql_pool_info['recoverable_database_id'] = recoverable_database_id
-    sql_pool_info['provisioning_state'] = provisioning_state
-    sql_pool_info['status'] = status
-    sql_pool_info['restore_point_in_time'] = restore_point_in_time
-    sql_pool_info['create_mode'] = create_mode
-    sql_pool_info['creation_date'] = creation_date
+    if sku is not None:
+        sql_pool_info['sku'] = sku
+    if max_size_bytes is not None:
+        sql_pool_info['max_size_bytes'] = max_size_bytes
+    if collation is not None:
+        sql_pool_info['collation'] = collation
+    if source_database_id is not None:
+        sql_pool_info['source_database_id'] = source_database_id
+    if recoverable_database_id is not None:
+        sql_pool_info['recoverable_database_id'] = recoverable_database_id
+    if provisioning_state is not None:
+        sql_pool_info['provisioning_state'] = provisioning_state
+    if status is not None:
+        sql_pool_info['status'] = status
+    if restore_point_in_time is not None:
+        sql_pool_info['restore_point_in_time'] = restore_point_in_time
+    if create_mode is not None:
+        sql_pool_info['create_mode'] = create_mode
+    if creation_date is not None:
+        sql_pool_info['creation_date'] = creation_date
     return sdk_no_wait(no_wait,
                        client.begin_create,
                        resource_group_name=resource_group_name,
@@ -261,18 +286,30 @@ def synapse_sql_pool_update(client,
                             create_mode=None,
                             creation_date=None):
     sql_pool_info = {}
-    sql_pool_info['tags'] = tags
-    sql_pool_info['location'] = location
-    sql_pool_info['sku'] = sku
-    sql_pool_info['max_size_bytes'] = max_size_bytes
-    sql_pool_info['collation'] = collation
-    sql_pool_info['source_database_id'] = source_database_id
-    sql_pool_info['recoverable_database_id'] = recoverable_database_id
-    sql_pool_info['provisioning_state'] = provisioning_state
-    sql_pool_info['status'] = status
-    sql_pool_info['restore_point_in_time'] = restore_point_in_time
-    sql_pool_info['create_mode'] = create_mode
-    sql_pool_info['creation_date'] = creation_date
+    if tags is not None:
+        sql_pool_info['tags'] = tags
+    if location is not None:
+        sql_pool_info['location'] = location
+    if sku is not None:
+        sql_pool_info['sku'] = sku
+    if max_size_bytes is not None:
+        sql_pool_info['max_size_bytes'] = max_size_bytes
+    if collation is not None:
+        sql_pool_info['collation'] = collation
+    if source_database_id is not None:
+        sql_pool_info['source_database_id'] = source_database_id
+    if recoverable_database_id is not None:
+        sql_pool_info['recoverable_database_id'] = recoverable_database_id
+    if provisioning_state is not None:
+        sql_pool_info['provisioning_state'] = provisioning_state
+    if status is not None:
+        sql_pool_info['status'] = status
+    if restore_point_in_time is not None:
+        sql_pool_info['restore_point_in_time'] = restore_point_in_time
+    if create_mode is not None:
+        sql_pool_info['create_mode'] = create_mode
+    if creation_date is not None:
+        sql_pool_info['creation_date'] = creation_date
     return client.update(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          sql_pool_name=sql_pool_name,
@@ -343,7 +380,8 @@ def synapse_sql_pool_metadata_sync_config_create(client,
                                                  sql_pool_name,
                                                  enabled=None):
     metadata_sync_configuration = {}
-    metadata_sync_configuration['enabled'] = enabled
+    if enabled is not None:
+        metadata_sync_configuration['enabled'] = enabled
     return client.create(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          sql_pool_name=sql_pool_name,
@@ -428,7 +466,8 @@ def synapse_sql_pool_transparent_data_encryption_create(client,
                                                         sql_pool_name,
                                                         status=None):
     parameters = {}
-    parameters['status'] = status
+    if status is not None:
+        parameters['status'] = status
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -468,14 +507,22 @@ def synapse_sql_pool_blob_auditing_policy_create(client,
                                                  is_storage_secondary_key_in_use=None,
                                                  is_azure_monitor_target_enabled=None):
     parameters = {}
-    parameters['state'] = state
-    parameters['storage_endpoint'] = storage_endpoint
-    parameters['storage_account_access_key'] = storage_account_access_key
-    parameters['retention_days'] = retention_days
-    parameters['audit_actions_and_groups'] = audit_actions_and_groups
-    parameters['storage_account_subscription_id'] = storage_account_subscription_id
-    parameters['is_storage_secondary_key_in_use'] = is_storage_secondary_key_in_use
-    parameters['is_azure_monitor_target_enabled'] = is_azure_monitor_target_enabled
+    if state is not None:
+        parameters['state'] = state
+    if storage_endpoint is not None:
+        parameters['storage_endpoint'] = storage_endpoint
+    if storage_account_access_key is not None:
+        parameters['storage_account_access_key'] = storage_account_access_key
+    if retention_days is not None:
+        parameters['retention_days'] = retention_days
+    if audit_actions_and_groups is not None:
+        parameters['audit_actions_and_groups'] = audit_actions_and_groups
+    if storage_account_subscription_id is not None:
+        parameters['storage_account_subscription_id'] = storage_account_subscription_id
+    if is_storage_secondary_key_in_use is not None:
+        parameters['is_storage_secondary_key_in_use'] = is_storage_secondary_key_in_use
+    if is_azure_monitor_target_enabled is not None:
+        parameters['is_azure_monitor_target_enabled'] = is_azure_monitor_target_enabled
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -543,10 +590,14 @@ def synapse_sql_pool_sensitivity_label_create(client,
                                               information_type=None,
                                               information_type_id=None):
     parameters = {}
-    parameters['label_name'] = label_name
-    parameters['label_id'] = label_id
-    parameters['information_type'] = information_type
-    parameters['information_type_id'] = information_type_id
+    if label_name is not None:
+        parameters['label_name'] = label_name
+    if label_id is not None:
+        parameters['label_id'] = label_id
+    if information_type is not None:
+        parameters['information_type'] = information_type
+    if information_type_id is not None:
+        parameters['information_type_id'] = information_type_id
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -568,10 +619,14 @@ def synapse_sql_pool_sensitivity_label_update(client,
                                               information_type=None,
                                               information_type_id=None):
     parameters = {}
-    parameters['label_name'] = label_name
-    parameters['label_id'] = label_id
-    parameters['information_type'] = information_type
-    parameters['information_type_id'] = information_type_id
+    if label_name is not None:
+        parameters['label_name'] = label_name
+    if label_id is not None:
+        parameters['label_id'] = label_id
+    if information_type is not None:
+        parameters['information_type'] = information_type
+    if information_type_id is not None:
+        parameters['information_type_id'] = information_type_id
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -729,10 +784,14 @@ def synapse_sql_pool_vulnerability_assessment_create(client,
                                                      storage_account_access_key=None,
                                                      recurring_scans=None):
     parameters = {}
-    parameters['storage_container_path'] = storage_container_path
-    parameters['storage_container_sas_key'] = storage_container_sas_key
-    parameters['storage_account_access_key'] = storage_account_access_key
-    parameters['recurring_scans'] = recurring_scans
+    if storage_container_path is not None:
+        parameters['storage_container_path'] = storage_container_path
+    if storage_container_sas_key is not None:
+        parameters['storage_container_sas_key'] = storage_container_sas_key
+    if storage_account_access_key is not None:
+        parameters['storage_account_access_key'] = storage_account_access_key
+    if recurring_scans is not None:
+        parameters['recurring_scans'] = recurring_scans
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -825,13 +884,20 @@ def synapse_sql_pool_security_alert_policy_create(client,
                                                   storage_account_access_key=None,
                                                   retention_days=None):
     parameters = {}
-    parameters['state'] = state
-    parameters['disabled_alerts'] = disabled_alerts
-    parameters['email_addresses'] = email_addresses
-    parameters['email_account_admins'] = email_account_admins
-    parameters['storage_endpoint'] = storage_endpoint
-    parameters['storage_account_access_key'] = storage_account_access_key
-    parameters['retention_days'] = retention_days
+    if state is not None:
+        parameters['state'] = state
+    if disabled_alerts is not None:
+        parameters['disabled_alerts'] = disabled_alerts
+    if email_addresses is not None:
+        parameters['email_addresses'] = email_addresses
+    if email_account_admins is not None:
+        parameters['email_account_admins'] = email_account_admins
+    if storage_endpoint is not None:
+        parameters['storage_endpoint'] = storage_endpoint
+    if storage_account_access_key is not None:
+        parameters['storage_account_access_key'] = storage_account_access_key
+    if retention_days is not None:
+        parameters['retention_days'] = retention_days
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -875,7 +941,8 @@ def synapse_sql_pool_vulnerability_assessment_rule_baseline_create(client,
                                                                    baseline_name,
                                                                    baseline_results=None):
     parameters = {}
-    parameters['baseline_results'] = baseline_results
+    if baseline_results is not None:
+        parameters['baseline_results'] = baseline_results
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -893,7 +960,8 @@ def synapse_sql_pool_vulnerability_assessment_rule_baseline_update(client,
                                                                    baseline_name,
                                                                    baseline_results=None):
     parameters = {}
-    parameters['baseline_results'] = baseline_results
+    if baseline_results is not None:
+        parameters['baseline_results'] = baseline_results
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    sql_pool_name=sql_pool_name,
@@ -947,19 +1015,33 @@ def synapse_workspace_create(client,
                              type_=None,
                              no_wait=False):
     workspace_info = {}
-    workspace_info['tags'] = tags
+    if tags is not None:
+        workspace_info['tags'] = tags
     workspace_info['location'] = location
-    workspace_info['default_data_lake_storage'] = default_data_lake_storage
-    workspace_info['sql_administrator_login_password'] = sql_administrator_login_password
-    workspace_info['managed_resource_group_name'] = managed_resource_group_name
-    workspace_info['sql_administrator_login'] = sql_administrator_login
-    workspace_info['connectivity_endpoints'] = connectivity_endpoints
-    workspace_info['managed_virtual_network'] = managed_virtual_network
-    workspace_info['private_endpoint_connections'] = private_endpoint_connections
+    if default_data_lake_storage is not None:
+        workspace_info['default_data_lake_storage'] = default_data_lake_storage
+    if sql_administrator_login_password is not None:
+        workspace_info['sql_administrator_login_password'] = sql_administrator_login_password
+    if managed_resource_group_name is not None:
+        workspace_info['managed_resource_group_name'] = managed_resource_group_name
+    if sql_administrator_login is not None:
+        workspace_info['sql_administrator_login'] = sql_administrator_login
+    if connectivity_endpoints is not None:
+        workspace_info['connectivity_endpoints'] = connectivity_endpoints
+    if managed_virtual_network is not None:
+        workspace_info['managed_virtual_network'] = managed_virtual_network
+    if private_endpoint_connections is not None:
+        workspace_info['private_endpoint_connections'] = private_endpoint_connections
     workspace_info['virtual_network_profile'] = {}
-    workspace_info['virtual_network_profile']['compute_subnet_id'] = compute_subnet_id
+    if compute_subnet_id is not None:
+        workspace_info['virtual_network_profile']['compute_subnet_id'] = compute_subnet_id
+    if len(workspace_info['virtual_network_profile']) == 0:
+        del workspace_info['virtual_network_profile']
     workspace_info['identity'] = {}
-    workspace_info['identity']['type'] = type_
+    if type_ is not None:
+        workspace_info['identity']['type'] = type_
+    if len(workspace_info['identity']) == 0:
+        del workspace_info['identity']
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -975,10 +1057,15 @@ def synapse_workspace_update(client,
                              type_=None,
                              no_wait=False):
     workspace_patch_info = {}
-    workspace_patch_info['tags'] = tags
-    workspace_patch_info['sql_administrator_login_password'] = sql_administrator_login_password
+    if tags is not None:
+        workspace_patch_info['tags'] = tags
+    if sql_administrator_login_password is not None:
+        workspace_patch_info['sql_administrator_login_password'] = sql_administrator_login_password
     workspace_patch_info['identity'] = {}
-    workspace_patch_info['identity']['type'] = type_
+    if type_ is not None:
+        workspace_patch_info['identity']['type'] = type_
+    if len(workspace_patch_info['identity']) == 0:
+        del workspace_patch_info['identity']
     return sdk_no_wait(no_wait,
                        client.begin_update,
                        resource_group_name=resource_group_name,
@@ -1012,10 +1099,14 @@ def synapse_workspace_aad_admin_create(client,
                                        sid=None,
                                        no_wait=False):
     aad_admin_info = {}
-    aad_admin_info['tenant_id'] = tenant_id
-    aad_admin_info['login'] = login
-    aad_admin_info['administrator_type'] = administrator_type
-    aad_admin_info['sid'] = sid
+    if tenant_id is not None:
+        aad_admin_info['tenant_id'] = tenant_id
+    if login is not None:
+        aad_admin_info['login'] = login
+    if administrator_type is not None:
+        aad_admin_info['administrator_type'] = administrator_type
+    if sid is not None:
+        aad_admin_info['sid'] = sid
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
@@ -1065,7 +1156,10 @@ def synapse_workspace_managed_identity_sql_control_setting_create(client,
                                                                   desired_state=None):
     managed_identity_sql_control_settings = {}
     managed_identity_sql_control_settings['grant_sql_control_to_managed_identity'] = {}
-    managed_identity_sql_control_settings['grant_sql_control_to_managed_identity']['desired_state'] = desired_state
+    if desired_state is not None:
+        managed_identity_sql_control_settings['grant_sql_control_to_managed_identity']['desired_state'] = desired_state
+    if len(managed_identity_sql_control_settings['grant_sql_control_to_managed_identity']) == 0:
+        del managed_identity_sql_control_settings['grant_sql_control_to_managed_identity']
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    managed_identity_sql_control_settings=managed_identity_sql_control_settings)
@@ -1123,8 +1217,10 @@ def synapse_integration_runtime_update(client,
                                        auto_update=None,
                                        update_delay_offset=None):
     update_integration_runtime_request = {}
-    update_integration_runtime_request['auto_update'] = auto_update
-    update_integration_runtime_request['update_delay_offset'] = update_delay_offset
+    if auto_update is not None:
+        update_integration_runtime_request['auto_update'] = auto_update
+    if update_delay_offset is not None:
+        update_integration_runtime_request['update_delay_offset'] = update_delay_offset
     return client.update(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          integration_runtime_name=integration_runtime_name,
@@ -1187,7 +1283,8 @@ def synapse_integration_runtime_object_metadata_get(client,
                                                     integration_runtime_name,
                                                     metadata_path=None):
     get_metadata_request = {}
-    get_metadata_request['metadata_path'] = metadata_path
+    if metadata_path is not None:
+        get_metadata_request['metadata_path'] = metadata_path
     return client.get(resource_group_name=resource_group_name,
                       workspace_name=workspace_name,
                       integration_runtime_name=integration_runtime_name,
@@ -1221,7 +1318,8 @@ def synapse_integration_runtime_node_update(client,
                                             node_name,
                                             concurrent_jobs_limit=None):
     update_integration_runtime_node_request = {}
-    update_integration_runtime_node_request['concurrent_jobs_limit'] = concurrent_jobs_limit
+    if concurrent_jobs_limit is not None:
+        update_integration_runtime_node_request['concurrent_jobs_limit'] = concurrent_jobs_limit
     return client.update(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          integration_runtime_name=integration_runtime_name,
@@ -1273,7 +1371,8 @@ def synapse_integration_runtime_auth_key_regenerate(client,
                                                     integration_runtime_name,
                                                     key_name=None):
     regenerate_key_parameters = {}
-    regenerate_key_parameters['key_name'] = key_name
+    if key_name is not None:
+        regenerate_key_parameters['key_name'] = key_name
     return client.regenerate(resource_group_name=resource_group_name,
                              workspace_name=workspace_name,
                              integration_runtime_name=integration_runtime_name,
@@ -1374,7 +1473,8 @@ def synapse_private_link_hub_create(client,
                                     location,
                                     tags=None):
     private_link_hub_info = {}
-    private_link_hub_info['tags'] = tags
+    if tags is not None:
+        private_link_hub_info['tags'] = tags
     private_link_hub_info['location'] = location
     return client.create_or_update(resource_group_name=resource_group_name,
                                    private_link_hub_name=private_link_hub_name,
@@ -1386,7 +1486,8 @@ def synapse_private_link_hub_update(client,
                                     private_link_hub_name,
                                     tags=None):
     private_link_hub_patch_info = {}
-    private_link_hub_patch_info['tags'] = tags
+    if tags is not None:
+        private_link_hub_patch_info['tags'] = tags
     return client.update(resource_group_name=resource_group_name,
                          private_link_hub_name=private_link_hub_name,
                          private_link_hub_patch_info=private_link_hub_patch_info)

@@ -70,21 +70,37 @@ def vm_virtual_machine_scale_set_vm_extension_create(client,
                                                      no_wait=False):
     extension_parameters = {}
     extension_parameters['location'] = location
-    extension_parameters['tags'] = tags
-    extension_parameters['force_update_tag'] = force_update_tag
-    extension_parameters['publisher'] = publisher
-    extension_parameters['type_properties_type'] = type_properties_type
-    extension_parameters['type_handler_version'] = type_handler_version
-    extension_parameters['auto_upgrade_minor_version'] = auto_upgrade_minor_version
-    extension_parameters['enable_automatic_upgrade'] = enable_automatic_upgrade
-    extension_parameters['settings'] = settings
-    extension_parameters['protected_settings'] = protected_settings
+    if tags is not None:
+        extension_parameters['tags'] = tags
+    if force_update_tag is not None:
+        extension_parameters['force_update_tag'] = force_update_tag
+    if publisher is not None:
+        extension_parameters['publisher'] = publisher
+    if type_properties_type is not None:
+        extension_parameters['type_properties_type'] = type_properties_type
+    if type_handler_version is not None:
+        extension_parameters['type_handler_version'] = type_handler_version
+    if auto_upgrade_minor_version is not None:
+        extension_parameters['auto_upgrade_minor_version'] = auto_upgrade_minor_version
+    if enable_automatic_upgrade is not None:
+        extension_parameters['enable_automatic_upgrade'] = enable_automatic_upgrade
+    if settings is not None:
+        extension_parameters['settings'] = settings
+    if protected_settings is not None:
+        extension_parameters['protected_settings'] = protected_settings
     extension_parameters['instance_view'] = {}
-    extension_parameters['instance_view']['name'] = name
-    extension_parameters['instance_view']['type'] = type_
-    extension_parameters['instance_view']['type_handler_version'] = virtual_machine_extension_instance_view_type_handler_version_type_handler_version
-    extension_parameters['instance_view']['substatuses'] = substatuses
-    extension_parameters['instance_view']['statuses'] = statuses
+    if name is not None:
+        extension_parameters['instance_view']['name'] = name
+    if type_ is not None:
+        extension_parameters['instance_view']['type'] = type_
+    if virtual_machine_extension_instance_view_type_handler_version_type_handler_version is not None:
+        extension_parameters['instance_view']['type_handler_version'] = virtual_machine_extension_instance_view_type_handler_version_type_handler_version
+    if substatuses is not None:
+        extension_parameters['instance_view']['substatuses'] = substatuses
+    if statuses is not None:
+        extension_parameters['instance_view']['statuses'] = statuses
+    if len(extension_parameters['instance_view']) == 0:
+        del extension_parameters['instance_view']
     return sdk_no_wait(no_wait,
                        client.create_or_update,
                        resource_group_name=resource_group_name,

@@ -53,14 +53,22 @@ def datafactory_create(client,
                        'repo_configuration!')
     repo_configuration = all_repo_configuration[0] if len(all_repo_configuration) == 1 else None
     factory = {}
-    factory['location'] = location
-    factory['tags'] = tags
-    factory['test_inherit'] = test_inherit
-    factory['repo_configuration'] = repo_configuration
-    factory['fake_identity'] = fake_identity
-    factory['zones'] = zones
+    if location is not None:
+        factory['location'] = location
+    if tags is not None:
+        factory['tags'] = tags
+    if test_inherit is not None:
+        factory['test_inherit'] = test_inherit
+    if repo_configuration is not None:
+        factory['repo_configuration'] = repo_configuration
+    if fake_identity is not None:
+        factory['fake_identity'] = fake_identity
+    if zones is not None:
+        factory['zones'] = zones
     factory['identity'] = {}
     factory['identity']['type'] = "SystemAssigned"
+    if len(factory['identity']) == 0:
+        del factory['identity']
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    if_match=if_match,
@@ -72,9 +80,12 @@ def datafactory_update(client,
                        factory_name,
                        tags=None):
     factory_update_parameters = {}
-    factory_update_parameters['tags'] = tags
+    if tags is not None:
+        factory_update_parameters['tags'] = tags
     factory_update_parameters['identity'] = {}
     factory_update_parameters['identity']['type'] = "SystemAssigned"
+    if len(factory_update_parameters['identity']) == 0:
+        del factory_update_parameters['identity']
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          factory_update_parameters=factory_update_parameters)
@@ -102,8 +113,10 @@ def datafactory_configure_factory_repo(client,
                        'repo_configuration!')
     repo_configuration = all_repo_configuration[0] if len(all_repo_configuration) == 1 else None
     factory_repo_update = {}
-    factory_repo_update['factory_resource_id'] = factory_resource_id
-    factory_repo_update['repo_configuration'] = repo_configuration
+    if factory_resource_id is not None:
+        factory_repo_update['factory_resource_id'] = factory_resource_id
+    if repo_configuration is not None:
+        factory_repo_update['repo_configuration'] = repo_configuration
     return client.configure_factory_repo(location_id=location_id,
                                          factory_repo_update=factory_repo_update)
 
@@ -117,11 +130,16 @@ def datafactory_get_data_plane_access(client,
                                       start_time=None,
                                       expire_time=None):
     policy = {}
-    policy['permissions'] = permissions
-    policy['access_resource_path'] = access_resource_path
-    policy['profile_name'] = profile_name
-    policy['start_time'] = start_time
-    policy['expire_time'] = expire_time
+    if permissions is not None:
+        policy['permissions'] = permissions
+    if access_resource_path is not None:
+        policy['access_resource_path'] = access_resource_path
+    if profile_name is not None:
+        policy['profile_name'] = profile_name
+    if start_time is not None:
+        policy['start_time'] = start_time
+    if expire_time is not None:
+        policy['expire_time'] = expire_time
     return client.get_data_plane_access(resource_group_name=resource_group_name,
                                         factory_name=factory_name,
                                         policy=policy)
@@ -135,7 +153,8 @@ def datafactory_get_git_hub_access_token(client,
                                          git_hub_client_id=None):
     git_hub_access_token_request = {}
     git_hub_access_token_request['git_hub_access_code'] = git_hub_access_code
-    git_hub_access_token_request['git_hub_client_id'] = git_hub_client_id
+    if git_hub_client_id is not None:
+        git_hub_access_token_request['git_hub_client_id'] = git_hub_client_id
     git_hub_access_token_request['git_hub_access_token_base_url'] = git_hub_access_token_base_url
     return client.get_git_hub_access_token(resource_group_name=resource_group_name,
                                            factory_name=factory_name,
@@ -213,8 +232,10 @@ def datafactory_trigger_query_by_factory(client,
                                          continuation_token=None,
                                          parent_trigger_name=None):
     filter_parameters = {}
-    filter_parameters['continuation_token'] = continuation_token
-    filter_parameters['parent_trigger_name'] = parent_trigger_name
+    if continuation_token is not None:
+        filter_parameters['continuation_token'] = continuation_token
+    if parent_trigger_name is not None:
+        filter_parameters['parent_trigger_name'] = parent_trigger_name
     return client.query_by_factory(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    filter_parameters=filter_parameters)
@@ -310,12 +331,18 @@ def datafactory_integration_runtime_managed_create(client,
     integration_runtime = {}
     integration_runtime['properties'] = {}
     integration_runtime['properties']['type'] = 'Managed'
-    integration_runtime['properties']['description'] = description
-    integration_runtime['properties']['repo_configuration'] = repo_configuration
-    integration_runtime['properties']['fake_identity'] = fake_identity
-    integration_runtime['properties']['zones'] = zones
-    integration_runtime['properties']['compute_properties'] = compute_properties
-    integration_runtime['properties']['ssis_properties'] = ssis_properties
+    if description is not None:
+        integration_runtime['properties']['description'] = description
+    if repo_configuration is not None:
+        integration_runtime['properties']['repo_configuration'] = repo_configuration
+    if fake_identity is not None:
+        integration_runtime['properties']['fake_identity'] = fake_identity
+    if zones is not None:
+        integration_runtime['properties']['zones'] = zones
+    if compute_properties is not None:
+        integration_runtime['properties']['compute_properties'] = compute_properties
+    if ssis_properties is not None:
+        integration_runtime['properties']['ssis_properties'] = ssis_properties
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    integration_runtime_name=integration_runtime_name,
@@ -333,8 +360,10 @@ def datafactory_integration_runtime_self_hosted_create(client,
     integration_runtime = {}
     integration_runtime['properties'] = {}
     integration_runtime['properties']['type'] = 'SelfHosted'
-    integration_runtime['properties']['description'] = description
-    integration_runtime['properties']['linked_info'] = linked_info
+    if description is not None:
+        integration_runtime['properties']['description'] = description
+    if linked_info is not None:
+        integration_runtime['properties']['linked_info'] = linked_info
     return client.create_or_update(resource_group_name=resource_group_name,
                                    factory_name=factory_name,
                                    integration_runtime_name=integration_runtime_name,
@@ -349,8 +378,10 @@ def datafactory_integration_runtime_update(client,
                                            auto_update=None,
                                            update_delay_offset=None):
     update_integration_runtime_request = {}
-    update_integration_runtime_request['auto_update'] = auto_update
-    update_integration_runtime_request['update_delay_offset'] = update_delay_offset
+    if auto_update is not None:
+        update_integration_runtime_request['auto_update'] = auto_update
+    if update_delay_offset is not None:
+        update_integration_runtime_request['update_delay_offset'] = update_delay_offset
     return client.update(resource_group_name=resource_group_name,
                          factory_name=factory_name,
                          integration_runtime_name=integration_runtime_name,
@@ -408,7 +439,8 @@ def datafactory_integration_runtime_regenerate_auth_key(client,
                                                         integration_runtime_name,
                                                         key_name=None):
     regenerate_key_parameters = {}
-    regenerate_key_parameters['key_name'] = key_name
+    if key_name is not None:
+        regenerate_key_parameters['key_name'] = key_name
     return client.regenerate_auth_key(resource_group_name=resource_group_name,
                                       factory_name=factory_name,
                                       integration_runtime_name=integration_runtime_name,
@@ -479,10 +511,14 @@ def datafactory_linked_integration_runtime_create(client,
                                                   data_factory_name=None,
                                                   data_factory_location=None):
     create_linked_integration_runtime_request = {}
-    create_linked_integration_runtime_request['name'] = name
-    create_linked_integration_runtime_request['subscription_id'] = subscription_id
-    create_linked_integration_runtime_request['data_factory_name'] = data_factory_name
-    create_linked_integration_runtime_request['data_factory_location'] = data_factory_location
+    if name is not None:
+        create_linked_integration_runtime_request['name'] = name
+    if subscription_id is not None:
+        create_linked_integration_runtime_request['subscription_id'] = subscription_id
+    if data_factory_name is not None:
+        create_linked_integration_runtime_request['data_factory_name'] = data_factory_name
+    if data_factory_location is not None:
+        create_linked_integration_runtime_request['data_factory_location'] = data_factory_location
     return client.create_linked_integration_runtime(resource_group_name=resource_group_name,
                                                     factory_name=factory_name,
                                                     integration_runtime_name=integration_runtime_name,
@@ -500,13 +536,20 @@ def datafactory_domain_service_create(client,
                                       sku=None,
                                       filtered_sync=None):
     domain_service = {}
-    domain_service['location'] = location
-    domain_service['tags'] = tags
-    domain_service['domain_name'] = domain_name
-    domain_service['replica_sets'] = replica_sets
-    domain_service['domain_configuration_type'] = domain_configuration_type
-    domain_service['sku'] = sku
-    domain_service['filtered_sync'] = filtered_sync
+    if location is not None:
+        domain_service['location'] = location
+    if tags is not None:
+        domain_service['tags'] = tags
+    if domain_name is not None:
+        domain_service['domain_name'] = domain_name
+    if replica_sets is not None:
+        domain_service['replica_sets'] = replica_sets
+    if domain_configuration_type is not None:
+        domain_service['domain_configuration_type'] = domain_configuration_type
+    if sku is not None:
+        domain_service['sku'] = sku
+    if filtered_sync is not None:
+        domain_service['filtered_sync'] = filtered_sync
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          domain_service_name=domain_service_name,
                                          domain_service=domain_service)
@@ -523,13 +566,20 @@ def datafactory_domain_service_update(client,
                                       sku=None,
                                       filtered_sync=None):
     domain_service = {}
-    domain_service['location'] = location
-    domain_service['tags'] = tags
-    domain_service['domain_name'] = domain_name
-    domain_service['replica_sets'] = replica_sets
-    domain_service['domain_configuration_type'] = domain_configuration_type
-    domain_service['sku'] = sku
-    domain_service['filtered_sync'] = filtered_sync
+    if location is not None:
+        domain_service['location'] = location
+    if tags is not None:
+        domain_service['tags'] = tags
+    if domain_name is not None:
+        domain_service['domain_name'] = domain_name
+    if replica_sets is not None:
+        domain_service['replica_sets'] = replica_sets
+    if domain_configuration_type is not None:
+        domain_service['domain_configuration_type'] = domain_configuration_type
+    if sku is not None:
+        domain_service['sku'] = sku
+    if filtered_sync is not None:
+        domain_service['filtered_sync'] = filtered_sync
     return client.begin_create_or_update(resource_group_name=resource_group_name,
                                          domain_service_name=domain_service_name,
                                          domain_service=domain_service)
@@ -541,7 +591,8 @@ def datafactory_group_create(client,
                              group_name,
                              e_tag=None):
     group = {}
-    group['e_tag'] = e_tag
+    if e_tag is not None:
+        group['e_tag'] = e_tag
     group['properties'] = {}
     return client.create(resource_group_name=resource_group_name,
                          project_name=project_name,
