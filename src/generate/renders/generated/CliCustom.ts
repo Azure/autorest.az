@@ -116,6 +116,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
     if (model.SelectFirstMethodParameter(true)) {
         const originalParameterStack: Parameter[] = [];
         const originalParameterNameStack: string[] = [];
+        const originalParameterCheckEmpty: boolean[] = [];
         const prefixIndent = '    ';
 
         let skip = false;
@@ -146,6 +147,13 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                     methodParameterHandler.MethodParameter.language?.['cli']?.cliFlattenTrace
                         ?.length < originalParameterStack.length
                 ) {
+                    if (originalParameterCheckEmpty.pop()) {
+                        const checks = ConstructEmptyCheck(
+                            prefixIndent,
+                            originalParameterNameStack,
+                        );
+                        outputBody = outputBody.concat(checks);
+                    }
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
                 }
@@ -165,6 +173,13 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                         methodHandler.Method.extensions?.['cli-split-operation-original-operation'],
                     )
                 ) {
+                    if (originalParameterCheckEmpty.pop()) {
+                        const checks = ConstructEmptyCheck(
+                            prefixIndent,
+                            originalParameterNameStack,
+                        );
+                        outputBody = outputBody.concat(checks);
+                    }
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
                 }
@@ -173,14 +188,15 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                     allParams.indexOf(methodParameterHandler.MethodParameter.schema) === -1
                 ) {
                     allParams.push(methodParameterHandler.MethodParameter.schema);
-                    originalParameterStack.push(methodParameterHandler.MethodParameter);
-                    originalParameterNameStack.push(methodParameterHandler.MethodParameter_Name);
-                } else if (originalParameterStack.length > 0) {
-                    originalParameterStack.push(methodParameterHandler.MethodParameter);
-                    originalParameterNameStack.push(methodParameterHandler.MethodParameter_Name);
-                } else {
+                } else if (originalParameterStack.length <= 0) {
                     continue;
                 }
+                originalParameterStack.push(methodParameterHandler.MethodParameter);
+                originalParameterNameStack.push(methodParameterHandler.MethodParameter_Name);
+                originalParameterCheckEmpty.push(
+                    !needGeneric &&
+                        !parameterHandler.Parameter_IsRequired(originalParameterStack.last),
+                );
                 if (!needGeneric) {
                     outputBody = outputBody.concat(
                         ConstructValuation(
@@ -229,6 +245,13 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                                 originalParameterStack.last.language?.['cli']?.cliM4Path,
                             ) === -1
                         ) {
+                            if (originalParameterCheckEmpty.pop()) {
+                                const checks = ConstructEmptyCheck(
+                                    prefixIndent,
+                                    originalParameterNameStack,
+                                );
+                                outputBody = outputBody.concat(checks);
+                            }
                             originalParameterStack.pop();
                             originalParameterNameStack.pop();
                         }
@@ -244,8 +267,15 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                                 flattenedFrom,
                             );
                             newParam.language['cli'] = flattenedFrom.language['cli'];
+
                             originalParameterStack.push(newParam);
                             originalParameterNameStack.push(flattenedFrom.language.python.name);
+                            originalParameterCheckEmpty.push(
+                                !needGeneric &&
+                                    !parameterHandler.Parameter_IsRequired(
+                                        originalParameterStack.last,
+                                    ),
+                            );
                             if (!needGeneric) {
                                 outputBody = outputBody.concat(
                                     ConstructValuation(
@@ -292,7 +322,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                             defaultValue = '{}';
                         }
                         if (!methodParameterHandler.MethodParameter_IsHidden) {
-                            let needIfClause = true;
+                            let needIfClause = !methodParameterHandler.MethodParameter_RequiredByMethod;
                             if (
                                 methodParameterHandler.MethodParameter_Type === SchemaType.Constant
                             ) {
@@ -359,8 +389,16 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                         }
                     }
                 } else {
+                    if (originalParameterCheckEmpty.pop()) {
+                        const checks = ConstructEmptyCheck(
+                            prefixIndent,
+                            originalParameterNameStack,
+                        );
+                        outputBody = outputBody.concat(checks);
+                    }
                     originalParameterStack.pop();
                     originalParameterNameStack.pop();
+
                     // if this parameter was popped out because of last flattened parameter has just finished construction,
                     // then we need to run construction logic for this parameter one more time.
                     if (
@@ -386,43 +424,65 @@ function ConstructValuation(
     paramName: string,
     value: string,
     defaultValue: string = null,
-    needIfClause = true,
+    needIfClause = false,
 ): string[] {
     const str = [];
-    let sentence = '';
+    let property = '';
+
     if (isGeneric) {
-        if (
-            !(value.startsWith("'") && value.endsWith("'")) &&
-            !(value.startsWith('"') && value.endsWith('"'))
-        ) {
-            str.push(prefix + 'if ' + value + ' is not None:');
-            prefix += '    ';
-        }
-
-        sentence = prefix + GetInstancePath(model, required) + '.';
+        property = GetInstancePath(model, required) + '.';
+        // sentence = prefix + GetInstancePath(model, required) + '.';
         for (let i = 1; i < classNames.length; ++i) {
-            sentence += classNames[i] + '.';
+            property += classNames[i] + '.';
         }
-        sentence += paramName;
+        property += paramName;
     } else {
-        sentence = prefix + classNames[0];
+        property += classNames[0];
+        // sentence = prefix + classNames[0];
         for (let i = 1; i < classNames.length; ++i) {
-            sentence += "['" + classNames[i] + "']";
+            property += "['" + classNames[i] + "']";
         }
-
         if (!isNullOrUndefined(paramName)) {
-            sentence += "['" + paramName + "']";
+            property += "['" + paramName + "']";
         }
     }
 
-    if (isNullOrUndefined(defaultValue)) {
-        sentence += ' = ' + value;
+    if (needIfClause) {
+        str.push(prefix + 'if ' + value + ' is not None:');
+        str.push(prefix + '    ' + property + ' = ' + value);
+        if (!isGeneric && !isNullOrUndefined(defaultValue)) {
+            str.push(prefix + 'else:');
+            str.push(prefix + '    ' + property + ' = ' + defaultValue);
+        }
     } else {
-        sentence += ' = ' + defaultValue;
-        if (needIfClause) {
-            sentence += ' if ' + value + ' is None else ' + value;
+        if (!isNullOrUndefined(defaultValue)) {
+            str.push(prefix + property + ' = ' + defaultValue);
+        } else {
+            str.push(prefix + property + ' = ' + value);
         }
     }
+    return str;
+}
+
+function ConstructEmptyCheck(prefix: string, classNames: string[]): string[] {
+    const str = [];
+
+    if (classNames.length <= 1) {
+        // avoid to delete 'parameter' variable
+        return str;
+    }
+
+    let value = classNames[0];
+    for (let i = 1; i < classNames.length; ++i) {
+        value += "['" + classNames[i] + "']";
+    }
+
+    let sentence = prefix + 'if len(' + value + ') == 0:';
+
+    str.push(sentence);
+
+    prefix += '    ';
+    sentence = prefix + 'del ' + value;
     str.push(sentence);
     return str;
 }
@@ -694,23 +754,6 @@ function GetSingleCommandBody(model: CodeModelAz, required: any) {
                             }
                             continue;
                         }
-                    } else if (
-                        methodParameterHandler.MethodParameter_DefaultValue !== undefined &&
-                        methodParameterHandler.MethodParameter_Type !== SchemaType.Constant
-                    ) {
-                        // model is simple type with default value
-                        outputBody.push(
-                            '    if ' + methodParameterHandler.MethodParameter_MapsTo + ' is None:',
-                        );
-                        outputBody.push(
-                            '        ' +
-                                methodParameterHandler.MethodParameter_MapsTo +
-                                ' = ' +
-                                ToPythonString(
-                                    methodParameterHandler.MethodParameter_DefaultValue,
-                                    methodParameterHandler.MethodParameter_Type,
-                                ),
-                        );
                     }
                 } while (skip || model.SelectNextMethodParameter());
             }
