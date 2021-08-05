@@ -1014,11 +1014,10 @@ function GetSimpleCallItem(
         const paramNamePython = parameterHandler.Parameter_NamePython(param);
         const paramDefaultValue = parameterHandler.Parameter_DefaultValue(param);
         if (parameterHandler.Parameter_IsHidden(param)) {
-            if (paramDefaultValue) {
+            if (!isNullOrUndefined(paramDefaultValue)) {
                 if (schemaHandler.Schema_Type(param.schema) === SchemaType.Object) {
-                    parameterPair =
-                        paramNamePython +
-                        '=json.loads(' +
+                    parameterPair = paramNamePython + `1`;
+                    '=json.loads(' +
                         ToPythonString(paramDefaultValue, parameterHandler.Parameter_Type(param)) +
                         ')';
                     required.json = true;
@@ -1038,11 +1037,32 @@ function GetSimpleCallItem(
                 parameterPair = paramNamePython + '=None';
             }
         } else {
+            let valueName;
             if (!isNullOrUndefined(optionName)) {
-                parameterPair = paramNamePython + '=' + optionName;
+                valueName = optionName;
+                // parameterPair = paramNamePython + '=' + optionName;
             } else {
-                parameterPair = paramNamePython + '=' + parameterHandler.Parameter_MapsTo(param);
+                valueName = parameterHandler.Parameter_MapsTo(param);
+                // parameterPair = paramNamePython + '=' + parameterHandler.Parameter_MapsTo(param);
             }
+
+            parameterPair = paramNamePython + '=';
+            if (!isNullOrUndefined(paramDefaultValue)) {
+                if (schemaHandler.Schema_Type(param.schema) === SchemaType.Object) {
+                    parameterPair +=
+                        'json.loads(' +
+                        ToPythonString(paramDefaultValue, parameterHandler.Parameter_Type(param)) +
+                        ')';
+                    required.json = true;
+                } else {
+                    parameterPair += ToPythonString(
+                        paramDefaultValue,
+                        parameterHandler.Parameter_Type(param),
+                    );
+                }
+                parameterPair += ' if ' + valueName + ' is None else ';
+            }
+            parameterPair += valueName;
         }
     }
     return parameterPair;
