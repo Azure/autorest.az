@@ -79,7 +79,7 @@ def synapse_big_data_pool_create(client,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        big_data_pool_name=big_data_pool_name,
-                       force=force,
+                       force=False if force is None else force,
                        big_data_pool_info=big_data_pool_info)
 
 
