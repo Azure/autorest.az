@@ -228,214 +228,433 @@ def users_user_create(client,
                       time_zone=None,
                       working_hours=None):
     body = {}
-    body['id'] = id_
-    body['deleted_date_time'] = deleted_date_time
-    body['account_enabled'] = account_enabled
-    body['age_group'] = age_group
-    body['assigned_licenses'] = assigned_licenses
-    body['assigned_plans'] = assigned_plans
-    body['business_phones'] = business_phones
-    body['city'] = city
-    body['company_name'] = company_name
-    body['consent_provided_for_minor'] = consent_provided_for_minor
-    body['country'] = country
-    body['created_date_time'] = created_date_time
-    body['creation_type'] = creation_type
-    body['department'] = department
-    body['display_name'] = display_name
-    body['employee_id'] = employee_id
-    body['external_user_state'] = external_user_state
-    body['external_user_state_change_date_time'] = external_user_state_change_date_time
-    body['fax_number'] = fax_number
-    body['given_name'] = given_name
-    body['identities'] = identities
-    body['im_addresses'] = im_addresses
-    body['is_resource_account'] = is_resource_account
-    body['job_title'] = job_title
-    body['last_password_change_date_time'] = last_password_change_date_time
-    body['legal_age_group_classification'] = legal_age_group_classification
-    body['license_assignment_states'] = license_assignment_states
-    body['mail'] = mail
-    body['mail_nickname'] = mail_nickname
-    body['mobile_phone'] = mobile_phone
-    body['office_location'] = office_location
-    body['on_premises_distinguished_name'] = on_premises_distinguished_name
-    body['on_premises_domain_name'] = on_premises_domain_name
-    body['on_premises_extension_attributes'] = on_premises_extension_attributes
-    body['on_premises_immutable_id'] = on_premises_immutable_id
-    body['on_premises_last_sync_date_time'] = on_premises_last_sync_date_time
-    body['on_premises_provisioning_errors'] = on_premises_provisioning_errors
-    body['on_premises_sam_account_name'] = on_premises_sam_account_name
-    body['on_premises_security_identifier'] = on_premises_security_identifier
-    body['on_premises_sync_enabled'] = on_premises_sync_enabled
-    body['on_premises_user_principal_name'] = on_premises_user_principal_name
-    body['other_mails'] = other_mails
-    body['password_policies'] = password_policies
-    body['password_profile'] = password_profile
-    body['postal_code'] = postal_code
-    body['preferred_language'] = preferred_language
-    body['provisioned_plans'] = provisioned_plans
-    body['proxy_addresses'] = proxy_addresses
-    body['show_in_address_list'] = show_in_address_list
-    body['sign_in_sessions_valid_from_date_time'] = sign_in_sessions_valid_from_date_time
-    body['state'] = state
-    body['street_address'] = street_address
-    body['surname'] = surname
-    body['usage_location'] = usage_location
-    body['user_principal_name'] = user_principal_name
-    body['user_type'] = user_type
-    body['device_enrollment_limit'] = device_enrollment_limit
-    body['about_me'] = about_me
-    body['birthday'] = birthday
-    body['hire_date'] = hire_date
-    body['interests'] = interests
-    body['my_site'] = my_site
-    body['past_projects'] = past_projects
-    body['preferred_name'] = preferred_name
-    body['responsibilities'] = responsibilities
-    body['schools'] = schools
-    body['skills'] = skills
-    body['app_role_assignments'] = app_role_assignments
-    body['created_objects'] = created_objects
-    body['direct_reports'] = direct_reports
-    body['license_details'] = license_details
-    body['manager'] = manager
-    body['member_of'] = member_of
-    body['oauth2_permission_grants'] = oauth2_permission_grants
-    body['owned_devices'] = owned_devices
-    body['owned_objects'] = owned_objects
-    body['registered_devices'] = registered_devices
-    body['scoped_role_member_of'] = scoped_role_member_of
-    body['transitive_member_of'] = transitive_member_of
-    body['calendar'] = calendar
-    body['calendar_groups'] = calendar_groups
-    body['calendars'] = calendars
-    body['calendar_view'] = calendar_view
-    body['contact_folders'] = contact_folders
-    body['contacts'] = contacts
-    body['events'] = events
-    body['mail_folders'] = mail_folders
-    body['messages'] = messages
-    body['people'] = people
-    body['photo'] = photo
-    body['photos'] = photos
-    body['drive'] = drive
-    body['drives'] = drives
-    body['followed_sites'] = followed_sites
-    body['extensions'] = extensions
-    body['managed_devices'] = managed_devices
-    body['managed_app_registrations'] = managed_app_registrations
-    body['device_management_troubleshooting_events'] = device_management_troubleshooting_events
-    body['activities'] = activities
-    body['online_meetings'] = online_meetings
-    body['joined_teams'] = joined_teams
+    if id_ is not None:
+        body['id'] = id_
+    if deleted_date_time is not None:
+        body['deleted_date_time'] = deleted_date_time
+    if account_enabled is not None:
+        body['account_enabled'] = account_enabled
+    if age_group is not None:
+        body['age_group'] = age_group
+    if assigned_licenses is not None:
+        body['assigned_licenses'] = assigned_licenses
+    if assigned_plans is not None:
+        body['assigned_plans'] = assigned_plans
+    if business_phones is not None:
+        body['business_phones'] = business_phones
+    if city is not None:
+        body['city'] = city
+    if company_name is not None:
+        body['company_name'] = company_name
+    if consent_provided_for_minor is not None:
+        body['consent_provided_for_minor'] = consent_provided_for_minor
+    if country is not None:
+        body['country'] = country
+    if created_date_time is not None:
+        body['created_date_time'] = created_date_time
+    if creation_type is not None:
+        body['creation_type'] = creation_type
+    if department is not None:
+        body['department'] = department
+    if display_name is not None:
+        body['display_name'] = display_name
+    if employee_id is not None:
+        body['employee_id'] = employee_id
+    if external_user_state is not None:
+        body['external_user_state'] = external_user_state
+    if external_user_state_change_date_time is not None:
+        body['external_user_state_change_date_time'] = external_user_state_change_date_time
+    if fax_number is not None:
+        body['fax_number'] = fax_number
+    if given_name is not None:
+        body['given_name'] = given_name
+    if identities is not None:
+        body['identities'] = identities
+    if im_addresses is not None:
+        body['im_addresses'] = im_addresses
+    if is_resource_account is not None:
+        body['is_resource_account'] = is_resource_account
+    if job_title is not None:
+        body['job_title'] = job_title
+    if last_password_change_date_time is not None:
+        body['last_password_change_date_time'] = last_password_change_date_time
+    if legal_age_group_classification is not None:
+        body['legal_age_group_classification'] = legal_age_group_classification
+    if license_assignment_states is not None:
+        body['license_assignment_states'] = license_assignment_states
+    if mail is not None:
+        body['mail'] = mail
+    if mail_nickname is not None:
+        body['mail_nickname'] = mail_nickname
+    if mobile_phone is not None:
+        body['mobile_phone'] = mobile_phone
+    if office_location is not None:
+        body['office_location'] = office_location
+    if on_premises_distinguished_name is not None:
+        body['on_premises_distinguished_name'] = on_premises_distinguished_name
+    if on_premises_domain_name is not None:
+        body['on_premises_domain_name'] = on_premises_domain_name
+    if on_premises_extension_attributes is not None:
+        body['on_premises_extension_attributes'] = on_premises_extension_attributes
+    if on_premises_immutable_id is not None:
+        body['on_premises_immutable_id'] = on_premises_immutable_id
+    if on_premises_last_sync_date_time is not None:
+        body['on_premises_last_sync_date_time'] = on_premises_last_sync_date_time
+    if on_premises_provisioning_errors is not None:
+        body['on_premises_provisioning_errors'] = on_premises_provisioning_errors
+    if on_premises_sam_account_name is not None:
+        body['on_premises_sam_account_name'] = on_premises_sam_account_name
+    if on_premises_security_identifier is not None:
+        body['on_premises_security_identifier'] = on_premises_security_identifier
+    if on_premises_sync_enabled is not None:
+        body['on_premises_sync_enabled'] = on_premises_sync_enabled
+    if on_premises_user_principal_name is not None:
+        body['on_premises_user_principal_name'] = on_premises_user_principal_name
+    if other_mails is not None:
+        body['other_mails'] = other_mails
+    if password_policies is not None:
+        body['password_policies'] = password_policies
+    if password_profile is not None:
+        body['password_profile'] = password_profile
+    if postal_code is not None:
+        body['postal_code'] = postal_code
+    if preferred_language is not None:
+        body['preferred_language'] = preferred_language
+    if provisioned_plans is not None:
+        body['provisioned_plans'] = provisioned_plans
+    if proxy_addresses is not None:
+        body['proxy_addresses'] = proxy_addresses
+    if show_in_address_list is not None:
+        body['show_in_address_list'] = show_in_address_list
+    if sign_in_sessions_valid_from_date_time is not None:
+        body['sign_in_sessions_valid_from_date_time'] = sign_in_sessions_valid_from_date_time
+    if state is not None:
+        body['state'] = state
+    if street_address is not None:
+        body['street_address'] = street_address
+    if surname is not None:
+        body['surname'] = surname
+    if usage_location is not None:
+        body['usage_location'] = usage_location
+    if user_principal_name is not None:
+        body['user_principal_name'] = user_principal_name
+    if user_type is not None:
+        body['user_type'] = user_type
+    if device_enrollment_limit is not None:
+        body['device_enrollment_limit'] = device_enrollment_limit
+    if about_me is not None:
+        body['about_me'] = about_me
+    if birthday is not None:
+        body['birthday'] = birthday
+    if hire_date is not None:
+        body['hire_date'] = hire_date
+    if interests is not None:
+        body['interests'] = interests
+    if my_site is not None:
+        body['my_site'] = my_site
+    if past_projects is not None:
+        body['past_projects'] = past_projects
+    if preferred_name is not None:
+        body['preferred_name'] = preferred_name
+    if responsibilities is not None:
+        body['responsibilities'] = responsibilities
+    if schools is not None:
+        body['schools'] = schools
+    if skills is not None:
+        body['skills'] = skills
+    if app_role_assignments is not None:
+        body['app_role_assignments'] = app_role_assignments
+    if created_objects is not None:
+        body['created_objects'] = created_objects
+    if direct_reports is not None:
+        body['direct_reports'] = direct_reports
+    if license_details is not None:
+        body['license_details'] = license_details
+    if manager is not None:
+        body['manager'] = manager
+    if member_of is not None:
+        body['member_of'] = member_of
+    if oauth2_permission_grants is not None:
+        body['oauth2_permission_grants'] = oauth2_permission_grants
+    if owned_devices is not None:
+        body['owned_devices'] = owned_devices
+    if owned_objects is not None:
+        body['owned_objects'] = owned_objects
+    if registered_devices is not None:
+        body['registered_devices'] = registered_devices
+    if scoped_role_member_of is not None:
+        body['scoped_role_member_of'] = scoped_role_member_of
+    if transitive_member_of is not None:
+        body['transitive_member_of'] = transitive_member_of
+    if calendar is not None:
+        body['calendar'] = calendar
+    if calendar_groups is not None:
+        body['calendar_groups'] = calendar_groups
+    if calendars is not None:
+        body['calendars'] = calendars
+    if calendar_view is not None:
+        body['calendar_view'] = calendar_view
+    if contact_folders is not None:
+        body['contact_folders'] = contact_folders
+    if contacts is not None:
+        body['contacts'] = contacts
+    if events is not None:
+        body['events'] = events
+    if mail_folders is not None:
+        body['mail_folders'] = mail_folders
+    if messages is not None:
+        body['messages'] = messages
+    if people is not None:
+        body['people'] = people
+    if photo is not None:
+        body['photo'] = photo
+    if photos is not None:
+        body['photos'] = photos
+    if drive is not None:
+        body['drive'] = drive
+    if drives is not None:
+        body['drives'] = drives
+    if followed_sites is not None:
+        body['followed_sites'] = followed_sites
+    if extensions is not None:
+        body['extensions'] = extensions
+    if managed_devices is not None:
+        body['managed_devices'] = managed_devices
+    if managed_app_registrations is not None:
+        body['managed_app_registrations'] = managed_app_registrations
+    if device_management_troubleshooting_events is not None:
+        body['device_management_troubleshooting_events'] = device_management_troubleshooting_events
+    if activities is not None:
+        body['activities'] = activities
+    if online_meetings is not None:
+        body['online_meetings'] = online_meetings
+    if joined_teams is not None:
+        body['joined_teams'] = joined_teams
     body['exceptions'] = {}
-    body['exceptions']['body_contains'] = body_contains
-    body['exceptions']['body_or_subject_contains'] = body_or_subject_contains
-    body['exceptions']['categories'] = categories
-    body['exceptions']['from_addresses'] = from_addresses
-    body['exceptions']['has_attachments'] = has_attachments
-    body['exceptions']['header_contains'] = header_contains
-    body['exceptions']['importance'] = importance
-    body['exceptions']['is_approval_request'] = exceptions_is_approval_request
-    body['exceptions']['is_automatic_forward'] = exceptions_is_automatic_forward
-    body['exceptions']['is_automatic_reply'] = exceptions_is_automatic_reply
-    body['exceptions']['is_encrypted'] = exceptions_is_encrypted
-    body['exceptions']['is_meeting_request'] = exceptions_is_meeting_request
-    body['exceptions']['is_meeting_response'] = exceptions_is_meeting_response
-    body['exceptions']['is_non_delivery_report'] = exceptions_is_non_delivery_report
-    body['exceptions']['is_permission_controlled'] = exceptions_is_permission_controlled
-    body['exceptions']['is_read_receipt'] = exceptions_is_read_receipt
-    body['exceptions']['is_signed'] = exceptions_is_signed
-    body['exceptions']['is_voicemail'] = exceptions_is_voicemail
-    body['exceptions']['message_action_flag'] = message_action_flag
-    body['exceptions']['not_sent_to_me'] = not_sent_to_me
-    body['exceptions']['recipient_contains'] = recipient_contains
-    body['exceptions']['sender_contains'] = sender_contains
-    body['exceptions']['sensitivity'] = sensitivity
-    body['exceptions']['sent_cc_me'] = sent_cc_me
-    body['exceptions']['sent_only_to_me'] = sent_only_to_me
-    body['exceptions']['sent_to_addresses'] = sent_to_addresses
-    body['exceptions']['sent_to_me'] = sent_to_me
-    body['exceptions']['sent_to_or_cc_me'] = sent_to_or_cc_me
-    body['exceptions']['subject_contains'] = subject_contains
-    body['exceptions']['within_size_range'] = within_size_range
+    if body_contains is not None:
+        body['exceptions']['body_contains'] = body_contains
+    if body_or_subject_contains is not None:
+        body['exceptions']['body_or_subject_contains'] = body_or_subject_contains
+    if categories is not None:
+        body['exceptions']['categories'] = categories
+    if from_addresses is not None:
+        body['exceptions']['from_addresses'] = from_addresses
+    if has_attachments is not None:
+        body['exceptions']['has_attachments'] = has_attachments
+    if header_contains is not None:
+        body['exceptions']['header_contains'] = header_contains
+    if importance is not None:
+        body['exceptions']['importance'] = importance
+    if exceptions_is_approval_request is not None:
+        body['exceptions']['is_approval_request'] = exceptions_is_approval_request
+    if exceptions_is_automatic_forward is not None:
+        body['exceptions']['is_automatic_forward'] = exceptions_is_automatic_forward
+    if exceptions_is_automatic_reply is not None:
+        body['exceptions']['is_automatic_reply'] = exceptions_is_automatic_reply
+    if exceptions_is_encrypted is not None:
+        body['exceptions']['is_encrypted'] = exceptions_is_encrypted
+    if exceptions_is_meeting_request is not None:
+        body['exceptions']['is_meeting_request'] = exceptions_is_meeting_request
+    if exceptions_is_meeting_response is not None:
+        body['exceptions']['is_meeting_response'] = exceptions_is_meeting_response
+    if exceptions_is_non_delivery_report is not None:
+        body['exceptions']['is_non_delivery_report'] = exceptions_is_non_delivery_report
+    if exceptions_is_permission_controlled is not None:
+        body['exceptions']['is_permission_controlled'] = exceptions_is_permission_controlled
+    if exceptions_is_read_receipt is not None:
+        body['exceptions']['is_read_receipt'] = exceptions_is_read_receipt
+    if exceptions_is_signed is not None:
+        body['exceptions']['is_signed'] = exceptions_is_signed
+    if exceptions_is_voicemail is not None:
+        body['exceptions']['is_voicemail'] = exceptions_is_voicemail
+    if message_action_flag is not None:
+        body['exceptions']['message_action_flag'] = message_action_flag
+    if not_sent_to_me is not None:
+        body['exceptions']['not_sent_to_me'] = not_sent_to_me
+    if recipient_contains is not None:
+        body['exceptions']['recipient_contains'] = recipient_contains
+    if sender_contains is not None:
+        body['exceptions']['sender_contains'] = sender_contains
+    if sensitivity is not None:
+        body['exceptions']['sensitivity'] = sensitivity
+    if sent_cc_me is not None:
+        body['exceptions']['sent_cc_me'] = sent_cc_me
+    if sent_only_to_me is not None:
+        body['exceptions']['sent_only_to_me'] = sent_only_to_me
+    if sent_to_addresses is not None:
+        body['exceptions']['sent_to_addresses'] = sent_to_addresses
+    if sent_to_me is not None:
+        body['exceptions']['sent_to_me'] = sent_to_me
+    if sent_to_or_cc_me is not None:
+        body['exceptions']['sent_to_or_cc_me'] = sent_to_or_cc_me
+    if subject_contains is not None:
+        body['exceptions']['subject_contains'] = subject_contains
+    if within_size_range is not None:
+        body['exceptions']['within_size_range'] = within_size_range
+    if len(body['exceptions']) == 0:
+        del body['exceptions']
     body['conditions'] = {}
-    body['conditions']['body_contains'] = microsoft_graph_message_rule_predicates_body_contains
-    body['conditions']['body_or_subject_contains'] = microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains
-    body['conditions']['categories'] = microsoft_graph_message_rule_predicates_categories
-    body['conditions']['from_addresses'] = microsoft_graph_message_rule_predicates_from_addresses
-    body['conditions']['has_attachments'] = boolean_has_attachments
-    body['conditions']['header_contains'] = microsoft_graph_message_rule_predicates_header_contains
-    body['conditions']['importance'] = microsoft_graph_importance
-    body['conditions']['is_approval_request'] = is_approval_request
-    body['conditions']['is_automatic_forward'] = is_automatic_forward
-    body['conditions']['is_automatic_reply'] = is_automatic_reply
-    body['conditions']['is_encrypted'] = is_encrypted
-    body['conditions']['is_meeting_request'] = is_meeting_request
-    body['conditions']['is_meeting_response'] = is_meeting_response
-    body['conditions']['is_non_delivery_report'] = is_non_delivery_report
-    body['conditions']['is_permission_controlled'] = is_permission_controlled
-    body['conditions']['is_read_receipt'] = is_read_receipt
-    body['conditions']['is_signed'] = is_signed
-    body['conditions']['is_voicemail'] = is_voicemail
-    body['conditions']['message_action_flag'] = microsoft_graph_message_action_flag_message_action_flag
-    body['conditions']['not_sent_to_me'] = boolean_not_sent_to_me
-    body['conditions']['recipient_contains'] = microsoft_graph_message_rule_predicates_recipient_contains
-    body['conditions']['sender_contains'] = microsoft_graph_message_rule_predicates_sender_contains
-    body['conditions']['sensitivity'] = microsoft_graph_sensitivity
-    body['conditions']['sent_cc_me'] = boolean_sent_cc_me
-    body['conditions']['sent_only_to_me'] = boolean_sent_only_to_me
-    body['conditions']['sent_to_addresses'] = microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses
-    body['conditions']['sent_to_me'] = boolean_sent_to_me
-    body['conditions']['sent_to_or_cc_me'] = boolean_sent_to_or_cc_me
-    body['conditions']['subject_contains'] = microsoft_graph_message_rule_predicates_subject_contains
-    body['conditions']['within_size_range'] = microsoft_graph_size_range_within_size_range
+    if microsoft_graph_message_rule_predicates_body_contains is not None:
+        body['conditions']['body_contains'] = microsoft_graph_message_rule_predicates_body_contains
+    if microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains is not None:
+        body['conditions']['body_or_subject_contains'] = microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains
+    if microsoft_graph_message_rule_predicates_categories is not None:
+        body['conditions']['categories'] = microsoft_graph_message_rule_predicates_categories
+    if microsoft_graph_message_rule_predicates_from_addresses is not None:
+        body['conditions']['from_addresses'] = microsoft_graph_message_rule_predicates_from_addresses
+    if boolean_has_attachments is not None:
+        body['conditions']['has_attachments'] = boolean_has_attachments
+    if microsoft_graph_message_rule_predicates_header_contains is not None:
+        body['conditions']['header_contains'] = microsoft_graph_message_rule_predicates_header_contains
+    if microsoft_graph_importance is not None:
+        body['conditions']['importance'] = microsoft_graph_importance
+    if is_approval_request is not None:
+        body['conditions']['is_approval_request'] = is_approval_request
+    if is_automatic_forward is not None:
+        body['conditions']['is_automatic_forward'] = is_automatic_forward
+    if is_automatic_reply is not None:
+        body['conditions']['is_automatic_reply'] = is_automatic_reply
+    if is_encrypted is not None:
+        body['conditions']['is_encrypted'] = is_encrypted
+    if is_meeting_request is not None:
+        body['conditions']['is_meeting_request'] = is_meeting_request
+    if is_meeting_response is not None:
+        body['conditions']['is_meeting_response'] = is_meeting_response
+    if is_non_delivery_report is not None:
+        body['conditions']['is_non_delivery_report'] = is_non_delivery_report
+    if is_permission_controlled is not None:
+        body['conditions']['is_permission_controlled'] = is_permission_controlled
+    if is_read_receipt is not None:
+        body['conditions']['is_read_receipt'] = is_read_receipt
+    if is_signed is not None:
+        body['conditions']['is_signed'] = is_signed
+    if is_voicemail is not None:
+        body['conditions']['is_voicemail'] = is_voicemail
+    if microsoft_graph_message_action_flag_message_action_flag is not None:
+        body['conditions']['message_action_flag'] = microsoft_graph_message_action_flag_message_action_flag
+    if boolean_not_sent_to_me is not None:
+        body['conditions']['not_sent_to_me'] = boolean_not_sent_to_me
+    if microsoft_graph_message_rule_predicates_recipient_contains is not None:
+        body['conditions']['recipient_contains'] = microsoft_graph_message_rule_predicates_recipient_contains
+    if microsoft_graph_message_rule_predicates_sender_contains is not None:
+        body['conditions']['sender_contains'] = microsoft_graph_message_rule_predicates_sender_contains
+    if microsoft_graph_sensitivity is not None:
+        body['conditions']['sensitivity'] = microsoft_graph_sensitivity
+    if boolean_sent_cc_me is not None:
+        body['conditions']['sent_cc_me'] = boolean_sent_cc_me
+    if boolean_sent_only_to_me is not None:
+        body['conditions']['sent_only_to_me'] = boolean_sent_only_to_me
+    if microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses is not None:
+        body['conditions']['sent_to_addresses'] = microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses
+    if boolean_sent_to_me is not None:
+        body['conditions']['sent_to_me'] = boolean_sent_to_me
+    if boolean_sent_to_or_cc_me is not None:
+        body['conditions']['sent_to_or_cc_me'] = boolean_sent_to_or_cc_me
+    if microsoft_graph_message_rule_predicates_subject_contains is not None:
+        body['conditions']['subject_contains'] = microsoft_graph_message_rule_predicates_subject_contains
+    if microsoft_graph_size_range_within_size_range is not None:
+        body['conditions']['within_size_range'] = microsoft_graph_size_range_within_size_range
+    if len(body['conditions']) == 0:
+        del body['conditions']
     body['onenote'] = {}
-    body['onenote']['id'] = microsoft_graph_entity_id
-    body['onenote']['notebooks'] = notebooks
-    body['onenote']['operations'] = operations
-    body['onenote']['pages'] = pages
-    body['onenote']['resources'] = resources
-    body['onenote']['section_groups'] = section_groups
-    body['onenote']['sections'] = sections
+    if microsoft_graph_entity_id is not None:
+        body['onenote']['id'] = microsoft_graph_entity_id
+    if notebooks is not None:
+        body['onenote']['notebooks'] = notebooks
+    if operations is not None:
+        body['onenote']['operations'] = operations
+    if pages is not None:
+        body['onenote']['pages'] = pages
+    if resources is not None:
+        body['onenote']['resources'] = resources
+    if section_groups is not None:
+        body['onenote']['section_groups'] = section_groups
+    if sections is not None:
+        body['onenote']['sections'] = sections
+    if len(body['onenote']) == 0:
+        del body['onenote']
     body['settings'] = {}
-    body['settings']['id'] = id1
-    body['settings']['contribution_to_content_discovery_as_organization_disabled'] = contribution_to_content_discovery_as_organization_disabled
-    body['settings']['contribution_to_content_discovery_disabled'] = contribution_to_content_discovery_disabled
+    if id1 is not None:
+        body['settings']['id'] = id1
+    if contribution_to_content_discovery_as_organization_disabled is not None:
+        body['settings']['contribution_to_content_discovery_as_organization_disabled'] = contribution_to_content_discovery_as_organization_disabled
+    if contribution_to_content_discovery_disabled is not None:
+        body['settings']['contribution_to_content_discovery_disabled'] = contribution_to_content_discovery_disabled
     body['settings']['shift_preferences'] = {}
-    body['settings']['shift_preferences']['id'] = id2
-    body['settings']['shift_preferences']['created_date_time'] = microsoft_graph_change_tracked_entity_created_date_time_created_date_time
-    body['settings']['shift_preferences']['last_modified_date_time'] = last_modified_date_time
+    if id2 is not None:
+        body['settings']['shift_preferences']['id'] = id2
+    if microsoft_graph_change_tracked_entity_created_date_time_created_date_time is not None:
+        body['settings']['shift_preferences']['created_date_time'] = microsoft_graph_change_tracked_entity_created_date_time_created_date_time
+    if last_modified_date_time is not None:
+        body['settings']['shift_preferences']['last_modified_date_time'] = last_modified_date_time
     body['settings']['shift_preferences']['last_modified_by'] = {}
-    body['settings']['shift_preferences']['last_modified_by']['application'] = application
-    body['settings']['shift_preferences']['last_modified_by']['device'] = device
-    body['settings']['shift_preferences']['last_modified_by']['user'] = user
-    body['settings']['shift_preferences']['availability'] = availability
+    if application is not None:
+        body['settings']['shift_preferences']['last_modified_by']['application'] = application
+    if device is not None:
+        body['settings']['shift_preferences']['last_modified_by']['device'] = device
+    if user is not None:
+        body['settings']['shift_preferences']['last_modified_by']['user'] = user
+    if len(body['settings']['shift_preferences']['last_modified_by']) == 0:
+        del body['settings']['shift_preferences']['last_modified_by']
+    if availability is not None:
+        body['settings']['shift_preferences']['availability'] = availability
+    if len(body['settings']['shift_preferences']) == 0:
+        del body['settings']['shift_preferences']
+    if len(body['settings']) == 0:
+        del body['settings']
     body['insights'] = {}
-    body['insights']['id'] = id3
-    body['insights']['shared'] = shared
-    body['insights']['trending'] = trending
-    body['insights']['used'] = used
+    if id3 is not None:
+        body['insights']['id'] = id3
+    if shared is not None:
+        body['insights']['shared'] = shared
+    if trending is not None:
+        body['insights']['trending'] = trending
+    if used is not None:
+        body['insights']['used'] = used
+    if len(body['insights']) == 0:
+        del body['insights']
     body['planner'] = {}
-    body['planner']['id'] = id4
-    body['planner']['plans'] = plans
-    body['planner']['tasks'] = tasks
+    if id4 is not None:
+        body['planner']['id'] = id4
+    if plans is not None:
+        body['planner']['plans'] = plans
+    if tasks is not None:
+        body['planner']['tasks'] = tasks
+    if len(body['planner']) == 0:
+        del body['planner']
     body['outlook'] = {}
-    body['outlook']['id'] = id5
-    body['outlook']['master_categories'] = master_categories
+    if id5 is not None:
+        body['outlook']['id'] = id5
+    if master_categories is not None:
+        body['outlook']['master_categories'] = master_categories
+    if len(body['outlook']) == 0:
+        del body['outlook']
     body['inference_classification'] = {}
-    body['inference_classification']['id'] = id6
-    body['inference_classification']['overrides'] = overrides
+    if id6 is not None:
+        body['inference_classification']['id'] = id6
+    if overrides is not None:
+        body['inference_classification']['overrides'] = overrides
+    if len(body['inference_classification']) == 0:
+        del body['inference_classification']
     body['mailbox_settings'] = {}
-    body['mailbox_settings']['archive_folder'] = archive_folder
-    body['mailbox_settings']['automatic_replies_setting'] = automatic_replies_setting
-    body['mailbox_settings']['date_format'] = date_format
-    body['mailbox_settings']['delegate_meeting_message_delivery_options'] = delegate_meeting_message_delivery_options
-    body['mailbox_settings']['language'] = language
-    body['mailbox_settings']['time_format'] = time_format
-    body['mailbox_settings']['time_zone'] = time_zone
-    body['mailbox_settings']['working_hours'] = working_hours
+    if archive_folder is not None:
+        body['mailbox_settings']['archive_folder'] = archive_folder
+    if automatic_replies_setting is not None:
+        body['mailbox_settings']['automatic_replies_setting'] = automatic_replies_setting
+    if date_format is not None:
+        body['mailbox_settings']['date_format'] = date_format
+    if delegate_meeting_message_delivery_options is not None:
+        body['mailbox_settings']['delegate_meeting_message_delivery_options'] = delegate_meeting_message_delivery_options
+    if language is not None:
+        body['mailbox_settings']['language'] = language
+    if time_format is not None:
+        body['mailbox_settings']['time_format'] = time_format
+    if time_zone is not None:
+        body['mailbox_settings']['time_zone'] = time_zone
+    if working_hours is not None:
+        body['mailbox_settings']['working_hours'] = working_hours
+    if len(body['mailbox_settings']) == 0:
+        del body['mailbox_settings']
     return client.create_user(body=body)
 
 
@@ -639,214 +858,433 @@ def users_user_update(client,
                       time_zone=None,
                       working_hours=None):
     body = {}
-    body['id'] = id_
-    body['deleted_date_time'] = deleted_date_time
-    body['account_enabled'] = account_enabled
-    body['age_group'] = age_group
-    body['assigned_licenses'] = assigned_licenses
-    body['assigned_plans'] = assigned_plans
-    body['business_phones'] = business_phones
-    body['city'] = city
-    body['company_name'] = company_name
-    body['consent_provided_for_minor'] = consent_provided_for_minor
-    body['country'] = country
-    body['created_date_time'] = created_date_time
-    body['creation_type'] = creation_type
-    body['department'] = department
-    body['display_name'] = display_name
-    body['employee_id'] = employee_id
-    body['external_user_state'] = external_user_state
-    body['external_user_state_change_date_time'] = external_user_state_change_date_time
-    body['fax_number'] = fax_number
-    body['given_name'] = given_name
-    body['identities'] = identities
-    body['im_addresses'] = im_addresses
-    body['is_resource_account'] = is_resource_account
-    body['job_title'] = job_title
-    body['last_password_change_date_time'] = last_password_change_date_time
-    body['legal_age_group_classification'] = legal_age_group_classification
-    body['license_assignment_states'] = license_assignment_states
-    body['mail'] = mail
-    body['mail_nickname'] = mail_nickname
-    body['mobile_phone'] = mobile_phone
-    body['office_location'] = office_location
-    body['on_premises_distinguished_name'] = on_premises_distinguished_name
-    body['on_premises_domain_name'] = on_premises_domain_name
-    body['on_premises_extension_attributes'] = on_premises_extension_attributes
-    body['on_premises_immutable_id'] = on_premises_immutable_id
-    body['on_premises_last_sync_date_time'] = on_premises_last_sync_date_time
-    body['on_premises_provisioning_errors'] = on_premises_provisioning_errors
-    body['on_premises_sam_account_name'] = on_premises_sam_account_name
-    body['on_premises_security_identifier'] = on_premises_security_identifier
-    body['on_premises_sync_enabled'] = on_premises_sync_enabled
-    body['on_premises_user_principal_name'] = on_premises_user_principal_name
-    body['other_mails'] = other_mails
-    body['password_policies'] = password_policies
-    body['password_profile'] = password_profile
-    body['postal_code'] = postal_code
-    body['preferred_language'] = preferred_language
-    body['provisioned_plans'] = provisioned_plans
-    body['proxy_addresses'] = proxy_addresses
-    body['show_in_address_list'] = show_in_address_list
-    body['sign_in_sessions_valid_from_date_time'] = sign_in_sessions_valid_from_date_time
-    body['state'] = state
-    body['street_address'] = street_address
-    body['surname'] = surname
-    body['usage_location'] = usage_location
-    body['user_principal_name'] = user_principal_name
-    body['user_type'] = user_type
-    body['device_enrollment_limit'] = device_enrollment_limit
-    body['about_me'] = about_me
-    body['birthday'] = birthday
-    body['hire_date'] = hire_date
-    body['interests'] = interests
-    body['my_site'] = my_site
-    body['past_projects'] = past_projects
-    body['preferred_name'] = preferred_name
-    body['responsibilities'] = responsibilities
-    body['schools'] = schools
-    body['skills'] = skills
-    body['app_role_assignments'] = app_role_assignments
-    body['created_objects'] = created_objects
-    body['direct_reports'] = direct_reports
-    body['license_details'] = license_details
-    body['manager'] = manager
-    body['member_of'] = member_of
-    body['oauth2_permission_grants'] = oauth2_permission_grants
-    body['owned_devices'] = owned_devices
-    body['owned_objects'] = owned_objects
-    body['registered_devices'] = registered_devices
-    body['scoped_role_member_of'] = scoped_role_member_of
-    body['transitive_member_of'] = transitive_member_of
-    body['calendar'] = calendar
-    body['calendar_groups'] = calendar_groups
-    body['calendars'] = calendars
-    body['calendar_view'] = calendar_view
-    body['contact_folders'] = contact_folders
-    body['contacts'] = contacts
-    body['events'] = events
-    body['mail_folders'] = mail_folders
-    body['messages'] = messages
-    body['people'] = people
-    body['photo'] = photo
-    body['photos'] = photos
-    body['drive'] = drive
-    body['drives'] = drives
-    body['followed_sites'] = followed_sites
-    body['extensions'] = extensions
-    body['managed_devices'] = managed_devices
-    body['managed_app_registrations'] = managed_app_registrations
-    body['device_management_troubleshooting_events'] = device_management_troubleshooting_events
-    body['activities'] = activities
-    body['online_meetings'] = online_meetings
-    body['joined_teams'] = joined_teams
+    if id_ is not None:
+        body['id'] = id_
+    if deleted_date_time is not None:
+        body['deleted_date_time'] = deleted_date_time
+    if account_enabled is not None:
+        body['account_enabled'] = account_enabled
+    if age_group is not None:
+        body['age_group'] = age_group
+    if assigned_licenses is not None:
+        body['assigned_licenses'] = assigned_licenses
+    if assigned_plans is not None:
+        body['assigned_plans'] = assigned_plans
+    if business_phones is not None:
+        body['business_phones'] = business_phones
+    if city is not None:
+        body['city'] = city
+    if company_name is not None:
+        body['company_name'] = company_name
+    if consent_provided_for_minor is not None:
+        body['consent_provided_for_minor'] = consent_provided_for_minor
+    if country is not None:
+        body['country'] = country
+    if created_date_time is not None:
+        body['created_date_time'] = created_date_time
+    if creation_type is not None:
+        body['creation_type'] = creation_type
+    if department is not None:
+        body['department'] = department
+    if display_name is not None:
+        body['display_name'] = display_name
+    if employee_id is not None:
+        body['employee_id'] = employee_id
+    if external_user_state is not None:
+        body['external_user_state'] = external_user_state
+    if external_user_state_change_date_time is not None:
+        body['external_user_state_change_date_time'] = external_user_state_change_date_time
+    if fax_number is not None:
+        body['fax_number'] = fax_number
+    if given_name is not None:
+        body['given_name'] = given_name
+    if identities is not None:
+        body['identities'] = identities
+    if im_addresses is not None:
+        body['im_addresses'] = im_addresses
+    if is_resource_account is not None:
+        body['is_resource_account'] = is_resource_account
+    if job_title is not None:
+        body['job_title'] = job_title
+    if last_password_change_date_time is not None:
+        body['last_password_change_date_time'] = last_password_change_date_time
+    if legal_age_group_classification is not None:
+        body['legal_age_group_classification'] = legal_age_group_classification
+    if license_assignment_states is not None:
+        body['license_assignment_states'] = license_assignment_states
+    if mail is not None:
+        body['mail'] = mail
+    if mail_nickname is not None:
+        body['mail_nickname'] = mail_nickname
+    if mobile_phone is not None:
+        body['mobile_phone'] = mobile_phone
+    if office_location is not None:
+        body['office_location'] = office_location
+    if on_premises_distinguished_name is not None:
+        body['on_premises_distinguished_name'] = on_premises_distinguished_name
+    if on_premises_domain_name is not None:
+        body['on_premises_domain_name'] = on_premises_domain_name
+    if on_premises_extension_attributes is not None:
+        body['on_premises_extension_attributes'] = on_premises_extension_attributes
+    if on_premises_immutable_id is not None:
+        body['on_premises_immutable_id'] = on_premises_immutable_id
+    if on_premises_last_sync_date_time is not None:
+        body['on_premises_last_sync_date_time'] = on_premises_last_sync_date_time
+    if on_premises_provisioning_errors is not None:
+        body['on_premises_provisioning_errors'] = on_premises_provisioning_errors
+    if on_premises_sam_account_name is not None:
+        body['on_premises_sam_account_name'] = on_premises_sam_account_name
+    if on_premises_security_identifier is not None:
+        body['on_premises_security_identifier'] = on_premises_security_identifier
+    if on_premises_sync_enabled is not None:
+        body['on_premises_sync_enabled'] = on_premises_sync_enabled
+    if on_premises_user_principal_name is not None:
+        body['on_premises_user_principal_name'] = on_premises_user_principal_name
+    if other_mails is not None:
+        body['other_mails'] = other_mails
+    if password_policies is not None:
+        body['password_policies'] = password_policies
+    if password_profile is not None:
+        body['password_profile'] = password_profile
+    if postal_code is not None:
+        body['postal_code'] = postal_code
+    if preferred_language is not None:
+        body['preferred_language'] = preferred_language
+    if provisioned_plans is not None:
+        body['provisioned_plans'] = provisioned_plans
+    if proxy_addresses is not None:
+        body['proxy_addresses'] = proxy_addresses
+    if show_in_address_list is not None:
+        body['show_in_address_list'] = show_in_address_list
+    if sign_in_sessions_valid_from_date_time is not None:
+        body['sign_in_sessions_valid_from_date_time'] = sign_in_sessions_valid_from_date_time
+    if state is not None:
+        body['state'] = state
+    if street_address is not None:
+        body['street_address'] = street_address
+    if surname is not None:
+        body['surname'] = surname
+    if usage_location is not None:
+        body['usage_location'] = usage_location
+    if user_principal_name is not None:
+        body['user_principal_name'] = user_principal_name
+    if user_type is not None:
+        body['user_type'] = user_type
+    if device_enrollment_limit is not None:
+        body['device_enrollment_limit'] = device_enrollment_limit
+    if about_me is not None:
+        body['about_me'] = about_me
+    if birthday is not None:
+        body['birthday'] = birthday
+    if hire_date is not None:
+        body['hire_date'] = hire_date
+    if interests is not None:
+        body['interests'] = interests
+    if my_site is not None:
+        body['my_site'] = my_site
+    if past_projects is not None:
+        body['past_projects'] = past_projects
+    if preferred_name is not None:
+        body['preferred_name'] = preferred_name
+    if responsibilities is not None:
+        body['responsibilities'] = responsibilities
+    if schools is not None:
+        body['schools'] = schools
+    if skills is not None:
+        body['skills'] = skills
+    if app_role_assignments is not None:
+        body['app_role_assignments'] = app_role_assignments
+    if created_objects is not None:
+        body['created_objects'] = created_objects
+    if direct_reports is not None:
+        body['direct_reports'] = direct_reports
+    if license_details is not None:
+        body['license_details'] = license_details
+    if manager is not None:
+        body['manager'] = manager
+    if member_of is not None:
+        body['member_of'] = member_of
+    if oauth2_permission_grants is not None:
+        body['oauth2_permission_grants'] = oauth2_permission_grants
+    if owned_devices is not None:
+        body['owned_devices'] = owned_devices
+    if owned_objects is not None:
+        body['owned_objects'] = owned_objects
+    if registered_devices is not None:
+        body['registered_devices'] = registered_devices
+    if scoped_role_member_of is not None:
+        body['scoped_role_member_of'] = scoped_role_member_of
+    if transitive_member_of is not None:
+        body['transitive_member_of'] = transitive_member_of
+    if calendar is not None:
+        body['calendar'] = calendar
+    if calendar_groups is not None:
+        body['calendar_groups'] = calendar_groups
+    if calendars is not None:
+        body['calendars'] = calendars
+    if calendar_view is not None:
+        body['calendar_view'] = calendar_view
+    if contact_folders is not None:
+        body['contact_folders'] = contact_folders
+    if contacts is not None:
+        body['contacts'] = contacts
+    if events is not None:
+        body['events'] = events
+    if mail_folders is not None:
+        body['mail_folders'] = mail_folders
+    if messages is not None:
+        body['messages'] = messages
+    if people is not None:
+        body['people'] = people
+    if photo is not None:
+        body['photo'] = photo
+    if photos is not None:
+        body['photos'] = photos
+    if drive is not None:
+        body['drive'] = drive
+    if drives is not None:
+        body['drives'] = drives
+    if followed_sites is not None:
+        body['followed_sites'] = followed_sites
+    if extensions is not None:
+        body['extensions'] = extensions
+    if managed_devices is not None:
+        body['managed_devices'] = managed_devices
+    if managed_app_registrations is not None:
+        body['managed_app_registrations'] = managed_app_registrations
+    if device_management_troubleshooting_events is not None:
+        body['device_management_troubleshooting_events'] = device_management_troubleshooting_events
+    if activities is not None:
+        body['activities'] = activities
+    if online_meetings is not None:
+        body['online_meetings'] = online_meetings
+    if joined_teams is not None:
+        body['joined_teams'] = joined_teams
     body['exceptions'] = {}
-    body['exceptions']['body_contains'] = body_contains
-    body['exceptions']['body_or_subject_contains'] = body_or_subject_contains
-    body['exceptions']['categories'] = categories
-    body['exceptions']['from_addresses'] = from_addresses
-    body['exceptions']['has_attachments'] = has_attachments
-    body['exceptions']['header_contains'] = header_contains
-    body['exceptions']['importance'] = importance
-    body['exceptions']['is_approval_request'] = exceptions_is_approval_request
-    body['exceptions']['is_automatic_forward'] = exceptions_is_automatic_forward
-    body['exceptions']['is_automatic_reply'] = exceptions_is_automatic_reply
-    body['exceptions']['is_encrypted'] = exceptions_is_encrypted
-    body['exceptions']['is_meeting_request'] = exceptions_is_meeting_request
-    body['exceptions']['is_meeting_response'] = exceptions_is_meeting_response
-    body['exceptions']['is_non_delivery_report'] = exceptions_is_non_delivery_report
-    body['exceptions']['is_permission_controlled'] = exceptions_is_permission_controlled
-    body['exceptions']['is_read_receipt'] = exceptions_is_read_receipt
-    body['exceptions']['is_signed'] = exceptions_is_signed
-    body['exceptions']['is_voicemail'] = exceptions_is_voicemail
-    body['exceptions']['message_action_flag'] = message_action_flag
-    body['exceptions']['not_sent_to_me'] = not_sent_to_me
-    body['exceptions']['recipient_contains'] = recipient_contains
-    body['exceptions']['sender_contains'] = sender_contains
-    body['exceptions']['sensitivity'] = sensitivity
-    body['exceptions']['sent_cc_me'] = sent_cc_me
-    body['exceptions']['sent_only_to_me'] = sent_only_to_me
-    body['exceptions']['sent_to_addresses'] = sent_to_addresses
-    body['exceptions']['sent_to_me'] = sent_to_me
-    body['exceptions']['sent_to_or_cc_me'] = sent_to_or_cc_me
-    body['exceptions']['subject_contains'] = subject_contains
-    body['exceptions']['within_size_range'] = within_size_range
+    if body_contains is not None:
+        body['exceptions']['body_contains'] = body_contains
+    if body_or_subject_contains is not None:
+        body['exceptions']['body_or_subject_contains'] = body_or_subject_contains
+    if categories is not None:
+        body['exceptions']['categories'] = categories
+    if from_addresses is not None:
+        body['exceptions']['from_addresses'] = from_addresses
+    if has_attachments is not None:
+        body['exceptions']['has_attachments'] = has_attachments
+    if header_contains is not None:
+        body['exceptions']['header_contains'] = header_contains
+    if importance is not None:
+        body['exceptions']['importance'] = importance
+    if exceptions_is_approval_request is not None:
+        body['exceptions']['is_approval_request'] = exceptions_is_approval_request
+    if exceptions_is_automatic_forward is not None:
+        body['exceptions']['is_automatic_forward'] = exceptions_is_automatic_forward
+    if exceptions_is_automatic_reply is not None:
+        body['exceptions']['is_automatic_reply'] = exceptions_is_automatic_reply
+    if exceptions_is_encrypted is not None:
+        body['exceptions']['is_encrypted'] = exceptions_is_encrypted
+    if exceptions_is_meeting_request is not None:
+        body['exceptions']['is_meeting_request'] = exceptions_is_meeting_request
+    if exceptions_is_meeting_response is not None:
+        body['exceptions']['is_meeting_response'] = exceptions_is_meeting_response
+    if exceptions_is_non_delivery_report is not None:
+        body['exceptions']['is_non_delivery_report'] = exceptions_is_non_delivery_report
+    if exceptions_is_permission_controlled is not None:
+        body['exceptions']['is_permission_controlled'] = exceptions_is_permission_controlled
+    if exceptions_is_read_receipt is not None:
+        body['exceptions']['is_read_receipt'] = exceptions_is_read_receipt
+    if exceptions_is_signed is not None:
+        body['exceptions']['is_signed'] = exceptions_is_signed
+    if exceptions_is_voicemail is not None:
+        body['exceptions']['is_voicemail'] = exceptions_is_voicemail
+    if message_action_flag is not None:
+        body['exceptions']['message_action_flag'] = message_action_flag
+    if not_sent_to_me is not None:
+        body['exceptions']['not_sent_to_me'] = not_sent_to_me
+    if recipient_contains is not None:
+        body['exceptions']['recipient_contains'] = recipient_contains
+    if sender_contains is not None:
+        body['exceptions']['sender_contains'] = sender_contains
+    if sensitivity is not None:
+        body['exceptions']['sensitivity'] = sensitivity
+    if sent_cc_me is not None:
+        body['exceptions']['sent_cc_me'] = sent_cc_me
+    if sent_only_to_me is not None:
+        body['exceptions']['sent_only_to_me'] = sent_only_to_me
+    if sent_to_addresses is not None:
+        body['exceptions']['sent_to_addresses'] = sent_to_addresses
+    if sent_to_me is not None:
+        body['exceptions']['sent_to_me'] = sent_to_me
+    if sent_to_or_cc_me is not None:
+        body['exceptions']['sent_to_or_cc_me'] = sent_to_or_cc_me
+    if subject_contains is not None:
+        body['exceptions']['subject_contains'] = subject_contains
+    if within_size_range is not None:
+        body['exceptions']['within_size_range'] = within_size_range
+    if len(body['exceptions']) == 0:
+        del body['exceptions']
     body['conditions'] = {}
-    body['conditions']['body_contains'] = microsoft_graph_message_rule_predicates_body_contains
-    body['conditions']['body_or_subject_contains'] = microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains
-    body['conditions']['categories'] = microsoft_graph_message_rule_predicates_categories
-    body['conditions']['from_addresses'] = microsoft_graph_message_rule_predicates_from_addresses
-    body['conditions']['has_attachments'] = boolean_has_attachments
-    body['conditions']['header_contains'] = microsoft_graph_message_rule_predicates_header_contains
-    body['conditions']['importance'] = microsoft_graph_importance
-    body['conditions']['is_approval_request'] = is_approval_request
-    body['conditions']['is_automatic_forward'] = is_automatic_forward
-    body['conditions']['is_automatic_reply'] = is_automatic_reply
-    body['conditions']['is_encrypted'] = is_encrypted
-    body['conditions']['is_meeting_request'] = is_meeting_request
-    body['conditions']['is_meeting_response'] = is_meeting_response
-    body['conditions']['is_non_delivery_report'] = is_non_delivery_report
-    body['conditions']['is_permission_controlled'] = is_permission_controlled
-    body['conditions']['is_read_receipt'] = is_read_receipt
-    body['conditions']['is_signed'] = is_signed
-    body['conditions']['is_voicemail'] = is_voicemail
-    body['conditions']['message_action_flag'] = microsoft_graph_message_action_flag_message_action_flag
-    body['conditions']['not_sent_to_me'] = boolean_not_sent_to_me
-    body['conditions']['recipient_contains'] = microsoft_graph_message_rule_predicates_recipient_contains
-    body['conditions']['sender_contains'] = microsoft_graph_message_rule_predicates_sender_contains
-    body['conditions']['sensitivity'] = microsoft_graph_sensitivity
-    body['conditions']['sent_cc_me'] = boolean_sent_cc_me
-    body['conditions']['sent_only_to_me'] = boolean_sent_only_to_me
-    body['conditions']['sent_to_addresses'] = microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses
-    body['conditions']['sent_to_me'] = boolean_sent_to_me
-    body['conditions']['sent_to_or_cc_me'] = boolean_sent_to_or_cc_me
-    body['conditions']['subject_contains'] = microsoft_graph_message_rule_predicates_subject_contains
-    body['conditions']['within_size_range'] = microsoft_graph_size_range_within_size_range
+    if microsoft_graph_message_rule_predicates_body_contains is not None:
+        body['conditions']['body_contains'] = microsoft_graph_message_rule_predicates_body_contains
+    if microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains is not None:
+        body['conditions']['body_or_subject_contains'] = microsoft_graph_message_rule_predicates_body_or_subject_contains_body_or_subject_contains
+    if microsoft_graph_message_rule_predicates_categories is not None:
+        body['conditions']['categories'] = microsoft_graph_message_rule_predicates_categories
+    if microsoft_graph_message_rule_predicates_from_addresses is not None:
+        body['conditions']['from_addresses'] = microsoft_graph_message_rule_predicates_from_addresses
+    if boolean_has_attachments is not None:
+        body['conditions']['has_attachments'] = boolean_has_attachments
+    if microsoft_graph_message_rule_predicates_header_contains is not None:
+        body['conditions']['header_contains'] = microsoft_graph_message_rule_predicates_header_contains
+    if microsoft_graph_importance is not None:
+        body['conditions']['importance'] = microsoft_graph_importance
+    if is_approval_request is not None:
+        body['conditions']['is_approval_request'] = is_approval_request
+    if is_automatic_forward is not None:
+        body['conditions']['is_automatic_forward'] = is_automatic_forward
+    if is_automatic_reply is not None:
+        body['conditions']['is_automatic_reply'] = is_automatic_reply
+    if is_encrypted is not None:
+        body['conditions']['is_encrypted'] = is_encrypted
+    if is_meeting_request is not None:
+        body['conditions']['is_meeting_request'] = is_meeting_request
+    if is_meeting_response is not None:
+        body['conditions']['is_meeting_response'] = is_meeting_response
+    if is_non_delivery_report is not None:
+        body['conditions']['is_non_delivery_report'] = is_non_delivery_report
+    if is_permission_controlled is not None:
+        body['conditions']['is_permission_controlled'] = is_permission_controlled
+    if is_read_receipt is not None:
+        body['conditions']['is_read_receipt'] = is_read_receipt
+    if is_signed is not None:
+        body['conditions']['is_signed'] = is_signed
+    if is_voicemail is not None:
+        body['conditions']['is_voicemail'] = is_voicemail
+    if microsoft_graph_message_action_flag_message_action_flag is not None:
+        body['conditions']['message_action_flag'] = microsoft_graph_message_action_flag_message_action_flag
+    if boolean_not_sent_to_me is not None:
+        body['conditions']['not_sent_to_me'] = boolean_not_sent_to_me
+    if microsoft_graph_message_rule_predicates_recipient_contains is not None:
+        body['conditions']['recipient_contains'] = microsoft_graph_message_rule_predicates_recipient_contains
+    if microsoft_graph_message_rule_predicates_sender_contains is not None:
+        body['conditions']['sender_contains'] = microsoft_graph_message_rule_predicates_sender_contains
+    if microsoft_graph_sensitivity is not None:
+        body['conditions']['sensitivity'] = microsoft_graph_sensitivity
+    if boolean_sent_cc_me is not None:
+        body['conditions']['sent_cc_me'] = boolean_sent_cc_me
+    if boolean_sent_only_to_me is not None:
+        body['conditions']['sent_only_to_me'] = boolean_sent_only_to_me
+    if microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses is not None:
+        body['conditions']['sent_to_addresses'] = microsoft_graph_message_rule_predicates_sent_to_addresses_sent_to_addresses
+    if boolean_sent_to_me is not None:
+        body['conditions']['sent_to_me'] = boolean_sent_to_me
+    if boolean_sent_to_or_cc_me is not None:
+        body['conditions']['sent_to_or_cc_me'] = boolean_sent_to_or_cc_me
+    if microsoft_graph_message_rule_predicates_subject_contains is not None:
+        body['conditions']['subject_contains'] = microsoft_graph_message_rule_predicates_subject_contains
+    if microsoft_graph_size_range_within_size_range is not None:
+        body['conditions']['within_size_range'] = microsoft_graph_size_range_within_size_range
+    if len(body['conditions']) == 0:
+        del body['conditions']
     body['onenote'] = {}
-    body['onenote']['id'] = microsoft_graph_entity_id
-    body['onenote']['notebooks'] = notebooks
-    body['onenote']['operations'] = operations
-    body['onenote']['pages'] = pages
-    body['onenote']['resources'] = resources
-    body['onenote']['section_groups'] = section_groups
-    body['onenote']['sections'] = sections
+    if microsoft_graph_entity_id is not None:
+        body['onenote']['id'] = microsoft_graph_entity_id
+    if notebooks is not None:
+        body['onenote']['notebooks'] = notebooks
+    if operations is not None:
+        body['onenote']['operations'] = operations
+    if pages is not None:
+        body['onenote']['pages'] = pages
+    if resources is not None:
+        body['onenote']['resources'] = resources
+    if section_groups is not None:
+        body['onenote']['section_groups'] = section_groups
+    if sections is not None:
+        body['onenote']['sections'] = sections
+    if len(body['onenote']) == 0:
+        del body['onenote']
     body['settings'] = {}
-    body['settings']['id'] = id1
-    body['settings']['contribution_to_content_discovery_as_organization_disabled'] = contribution_to_content_discovery_as_organization_disabled
-    body['settings']['contribution_to_content_discovery_disabled'] = contribution_to_content_discovery_disabled
+    if id1 is not None:
+        body['settings']['id'] = id1
+    if contribution_to_content_discovery_as_organization_disabled is not None:
+        body['settings']['contribution_to_content_discovery_as_organization_disabled'] = contribution_to_content_discovery_as_organization_disabled
+    if contribution_to_content_discovery_disabled is not None:
+        body['settings']['contribution_to_content_discovery_disabled'] = contribution_to_content_discovery_disabled
     body['settings']['shift_preferences'] = {}
-    body['settings']['shift_preferences']['id'] = id2
-    body['settings']['shift_preferences']['created_date_time'] = microsoft_graph_change_tracked_entity_created_date_time_created_date_time
-    body['settings']['shift_preferences']['last_modified_date_time'] = last_modified_date_time
+    if id2 is not None:
+        body['settings']['shift_preferences']['id'] = id2
+    if microsoft_graph_change_tracked_entity_created_date_time_created_date_time is not None:
+        body['settings']['shift_preferences']['created_date_time'] = microsoft_graph_change_tracked_entity_created_date_time_created_date_time
+    if last_modified_date_time is not None:
+        body['settings']['shift_preferences']['last_modified_date_time'] = last_modified_date_time
     body['settings']['shift_preferences']['last_modified_by'] = {}
-    body['settings']['shift_preferences']['last_modified_by']['application'] = application
-    body['settings']['shift_preferences']['last_modified_by']['device'] = device
-    body['settings']['shift_preferences']['last_modified_by']['user'] = user
-    body['settings']['shift_preferences']['availability'] = availability
+    if application is not None:
+        body['settings']['shift_preferences']['last_modified_by']['application'] = application
+    if device is not None:
+        body['settings']['shift_preferences']['last_modified_by']['device'] = device
+    if user is not None:
+        body['settings']['shift_preferences']['last_modified_by']['user'] = user
+    if len(body['settings']['shift_preferences']['last_modified_by']) == 0:
+        del body['settings']['shift_preferences']['last_modified_by']
+    if availability is not None:
+        body['settings']['shift_preferences']['availability'] = availability
+    if len(body['settings']['shift_preferences']) == 0:
+        del body['settings']['shift_preferences']
+    if len(body['settings']) == 0:
+        del body['settings']
     body['insights'] = {}
-    body['insights']['id'] = id3
-    body['insights']['shared'] = shared
-    body['insights']['trending'] = trending
-    body['insights']['used'] = used
+    if id3 is not None:
+        body['insights']['id'] = id3
+    if shared is not None:
+        body['insights']['shared'] = shared
+    if trending is not None:
+        body['insights']['trending'] = trending
+    if used is not None:
+        body['insights']['used'] = used
+    if len(body['insights']) == 0:
+        del body['insights']
     body['planner'] = {}
-    body['planner']['id'] = id4
-    body['planner']['plans'] = plans
-    body['planner']['tasks'] = tasks
+    if id4 is not None:
+        body['planner']['id'] = id4
+    if plans is not None:
+        body['planner']['plans'] = plans
+    if tasks is not None:
+        body['planner']['tasks'] = tasks
+    if len(body['planner']) == 0:
+        del body['planner']
     body['outlook'] = {}
-    body['outlook']['id'] = id5
-    body['outlook']['master_categories'] = master_categories
+    if id5 is not None:
+        body['outlook']['id'] = id5
+    if master_categories is not None:
+        body['outlook']['master_categories'] = master_categories
+    if len(body['outlook']) == 0:
+        del body['outlook']
     body['inference_classification'] = {}
-    body['inference_classification']['id'] = id6
-    body['inference_classification']['overrides'] = overrides
+    if id6 is not None:
+        body['inference_classification']['id'] = id6
+    if overrides is not None:
+        body['inference_classification']['overrides'] = overrides
+    if len(body['inference_classification']) == 0:
+        del body['inference_classification']
     body['mailbox_settings'] = {}
-    body['mailbox_settings']['archive_folder'] = archive_folder
-    body['mailbox_settings']['automatic_replies_setting'] = automatic_replies_setting
-    body['mailbox_settings']['date_format'] = date_format
-    body['mailbox_settings']['delegate_meeting_message_delivery_options'] = delegate_meeting_message_delivery_options
-    body['mailbox_settings']['language'] = language
-    body['mailbox_settings']['time_format'] = time_format
-    body['mailbox_settings']['time_zone'] = time_zone
-    body['mailbox_settings']['working_hours'] = working_hours
+    if archive_folder is not None:
+        body['mailbox_settings']['archive_folder'] = archive_folder
+    if automatic_replies_setting is not None:
+        body['mailbox_settings']['automatic_replies_setting'] = automatic_replies_setting
+    if date_format is not None:
+        body['mailbox_settings']['date_format'] = date_format
+    if delegate_meeting_message_delivery_options is not None:
+        body['mailbox_settings']['delegate_meeting_message_delivery_options'] = delegate_meeting_message_delivery_options
+    if language is not None:
+        body['mailbox_settings']['language'] = language
+    if time_format is not None:
+        body['mailbox_settings']['time_format'] = time_format
+    if time_zone is not None:
+        body['mailbox_settings']['time_zone'] = time_zone
+    if working_hours is not None:
+        body['mailbox_settings']['working_hours'] = working_hours
+    if len(body['mailbox_settings']) == 0:
+        del body['mailbox_settings']
     return client.update_user(user_id=user_id,
                               body=body)
 
@@ -862,7 +1300,8 @@ def users_user_create_extension(client,
                                 user_id,
                                 id_=None):
     body = {}
-    body['id'] = id_
+    if id_ is not None:
+        body['id'] = id_
     return client.create_extensions(user_id=user_id,
                                     body=body)
 
@@ -874,10 +1313,14 @@ def users_user_create_license_detail(client,
                                      sku_id=None,
                                      sku_part_number=None):
     body = {}
-    body['id'] = id_
-    body['service_plans'] = service_plans
-    body['sku_id'] = sku_id
-    body['sku_part_number'] = sku_part_number
+    if id_ is not None:
+        body['id'] = id_
+    if service_plans is not None:
+        body['service_plans'] = service_plans
+    if sku_id is not None:
+        body['sku_id'] = sku_id
+    if sku_part_number is not None:
+        body['sku_part_number'] = sku_part_number
     return client.create_license_details(user_id=user_id,
                                          body=body)
 
@@ -888,9 +1331,12 @@ def users_user_create_photo(client,
                             height=None,
                             width=None):
     body = {}
-    body['id'] = id_
-    body['height'] = height
-    body['width'] = width
+    if id_ is not None:
+        body['id'] = id_
+    if height is not None:
+        body['height'] = height
+    if width is not None:
+        body['width'] = width
     return client.create_photos(user_id=user_id,
                                 body=body)
 
@@ -1260,7 +1706,8 @@ def users_user_update_extension(client,
                                 extension_id,
                                 id_=None):
     body = {}
-    body['id'] = id_
+    if id_ is not None:
+        body['id'] = id_
     return client.update_extensions(user_id=user_id,
                                     extension_id=extension_id,
                                     body=body)
@@ -1274,10 +1721,14 @@ def users_user_update_license_detail(client,
                                      sku_id=None,
                                      sku_part_number=None):
     body = {}
-    body['id'] = id_
-    body['service_plans'] = service_plans
-    body['sku_id'] = sku_id
-    body['sku_part_number'] = sku_part_number
+    if id_ is not None:
+        body['id'] = id_
+    if service_plans is not None:
+        body['service_plans'] = service_plans
+    if sku_id is not None:
+        body['sku_id'] = sku_id
+    if sku_part_number is not None:
+        body['sku_part_number'] = sku_part_number
     return client.update_license_details(user_id=user_id,
                                          license_details_id=license_details_id,
                                          body=body)
@@ -1288,8 +1739,10 @@ def users_user_update_outlook(client,
                               id_=None,
                               master_categories=None):
     body = {}
-    body['id'] = id_
-    body['master_categories'] = master_categories
+    if id_ is not None:
+        body['id'] = id_
+    if master_categories is not None:
+        body['master_categories'] = master_categories
     return client.update_outlook(user_id=user_id,
                                  body=body)
 
@@ -1301,9 +1754,12 @@ def users_user_update_photo(client,
                             height=None,
                             width=None):
     body = {}
-    body['id'] = id_
-    body['height'] = height
-    body['width'] = width
+    if id_ is not None:
+        body['id'] = id_
+    if height is not None:
+        body['height'] = height
+    if width is not None:
+        body['width'] = width
     if user_id is not None and profile_photo_id is not None:
         return client.update_photos(user_id=user_id,
                                     profile_photo_id=profile_photo_id,
@@ -1325,18 +1781,32 @@ def users_user_update_setting(client,
                               user=None,
                               availability=None):
     body = {}
-    body['id'] = id_
-    body['contribution_to_content_discovery_as_organization_disabled'] = contribution_to_content_discovery_as_organization_disabled
-    body['contribution_to_content_discovery_disabled'] = contribution_to_content_discovery_disabled
+    if id_ is not None:
+        body['id'] = id_
+    if contribution_to_content_discovery_as_organization_disabled is not None:
+        body['contribution_to_content_discovery_as_organization_disabled'] = contribution_to_content_discovery_as_organization_disabled
+    if contribution_to_content_discovery_disabled is not None:
+        body['contribution_to_content_discovery_disabled'] = contribution_to_content_discovery_disabled
     body['shift_preferences'] = {}
-    body['shift_preferences']['id'] = microsoft_graph_entity_id
-    body['shift_preferences']['created_date_time'] = created_date_time
-    body['shift_preferences']['last_modified_date_time'] = last_modified_date_time
+    if microsoft_graph_entity_id is not None:
+        body['shift_preferences']['id'] = microsoft_graph_entity_id
+    if created_date_time is not None:
+        body['shift_preferences']['created_date_time'] = created_date_time
+    if last_modified_date_time is not None:
+        body['shift_preferences']['last_modified_date_time'] = last_modified_date_time
     body['shift_preferences']['last_modified_by'] = {}
-    body['shift_preferences']['last_modified_by']['application'] = application
-    body['shift_preferences']['last_modified_by']['device'] = device
-    body['shift_preferences']['last_modified_by']['user'] = user
-    body['shift_preferences']['availability'] = availability
+    if application is not None:
+        body['shift_preferences']['last_modified_by']['application'] = application
+    if device is not None:
+        body['shift_preferences']['last_modified_by']['device'] = device
+    if user is not None:
+        body['shift_preferences']['last_modified_by']['user'] = user
+    if len(body['shift_preferences']['last_modified_by']) == 0:
+        del body['shift_preferences']['last_modified_by']
+    if availability is not None:
+        body['shift_preferences']['availability'] = availability
+    if len(body['shift_preferences']) == 0:
+        del body['shift_preferences']
     return client.update_settings(user_id=user_id,
                                   body=body)
 
@@ -1347,9 +1817,12 @@ def users_user_outlook_create_master_category(client,
                                               color=None,
                                               display_name=None):
     body = {}
-    body['id'] = id_
-    body['color'] = color
-    body['display_name'] = display_name
+    if id_ is not None:
+        body['id'] = id_
+    if color is not None:
+        body['color'] = color
+    if display_name is not None:
+        body['display_name'] = display_name
     return client.create_master_categories(user_id=user_id,
                                            body=body)
 
@@ -1392,9 +1865,12 @@ def users_user_outlook_update_master_category(client,
                                               color=None,
                                               display_name=None):
     body = {}
-    body['id'] = id_
-    body['color'] = color
-    body['display_name'] = display_name
+    if id_ is not None:
+        body['id'] = id_
+    if color is not None:
+        body['color'] = color
+    if display_name is not None:
+        body['display_name'] = display_name
     return client.update_master_categories(user_id=user_id,
                                            outlook_category_id=outlook_category_id,
                                            body=body)
@@ -1426,13 +1902,22 @@ def users_user_setting_update_shift_preference(client,
                                                user=None,
                                                availability=None):
     body = {}
-    body['id'] = id_
-    body['created_date_time'] = created_date_time
-    body['last_modified_date_time'] = last_modified_date_time
+    if id_ is not None:
+        body['id'] = id_
+    if created_date_time is not None:
+        body['created_date_time'] = created_date_time
+    if last_modified_date_time is not None:
+        body['last_modified_date_time'] = last_modified_date_time
     body['last_modified_by'] = {}
-    body['last_modified_by']['application'] = application
-    body['last_modified_by']['device'] = device
-    body['last_modified_by']['user'] = user
-    body['availability'] = availability
+    if application is not None:
+        body['last_modified_by']['application'] = application
+    if device is not None:
+        body['last_modified_by']['device'] = device
+    if user is not None:
+        body['last_modified_by']['user'] = user
+    if len(body['last_modified_by']) == 0:
+        del body['last_modified_by']
+    if availability is not None:
+        body['availability'] = availability
     return client.update_shift_preferences(user_id=user_id,
                                            body=body)

@@ -19,11 +19,16 @@ def attestation_create_provider(client,
                                 keys=None):
     creation_params = {}
     creation_params['location'] = location
-    creation_params['tags'] = tags
+    if tags is not None:
+        creation_params['tags'] = tags
     creation_params['properties'] = {}
-    creation_params['properties']['attestation_policy'] = attestation_policy
+    if attestation_policy is not None:
+        creation_params['properties']['attestation_policy'] = attestation_policy
     creation_params['properties']['policy_signing_certificates'] = {}
-    creation_params['properties']['policy_signing_certificates']['keys'] = keys
+    if keys is not None:
+        creation_params['properties']['policy_signing_certificates']['keys'] = keys
+    if len(creation_params['properties']['policy_signing_certificates']) == 0:
+        del creation_params['properties']['policy_signing_certificates']
     return client.create(resource_group_name=resource_group_name,
                          offer_type="virtualmachine",
                          provider_name=provider_name,
@@ -54,7 +59,8 @@ def attestation_attestation_provider_update(client,
                                             provider_name,
                                             tags=None):
     update_params = {}
-    update_params['tags'] = tags
+    if tags is not None:
+        update_params['tags'] = tags
     return client.update(resource_group_name=resource_group_name,
                          offer_type="virtualmachine",
                          provider_name=provider_name,

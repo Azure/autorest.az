@@ -47,14 +47,12 @@ def synapse_big_data_pool_create(client,
                                  node_size=None,
                                  node_size_family=None,
                                  no_wait=False):
-    if force is None:
-        force = False
     return sdk_no_wait(no_wait,
                        client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        big_data_pool_name=big_data_pool_name,
-                       force=force,
+                       force=False if force is None else force,
                        tags=tags,
                        location=location,
                        provisioning_state=provisioning_state,

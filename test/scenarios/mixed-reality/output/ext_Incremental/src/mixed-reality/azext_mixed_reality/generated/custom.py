@@ -16,10 +16,11 @@ def spatial_anchors_account_regenerate_key(client,
                                            resource_group_name,
                                            account_name,
                                            serial=None):
-    if serial is None:
-        serial = 1
     regenerate = {}
-    regenerate['serial'] = 1 if serial is None else serial
+    if serial is not None:
+        regenerate['serial'] = serial
+    else:
+        regenerate['serial'] = 1
     return client.regenerate_keys(resource_group_name=resource_group_name,
                                   account_name=account_name,
                                   regenerate=regenerate)
@@ -45,7 +46,8 @@ def remote_rendering_account_create(client,
                                     location,
                                     tags=None):
     remote_rendering_account = {}
-    remote_rendering_account['tags'] = tags
+    if tags is not None:
+        remote_rendering_account['tags'] = tags
     remote_rendering_account['location'] = location
     remote_rendering_account['identity'] = json.loads("{\"type\": \"SystemAssigned\"}")
     return client.create(resource_group_name=resource_group_name,
@@ -59,7 +61,8 @@ def remote_rendering_account_update(client,
                                     location,
                                     tags=None):
     remote_rendering_account = {}
-    remote_rendering_account['tags'] = tags
+    if tags is not None:
+        remote_rendering_account['tags'] = tags
     remote_rendering_account['location'] = location
     remote_rendering_account['identity'] = json.loads("{\"type\": \"SystemAssigned\"}")
     return client.update(resource_group_name=resource_group_name,
@@ -85,10 +88,11 @@ def remote_rendering_account_regenerate_key(client,
                                             resource_group_name,
                                             account_name,
                                             serial=None):
-    if serial is None:
-        serial = 1
     regenerate = {}
-    regenerate['serial'] = 1 if serial is None else serial
+    if serial is not None:
+        regenerate['serial'] = serial
+    else:
+        regenerate['serial'] = 1
     return client.regenerate_keys(resource_group_name=resource_group_name,
                                   account_name=account_name,
                                   regenerate=regenerate)
