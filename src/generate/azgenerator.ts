@@ -31,7 +31,13 @@ export async function processRequest(host: Host) {
                     ),
                 );
                 session.protectFiles(
+                    path.join(configHandler.azOutputFolder, PathConstants.historyRstFile),
+                );
+                session.protectFiles(
                     path.join(configHandler.azOutputFolder, PathConstants.readmeFile),
+                );
+                session.protectFiles(
+                    path.join(configHandler.azOutputFolder, PathConstants.linterExclusionsFile),
                 );
             } while (model.SelectNextExtension());
         }
