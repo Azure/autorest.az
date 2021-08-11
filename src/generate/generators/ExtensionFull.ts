@@ -85,7 +85,7 @@ export class AzExtensionFullGenerator extends GeneratorBase {
         await this.generateFullSingleAndAddtoOutput(new CliTopHelp(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliTopMetadata(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliReport(this.model));
-        await this.generateFullSingleAndAddtoOutput(new CliExtHistory(this.model));
+        await this.generateFullSingleAndAddtoOutput(new CliExtHistory(this.model), false);
         await this.generateFullSingleAndAddtoOutput(new CliExtReadme(this.model), false);
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupCfg(this.model));
         await this.generateFullSingleAndAddtoOutput(new CliExtSetupPy(this.model));
