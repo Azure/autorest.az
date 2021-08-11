@@ -75,6 +75,7 @@ export class PathConstants {
     public static readonly setupPyFile: string = 'setup.py';
     public static readonly setupCfgFile: string = 'setup.cfg';
     public static readonly historyRstFile: string = 'HISTORY.rst';
+    public static readonly linterExclusionsFile: string = 'linter_exclusions.yml';
     public static readonly docSourceJsonFile: string = path.join(
         '/doc/sphinx/azhelpgen/doc_source_map.json',
     );
