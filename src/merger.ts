@@ -191,6 +191,9 @@ export class CodeModelMerger {
                         // here we use a level traversal algorithm to traverse all the subnodes of the param node in python codemodel.
                         const OutLayerProp = [];
                         const cliFlattenTrace = param.language['cli'].cliM4Path;
+
+                        const pythonFlattenedTrace = [];
+
                         // OutLayerProp is the queue in level traversal algorithm.
                         // each node of OutLayerProp is a pair, and the first element is the target traversal node, the second element is current cli flatten trace from the top to that node.
                         OutLayerProp.push([param.schema, cliFlattenTrace]);
@@ -200,6 +203,14 @@ export class CodeModelMerger {
                             const preFlattenTrace = layerPair[1];
                             if (isNullOrUndefined(outProp)) {
                                 continue;
+                            }
+                            if (
+                                preFlattenTrace ===
+                                fnode.language?.cli?.cliFlattenTrace
+                                    .slice(0, pythonFlattenedTrace.length + 1)
+                                    .join(';')
+                            ) {
+                                pythonFlattenedTrace.push(param);
                             }
                             for (const prop of getAllProperties(outProp)) {
                                 if (foundProp) {
@@ -214,6 +225,7 @@ export class CodeModelMerger {
                                 ) {
                                     OutLayerProp.push([prop.schema, curFlattenTrace]);
                                 }
+
                                 // because flatten will delete the original schema if no other places have refer to that schema.
                                 // in the case of flattened schema is not being deleted, and we can find the targeting node. we simply need to record language.python and pythonFlattenedFrom for future parameter construction when calling python SDK.
                                 if (
@@ -231,6 +243,14 @@ export class CodeModelMerger {
                                 } else if (
                                     !isNullOrUndefined(fnode.language?.cli?.cliFlattenTrace)
                                 ) {
+                                    if (
+                                        curFlattenTrace ===
+                                        fnode.language?.cli?.cliFlattenTrace
+                                            .slice(0, pythonFlattenedTrace.length + 1)
+                                            .join(';')
+                                    ) {
+                                        pythonFlattenedTrace.push(prop);
+                                    }
                                     // in the case of flattened schema has been deleted, we need to use cli flatten trace to identify the flattened schema.
                                     for (const trace of values(
                                         fnode.language.cli.cliFlattenTrace,
@@ -261,6 +281,7 @@ export class CodeModelMerger {
                                 }
                             }
                         }
+                        fnode.language.cli.pythonFlattenedTrace = pythonFlattenedTrace;
                     }
                 }
             }
