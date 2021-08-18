@@ -214,6 +214,9 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                 const flattenedFrom = schemaHandler.Schema_FlattenedFrom(
                     methodParameterHandler.MethodParameter['targetProperty'],
                 );
+                const flattenedTrace = schemaHandler.Schema_PythonFlattenedTrace(
+                    methodParameterHandler.MethodParameter['targetProperty'],
+                );
                 if (
                     methodParameterHandler.MethodParameter['originalParameter'] ===
                         originalParameterStack.last ||
@@ -259,35 +262,46 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                             originalParameterStack.last?.language?.['cli']?.[
                                 'moved-from-python'
                             ] !== true &&
-                            originalParameterStack.last.schema !== flattenedFrom
+                            !isNullOrUndefined(flattenedTrace)
                         ) {
-                            const newParam = new Parameter(
-                                flattenedFrom.language.python.name,
-                                flattenedFrom.language.python.description,
-                                flattenedFrom,
-                            );
-                            newParam.language['cli'] = flattenedFrom.language['cli'];
-
-                            originalParameterStack.push(newParam);
-                            originalParameterNameStack.push(flattenedFrom.language.python.name);
-                            originalParameterCheckEmpty.push(
-                                !needGeneric &&
-                                    !parameterHandler.Parameter_IsRequired(
-                                        originalParameterStack.last,
-                                    ),
-                            );
-                            if (!needGeneric) {
-                                outputBody = outputBody.concat(
-                                    ConstructValuation(
-                                        model,
-                                        required,
-                                        needGeneric,
-                                        prefixIndent,
-                                        originalParameterNameStack,
-                                        null,
-                                        '{}',
-                                    ),
+                            let newParams = [];
+                            for (const flattenParam of flattenedTrace.slice().reverse()) {
+                                if (originalParameterStack.last.schema === flattenParam) {
+                                    break;
+                                }
+                                const newParam = new Parameter(
+                                    flattenParam.language.python.name,
+                                    flattenParam.language.python.description,
+                                    flattenParam,
                                 );
+                                newParam.language['cli'] = flattenParam.language['cli'];
+                                newParams = [newParam, ...newParams];
+                            }
+
+                            for (const newParam of newParams) {
+                                originalParameterStack.push(newParam);
+                                originalParameterNameStack.push(
+                                    newParam.schema.language.python.name,
+                                );
+                                originalParameterCheckEmpty.push(
+                                    !needGeneric &&
+                                        !parameterHandler.Parameter_IsRequired(
+                                            originalParameterStack.last,
+                                        ),
+                                );
+                                if (!needGeneric) {
+                                    outputBody = outputBody.concat(
+                                        ConstructValuation(
+                                            model,
+                                            required,
+                                            needGeneric,
+                                            prefixIndent,
+                                            originalParameterNameStack,
+                                            null,
+                                            '{}',
+                                        ),
+                                    );
+                                }
                             }
                         }
                     }

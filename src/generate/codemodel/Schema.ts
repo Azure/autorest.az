@@ -8,6 +8,7 @@ export interface SchemaModel {
     Schema_Type(Schema): string;
     Schema_Description(Schema): string;
     Schema_FlattenedFrom(Schema): Schema;
+    Schema_PythonFlattenedTrace(Schema): Schema[];
     Schema_IsPositional(Schema): boolean;
     Schema_IsListOfSimple(schema: Schema): boolean;
     Schema_IsList(schema: Schema): boolean;
@@ -166,6 +167,10 @@ export class SchemaModelImpl implements SchemaModel {
 
     public Schema_FlattenedFrom(schema: Schema): Schema {
         return schema?.language['cli']?.pythonFlattenedFrom;
+    }
+
+    public Schema_PythonFlattenedTrace(schema: Schema): Schema[] {
+        return schema?.language['cli']?.pythonFlattenedTrace;
     }
 
     public Schema_IsPositional(schema: Schema): boolean {
