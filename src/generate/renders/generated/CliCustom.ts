@@ -265,7 +265,7 @@ function ConstructMethodBodyParameter(model: CodeModelAz, needGeneric = false, r
                             !isNullOrUndefined(flattenedTrace)
                         ) {
                             let newParams = [];
-                            for (const flattenParam of flattenedTrace.reverse()) {
+                            for (const flattenParam of flattenedTrace.slice().reverse()) {
                                 if (originalParameterStack.last.schema === flattenParam) {
                                     break;
                                 }
