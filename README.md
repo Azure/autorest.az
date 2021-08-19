@@ -59,7 +59,7 @@ After the code model has been updated and merged, AutoRest.az will render the co
 ## Different Generation Options
 **Autorest Options**
 1. *--use*  
-This *--use* option is to specify the download location of the package. For Azure CLI code generation, by default, we will use the [latest publish Autorest.az in npmjs](https://www.npmjs.com/package/@autorest/az). Private releases are available in [github releases](https://github.com/Azure/autorest.az/releases) for users who want to try out some preview features. For example:  `--use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz` 
+This *--use* option is to specify the download location of the package. For Azure CLI code generation, by default, we will use the [latest publish Autorest.az in npmjs](https://www.npmjs.com/package/@autorest/az). Private releases are available in [github releases](https://github.com/Azure/autorest.az/releases) for users who want to try out some preview features. For example:  `--use=https://github.com/Azure/autorest.az/releases/download/1.7.3-b.20210818.1/autorest-az-1.7.3.tgz` 
 1. *--debug*  
 This *--debug* option will show more information while generating the code. It is very helpful for user to trouble shooting the wrong configuration in readme.az.md file which would cause no code is generated in the target folder. 
 1. *--interactive*  
@@ -75,11 +75,11 @@ This *--sdk-flatten* option is still in private releases. It will only take effe
 1. --generate-sdk  
 This *--generate-sdk* has two available value "yes" or "no". By default the value is "yes" for Azure CLI extensions generation, and "no" for Azure CLI main repo modules.
 1. --compatible-level  
-This *--generate-sdk* has two available value "track1" or "track2". By default the value is "track2" for Azure CLI extensions generation, and "track1" for Azure CLI main repo modules.
+This *--generate-sdk* has two available value "track1" or "track2". By default the value is "track2" for both Azure CLI extensions and main repo modules generation.
 1. --extension-mode  
 This *--extension-mode* option is to set the global extension mode for the generated modules. it has three available value 'experimental' or 'preview' or 'stable'. By default the value is 'experimental' for Azure CLI extensions generation. And 'stable' for Azure CLI main repo modules but the command groups mode will still be 'experimental' if not specified.
 1. --target-mode  
-This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. By default Autorest.az will generate code targeting azure-cli-extensions repo. Setting `--target-mode=core` if you want to generate azure-cli repo command modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track1`.
+This *--target-mode* option is a convenience option for users who working on Azure CLI main repo modules. By default Autorest.az will generate code targeting azure-cli-extensions repo. Setting `--target-mode=core` if you want to generate azure-cli repo command modules. It basically equals to `--sdk-no-flatten --generate-sdk=no --compatible-level=track2`.
 
 Other command line options can be found in the [generate with different options doc](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md)
 
@@ -128,7 +128,7 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 `autorest --version=3.0.6370 --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --sdk-no-flatten --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>`
 
 1. Sample command for authoring Azure CLI main modules:  
-`autorest --version=3.0.6370 --az --use=https://github.com/Azure/autorest.az/releases/download/1.6.2-b.20201211.1/autorest-az-1.6.2.tgz <path-to-the-swagger-readme.md> --compatible-level=track2 --azure-cli-folder=<path-to-the-azure-cli-repo>`
+`autorest --version=3.0.6370 --az --use=https://github.com/Azure/autorest.az/releases/download/1.7.3-b.20210818.1/autorest-az-1.7.3.tgz <path-to-the-swagger-readme.md> --compatible-level=track2 --azure-cli-folder=<path-to-the-azure-cli-repo>`
 
 See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 

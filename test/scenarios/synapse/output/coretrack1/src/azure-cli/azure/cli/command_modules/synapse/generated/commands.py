@@ -646,7 +646,6 @@ def load_command_table(self, _):
             supports_no_wait=True,
             custom_func_name='synapse_workspace_aad_admin_update',
             setter_arg_name='aad_admin_info',
-            setter_name='begin_create_or_update',
         )
         g.custom_command('delete', 'synapse_workspace_aad_admin_delete', supports_no_wait=True, confirmation=True)
         g.custom_wait_command('wait', 'synapse_workspace_aad_admin_show')

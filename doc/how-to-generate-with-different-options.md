@@ -35,9 +35,7 @@ This option is to determine whether you want to adapt to track1 mode or not.
 --compatible-level=track1 means to generate the code compatible to track1 sdk. 
 --compatible-level=track2 means to generate the code compatible to track2 sdk.
 ```
-If this option is not set, the default value of --compatible-level will be different according to --target-mode option value.  
-which means if --target-mode=extension, the default value of --compatible-level is track2 and we will generate code compatible to track2 sdk.  
-If the --target-mode=core, the default value of --compatible-level is track1 and we will generate code compatible to track1.  
+If this option is not set, the default value of --compatible-level is track2 and we will generate code compatible to track2 sdk.  
 
 
 ### --sdk-no-flatten option

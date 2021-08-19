@@ -124,7 +124,7 @@ function processGenerationOption(session: Session<CodeModel>) {
     let isSdkNeeded = !cliCore;
     const generateSdk = AzConfiguration.getValue(CodeGenConstants.generateSDK);
     isSdkNeeded = isNullOrUndefined(generateSdk) ? isSdkNeeded : generateSdk === GenerateSdk.Yes;
-    let compatibleLevel = cliCore ? CompatibleLevel.Track1 : CompatibleLevel.Track2;
+    let compatibleLevel = CompatibleLevel.Track2;
     compatibleLevel = !isNullOrUndefined(AzConfiguration.getValue(CodeGenConstants.compatibleLevel))
         ? AzConfiguration.getValue(CodeGenConstants.compatibleLevel)
         : compatibleLevel;
