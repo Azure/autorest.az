@@ -74,10 +74,7 @@ def load_command_table(self, _):
         g.custom_show_command('show', 'kusto_attached_database_configuration_show')
         g.custom_command('create', 'kusto_attached_database_configuration_create', supports_no_wait=True)
         g.generic_update_command(
-            'update',
-            supports_no_wait=True,
-            custom_func_name='kusto_attached_database_configuration_update',
-            setter_name='begin_create_or_update',
+            'update', supports_no_wait=True, custom_func_name='kusto_attached_database_configuration_update'
         )
         g.custom_command(
             'delete', 'kusto_attached_database_configuration_delete', supports_no_wait=True, confirmation=True
@@ -121,10 +118,7 @@ def load_command_table(self, _):
         g.custom_show_command('show', 'kusto_cluster_principal_assignment_show')
         g.custom_command('create', 'kusto_cluster_principal_assignment_create', supports_no_wait=True)
         g.generic_update_command(
-            'update',
-            supports_no_wait=True,
-            custom_func_name='kusto_cluster_principal_assignment_update',
-            setter_name='begin_create_or_update',
+            'update', supports_no_wait=True, custom_func_name='kusto_cluster_principal_assignment_update'
         )
         g.custom_command(
             'delete', 'kusto_cluster_principal_assignment_delete', supports_no_wait=True, confirmation=True
@@ -171,10 +165,7 @@ def load_command_table(self, _):
         g.custom_show_command('show', 'kusto_database_principal_assignment_show')
         g.custom_command('create', 'kusto_database_principal_assignment_create', supports_no_wait=True)
         g.generic_update_command(
-            'update',
-            supports_no_wait=True,
-            custom_func_name='kusto_database_principal_assignment_update',
-            setter_name='begin_create_or_update',
+            'update', supports_no_wait=True, custom_func_name='kusto_database_principal_assignment_update'
         )
         g.custom_command(
             'delete', 'kusto_database_principal_assignment_delete', supports_no_wait=True, confirmation=True

@@ -75,7 +75,7 @@ def synapse_big_data_pool_create(client,
     if node_size_family is not None:
         big_data_pool_info['node_size_family'] = node_size_family
     return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
+                       client.create_or_update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        big_data_pool_name=big_data_pool_name,
@@ -100,7 +100,7 @@ def synapse_big_data_pool_delete(client,
                                  big_data_pool_name,
                                  no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        big_data_pool_name=big_data_pool_name)
@@ -148,7 +148,7 @@ def synapse_ip_firewall_rule_create(client,
                                     start_ip_address=None,
                                     no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
+                       client.create_or_update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        rule_name=rule_name,
@@ -164,7 +164,7 @@ def synapse_ip_firewall_rule_update(client,
                                     start_ip_address=None,
                                     no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
+                       client.create_or_update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        rule_name=rule_name,
@@ -178,7 +178,7 @@ def synapse_ip_firewall_rule_delete(client,
                                     rule_name,
                                     no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        rule_name=rule_name)
@@ -190,7 +190,7 @@ def synapse_ip_firewall_rule_replace_all(client,
                                          ip_firewall_rules=None,
                                          no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_replace_all,
+                       client.replace_all,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        ip_firewall_rules=ip_firewall_rules)
@@ -254,7 +254,7 @@ def synapse_sql_pool_create(client,
     if creation_date is not None:
         sql_pool_info['creation_date'] = creation_date
     return sdk_no_wait(no_wait,
-                       client.begin_create,
+                       client.create,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        sql_pool_name=sql_pool_name,
@@ -314,7 +314,7 @@ def synapse_sql_pool_delete(client,
                             sql_pool_name,
                             no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        sql_pool_name=sql_pool_name)
@@ -326,7 +326,7 @@ def synapse_sql_pool_pause(client,
                            sql_pool_name,
                            no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_pause,
+                       client.pause,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        sql_pool_name=sql_pool_name)
@@ -349,7 +349,7 @@ def synapse_sql_pool_resume(client,
                             sql_pool_name,
                             no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_resume,
+                       client.resume,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        sql_pool_name=sql_pool_name)
@@ -420,10 +420,10 @@ def synapse_sql_pool_restore_point_create(client,
                                           workspace_name,
                                           sql_pool_name,
                                           restore_point_label):
-    return client.begin_create(resource_group_name=resource_group_name,
-                               workspace_name=workspace_name,
-                               sql_pool_name=sql_pool_name,
-                               restore_point_label=restore_point_label)
+    return client.create(resource_group_name=resource_group_name,
+                         workspace_name=workspace_name,
+                         sql_pool_name=sql_pool_name,
+                         restore_point_label=restore_point_label)
 
 
 def synapse_sql_pool_replication_link_list(client,
@@ -839,11 +839,11 @@ def synapse_sql_pool_vulnerability_assessment_scan_initiate_scan(client,
                                                                  workspace_name,
                                                                  sql_pool_name,
                                                                  scan_id):
-    return client.begin_initiate_scan(resource_group_name=resource_group_name,
-                                      workspace_name=workspace_name,
-                                      sql_pool_name=sql_pool_name,
-                                      vulnerability_assessment_name="default",
-                                      scan_id=scan_id)
+    return client.initiate_scan(resource_group_name=resource_group_name,
+                                workspace_name=workspace_name,
+                                sql_pool_name=sql_pool_name,
+                                vulnerability_assessment_name="default",
+                                scan_id=scan_id)
 
 
 def synapse_sql_pool_security_alert_policy_show(client,
@@ -1021,7 +1021,7 @@ def synapse_workspace_create(client,
     if len(workspace_info['identity']) == 0:
         del workspace_info['identity']
     return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
+                       client.create_or_update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        workspace_info=workspace_info)
@@ -1045,7 +1045,7 @@ def synapse_workspace_update(client,
     if len(workspace_patch_info['identity']) == 0:
         del workspace_patch_info['identity']
     return sdk_no_wait(no_wait,
-                       client.begin_update,
+                       client.update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        workspace_patch_info=workspace_patch_info)
@@ -1056,7 +1056,7 @@ def synapse_workspace_delete(client,
                              workspace_name,
                              no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name)
 
@@ -1086,7 +1086,7 @@ def synapse_workspace_aad_admin_create(client,
     if sid is not None:
         aad_admin_info['sid'] = sid
     return sdk_no_wait(no_wait,
-                       client.begin_create_or_update,
+                       client.create_or_update,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        aad_admin_info=aad_admin_info)
@@ -1116,7 +1116,7 @@ def synapse_workspace_aad_admin_delete(client,
                                        workspace_name,
                                        no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name)
 
@@ -1175,7 +1175,7 @@ def synapse_integration_runtime_create(client,
                                        if_match=None,
                                        no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_create,
+                       client.create,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        integration_runtime_name=integration_runtime_name,
@@ -1202,7 +1202,7 @@ def synapse_integration_runtime_delete(client,
                                        integration_runtime_name,
                                        no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        integration_runtime_name=integration_runtime_name)
@@ -1395,7 +1395,7 @@ def synapse_private_endpoint_connection_create(client,
                                                private_endpoint_connection_name,
                                                no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_create,
+                       client.create,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        private_endpoint_connection_name=private_endpoint_connection_name)
@@ -1407,7 +1407,7 @@ def synapse_private_endpoint_connection_delete(client,
                                                private_endpoint_connection_name,
                                                no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.begin_delete,
+                       client.delete,
                        resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        private_endpoint_connection_name=private_endpoint_connection_name)

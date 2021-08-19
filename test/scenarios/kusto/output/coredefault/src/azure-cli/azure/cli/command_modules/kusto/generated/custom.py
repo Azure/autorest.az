@@ -83,7 +83,7 @@ def kusto_cluster_create(client,
     if len(parameters['identity']) == 0:
         del parameters['identity']
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        parameters=parameters)
@@ -143,7 +143,7 @@ def kusto_cluster_update(client,
     if len(parameters['identity']) == 0:
         del parameters['identity']
     return sdk_no_wait(no_wait,
-                       client.update,
+                       client.begin_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        parameters=parameters)
@@ -154,7 +154,7 @@ def kusto_cluster_delete(client,
                          cluster_name,
                          no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.delete,
+                       client.begin_delete,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name)
 
@@ -164,11 +164,14 @@ def kusto_cluster_add_language_extension(client,
                                          cluster_name,
                                          value=None,
                                          no_wait=False):
+    language_extensions_to_add = {}
+    if value is not None:
+        language_extensions_to_add['value'] = value
     return sdk_no_wait(no_wait,
-                       client.add_language_extensions,
+                       client.begin_add_language_extensions,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
-                       value=value)
+                       language_extensions_to_add=language_extensions_to_add)
 
 
 def kusto_cluster_detach_follower_database(client,
@@ -177,12 +180,14 @@ def kusto_cluster_detach_follower_database(client,
                                            cluster_resource_id,
                                            attached_database_configuration_name,
                                            no_wait=False):
+    follower_database_to_remove = {}
+    follower_database_to_remove['cluster_resource_id'] = cluster_resource_id
+    follower_database_to_remove['attached_database_configuration_name'] = attached_database_configuration_name
     return sdk_no_wait(no_wait,
-                       client.detach_follower_databases,
+                       client.begin_detach_follower_databases,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
-                       cluster_resource_id=cluster_resource_id,
-                       attached_database_configuration_name=attached_database_configuration_name)
+                       follower_database_to_remove=follower_database_to_remove)
 
 
 def kusto_cluster_diagnose_virtual_network(client,
@@ -190,7 +195,7 @@ def kusto_cluster_diagnose_virtual_network(client,
                                            cluster_name,
                                            no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.diagnose_virtual_network,
+                       client.begin_diagnose_virtual_network,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name)
 
@@ -223,11 +228,14 @@ def kusto_cluster_remove_language_extension(client,
                                             cluster_name,
                                             value=None,
                                             no_wait=False):
+    language_extensions_to_remove = {}
+    if value is not None:
+        language_extensions_to_remove['value'] = value
     return sdk_no_wait(no_wait,
-                       client.remove_language_extensions,
+                       client.begin_remove_language_extensions,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
-                       value=value)
+                       language_extensions_to_remove=language_extensions_to_remove)
 
 
 def kusto_cluster_start(client,
@@ -235,7 +243,7 @@ def kusto_cluster_start(client,
                         cluster_name,
                         no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.start,
+                       client.begin_start,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name)
 
@@ -245,7 +253,7 @@ def kusto_cluster_stop(client,
                        cluster_name,
                        no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.stop,
+                       client.begin_stop,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name)
 
@@ -285,7 +293,7 @@ def kusto_cluster_principal_assignment_create(client,
     if principal_type is not None:
         parameters['principal_type'] = principal_type
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        principal_assignment_name=principal_assignment_name,
@@ -318,7 +326,7 @@ def kusto_cluster_principal_assignment_delete(client,
                                               principal_assignment_name,
                                               no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.delete,
+                       client.begin_delete,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        principal_assignment_name=principal_assignment_name)
@@ -359,7 +367,7 @@ def kusto_database_create(client,
                        'provided!')
     parameters = all_parameters[0] if len(all_parameters) == 1 else None
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -385,7 +393,7 @@ def kusto_database_update(client,
                        'provided!')
     parameters = all_parameters[0] if len(all_parameters) == 1 else None
     return sdk_no_wait(no_wait,
-                       client.update,
+                       client.begin_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -398,7 +406,7 @@ def kusto_database_delete(client,
                           database_name,
                           no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.delete,
+                       client.begin_delete,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name)
@@ -409,10 +417,13 @@ def kusto_database_add_principal(client,
                                  cluster_name,
                                  database_name,
                                  value=None):
+    database_principals_to_add = {}
+    if value is not None:
+        database_principals_to_add['value'] = value
     return client.add_principals(resource_group_name=resource_group_name,
                                  cluster_name=cluster_name,
                                  database_name=database_name,
-                                 value=value)
+                                 database_principals_to_add=database_principals_to_add)
 
 
 def kusto_database_list_principal(client,
@@ -429,10 +440,13 @@ def kusto_database_remove_principal(client,
                                     cluster_name,
                                     database_name,
                                     value=None):
+    database_principals_to_remove = {}
+    if value is not None:
+        database_principals_to_remove['value'] = value
     return client.remove_principals(resource_group_name=resource_group_name,
                                     cluster_name=cluster_name,
                                     database_name=database_name,
-                                    value=value)
+                                    database_principals_to_remove=database_principals_to_remove)
 
 
 def kusto_database_principal_assignment_list(client,
@@ -475,7 +489,7 @@ def kusto_database_principal_assignment_create(client,
     if principal_type is not None:
         parameters['principal_type'] = principal_type
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -511,7 +525,7 @@ def kusto_database_principal_assignment_delete(client,
                                                principal_assignment_name,
                                                no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.delete,
+                       client.begin_delete,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -553,7 +567,7 @@ def kusto_attached_database_configuration_create(client,
     if default_principals_modification_kind is not None:
         parameters['default_principals_modification_kind'] = default_principals_modification_kind
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        attached_database_configuration_name=attached_database_configuration_name,
@@ -586,7 +600,7 @@ def kusto_attached_database_configuration_delete(client,
                                                  attached_database_configuration_name,
                                                  no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.delete,
+                       client.begin_delete,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        attached_database_configuration_name=attached_database_configuration_name)
@@ -636,7 +650,7 @@ def kusto_data_connection_create(client,
                        'event_grid_data_connection is provided!')
     parameters = all_parameters[0] if len(all_parameters) == 1 else None
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -668,7 +682,7 @@ def kusto_data_connection_update(client,
                        'event_grid_data_connection is provided!')
     parameters = all_parameters[0] if len(all_parameters) == 1 else None
     return sdk_no_wait(no_wait,
-                       client.update,
+                       client.begin_update,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -683,7 +697,7 @@ def kusto_data_connection_delete(client,
                                  data_connection_name,
                                  no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.delete,
+                       client.begin_delete,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
@@ -710,10 +724,14 @@ def kusto_data_connection_data_connection_validation(client,
         raise CLIError('at most one of  event_hub_data_connection, iot_hub_data_connection, event_grid_data_connection '
                        'is needed for properties!')
     properties = all_properties[0] if len(all_properties) == 1 else None
+    parameters = {}
+    if data_connection_name is not None:
+        parameters['data_connection_name'] = data_connection_name
+    if properties is not None:
+        parameters['properties'] = properties
     return sdk_no_wait(no_wait,
-                       client.data_connection_validation,
+                       client.begin_data_connection_validation,
                        resource_group_name=resource_group_name,
                        cluster_name=cluster_name,
                        database_name=database_name,
-                       data_connection_name=data_connection_name,
-                       properties=properties)
+                       parameters=parameters)

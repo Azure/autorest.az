@@ -18,7 +18,7 @@ def vm_virtual_machine_assess_patch(client,
                                     vm_name,
                                     no_wait=False):
     return sdk_no_wait(no_wait,
-                       client.assess_patches,
+                       client.begin_assess_patches,
                        resource_group_name=resource_group_name,
                        vm_name=vm_name)
 
@@ -102,7 +102,7 @@ def vm_virtual_machine_scale_set_vm_extension_create(client,
     if len(extension_parameters['instance_view']) == 0:
         del extension_parameters['instance_view']
     return sdk_no_wait(no_wait,
-                       client.create_or_update,
+                       client.begin_create_or_update,
                        resource_group_name=resource_group_name,
                        vm_scale_set_name=vm_scale_set_name,
                        instance_id=instance_id,

@@ -17,7 +17,7 @@ export enum TestMode {
     ExtNoSdk = 'extnosdk',
     ExtDefaultFolder = 'ext_default_folder',
     ExtNoSdkNoFlattenTrack1 = 'extnosdknoflattentrack1',
-    CoreTrack2 = 'coretrack2',
+    CoreTrack1 = 'coretrack1',
 }
 
 describe('ScenarioTest', () => {
@@ -32,7 +32,7 @@ describe('ScenarioTest', () => {
             'kusto',
             [
                 TestMode.CoreDefault,
-                TestMode.CoreTrack2,
+                TestMode.CoreTrack1,
                 TestMode.ExtDefaultFolder,
                 TestMode.ExtNoSdkNoFlattenTrack1,
             ],
@@ -41,6 +41,7 @@ describe('ScenarioTest', () => {
             'synapse',
             [
                 TestMode.CoreDefault,
+                TestMode.CoreTrack1,
                 TestMode.ExtFlatten,
                 TestMode.ExtDefaultFolder,
                 TestMode.ExtNoSdkNoFlattenTrack1,
@@ -120,13 +121,13 @@ describe('ScenarioTest', () => {
             key = CodeGenConstants.azureCliFolder;
             extraOption[key] = outputDir;
             return extraOption;
-        } else if (testMode === TestMode.CoreTrack2) {
+        } else if (testMode === TestMode.CoreTrack1) {
             let key = CodeGenConstants.targetMode;
             extraOption[key] = TargetMode.Core;
             key = CodeGenConstants.azureCliFolder;
             extraOption[key] = outputDir;
             key = CodeGenConstants.compatibleLevel;
-            extraOption[key] = CompatibleLevel.Track2;
+            extraOption[key] = CompatibleLevel.Track1;
             return extraOption;
         } else if (testMode === TestMode.ExtFlatten) {
             let key = CodeGenConstants.azureCliExtFolder;
@@ -213,7 +214,7 @@ describe('ScenarioTest', () => {
                             dimension === TestMode.CoreDefault ||
                             dimension === TestMode.ExtIncremental ||
                             dimension === TestMode.CoreIncremental ||
-                            dimension === TestMode.CoreTrack2
+                            dimension === TestMode.CoreTrack1
                         ) {
                             copyRecursiveSync(
                                 path.join(dir, rp, 'basecli'),
