@@ -66,16 +66,7 @@ If your service has released Python SDK, it's likely you already have the file. 
         output-folder: $(python-sdks-folder)/{svcName}/azure-mgmt-{svcName}
     ```
 
-## Step 4. Update readme.md
-
-Add following highlighted line in readme.md to enable CLI CodeGen in swagger PR:
-
-![sample image](images/author-readme1.png)
-
-If you have PR to **azure-rest-api-specs** repo, you should be able to see the CLI CodeGen triggered automatically for your swagger PR:
-![sample image](images/codegen-in-swagger-pr.png)
-
 ## Ready to generate code
-All readme files should be ready now. You can refer to [here](how-to-generate.md) to generate your CLI code now if you want. 
+All readme files should be ready now. You can refer to [here](../../../#how-to-use-azure-cli-code-generator) to generate your CLI code now if you want. 
 
 Feel free to reach to us at amecodegen@microsoft.com if you hit any issues or questions.
