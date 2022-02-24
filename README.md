@@ -132,7 +132,7 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 
 See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 
-If there are any errors while code generation, please check [common errors while code generation](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#common-errors-while-code-generation).
+If there is any error while code generation, please check [common errors while code generation](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#common-errors-while-code-generation) for resolutions.
 
 ## Build the Generated Code
 If you want to do a simple try, please go to the az-output-folder that you specified in your readme.az.md, build the wheel file and add the generated file into Azure CLI.
