@@ -449,4 +449,13 @@ cli:
             shorthandSyntax: true
 ```
 In this way. we can use `--param-name key1=value1,key2=value2 key1=valuea,key2=valueb` instead of `--param-name key1=value1 key2=value2 key1=valuea key2=valueb` to suggest that we want to input  
-two items (value1, value2) and (valuea, valueb).    
+two items (value1, value2) and (valuea, valueb).
+
+## Common errors while code generation
+> ModuleNotFoundError: No module named 'm2r'
+1. Active the Python virtual environment within "@autorest_python" extension;
+2. Execute `pip install m2r`;
+
+> AttributeError: module 'mistune' has no attribute 'BlockGrammar'
+1. Active the Python virtual environment within "@autorest_python" extension;
+2. Execute `pip install mistune==0.8.4`;
