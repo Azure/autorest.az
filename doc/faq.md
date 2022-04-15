@@ -450,32 +450,3 @@ cli:
 ```
 In this way. we can use `--param-name key1=value1,key2=value2 key1=valuea,key2=valueb` instead of `--param-name key1=value1 key2=value2 key1=valuea key2=valueb` to suggest that we want to input  
 two items (value1, value2) and (valuea, valueb).
-
-## Common errors while code generation
-The specific version information:
-
-| AutoRest Core  | AutoRest CLI  | Node.js  |
-|:--------------:|:-------------:|:--------:|
-|    3.0.6370    |     3.5.1     |  12.20   |
-
-The path of Python virtual environment within "@autorest/python" extension should be like:
-```text
-~/.autorest/@autorest_python@xx/node_modules/@autorest/python/venv
-```
-
-> ModuleNotFoundError: No module named 'm2r'
-
-1. Active the virtual environment within "@autorest/python";
-2. Execute `pip install m2r`;
-
-> AttributeError: module 'mistune' has no attribute 'BlockGrammar'
-
-1. Active the virtual environment within "@autorest/python";
-2. Execute `pip install mistune==0.8.4`;
-
-> Failed to install or start extension '@autorest/az'
-
-Specify the version of Node.js to **12.20** and the command should be like:
-```text
-$ autorest --version=3.0.6370 --az --use=@autorest/az@latest <path-to-the-swagger-readme.md> --azure-cli-extension-folder=<path-to-the-azure-cli-extension-repo>
-```
