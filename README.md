@@ -132,7 +132,32 @@ Users can refer to [this document](https://github.com/Azure/azure-rest-api-specs
 
 See [different combination of generation options](https://github.com/Azure/autorest.az/blob/master/doc/how-to-generate-with-different-options.md#most-useful-command-options-combination) for more useful scenarios.
 
-If there is any error while code generation, please check [common errors while code generation](https://github.com/Azure/autorest.az/blob/master/doc/faq.md#common-errors-while-code-generation) for resolutions.
+### Take logz extension as a dry run
+It's always good to start with a command like that:
+```text
+$ autorest --version=3.0.6370 --az --use=@autorest/az@latest ../azure-rest-api-specs/specification/logz/resource-manager/readme.md --azure-cli-extension-folder=./azure-cli-extensions
+```
+
+Make sure you have these specific versions installed:
+
+| AutoRest Core  | AutoRest CLI  | Node.js  |
+|:--------------:|:-------------:|:--------:|
+|    3.0.6370    |     3.5.1     |  12.20   |
+
+Errors you might encounter nowadays:
+- ERROR: Schema violation: Additional properties not allowed: x-ms-identifiers
+    1. Append *--pass-thru:schema-validator-swagger* to the command;
+- AttributeError: module 'mistune' has no attribute 'BlockGrammar'
+    1. Active the venv within *~/.autorest/@autorest_python@5.4.0/node_modules/@autorest/python*;
+    2. Execute *pip install mistune==0.8.4*;
+- ImportError: cannot import name '_unicodefun' from 'click'
+    1. Active the venv within *~/.autorest/@autorest_az@1.8.0/node_modules/@autorest/az*;
+    2. Execute *pip install click==8.0.2*;
+
+One more thing, it's a good practice to clean up AutoRest extensions by:
+```text
+$ autorest --reset
+```
 
 ## Build the Generated Code
 If you want to do a simple try, please go to the az-output-folder that you specified in your readme.az.md, build the wheel file and add the generated file into Azure CLI.
