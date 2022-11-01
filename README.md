@@ -1,4 +1,10 @@
 # Autorest.Az
+
+> **Warning**
+> __Autorest.Az is not maintained. Please use [aaz-dev-tools](https://github.com/Azure/aaz-dev-tools) for Azure CLI code generation.__
+
+---
+
 [1. Introduction](#Introduction)  
 [2. How does Azure CLI Code Generator Work](#How-does-Azure-CLI-Code-Generator-Work)  
 &nbsp;  [2.1. Different Generation Options](#Different-Generation-Options)  
